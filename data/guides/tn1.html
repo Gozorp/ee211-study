@@ -1,0 +1,572 @@
+<section class="g-sec" id="tn1-overview" data-kind="overview">
+<h2>Overview</h2>
+<p>This lecture (recorded 24 Sep 2020) introduces <strong>Thévenin's theorem</strong>: any linear two-terminal network of resistances and sources can be replaced, as seen from two terminals A and B, by <strong>one voltage source \(V_{TH}\) in series with one resistance \(R_{TH}\)</strong>. The instructor defines \(V_{TH}\) as the open-terminal voltage across A–B and \(R_{TH}\) as the resistance seen looking back into A–B with the voltage sources shorted. He practises each on small circuits, then "Thévenizes" a 100 V ladder circuit (\(V_{TH} = 50\,\text{V}\), \(R_{TH} = 25\,\Omega\)). A student question then clears up a very common confusion: when does a short make a resistor "disappear"?</p>
+<p>Parts of the video:</p>
+<ul>
+<li><a class="ts" data-t="0:00"></a> Who Thévenin was; Ohm and Kirchhoff for perspective (history)</li>
+<li><a class="ts" data-t="3:02"></a> Statement of Thévenin's theorem</li>
+<li><a class="ts" data-t="5:13"></a> The "black box" picture: why the equivalent behaves identically at A–B</li>
+<li><a class="ts" data-t="7:42"></a> Names: <em>Thévenin equivalent circuit</em> and <em>Thévenizing</em></li>
+<li><a class="ts" data-t="9:16"></a> Side note on Morse code and ham radio (not part of the topic; outlined at the end)</li>
+<li><a class="ts" data-t="15:58"></a> Only two numbers are needed: \(V_{TH}\) and \(R_{TH}\)</li>
+<li><a class="ts" data-t="16:45"></a> Finding \(V_{TH}\) + three quick examples (<a class="ts" data-t="19:25"></a>, <a class="ts" data-t="20:06"></a>, <a class="ts" data-t="21:35"></a>)</li>
+<li><a class="ts" data-t="23:36"></a> Finding \(R_{TH}\) + two quick examples (<a class="ts" data-t="25:40"></a>, <a class="ts" data-t="29:06"></a>)</li>
+<li><a class="ts" data-t="29:46"></a> Full example: Thévenize a 100 V ladder circuit</li>
+<li><a class="ts" data-t="42:40"></a> Q&amp;A: "Why didn't the parallel resistors become zero?"</li>
+<li><a class="ts" data-t="46:41"></a> Keep the fundamentals sharp; exam and lab announcements</li>
+</ul>
+<aside class="note">The video never connects an actual load or computes load currents. The load-current example, the current-source rule, the \(V_{OC}/I_{SC}\) method and the dependent-source material in this guide are clearly marked as additional teaching. Thévenin continues in <a class="xref" data-lesson="tn2">Thévenin cont. &amp; Norton</a>.</aside>
+</section>
+
+<section class="g-sec" id="tn1-objectives" data-kind="objectives">
+<h2>Learning objectives</h2>
+<p>After this lesson you should be able to:</p>
+<ol>
+<li>State Thévenin's theorem and explain what "equivalent" means: anything connected between A and B gets the same voltage and current from the equivalent as from the original circuit.</li>
+<li>Pick out the two load terminals A and B, and explain why moving them gives a different Thévenin equivalent.</li>
+<li>Find \(V_{TH}\) as the open-circuit voltage \(V_{AB}\) using total resistance, Ohm's law, KVL and node voltages, and state its polarity (A is the "+" terminal).</li>
+<li>Find \(R_{TH}\) by redrawing the circuit with every independent voltage source shorted and reducing the resistance seen from A–B.</li>
+<li>Tell whether a short eliminates a resistor (short in parallel with it) or only joins resistors in series, by tracing where current divides and sums.</li>
+<li>Draw the finished Thévenin equivalent with values and polarity.</li>
+<li>(Extra) Use the equivalent to get load current and voltage for any \(R_L\); open current sources when finding \(R_{TH}\); use \(V_{OC}/I_{SC}\) or a test source when the circuit has dependent sources.</li>
+</ol>
+</section>
+
+<section class="g-sec" id="tn1-prereqs" data-kind="prereqs">
+<h2>Prerequisites</h2>
+<dl>
+<dt>Ohm's law</dt><dd>\(V = IR\). Used to get the total current and each resistor's voltage drop.</dd>
+<dt>Series and parallel resistance</dt><dd>Series: same current, \(R_{eq} = R_1 + R_2 + \dots\). Parallel: same two nodes, \(R_{eq} = \frac{R_1 R_2}{R_1 + R_2}\) for two resistors. The instructor's test: imagine current flowing from A to B. Where it <em>divides</em> (dividing node) and where it <em>sums back together</em> (summing node) mark the two ends of a parallel group. If the current doesn't divide between two resistors, they are in series.</dd>
+<dt>Voltage divider</dt><dd>Two series resistors across a source share its voltage in proportion to resistance: \(V_2 = V_s\frac{R_2}{R_1 + R_2}\).</dd>
+<dt>KVL and node voltages</dt><dd>The voltage drops around a loop add to zero. In practice: start at a node with a known voltage and subtract each drop to get the next node's voltage. The voltage across an element is the difference of its two node voltages.</dd>
+<dt>Turning off a voltage source</dt><dd>As in superposition, an independent voltage source is "turned off" by replacing it with a short (a wire, 0 V). The instructor refers back to this at <a class="ts" data-t="25:16"></a>.</dd>
+<dt>Resistance between two points</dt><dd>The single resistance an ohmmeter would read between two terminals. You measured this in an earlier lab (mentioned at <a class="ts" data-t="27:00"></a>).</dd>
+</dl>
+</section>
+
+<section class="g-sec" id="tn1-definitions" data-kind="definitions">
+<h2>Definitions &amp; symbols</h2>
+<table>
+<tr><th>Term / symbol</th><th>Meaning</th><th>Unit</th></tr>
+<tr><td>Two-terminal network</td><td>A circuit we look at through just two connection points (terminals). You can put the terminals on any two nodes of any circuit.</td><td>—</td></tr>
+<tr><td>Linear network</td><td>Built from resistances and sources (in this course: resistors and ideal sources), so voltages and currents scale proportionally.</td><td>—</td></tr>
+<tr><td>A, B (load terminals)</td><td>The two points where a load <em>will eventually</em> be attached. While you derive the equivalent, <em>nothing</em> is connected there.</td><td>—</td></tr>
+<tr><td>Load, \(R_L\)</td><td>Whatever gets connected between A and B (e.g. a resistor). \(R_L\) is used in the extra material.</td><td>Ω</td></tr>
+<tr><td>\(V_{TH}\) (Thévenin voltage)</td><td>The open-terminal voltage "felt" across A and B: \(V_{TH} = V_{AB} = V_A - V_B\) with nothing connected.</td><td>V</td></tr>
+<tr><td>\(R_{TH}\) (Thévenin resistance)</td><td>The resistance "seen" looking back into the circuit from A and B with the voltage sources shorted.</td><td>Ω</td></tr>
+<tr><td>Thévenin equivalent circuit</td><td>The result: a single source \(V_{TH}\) in series with a single resistor \(R_{TH}\), brought out to A and B.</td><td>—</td></tr>
+<tr><td>Thévenizing</td><td>The process of turning a circuit into its Thévenin equivalent ("Thévenize the circuit").</td><td>—</td></tr>
+<tr><td>Open-circuit (open-terminal) voltage, \(V_{OC}\)</td><td>The voltage between two terminals with nothing connected (no current leaves). The same thing as \(V_{TH}\).</td><td>V</td></tr>
+<tr><td>Shorting a source</td><td>Replacing an ideal voltage source by a wire (0 V) on paper, to turn it off.</td><td>—</td></tr>
+<tr><td>\(R_T\), \(I_T\)</td><td>Total resistance seen by the source and total source current (used in the ladder example).</td><td>Ω, A</td></tr>
+<tr><td>Dividing / summing node</td><td>The node where an imagined current splits up / where it rejoins. Together they bound a parallel group.</td><td>—</td></tr>
+<tr><td>\(I_{SC}\) (extra)</td><td>Short-circuit current: the current that flows through a wire placed directly from A to B.</td><td>A</td></tr>
+<tr><td>Dependent source (extra)</td><td>A source whose value is set by a voltage or current elsewhere in the circuit (diamond symbol, e.g. \(2I_x\)). Not covered in the course videos.</td><td>V or A</td></tr>
+</table>
+</section>
+
+<section class="g-sec" id="tn1-history" data-kind="lesson" data-ts="0-182">
+<h2>1. Who was Thévenin?</h2>
+<p><a class="ts" data-t="0:21"></a> The instructor opens with some history. Léon Charles Thévenin was a French telegraph worker. In his day, the most advanced use of electricity was tapping two wires together to send "dits and dashes" over long distances. He was interested in Ohm's law and Kirchhoff's laws. The page at <a class="ts" data-t="2:50"></a> lists the dates:</p>
+<table>
+<tr><th>Person</th><th>Dates (as written on the page)</th><th>Known for</th></tr>
+<tr><td>Léon Charles Thévenin</td><td>1857–1926</td><td>Thévenin's theorem (this lecture)</td></tr>
+<tr><td>George (Georg) Ohm</td><td>1789–1854</td><td>Ohm's law</td></tr>
+<tr><td>Gustav Kirchhoff</td><td>1824–1887</td><td>KVL and KCL</td></tr>
+</table>
+<p>His point: all the circuit laws used in this course are fairly recent. From telegraph wires to smartphones took only about 130 years <a class="ts" data-t="1:31"></a>.</p>
+<aside class="uncertain">At <a class="ts" data-t="1:13"></a> the instructor says "1856 to 1926", but the page says 1857–1926. Thévenin was born in 1857, so the page is right. This is history only and won't affect any calculation.</aside>
+</section>
+
+<section class="g-sec" id="tn1-theorem" data-kind="lesson" data-ts="182-556">
+<h2>2. Thévenin's theorem</h2>
+<p><a class="ts" data-t="3:02"></a> The statement as written on the page (<a class="ts" data-t="5:26"></a>):</p>
+<div class="formula">\[ \text{Any linear two-terminal network of resistances and sources} \;\Longrightarrow\; V_{TH} \text{ in series with } R_{TH} \]</div>
+<blockquote>Any linear two-terminal network of resistances &amp; sources can be simplified by an <u>equivalent circuit</u> consisting of a single voltage source (\(V_{TH}\)) &amp; a single series resistance (\(R_{TH}\)).</blockquote>
+<ul>
+<li><strong>Two-terminal</strong> <a class="ts" data-t="3:27"></a>: there are two connection points. Every circuit you have solved so far can be turned into one: put a terminal "A" on any point and a terminal "B" on any other point <a class="ts" data-t="5:39"></a>.</li>
+<li><strong>Linear</strong>: everything in this course so far (resistors and sources) is linear <a class="ts" data-t="4:46"></a>.</li>
+<li><strong>Equivalent</strong> <a class="ts" data-t="6:28"></a>: as seen from A and B, the equivalent behaves exactly like the original. If you plug a resistor between A and B on the original circuit, it gets some voltage and current. Plug the same resistor into the Thévenin equivalent and it gets the <em>same</em> voltage and current <a class="ts" data-t="6:53"></a>.</li>
+<li><strong>Big reduction</strong> <a class="ts" data-t="7:17"></a>: the box could hold "a hundred voltage sources and two resistors" or "a zillion resistors and five voltage sources". It still reduces to one source and one resistor.</li>
+</ul>
+<figure class="circuit" id="tn1-fig-blackbox">
+<script type="application/json">{"parts":[
+ {"t":"BOX","a":[0,0],"b":[4,4],"label":"Circuit"},
+ {"t":"T","at":[2,2.3],"text":"any linear R's\nand sources","cls":"muted"},
+ {"t":"W","pts":[[4,1],[5.5,1]]},{"t":"N","at":[5.5,1],"open":true,"label":"A","pos":"e"},
+ {"t":"W","pts":[[4,3],[5.5,3]]},{"t":"N","at":[5.5,3],"open":true,"label":"B","pos":"e"},
+ {"t":"ARROW","a":[7,2],"b":[9,2],"label":"Thévenize","lat":[8,1.5]},
+ {"t":"BAT","a":[10.5,4],"b":[10.5,1],"plus":"b","label":"V_{TH}"},
+ {"t":"W","pts":[[10.5,1],[10.5,0],[11.5,0]]},
+ {"t":"R","a":[11.5,0],"b":[14,0],"label":"R_{TH}"},
+ {"t":"W","pts":[[14,0],[15,0]]},{"t":"N","at":[15,0],"open":true,"label":"A","pos":"e"},
+ {"t":"W","pts":[[10.5,4],[15,4]]},{"t":"N","at":[15,4],"open":true,"label":"B","pos":"e"},
+ {"t":"BOX","a":[9.6,-1.5],"b":[16.2,4.7],"label":"Thévenin equivalent circuit"}
+],"alt":"Left: a box labelled Circuit with terminals A and B. An arrow labelled Thévenize points to the right: a battery V_TH, positive plate on top, in series with resistor R_TH leading to terminal A; the battery's negative side goes to terminal B."}</script>
+<figcaption>The black-box picture and its Thévenin equivalent, as drawn at <a class="ts" data-t="9:30"></a>. The battery's long (positive) plate is on top and connects through \(R_{TH}\) to A, so A is the "+" terminal: \(V_{TH} = V_A - V_B\).</figcaption>
+</figure>
+<p><a class="ts" data-t="7:42"></a> <strong>Vocabulary.</strong> The result of the process is the <em>Thévenin equivalent circuit</em> (written in red). The process itself is called <em>Thévenizing the circuit</em> (written in blue at <a class="ts" data-t="8:24"></a>). The result is always one voltage source and one resistor, brought out to the two terminals.</p>
+<aside class="uncertain"><strong>Possible verbal slip.</strong> At <a class="ts" data-t="8:52"></a> the instructor says the result is "one voltage source with one resistor in parallel". The theorem he wrote, and every equivalent he draws, has the resistor <strong>in series</strong> with the source. Series is correct for Thévenin. (A source with a resistor in parallel is the <em>Norton</em> form, which comes next in <a class="xref" data-lesson="tn2">Thévenin cont. &amp; Norton</a>.)</aside>
+<aside class="instructor">The equivalence holds only "from the perspective of these two terminal points" <a class="ts" data-t="6:28"></a>. The two circuits match only for what you connect between A and B.</aside>
+<aside class="extra"><strong>Why bother?</strong> Suppose you want to try many different loads between A and B: ten resistor values, a lamp, a meter. Without Thévenin you would re-solve the whole network for every load. With the equivalent you solve the network <em>once</em> for \(V_{TH}\) and \(R_{TH}\). After that every load is a one-line series-circuit calculation, \(I_L = V_{TH}/(R_{TH}+R_L)\). See <a href="#tn1-ex7">Example 7</a> for a worked case. This also models real hardware: a battery, a function generator or a sensor output behaves like an ideal source with a series "internal" resistance.</aside>
+</section>
+
+<section class="g-sec" id="tn1-vth" data-kind="lesson" data-ts="958-1416">
+<h2>3. Finding \(V_{TH}\): the open-terminal voltage</h2>
+<p><a class="ts" data-t="15:58"></a> Look at the equivalent circuit: it contains only two values. So Thévenizing a circuit comes down to finding <strong>two numbers</strong>, \(V_{TH}\) and \(R_{TH}\), and plugging them into the standard picture <a class="ts" data-t="16:19"></a>. There is a separate procedure for each.</p>
+<p><a class="ts" data-t="16:45"></a> Definition, as written at <a class="ts" data-t="17:40"></a>:</p>
+<blockquote>\(V_{TH}\): is the open-terminal voltage "felt" across the load terminals (A &amp; B).</blockquote>
+<div class="formula">\[ V_{TH} = V_{AB}\Big|_{\text{nothing connected to A–B}} = V_A - V_B \]</div>
+<dl class="vardefs"><dt>\(V_{TH}\)</dt><dd>Thévenin voltage, V</dd><dt>\(V_A, V_B\)</dt><dd>voltages of terminals A and B with respect to a common reference, V</dd></dl>
+<p>This applies to any linear circuit. Leave A–B open (no load), solve the circuit with your usual tools, and report the voltage between A and B. "That's all it is" <a class="ts" data-t="17:38"></a>.</p>
+<p><a class="ts" data-t="18:35"></a> <strong>You must have two terminals first.</strong> A circuit with no A and B marked cannot be Thévenized: you have to decide which two points the equivalent is "seen" from. They are called <em>load</em> terminals because a load will be attached there eventually <a class="ts" data-t="19:00"></a>. While you derive the equivalent, you do <strong>not</strong> connect anything to them.</p>
+<p><strong>Procedure for \(V_{TH}\):</strong></p>
+<ol>
+<li>Mark A and B and remove any load (leave the terminals open).</li>
+<li>Solve the circuit normally (total resistance, total current, Ohm's law, KVL/node voltages, divider).</li>
+<li>\(V_{TH}\) = the voltage between A and B, with A taken as "+".</li>
+</ol>
+
+<div class="example" id="tn1-ex1"><h3>Example 1: Source directly across the terminals <a class="ts" data-t="19:25"></a></h3>
+<figure class="circuit" id="tn1-fig-ex1">
+<script type="application/json">{"parts":[
+ {"t":"BAT","a":[0,3],"b":[0,0],"plus":"b","label":"10 V","side":-1},
+ {"t":"W","pts":[[0,0],[5,0]]},
+ {"t":"R","a":[3,0],"b":[3,3],"label":"10 Ω"},
+ {"t":"W","pts":[[0,3],[5,3]]},
+ {"t":"N","at":[3,0]},{"t":"N","at":[3,3]},
+ {"t":"N","at":[5,0],"open":true,"label":"A","pos":"e"},
+ {"t":"N","at":[5,3],"open":true,"label":"B","pos":"e"},
+ {"t":"VM","a":[6.2,0.4],"b":[6.2,2.6],"label":"V_{TH} = 10 V","lat":[6.55,1.5],"anchor":"start"},{"t":"T","at":[8.85,1.5],"text":" "}
+],"alt":"A 10 V battery, positive on top, connected directly across a 10 ohm resistor. Terminal A is at the top node and terminal B at the bottom node; V_TH = 10 V."}</script>
+<figcaption>Example 1 as drawn at <a class="ts" data-t="19:50"></a>: 10 V source, 10 Ω resistor, A at the top and B at the bottom.</figcaption>
+</figure>
+<p><strong>Given:</strong> 10 V source; 10 Ω connected straight across it; A on the top node, B on the bottom node. <strong>Goal:</strong> \(V_{TH}\).</p>
+<p class="step">1. A and B sit on the same two nodes as the source, so \(V_{AB}\) equals the source voltage.</p>
+<p class="answer">\(V_{TH} = 10\,\text{V}\) (A positive).</p>
+</div>
+
+<div class="example" id="tn1-ex2"><h3>Example 2: Voltage divider, terminals across the 100 Ω <a class="ts" data-t="20:06"></a></h3>
+<figure class="circuit" id="tn1-fig-ex2">
+<script type="application/json">{"parts":[
+ {"t":"BAT","a":[0,4],"b":[0,0],"plus":"b","label":"5 V","side":-1},
+ {"t":"W","pts":[[0,0],[3,0]]},
+ {"t":"IARR","a":[0.8,0],"b":[2.4,0],"label":"I = 10 mA"},
+ {"t":"R","a":[3,0],"b":[3,2],"label":"100 Ω","value":"(1 V)"},
+ {"t":"R","a":[3,2],"b":[3,4],"label":"400 Ω","value":"(4 V)"},
+ {"t":"W","pts":[[3,4],[0,4]]},
+ {"t":"W","pts":[[3,0],[6,0]]},{"t":"W","pts":[[3,2],[6,2]]},
+ {"t":"N","at":[3,0]},{"t":"N","at":[3,2]},
+ {"t":"N","at":[6,0],"open":true,"label":"A","pos":"e"},
+ {"t":"N","at":[6,2],"open":true,"label":"B","pos":"e"},
+ {"t":"VM","a":[7.2,0.3],"b":[7.2,1.7],"label":"V_{TH} = 1 V","lat":[7.55,1],"anchor":"start"},{"t":"T","at":[9.85,1],"text":" "}
+],"alt":"A 5 V battery, positive on top, in series with 100 ohm (top) and 400 ohm (bottom). Current 10 mA. Terminal A at the top of the 100 ohm, terminal B at the junction between the resistors. V_TH = 1 V."}</script>
+<figcaption>Example 2 as drawn at <a class="ts" data-t="21:40"></a>: A at the top node, B at the junction of the 100 Ω and 400 Ω.</figcaption>
+</figure>
+<p><strong>Given:</strong> 5 V source, 100 Ω and 400 Ω in series; A at the top of the 100 Ω, B at the junction between the two resistors. <strong>Goal:</strong> \(V_{TH}\).</p>
+<p class="step">1. Total resistance (series): \(R_T = 100 + 400 = 500\,\Omega\).</p>
+<p class="step">2. Total current (Ohm's law) <a class="ts" data-t="20:54"></a>: \(I = \dfrac{5\,\text{V}}{500\,\Omega} = 0.010\,\text{A} = 10\,\text{mA}\).</p>
+<p class="step">3. Drop across each resistor (Ohm's law) <a class="ts" data-t="21:10"></a>: \(V_{100} = 0.010 \times 100 = 1\,\text{V}\) and \(V_{400} = 0.010 \times 400 = 4\,\text{V}\). Check: \(1 + 4 = 5\,\text{V}\) ✓ (KVL).</p>
+<p class="step">4. A and B sit across the 100 Ω, so \(V_{AB} = V_{100}\). The top node is the higher one, so A is "+".</p>
+<p class="answer">\(V_{TH} = 1\,\text{V}\)</p>
+</div>
+
+<div class="example" id="tn1-ex3"><h3>Example 3: Same circuit, terminals moved across the 400 Ω <a class="ts" data-t="21:35"></a></h3>
+<figure class="circuit" id="tn1-fig-ex3">
+<script type="application/json">{"parts":[
+ {"t":"BAT","a":[0,4],"b":[0,0],"plus":"b","label":"5 V","side":-1},
+ {"t":"W","pts":[[0,0],[3,0]]},
+ {"t":"R","a":[3,0],"b":[3,2],"label":"100 Ω","value":"(1 V)"},
+ {"t":"R","a":[3,2],"b":[3,4],"label":"400 Ω","value":"(4 V)"},
+ {"t":"W","pts":[[3,4],[0,4]]},
+ {"t":"W","pts":[[3,2],[6,2]]},{"t":"W","pts":[[3,4],[6,4]]},
+ {"t":"N","at":[3,2]},{"t":"N","at":[3,4]},
+ {"t":"N","at":[6,2],"open":true,"label":"A","pos":"e"},
+ {"t":"N","at":[6,4],"open":true,"label":"B","pos":"e"},
+ {"t":"VM","a":[7.2,2.3],"b":[7.2,3.7],"label":"V_{TH} = 4 V","lat":[7.55,3],"anchor":"start"},{"t":"T","at":[9.85,3],"text":" "}
+],"alt":"The same 5 V, 100 ohm, 400 ohm divider, but terminal A is at the junction and terminal B at the bottom, across the 400 ohm. V_TH = 4 V."}</script>
+<figcaption>Example 3 as drawn at <a class="ts" data-t="23:15"></a>: same circuit, but A is at the junction and B at the bottom (across the 400 Ω).</figcaption>
+</figure>
+<p class="step">1. Nothing in the circuit changed, so the current is still 10 mA and the drops are still 1 V and 4 V.</p>
+<p class="step">2. Now A–B spans the 400 Ω, so \(V_{AB} = V_{400}\), with the junction (A) above the bottom node (B).</p>
+<p class="answer">\(V_{TH} = 4\,\text{V}\)</p>
+<aside class="instructor">Same circuit, different answer <a class="ts" data-t="22:44"></a>. The Thévenin equivalent "very much depends on where A and B is". Always check which two points you are Thévenizing from.</aside>
+</div>
+<p><a class="ts" data-t="23:09"></a> A third circuit (a source feeding a series resistor, a shunt resistor and another series resistor, with no values) was drawn on the page but skipped. The instructor said a similar problem would come once \(R_{TH}\) was covered. That is the ladder problem in section 5.</p>
+<aside class="extra"><strong>Polarity.</strong> \(V_{TH}\) is defined as \(V_A - V_B\). If you swap the labels A and B, \(V_{TH}\) changes sign. In the drawn equivalent, that means the source is flipped (+ toward the new A). In every example in this video, A is the higher-voltage terminal, so the "+" of \(V_{TH}\) faces A.</aside>
+</section>
+
+<section class="g-sec" id="tn1-rth" data-kind="lesson" data-ts="1416-1786">
+<h2>4. Finding \(R_{TH}\): look back with the sources shorted</h2>
+<p><a class="ts" data-t="23:36"></a> Definition, as written at <a class="ts" data-t="25:05"></a>:</p>
+<blockquote>\(R_{TH}\): the resistance "seen" when looking back into the circuit from the two terminals with voltage sources shorted.</blockquote>
+<div class="formula">\[ R_{TH} = R_{AB}\Big|_{\text{all independent voltage sources replaced by shorts}} \]</div>
+<dl class="vardefs"><dt>\(R_{TH}\)</dt><dd>Thévenin resistance, Ω</dd><dt>\(R_{AB}\)</dt><dd>equivalent resistance between terminals A and B (what an ohmmeter would read), Ω</dd></dl>
+<p>This applies to circuits whose sources are independent voltage sources, which is every circuit in this video. The extras below cover current sources and dependent sources. Shorting a voltage source is the same "disable" step you used in superposition <a class="ts" data-t="25:16"></a>: connect one side of the source straight to the other.</p>
+<p><strong>Procedure for \(R_{TH}\):</strong></p>
+<ol>
+<li><strong>Redraw</strong> the circuit as a new problem. Don't reuse the \(V_{TH}\) drawing or any of its voltages and currents <a class="ts" data-t="25:40"></a>.</li>
+<li>Replace each voltage source by a short (wire).</li>
+<li>Find the resistance between A and B with series/parallel reduction. If in doubt, imagine current entering at A and leaving at B <a class="ts" data-t="27:24"></a>.</li>
+</ol>
+
+<div class="example" id="tn1-ex4"><h3>Example 4: \(R_{TH}\) of the Example 2 circuit (A–B across the 100 Ω) <a class="ts" data-t="25:40"></a></h3>
+<figure class="circuit" id="tn1-fig-ex4">
+<script type="application/json">{"parts":[
+ {"t":"W","pts":[[0,0],[0,4]]},
+ {"t":"T","at":[-0.3,2.1],"text":"short\n(was 5 V)","anchor":"end","cls":"muted"},
+ {"t":"T","at":[-2.4,0],"text":" "},
+ {"t":"W","pts":[[0,0],[3,0]]},
+ {"t":"R","a":[3,0],"b":[3,2],"label":"100 Ω"},
+ {"t":"R","a":[3,2],"b":[3,4],"label":"400 Ω"},
+ {"t":"W","pts":[[3,4],[0,4]]},
+ {"t":"W","pts":[[3,0],[5.5,0]]},{"t":"W","pts":[[3,2],[5.5,2]]},
+ {"t":"N","at":[3,0]},{"t":"N","at":[3,2]},
+ {"t":"N","at":[5.5,0],"open":true,"label":"A","pos":"e"},
+ {"t":"N","at":[5.5,2],"open":true,"label":"B","pos":"e"},
+ {"t":"ARROW","a":[7.2,2],"b":[8.8,2],"label":"redraw","lat":[8,1.5]},
+ {"t":"W","pts":[[9.5,0.5],[14,0.5]]},{"t":"W","pts":[[9.5,3.5],[14,3.5]]},
+ {"t":"R","a":[9.5,0.5],"b":[9.5,3.5],"label":"400 Ω"},
+ {"t":"R","a":[11.8,0.5],"b":[11.8,3.5],"label":"100 Ω"},
+ {"t":"N","at":[11.8,0.5]},{"t":"N","at":[11.8,3.5]},
+ {"t":"N","at":[14,0.5],"open":true,"label":"A","pos":"e"},
+ {"t":"N","at":[14,3.5],"open":true,"label":"B","pos":"e"},
+ {"t":"T","at":[11.8,4.6],"text":"R_{TH} = 400 ∥ 100 = 80 Ω","cls":"accent"}
+],"alt":"Left: the 5 V source replaced by a wire; 100 ohm on top and 400 ohm below, A at the top node and B at the junction. Right: redrawn as 400 ohm and 100 ohm both connected directly between A and B, in parallel, giving 80 ohm."}</script>
+<figcaption>Source shorted (<a class="ts" data-t="26:55"></a>) and redrawn as 400 Ω ∥ 100 Ω between A and B (<a class="ts" data-t="28:50"></a>).</figcaption>
+</figure>
+<p class="step">1. Redraw with the 5 V source replaced by a wire <a class="ts" data-t="26:20"></a>. The 100 Ω and 400 Ω stay where they were. A is at the top, B at the junction.</p>
+<p class="step">2. Series or parallel? Imagine current entering at A <a class="ts" data-t="27:49"></a>. At the top node it divides. Part goes down through the 100 Ω straight to B. The rest goes around through the short and up through the 400 Ω to B. It sums back together at B. Dividing node = A, summing node = B, so the 100 Ω and 400 Ω are <strong>in parallel</strong>.</p>
+<p class="step">3. Product over sum <a class="ts" data-t="28:09"></a>: \(R_{TH} = \dfrac{400 \times 100}{400 + 100} = \dfrac{40\,000}{500} = 80\,\Omega\).</p>
+<p class="answer">\(R_{TH} = 80\,\Omega\)</p>
+</div>
+
+<div class="example" id="tn1-ex5"><h3>Example 5: \(R_{TH}\) of the Example 1 circuit (10 V across 10 Ω) <a class="ts" data-t="29:06"></a></h3>
+<figure class="circuit" id="tn1-fig-ex5">
+<script type="application/json">{"parts":[
+ {"t":"W","pts":[[0,0],[0,3]]},
+ {"t":"T","at":[-0.3,1.6],"text":"short\n(was 10 V)","anchor":"end","cls":"muted"},
+ {"t":"T","at":[-2.4,0],"text":" "},
+ {"t":"W","pts":[[0,0],[5,0]]},
+ {"t":"R","a":[3,0],"b":[3,3],"label":"10 Ω"},
+ {"t":"W","pts":[[0,3],[5,3]]},
+ {"t":"N","at":[3,0]},{"t":"N","at":[3,3]},
+ {"t":"N","at":[5,0],"open":true,"label":"A","pos":"e"},
+ {"t":"N","at":[5,3],"open":true,"label":"B","pos":"e"},
+ {"t":"T","at":[7.6,1.7],"text":"R_{TH} = 0 Ω","cls":"accent"}
+],"alt":"The 10 V source replaced by a wire, which sits directly across the 10 ohm resistor, so the resistance from A to B is 0 ohm."}</script>
+<figcaption>The 10 V source shorted, as drawn at <a class="ts" data-t="29:42"></a>. The short lands directly across the 10 Ω.</figcaption>
+</figure>
+<p class="step">1. Short the 10 V source. The wire now connects the top and bottom nodes, the same two nodes as the 10 Ω.</p>
+<p class="step">2. The short is <em>in parallel</em> with the 10 Ω, and \(0 \parallel 10 = 0\). Current takes the wire and the resistor effectively disappears. A and B are joined by a wire.</p>
+<p class="answer">\(R_{TH} = 0\,\Omega\)</p>
+<aside class="instructor">That is why he did this one second <a class="ts" data-t="29:30"></a>: shorting the source also shorts out the resistor, which is less intuitive as a first example.</aside>
+</div>
+
+<aside class="extra"><strong>Putting the small examples together.</strong> These equivalents were not drawn in the video, but they follow directly from its numbers:
+<ul>
+<li>Example 1 → \(V_{TH} = 10\,\text{V}\), \(R_{TH} = 0\,\Omega\): the equivalent is just the ideal 10 V source. Any load gets exactly 10 V.</li>
+<li>Example 2 → \(V_{TH} = 1\,\text{V}\) in series with \(R_{TH} = 80\,\Omega\).</li>
+<li>Example 3 → \(V_{TH} = 4\,\text{V}\). Its \(R_{TH}\) was not computed in the video. Shorting the source again leaves the 100 Ω and 400 Ω both directly between A and B, so \(R_{TH} = 80\,\Omega\) here too. Only \(V_{TH}\) changed. In general <em>both</em> numbers can change when you move the terminals.</li>
+</ul></aside>
+<aside class="extra"><strong>Current sources: open them (not in this video).</strong> The instructor's definition mentions only voltage sources because every circuit in this lecture has only voltage sources. The general rule is to turn off every <em>independent</em> source. A voltage source turned off is 0 V, which is a <strong>short</strong>. A current source turned off is 0 A, which is an <strong>open circuit</strong> (remove it and leave a gap). Shorting a current source is a classic mistake. <a class="xref" data-lesson="tn2">Thévenin cont. &amp; Norton</a> continues from here.</aside>
+<aside class="extra"><strong>An alternative: \(R_{TH} = V_{OC}/I_{SC}\) (not mentioned in this video).</strong> Put a wire from A to B and find the short-circuit current \(I_{SC}\) flowing from A to B through it. Then \(R_{TH} = V_{OC}/I_{SC} = V_{TH}/I_{SC}\). This works because shorting the equivalent circuit gives \(I_{SC} = V_{TH}/R_{TH}\). Check on Example 2: a wire across the 100 Ω leaves only the 400 Ω, so \(I_{SC} = 5/400 = 12.5\,\text{mA}\) and \(R_{TH} = 1\,\text{V}/12.5\,\text{mA} = 80\,\Omega\) ✓. It fails for Example 1: a wire across an ideal source draws unlimited current (that's the \(R_{TH}=0\) case).</aside>
+</section>
+
+<section class="g-sec" id="tn1-ladder" data-kind="lesson" data-ts="1786-2533">
+<h2>5. Full example: Thévenizing a 100 V ladder circuit</h2>
+<div class="example" id="tn1-ex6"><h3>Example 6: Find the Thévenin equivalent at A–B <a class="ts" data-t="29:46"></a></h3>
+<figure class="circuit" id="tn1-fig-ex6">
+<script type="application/json">{"parts":[
+ {"t":"T","at":[1,-1.5],"text":" "},
+ {"t":"BAT","a":[0,4],"b":[0,0],"plus":"b","label":"100 V","side":-1},
+ {"t":"W","pts":[[0,0],[1,0]]},
+ {"t":"R","a":[1,0],"b":[4,0],"label":"R_1","value":"25 Ω"},
+ {"t":"W","pts":[[4,0],[10,0]]},
+ {"t":"R","a":[5.5,0],"b":[5.5,4],"label":"R_3","value":"100 Ω"},
+ {"t":"R","a":[8,0],"b":[8,4],"label":"R_4","value":"100 Ω"},
+ {"t":"W","pts":[[0,4],[1,4]]},
+ {"t":"R","a":[1,4],"b":[4,4],"label":"R_2","value":"25 Ω","side":-1},{"t":"T","at":[0,5.4],"text":" "},
+ {"t":"W","pts":[[4,4],[10,4]]},
+ {"t":"N","at":[5.5,0]},{"t":"N","at":[8,0]},{"t":"N","at":[5.5,4]},{"t":"N","at":[8,4]},
+ {"t":"N","at":[10,0],"open":true,"label":"A","pos":"e"},
+ {"t":"N","at":[10,4],"open":true,"label":"B","pos":"e"}
+],"alt":"A 100 V battery, positive on top. Top rail: 25 ohm R1 then a node feeding 100 ohm R3 and 100 ohm R4 to the bottom rail, then terminal A. Bottom rail: 25 ohm R2 from the battery's negative side to the bottom of R3, R4 and terminal B."}</script>
+<figcaption>The circuit to Thévenize, drawn at <a class="ts" data-t="30:12"></a> (complete at <a class="ts" data-t="32:05"></a>). The names \(R_1\)–\(R_4\) are added here for reference. The instructor labels them by value only.</figcaption>
+</figure>
+<p><strong>Given:</strong> 100 V source (+ on top); 25 Ω in the top line (\(R_1\)) and 25 Ω in the bottom line (\(R_2\)); two 100 Ω resistors (\(R_3\), \(R_4\)) from the top rail to the bottom rail; A at the top rail and B at the bottom rail (across \(R_4\)). <strong>Goal</strong> <a class="ts" data-t="30:40"></a>: Thévenize, i.e. find \(V_{TH}\) and \(R_{TH}\) and draw the equivalent. The result must behave identically at A–B <a class="ts" data-t="31:36"></a>.</p>
+
+<h4>Part 1: Find \(V_{TH}\) <a class="ts" data-t="32:18"></a></h4>
+<p>The instructor redraws the circuit under the heading "1) Finding \(V_{TH}\)" to keep the original page clean. Nothing is attached to A–B.</p>
+<p class="step">1. <strong>Total resistance</strong> <a class="ts" data-t="33:44"></a>. With A–B open, \(R_3\) and \(R_4\) share the same two nodes: \(100 \parallel 100 = 50\,\Omega\). That 50 Ω is in series with both 25 Ω resistors: \(R_T = 25 + 50 + 25 = 100\,\Omega\).</p>
+<p class="step">2. <strong>Total current</strong> (Ohm's law) <a class="ts" data-t="34:10"></a>: \(I_T = \dfrac{100\,\text{V}}{100\,\Omega} = 1\,\text{A}\).</p>
+<p class="step">3. <strong>Back-fill</strong> <a class="ts" data-t="34:43"></a>. The 1 A leaving the source flows through the top 25 Ω and must come back through the bottom 25 Ω. Drop across each: \(1\,\text{A} \times 25\,\Omega = 25\,\text{V}\) <a class="ts" data-t="35:12"></a>.</p>
+<p class="step">4. <strong>Node voltages via KVL</strong>, taking the source's "−" side as 0 V <a class="ts" data-t="35:37"></a>. Top: start at 100 V, lose 25 V across \(R_1\), so the whole top rail is at \(100 - 25 = 75\,\text{V}\). Bottom: the rail ends at 0 V after dropping 25 V across \(R_2\), so the bottom rail is at \(0 + 25 = 25\,\text{V}\).</p>
+<p class="step">5. <strong>Voltage across the 100 Ω resistors</strong> <a class="ts" data-t="35:59"></a>: \(75 - 25 = 50\,\text{V}\) across \(R_3\). \(R_4\) is on the same two rails (in parallel), so it also has 50 V <a class="ts" data-t="36:26"></a>.</p>
+<p class="step">6. <strong>Read off \(V_{AB}\)</strong> <a class="ts" data-t="36:50"></a>. A is wired to the 75 V rail and B to the 25 V rail: \(V_{TH} = V_A - V_B = 75 - 25 = 50\,\text{V}\), A positive. This makes sense: A–B is in parallel with both 100 Ω resistors, which each have 50 V.</p>
+<figure class="circuit" id="tn1-fig-ex6-vth">
+<script type="application/json">{"parts":[
+ {"t":"T","at":[1,-1.5],"text":" "},
+ {"t":"BAT","a":[0,4],"b":[0,0],"plus":"b","label":"100 V","side":-1},
+ {"t":"W","pts":[[0,0],[1,0]]},
+ {"t":"R","a":[1,0],"b":[4,0],"label":"25 Ω","value":"drop 25 V"},
+ {"t":"W","pts":[[4,0],[10,0]]},
+ {"t":"IARR","a":[4,0],"b":[5.5,0],"label":"1 A"},
+ {"t":"R","a":[5.5,0],"b":[5.5,4],"label":"100 Ω","value":"50 V"},
+ {"t":"R","a":[8,0],"b":[8,4],"label":"100 Ω","value":"50 V"},
+ {"t":"W","pts":[[0,4],[1,4]]},
+ {"t":"R","a":[1,4],"b":[4,4],"label":"25 Ω","value":"drop 25 V","side":-1},{"t":"T","at":[0,5.5],"text":" "},
+ {"t":"W","pts":[[4,4],[10,4]]},
+ {"t":"IARR","a":[5.5,4],"b":[4,4],"label":"1 A","side":-1},
+ {"t":"N","at":[5.5,0]},{"t":"N","at":[8,0]},{"t":"N","at":[5.5,4]},{"t":"N","at":[8,4]},
+ {"t":"N","at":[10,0],"open":true,"label":"A","pos":"e"},
+ {"t":"N","at":[10,4],"open":true,"label":"B","pos":"e"},
+ {"t":"T","at":[0.5,-0.7],"text":"100 V","cls":"accent"},
+ {"t":"T","at":[7,-0.5],"text":"75 V","cls":"accent"},
+ {"t":"T","at":[7,5],"text":"25 V","cls":"accent"},
+ {"t":"T","at":[0.5,5],"text":"0 V","cls":"accent"},
+ {"t":"VM","a":[11.3,0.5],"b":[11.3,3.5],"label":"V_{TH} = 50 V","lat":[11.65,2],"anchor":"start"},{"t":"T","at":[13.95,2],"text":" "}
+],"alt":"The ladder with 1 A flowing clockwise: 25 V dropped across each 25 ohm resistor. Node voltages: 100 V at the source top, 75 V on the whole top rail, 25 V on the whole bottom rail, 0 V at the source bottom. Each 100 ohm resistor has 50 V, and V_TH = 50 V with A positive."}</script>
+<figcaption>Node voltages and currents as marked on the page at <a class="ts" data-t="36:55"></a>. The red node voltages are 100 V, 75 V, 25 V and 0 V. The blue drops are 25 V on each 25 Ω and 50 V on each 100 Ω.</figcaption>
+</figure>
+<p class="answer">\(V_{TH} = 50\,\text{V}\) (written into the equivalent at <a class="ts" data-t="37:50"></a>)</p>
+<aside class="note">Why is \(R_4\) included in the total resistance even though A and B are "the output"? With the terminals open, \(R_4\) is just another resistor in the circuit. It carries current and sets the voltage. What has to stay open is the <em>load</em> position, not the resistor that happens to sit across A–B.</aside>
+
+<h4>Part 2: Find \(R_{TH}\) <a class="ts" data-t="38:03"></a></h4>
+<aside class="instructor">This is where the instructor sees the most mistakes <a class="ts" data-t="38:03"></a>. Students try to find \(V_{TH}\) and \(R_{TH}\) on the same drawing and get mixed up. Shorting the source makes a fundamentally different circuit, so the 75 V, 25 V and 1 A values no longer apply. "Redraw the circuit, please. I beg everyone to redraw this."</aside>
+<p class="step">1. <strong>Redraw and short the source</strong> <a class="ts" data-t="39:19"></a>. Under "2) Finding \(R_{TH}\)", the 100 V source is replaced by a wire joining the left ends of the two 25 Ω resistors.</p>
+<p class="step">2. <strong>Find what is in series</strong> <a class="ts" data-t="39:57"></a>. Imagine current entering at A. It divides at the top rail: some goes down \(R_4\), some down \(R_3\), and some goes left through the top 25 Ω. The part in the top 25 Ω does <em>not</em> divide again. It goes through the short and then through the bottom 25 Ω. Same current, so the two 25 Ω are <strong>in series</strong>: \(25 + 25 = 50\,\Omega\) <a class="ts" data-t="40:24"></a>.</p>
+<p class="step">3. <strong>Everything else is in parallel</strong> <a class="ts" data-t="41:04"></a>. The 50 Ω branch, \(R_3\) and \(R_4\) all connect between the top rail (A) and the bottom rail (B): \(R_{TH} = 50 \parallel 100 \parallel 100\).</p>
+<p class="step">4. <strong>Reduce</strong>: \(100 \parallel 100 = 50\,\Omega\), then \(50 \parallel 50 = 25\,\Omega\) <a class="ts" data-t="41:24"></a>. Check with reciprocals: \(\frac{1}{50} + \frac{1}{100} + \frac{1}{100} = \frac{4}{100}\), so \(R_{TH} = 25\,\Omega\) ✓.</p>
+<figure class="circuit" id="tn1-fig-ex6-rth1">
+<script type="application/json">{"parts":[
+ {"t":"W","pts":[[0,0],[0,4]]},
+ {"t":"T","at":[-0.3,2.1],"text":"short\n(was 100 V)","anchor":"end","cls":"muted"},
+ {"t":"T","at":[-2.4,0],"text":" "},
+ {"t":"W","pts":[[0,0],[1,0]]},
+ {"t":"R","a":[1,0],"b":[4,0],"label":"25 Ω"},
+ {"t":"W","pts":[[4,0],[10,0]]},
+ {"t":"R","a":[5.5,0],"b":[5.5,4],"label":"100 Ω"},
+ {"t":"R","a":[8,0],"b":[8,4],"label":"100 Ω"},
+ {"t":"W","pts":[[0,4],[1,4]]},
+ {"t":"R","a":[1,4],"b":[4,4],"label":"25 Ω","side":-1},{"t":"T","at":[0,5.2],"text":" "},
+ {"t":"W","pts":[[4,4],[10,4]]},
+ {"t":"IARR","a":[10,0],"b":[8.6,0],"label":"from A"},
+ {"t":"IARR","a":[0,1.4],"b":[0,2.6],"label":"same current"},
+ {"t":"N","at":[5.5,0]},{"t":"N","at":[8,0]},{"t":"N","at":[5.5,4]},{"t":"N","at":[8,4]},
+ {"t":"N","at":[10,0],"open":true,"label":"A","pos":"e"},
+ {"t":"N","at":[10,4],"open":true,"label":"B","pos":"e"}
+],"alt":"The ladder redrawn with the 100 V source replaced by a wire. Current entering at A splits at the top rail. The part through the top 25 ohm continues through the short and the bottom 25 ohm without splitting, so the two 25 ohm resistors are in series."}</script>
+<figcaption>Step 1–2: source shorted, redrawn at <a class="ts" data-t="40:40"></a>. The short only links the top 25 Ω to the bottom 25 Ω, so they carry the same current and are in series.</figcaption>
+</figure>
+<figure class="circuit" id="tn1-fig-ex6-rth2">
+<script type="application/json">{"parts":[
+ {"t":"W","pts":[[0,0],[8,0]]},{"t":"W","pts":[[0,3],[8,3]]},
+ {"t":"R","a":[0,0],"b":[0,3],"label":"50 Ω","value":"(25 + 25)"},
+ {"t":"R","a":[3,0],"b":[3,3],"label":"100 Ω"},
+ {"t":"R","a":[6,0],"b":[6,3],"label":"100 Ω"},
+ {"t":"N","at":[3,0]},{"t":"N","at":[6,0]},{"t":"N","at":[3,3]},{"t":"N","at":[6,3]},
+ {"t":"N","at":[8,0],"open":true,"label":"A","pos":"e"},
+ {"t":"N","at":[8,3],"open":true,"label":"B","pos":"e"},
+ {"t":"ARROW","a":[9.4,1.5],"b":[10.8,1.5]},
+ {"t":"W","pts":[[12,0],[13.5,0]]},{"t":"W","pts":[[12,3],[13.5,3]]},
+ {"t":"R","a":[12,0],"b":[12,3],"label":"25 Ω"},
+ {"t":"N","at":[13.5,0],"open":true,"label":"A","pos":"e"},
+ {"t":"N","at":[13.5,3],"open":true,"label":"B","pos":"e"},
+ {"t":"T","at":[12.6,4],"text":"R_{TH} = 25 Ω","cls":"accent"}
+],"alt":"Three resistors in parallel between A and B: 50 ohm (the two 25 ohm in series), 100 ohm and 100 ohm. An arrow points to a single 25 ohm resistor between A and B."}</script>
+<figcaption>Steps 3–4 as drawn at <a class="ts" data-t="41:30"></a>: 50 Ω ∥ 100 Ω ∥ 100 Ω reduces to 25 Ω.</figcaption>
+</figure>
+<p class="answer">\(R_{TH} = 25\,\Omega\)</p>
+<aside class="uncertain">At <a class="ts" data-t="41:04"></a> the auto-captions read "put the 225s in series we get 150". The page clearly shows <strong>50 Ω</strong>, and \(25 + 25 = 50\,\Omega\) is correct. The caption misheard "the two 25s … a 50".</aside>
+
+<h4>Part 3: The Thévenin equivalent <a class="ts" data-t="41:48"></a></h4>
+<figure class="circuit" id="tn1-fig-ex6-eq">
+<script type="application/json">{"parts":[
+ {"t":"T","at":[1,-1.5],"text":" "},
+ {"t":"BAT","a":[0,4],"b":[0,1],"plus":"b","label":"V_{TH}","value":"50 V"},
+ {"t":"W","pts":[[0,1],[0,0],[1,0]]},
+ {"t":"R","a":[1,0],"b":[4,0],"label":"R_{TH}","value":"25 Ω"},
+ {"t":"W","pts":[[4,0],[5,0]]},
+ {"t":"N","at":[5,0],"open":true,"label":"A","pos":"e"},
+ {"t":"W","pts":[[0,4],[5,4]]},
+ {"t":"N","at":[5,4],"open":true,"label":"B","pos":"e"}
+],"alt":"Thévenin equivalent: a 50 V battery, positive on top, in series with a 25 ohm resistor to terminal A; the negative side goes to terminal B."}</script>
+<figcaption>The finished equivalent, as filled in at <a class="ts" data-t="42:20"></a>: \(V_{TH} = 50\,\text{V}\), \(R_{TH} = 25\,\Omega\), A positive.</figcaption>
+</figure>
+<p class="answer">Thévenin equivalent at A–B: a 50 V source in series with 25 Ω (A = +). From the perspective of A and B, the two circuits now behave identically <a class="ts" data-t="41:48"></a>.</p>
+<aside class="extra"><strong>Cross-check with \(V_{OC}/I_{SC}\)</strong> (not in the video). Put a wire from A to B. It shorts out both 100 Ω resistors, leaving 100 V across \(25 + 25 = 50\,\Omega\). So \(I_{SC} = 100/50 = 2\,\text{A}\) and \(R_{TH} = 50\,\text{V}/2\,\text{A} = 25\,\Omega\) ✓.</aside>
+</div>
+
+<aside class="extra">
+<div class="example" id="tn1-ex7"><h3>Example 7 (added, not from the video): Why the equivalent is useful when the load changes</h3>
+<p>Attach a load resistor \(R_L\) between A and B of the ladder circuit and find the load current and voltage for several values. With the equivalent, every case is one series circuit:</p>
+<div class="formula">\[ I_L = \frac{V_{TH}}{R_{TH} + R_L} = \frac{50}{25 + R_L}, \qquad V_L = I_L R_L = 50\,\frac{R_L}{25 + R_L} \]</div>
+<figure class="circuit" id="tn1-fig-ex7">
+<script type="application/json">{"parts":[
+ {"t":"T","at":[1,-1.5],"text":" "},
+ {"t":"BAT","a":[0,4],"b":[0,1],"plus":"b","label":"50 V"},
+ {"t":"W","pts":[[0,1],[0,0],[1,0]]},
+ {"t":"R","a":[1,0],"b":[4,0],"label":"R_{TH}","value":"25 Ω"},
+ {"t":"W","pts":[[4,0],[7,0]]},
+ {"t":"N","at":[5,0],"open":true,"label":"A","pos":"n"},
+ {"t":"IARR","a":[5.2,0],"b":[7,0],"label":"I_L"},
+ {"t":"R","a":[7,0],"b":[7,4],"label":"R_L","side":-1},
+ {"t":"W","pts":[[0,4],[7,4]]},
+ {"t":"N","at":[5,4],"open":true,"label":"B","pos":"s"},
+ {"t":"VM","a":[7.9,0.6],"b":[7.9,3.4],"label":"V_L","lat":[8.25,2],"anchor":"start"},{"t":"T","at":[9,2],"text":" "}
+],"alt":"The 50 V, 25 ohm Thévenin equivalent with a load resistor R_L connected from A to B; load current I_L flows through R_L, with voltage V_L across it."}</script>
+<figcaption>Load attached to the Thévenin equivalent (added for clarity).</figcaption>
+</figure>
+<table>
+<tr><th>\(R_L\)</th><th>\(I_L = 50/(25+R_L)\)</th><th>\(V_L = I_L R_L\)</th></tr>
+<tr><td>10 Ω</td><td>1.429 A</td><td>14.29 V</td></tr>
+<tr><td>25 Ω</td><td>1.000 A</td><td>25.00 V</td></tr>
+<tr><td>50 Ω</td><td>0.667 A</td><td>33.33 V</td></tr>
+<tr><td>75 Ω</td><td>0.500 A</td><td>37.50 V</td></tr>
+<tr><td>100 Ω</td><td>0.400 A</td><td>40.00 V</td></tr>
+</table>
+<p class="step">Check: each row was also computed by nodal analysis of the <em>original</em> ladder with \(R_L\) attached, and the results agree exactly. That agreement is what "equivalent" means. Without Thévenin you would redo that full analysis five times.</p>
+<p class="answer">For example, with \(R_L = 75\,\Omega\): \(I_L = 50/100 = 0.5\,\text{A}\) and \(V_L = 37.5\,\text{V}\).</p>
+</div>
+</aside>
+</section>
+
+<section class="g-sec" id="tn1-qa" data-kind="lesson" data-ts="2533-2801">
+<h2>6. Q&amp;A: why didn't the parallel resistors become zero?</h2>
+<p><a class="ts" data-t="42:40"></a> A student asked why, after shorting the 100 V source, the parallel resistors didn't all become 0 Ω (as the 10 Ω did in Example 5). The answer: <strong>a short eliminates a resistor only when the short is in parallel with that resistor</strong>, meaning it connects the resistor's two ends together. Shorting the source in the ladder did not put a short across any resistor <a class="ts" data-t="43:06"></a>.</p>
+<p><strong>How to tell: follow the current</strong> <a class="ts" data-t="44:09"></a>. "Current's your friend." Imagine current flowing from A to B:</p>
+<ul>
+<li><strong>Short in parallel</strong> (the instructor's red sketch). Current divides at the top node: it can go through the resistor or through the wire. It sums again at the bottom node. The wire and the resistor share both nodes, so they are in parallel. All the current takes the 0 Ω wire, the resistor "effectively disappears", and the result is a short (0 Ω) in its place <a class="ts" data-t="44:35"></a>. This is what happened to the 10 Ω in Example 5.</li>
+<li><strong>Short in series</strong> (the ladder) <a class="ts" data-t="45:01"></a>. Run current through it and mark where it divides and where it rejoins. The parallel group runs between the top rail and the bottom rail. The short (the old source position) does not span those two points. It only connects the left end of the top 25 Ω to the left end of the bottom 25 Ω. All it does is put the two 25 Ω in series <a class="ts" data-t="46:10"></a>. If the short were in parallel with something, you would see current divide at one end of it, and that doesn't happen here.</li>
+</ul>
+<figure class="circuit" id="tn1-fig-qa">
+<script type="application/json">{"parts":[
+ {"t":"W","pts":[[2,0],[0,0],[0,3],[2,3]]},
+ {"t":"R","a":[2,0],"b":[2,3],"label":"R"},
+ {"t":"W","pts":[[2,0],[4,0]]},{"t":"W","pts":[[2,3],[4,3]]},
+ {"t":"N","at":[2,0]},{"t":"N","at":[2,3]},
+ {"t":"N","at":[4,0],"open":true,"label":"A","pos":"e"},
+ {"t":"N","at":[4,3],"open":true,"label":"B","pos":"e"},
+ {"t":"IARR","a":[4,0],"b":[2.6,0],"label":"I"},
+ {"t":"IARR","a":[0,1],"b":[0,2.2],"label":"all of I","side":-1},
+ {"t":"T","at":[1,4],"text":"short across R","cls":"muted"},
+ {"t":"ARROW","a":[5.5,1.5],"b":[7,1.5]},
+ {"t":"W","pts":[[9.5,0],[8.5,0],[8.5,3],[9.5,3]]},
+ {"t":"N","at":[9.5,0],"open":true,"label":"A","pos":"e"},
+ {"t":"N","at":[9.5,3],"open":true,"label":"B","pos":"e"},
+ {"t":"T","at":[8.3,1.7],"text":"0 Ω","anchor":"end","cls":"accent"}
+],"alt":"A resistor R between nodes A and B with a wire also connected from A to B around it. All current takes the wire, so the combination is 0 ohm: just a wire between A and B."}</script>
+<figcaption>A short in parallel with a resistor makes it vanish (0 Ω), as sketched in red at <a class="ts" data-t="44:25"></a>–<a class="ts" data-t="45:12"></a>. Compare the ladder in <a href="#tn1-fig-ex6-rth1">the \(R_{TH}\) redraw above</a>, where the short is not across any resistor.</figcaption>
+</figure>
+<aside class="instructor">"Do not skip steps" <a class="ts" data-t="43:06"></a>. Run the current through it and draw it by hand to convince yourself <a class="ts" data-t="45:27"></a>. Just looking at the circuit is not enough. If you still struggle to recognise shorts, parallel and series, set up office hours with the instructor <a class="ts" data-t="46:41"></a>. Don't let it carry into the next course (311).</aside>
+</section>
+
+<section class="g-sec" id="tn1-wrapup" data-kind="lesson" data-ts="2801-2989">
+<h2>7. Keep the fundamentals sharp; exam and lab notes</h2>
+<ul>
+<li><a class="ts" data-t="47:18"></a> The instructor thought the question was a good one. As material gets more advanced, the "old" basics start to slip. Ohm's law, KVL, KCL, series and parallel need to become second nature, like converting between decimal and binary for a computer engineer <a class="ts" data-t="47:39"></a>.</li>
+<li><a class="ts" data-t="48:29"></a> <strong>Lab connection:</strong> there is a lab on Thévenin and Norton equivalent circuits. The instructor is changing that lab and it will start next time. Norton equivalent circuits, "the other side of this puzzle", come next (see <a class="xref" data-lesson="tn2">Thévenin cont. &amp; Norton</a> and <a class="xref" data-lesson="tn3">Norton cont.</a>).</li>
+<li><a class="ts" data-t="48:55"></a> The exam is the following week. That day's lab time was used for exam-preparation help rather than a new lab. Class breaks at 10:23 and resumes at 10:33 <a class="ts" data-t="49:25"></a>.</li>
+</ul>
+<aside class="extra"><strong>Thévenin in the lab.</strong> You can measure both numbers on a real circuit. \(V_{TH}\) is what a voltmeter reads across A–B with nothing else connected; a good voltmeter draws almost no current, so it acts as an open circuit. For \(R_{TH}\), take the sources <em>out</em> of the circuit and put a wire in their place, then read A–B with an ohmmeter. That is exactly the earlier "resistance between two points" lab. Never short a real power supply or battery by itself: "shorting the source" is a paper step that means replacing the removed source by a wire.</aside>
+</section>
+
+<section class="g-sec" id="tn1-other" data-kind="lesson" data-ts="556-958">
+<h2>Other content in this video (outside this topic)</h2>
+<p>A student asked "what is Morse code?" after the telegraph remark, so the instructor took a short detour. None of this is examinable for circuits:</p>
+<ul>
+<li><a class="ts" data-t="9:16"></a> Morse code was how telegraph messages were sent.</li>
+<li><a class="ts" data-t="9:59"></a> International Morse code chart (screen share): every letter and digit is a sequence of dots and dashes ("dits and dashes") tapped on a key.</li>
+<li><a class="ts" data-t="11:08"></a> Learning tip: learn it at full speed, like a language, so your brain hears each pattern as a letter. Don't translate dot-by-dot.</li>
+<li><a class="ts" data-t="12:02"></a> Why it lasted: it gets through over long distances with very weak signals and lots of noise. It was used heavily by navies in the World Wars.</li>
+<li><a class="ts" data-t="12:52"></a> The instructor is a licensed ham-radio operator (since about 2003). The entry-level Technician exam covers Ohm's law and power and is easy after this class.</li>
+<li><a class="ts" data-t="14:19"></a> A video of an operator chatting in Morse while reading a newspaper, and a joke from its comments. Back to Thévenin at <a class="ts" data-t="15:38"></a>.</li>
+<li><a class="ts" data-t="42:13"></a> Brief chatter with "four minutes left" before the Q&amp;A.</li>
+</ul>
+</section>
+
+<section class="g-sec" id="tn1-assumptions" data-kind="assumptions">
+<h2>Assumptions &amp; limitations</h2>
+<ul>
+<li><strong>Linear circuits only.</strong> The theorem as stated applies to linear networks of resistances and sources <a class="ts" data-t="3:27"></a>. <em>(Extra:)</em> it does not hold for non-linear parts such as diodes or lamps whose resistance changes with current. Those can be the <em>load</em>, but not part of the network being Thévenized.</li>
+<li><strong>Equivalent only at A–B.</strong> The two circuits match only for what you connect between A and B <a class="ts" data-t="6:28"></a>. <em>(Extra:)</em> they are not equivalent inside. With A–B open, the original ladder still draws 1 A from its 100 V source and dissipates 100 W internally, while the open equivalent dissipates 0 W.</li>
+<li><strong>Depends on the terminals.</strong> Moving A or B gives a different equivalent <a class="ts" data-t="22:44"></a>.</li>
+<li><strong>Load removed.</strong> \(V_{TH}\) is the <em>open</em>-terminal voltage. If a load were left in place you would get the loaded voltage, which is not \(V_{TH}\).</li>
+<li><strong>Source deactivation as taught</strong> covers independent voltage sources (short them). <em>(Extra:)</em> independent current sources are opened. Ideal sources are assumed. A real source's internal resistance would stay in the circuit after deactivation.</li>
+<li><strong>\(R_{TH} = 0\) case.</strong> If an ideal voltage source sits directly across A–B (Example 5), the equivalent is just that source. The \(V_{OC}/I_{SC}\) shortcut can't be used there because \(I_{SC}\) is unbounded.</li>
+</ul>
+<aside class="extra"><strong>Circuits with dependent sources: finding \(R_{TH}\)</strong> (not from the video). The EE 211 course videos never cover dependent (controlled) sources. This box is for textbook problems and later courses.
+<p>A dependent source (diamond symbol) has a value set by some other voltage or current in the circuit, e.g. \(2I_x\) volts. It is not an independent excitation, so it <strong>cannot be zeroed</strong>. If you short it like an independent source, you get the wrong \(R_{TH}\). Leave every dependent source in place and use one of these:</p>
+<ol>
+<li><strong>Test source:</strong> zero only the <em>independent</em> sources. Apply a test voltage \(V_{test}\) (or test current \(I_{test}\)) at A–B, solve for the other quantity, and \(R_{TH} = V_{test}/I_{test}\).</li>
+<li><strong>\(V_{OC}/I_{SC}\):</strong> keep all sources on. Find \(V_{OC}\) (open A–B) and \(I_{SC}\) (short A–B, current from A to B). Then \(R_{TH} = V_{OC}/I_{SC}\).</li>
+</ol>
+<div class="example" id="tn1-ex8"><h3>Example 8 (added): Thévenin equivalent with a current-controlled voltage source</h3>
+<figure class="circuit" id="tn1-fig-ex8">
+<script type="application/json">{"parts":[
+ {"t":"T","at":[1,-1.5],"text":" "},
+ {"t":"V","a":[0,4],"b":[0,0],"plus":"b","label":"12 V","side":-1},
+ {"t":"W","pts":[[0,0],[1,0]]},
+ {"t":"R","a":[1,0],"b":[3.5,0],"label":"R_1","value":"4 Ω"},
+ {"t":"W","pts":[[3.5,0],[4.5,0]]},
+ {"t":"IARR","a":[3.5,0],"b":[4.5,0],"label":"I_x","side":-1},
+ {"t":"DV","a":[4.5,0],"b":[7.5,0],"label":"2I_x","plus":"b"},
+ {"t":"W","pts":[[7.5,0],[10,0]]},
+ {"t":"N","at":[8.5,0],"label":"a","pos":"n"},
+ {"t":"R","a":[8.5,0],"b":[8.5,4],"label":"R_2","value":"2 Ω"},
+ {"t":"W","pts":[[0,4],[10,4]]},
+ {"t":"N","at":[8.5,4]},
+ {"t":"N","at":[10,0],"open":true,"label":"A","pos":"e"},
+ {"t":"N","at":[10,4],"open":true,"label":"B","pos":"e"}
+],"alt":"A 12 V source, positive on top, feeds R1 = 4 ohm carrying current I_x to the right, then a diamond dependent voltage source of value 2 I_x with its plus side toward node a. From node a, R2 = 2 ohm goes to the bottom wire. Terminals A at node a and B at the bottom wire."}</script>
+<figcaption>Example circuit (added for clarity, not from the video). \(I_x\) is the current through \(R_1\), left to right. The dependent source's "+" faces node a, so \(V_a = V_m + 2I_x\), where m is the node between \(R_1\) and the diamond.</figcaption>
+</figure>
+<p><strong>Given:</strong> 12 V, \(R_1 = 4\,\Omega\), CCVS \(2I_x\) (V, with \(I_x\) in A), \(R_2 = 2\,\Omega\). <strong>Find:</strong> \(V_{TH}\), \(R_{TH}\).</p>
+<p class="step">1. <strong>\(V_{OC}\).</strong> With A–B open, \(I_x\) flows around the single loop. KVL clockwise: \(+12 - 4I_x + 2I_x - 2I_x = 0 \Rightarrow I_x = 3\,\text{A}\). Then \(V_{OC} = I_x R_2 = 3 \times 2 = 6\,\text{V}\). Check: \(V_m = 12 - 4(3) = 0\,\text{V}\) and \(V_a = 0 + 2(3) = 6\,\text{V}\) ✓.</p>
+<p class="step">2. <strong>\(I_{SC}\).</strong> Short A–B, so \(V_a = 0\). \(R_2\) carries no current and all of \(I_x\) goes through the short. KVL: \(12 - 4I_x + 2I_x = 0 \Rightarrow I_x = 6\,\text{A} = I_{SC}\). So \(R_{TH} = V_{OC}/I_{SC} = 6/6 = 1\,\Omega\).</p>
+<p class="step">3. <strong>Test-source check.</strong> Short the 12 V (independent) but keep the \(2I_x\) source. Apply \(V_{test} = 1\,\text{V}\) at A–B. Current down \(R_2\): \(1/2 = 0.5\,\text{A}\). In the left branch, \(V_m = 0 - 4I_x\) and \(V_a = V_m + 2I_x = -2I_x = 1\), so \(I_x = -0.5\,\text{A}\). That means 0.5 A actually flows right-to-left, out of node a. Current supplied by the test source: \(I_{test} = 0.5 - I_x = 0.5 + 0.5 = 1\,\text{A}\). So \(R_{TH} = 1\,\text{V}/1\,\text{A} = 1\,\Omega\) ✓.</p>
+<p class="step">4. <strong>The trap.</strong> If you had also shorted the dependent source, you'd get \(R_1 \parallel R_2 = 4 \parallel 2 = 1.33\,\Omega\). That's wrong, because the dependent source changes how current responds to voltage at A–B.</p>
+<p class="answer">\(V_{TH} = 6\,\text{V}\), \(R_{TH} = 1\,\Omega\). Check with a 2 Ω load: the equivalent gives \(6 \cdot \frac{2}{1+2} = 4\,\text{V}\), and solving the full circuit also gives \(V_a = 4\,\text{V}\) ✓.</p>
+</div>
+</aside>
+</section>
+
+<section class="g-sec" id="tn1-mistakes" data-kind="mistakes">
+<h2>Common mistakes</h2>
+<aside class="mistake"><strong>Finding \(V_{TH}\) and \(R_{TH}\) on one drawing.</strong> The node voltages and currents from the \(V_{TH}\) step mean nothing once the source is shorted. <em>Fix:</em> redraw a clean copy for \(R_{TH}\), as the instructor stresses at <a class="ts" data-t="38:03"></a>.</aside>
+<aside class="mistake"><strong>"Shorting the source makes everything zero."</strong> A short removes a resistor only if it is in parallel with it, i.e. it joins the resistor's two ends. <em>Spot it:</em> trace current from A to B and check whether the short spans a dividing/summing node pair. <em>Fix:</em> in the ladder, the short just puts the two 25 Ω in series (<a class="ts" data-t="45:54"></a>).</aside>
+<aside class="mistake"><strong>Using the wrong terminals.</strong> The same divider gave \(V_{TH} = 1\,\text{V}\) or \(4\,\text{V}\) depending on where A and B were. <em>Fix:</em> circle A and B before you start and read \(V_{AB}\) across exactly those points.</aside>
+<aside class="mistake"><strong>Leaving out the resistor that sits across A–B</strong> when computing \(V_{TH}\) (e.g. ignoring the right-hand 100 Ω). With nothing connected, it is part of the circuit and carries current. What stays open is the load position.</aside>
+<aside class="mistake"><strong>Drawing \(R_{TH}\) in parallel with \(V_{TH}\).</strong> The Thévenin form is always source <em>in series</em> with resistance (the "in parallel" at <a class="ts" data-t="8:52"></a> was a slip of the tongue). A resistor in parallel with an ideal voltage source would have no effect at the terminals.</aside>
+<aside class="mistake"><strong>Polarity flipped.</strong> \(V_{TH} = V_A - V_B\). Put the source's "+" toward A when A is the higher terminal. If you compute a negative \(V_{AB}\), flip the source.</aside>
+<aside class="mistake"><strong>Leaving a load connected while finding \(V_{TH}\)</strong> (extra). That gives the loaded voltage, not the open-circuit voltage. Remove the load first.</aside>
+<aside class="mistake"><strong>Shorting current sources or zeroing dependent sources</strong> (extra). Independent current sources are opened. Dependent sources stay in and need a test source or \(V_{OC}/I_{SC}\).</aside>
+<aside class="mistake"><strong>Arithmetic slips in parallel reductions.</strong> Quick checks: \(n\) equal resistors \(R\) in parallel give \(R/n\) (\(100 \parallel 100 = 50\)). Parallel resistance is always smaller than the smallest branch (80 Ω &lt; 100 Ω; 25 Ω &lt; 50 Ω).</aside>
+</section>
+
+<section class="g-sec" id="tn1-recap" data-kind="recap">
+<h2>Recap &amp; formula sheet</h2>
+<p>Any linear two-terminal network can be replaced, as seen from terminals A and B, by \(V_{TH}\) in series with \(R_{TH}\). To Thévenize: (1) mark A and B and remove the load; (2) \(V_{TH}\) = open-circuit voltage from A to B, solved with your usual tools; (3) redraw, short the voltage sources, and \(R_{TH}\) = resistance seen from A–B; (4) draw the equivalent with "+" toward A. In this video: divider examples gave \(V_{TH} = 10\), 1 and 4 V, with \(R_{TH} = 0\) and 80 Ω. The 100 V ladder Thévenized to 50 V in series with 25 Ω. Trace current to decide series/parallel: a short only removes resistors it is in parallel with.</p>
+<div class="formula-sheet">
+<div class="formula">\[ V_{TH} = V_{AB}\big|_{\text{open}} = V_A - V_B \]</div>
+<dl class="vardefs"><dt>\(V_{TH}\)</dt><dd>Thévenin (open-circuit) voltage, V</dd><dt>\(V_A, V_B\)</dt><dd>terminal voltages, V</dd></dl>
+<div class="formula">\[ R_{TH} = R_{AB}\big|_{\text{voltage sources shorted (current sources opened)}} \]</div>
+<dl class="vardefs"><dt>\(R_{TH}\)</dt><dd>Thévenin resistance, Ω</dd></dl>
+<div class="formula">\[ R_{TH} = \frac{V_{OC}}{I_{SC}} \qquad\text{or}\qquad R_{TH} = \frac{V_{test}}{I_{test}} \quad\text{(extra; needed with dependent sources)} \]</div>
+<dl class="vardefs"><dt>\(V_{OC}\)</dt><dd>open-circuit voltage \(= V_{TH}\), V</dd><dt>\(I_{SC}\)</dt><dd>current through a wire from A to B, A</dd><dt>\(V_{test}, I_{test}\)</dt><dd>applied test voltage and the current it supplies (independent sources zeroed), V and A</dd></dl>
+<div class="formula">\[ I_L = \frac{V_{TH}}{R_{TH} + R_L}, \qquad V_L = V_{TH}\frac{R_L}{R_{TH} + R_L} \quad\text{(extra)} \]</div>
+<dl class="vardefs"><dt>\(R_L\)</dt><dd>load resistance between A and B, Ω</dd><dt>\(I_L, V_L\)</dt><dd>load current (A) and load voltage (V)</dd></dl>
+<div class="formula">\[ R_{series} = R_1 + R_2 + \cdots, \qquad R_1 \parallel R_2 = \frac{R_1 R_2}{R_1 + R_2}, \qquad \frac{1}{R_{par}} = \frac{1}{R_1} + \frac{1}{R_2} + \cdots \]</div>
+<dl class="vardefs"><dt>\(R_1, R_2\)</dt><dd>resistances, Ω</dd></dl>
+<div class="formula">\[ V = IR, \qquad I_T = \frac{V_s}{R_T}, \qquad V_x = V_s\frac{R_x}{R_T}\ \text{(series divider)} \]</div>
+<dl class="vardefs"><dt>\(V_s\)</dt><dd>source voltage, V</dd><dt>\(R_T, I_T\)</dt><dd>total resistance (Ω) and total current (A)</dd><dt>\(R_x, V_x\)</dt><dd>one series resistor and its voltage</dd></dl>
+<table>
+<tr><th>Circuit (this video)</th><th>\(V_{TH}\)</th><th>\(R_{TH}\)</th></tr>
+<tr><td>10 V across 10 Ω (Ex. 1, 5)</td><td>10 V</td><td>0 Ω</td></tr>
+<tr><td>5 V, 100 Ω + 400 Ω, A–B across 100 Ω (Ex. 2, 4)</td><td>1 V</td><td>80 Ω</td></tr>
+<tr><td>Same, A–B across 400 Ω (Ex. 3)</td><td>4 V</td><td>80 Ω (computed here, not in video)</td></tr>
+<tr><td>100 V ladder 25–100–100–25 (Ex. 6)</td><td>50 V</td><td>25 Ω</td></tr>
+</table>
+</div>
+</section>

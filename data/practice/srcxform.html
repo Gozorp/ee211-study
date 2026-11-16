@@ -1,0 +1,278 @@
+<article class="q" id="srcxform-q1" data-level="1" data-kind="conceptual" data-title="Which source transformation is legal?">
+  <div class="q-prompt">
+    <p>Each sub-circuit below is connected to the rest of a circuit only through its terminals a and b.</p>
+    <ul>
+      <li><b>Circuit 1:</b> a 12 V source (+ toward a) in series with a 4 kΩ resistor.</li>
+      <li><b>Circuit 2:</b> an ideal 12 V source (+ toward a) connected directly across a–b, with a 4 kΩ resistor also connected across a–b.</li>
+      <li><b>Circuit 3:</b> an ideal 3 mA current source (arrow toward a) in series with a 4 kΩ resistor.</li>
+    </ul>
+    <p>A classmate proposes the four replacements listed in (a). "Equivalent" means the replacement gives the same terminal voltage \(v_{ab}\) and terminal current for <em>every</em> load connected across a–b.</p>
+    <p>(a) Which <b>one</b> replacement is equivalent to its original circuit?</p>
+    <p>(b) Take circuit 1 and its correct transformed version, and leave terminals a–b open (nothing connected). Which statement about the power dissipated in the 4 kΩ resistor is true?</p>
+  </div>
+  <figure class="circuit"><script type="application/json">{"parts":[
+   {"t":"BAT","a":[0,4],"b":[0,1],"label":"12 V","side":-1},
+   {"t":"R","a":[0,1],"b":[3,1],"label":"4 kΩ"},
+   {"t":"W","pts":[[3,1],[4,1]]},
+   {"t":"N","at":[4,1],"open":true,"label":"a","pos":"e"},
+   {"t":"W","pts":[[0,4],[4,4]]},
+   {"t":"N","at":[4,4],"open":true,"label":"b","pos":"e"},
+   {"t":"T","at":[2,5.4],"text":"Circuit 1","anchor":"middle","bold":true},
+   {"t":"BAT","a":[7.5,4],"b":[7.5,1],"label":"12 V","side":-1},
+   {"t":"W","pts":[[7.5,1],[11,1]]},
+   {"t":"W","pts":[[7.5,4],[11,4]]},
+   {"t":"R","a":[9.5,1],"b":[9.5,4],"label":"4 kΩ"},
+   {"t":"N","at":[11,1],"open":true,"label":"a","pos":"e"},
+   {"t":"N","at":[11,4],"open":true,"label":"b","pos":"e"},
+   {"t":"T","at":[9.25,5.4],"text":"Circuit 2","anchor":"middle","bold":true},
+   {"t":"I","a":[14.5,4],"b":[14.5,1],"label":"3 mA","side":-1},
+   {"t":"R","a":[14.5,1],"b":[17.5,1],"label":"4 kΩ"},
+   {"t":"W","pts":[[17.5,1],[18.5,1]]},
+   {"t":"N","at":[18.5,1],"open":true,"label":"a","pos":"e"},
+   {"t":"W","pts":[[14.5,4],[18.5,4]]},
+   {"t":"N","at":[18.5,4],"open":true,"label":"b","pos":"e"},
+   {"t":"T","at":[16.5,5.4],"text":"Circuit 3","anchor":"middle","bold":true}
+  ],"alt":"Circuit 1: 12 volt battery, positive plate on top, in series with a 4 kilohm resistor in the top lead, between terminals a (top) and b (bottom). Circuit 2: 12 volt battery, positive on top, connected directly across terminals a and b, with a 4 kilohm resistor also across a and b. Circuit 3: 3 milliampere current source with its arrow pointing up toward a, with a 4 kilohm resistor in series in the top lead, between a and b."}</script>
+  <figcaption>The three original sub-circuits. In each, terminal a is at the top and b at the bottom; the battery's long plate (+) is on top and the current-source arrow points up toward a.</figcaption></figure>
+  <div class="q-answers">
+    <div class="ans" data-type="mc" data-name="valid" data-label="(a) Which replacement is equivalent at terminals a–b?" data-correct="b">
+      <div class="opt" data-v="a">Circuit 1 → a 3 mA current source in parallel with 4 kΩ, arrow pointing <b>toward b</b>.<span class="opt-fb">Wrong — the value and the resistor are right, but the arrow is reversed. With a–b open, all 3 mA would flow up through the 4 kΩ from b to a, giving \(v_{ab} = -(3\ \text{mA})(4\ \text{k}\Omega) = -12\ \text{V}\). Circuit 1 gives \(v_{ab} = +12\ \text{V}\). The arrow must point toward the terminal on the + side of the voltage source.</span></div>
+      <div class="opt" data-v="b">Circuit 1 → a 3 mA current source in parallel with 4 kΩ, arrow pointing <b>toward a</b>.<span class="opt-fb">Correct. Circuit 1 is a real series V–R pair, so \(I = V/R = 12\ \text{V}/4\ \text{k}\Omega = 3\ \text{mA}\), the same 4 kΩ moves into parallel, and the arrow points toward a (the + side). Check: open circuit \(v_{ab} = (3\ \text{mA})(4\ \text{k}\Omega) = 12\ \text{V}\) in both; short circuit \(12\ \text{V}/4\ \text{k}\Omega = 3\ \text{mA}\) out of a in both.</span></div>
+      <div class="opt" data-v="c">Circuit 2 → a 3 mA current source in parallel with 4 kΩ, arrow pointing toward a.<span class="opt-fb">Wrong — in circuit 2 the 4 kΩ is in <em>parallel</em> with the voltage source, not in series, so there is no V–R pair to transform. The ideal source holds \(v_{ab} = 12\ \text{V}\) whatever is connected; the 4 kΩ only draws extra current from the source. Seen from a–b, circuit 2 is just an ideal 12 V source (R = 0 in series), which cannot be turned into a current source (\(V/0\) is infinite). Test: with a 4 kΩ load, circuit 2 gives 12 V but the proposal gives \(3\ \text{mA}\times(4\,\text{k}\parallel 4\,\text{k}) = 6\ \text{V}\).</span></div>
+      <div class="opt" data-v="d">Circuit 3 → a 12 V source (+ toward a) in series with 4 kΩ.<span class="opt-fb">Wrong — in circuit 3 the 4 kΩ is in <em>series</em> with the current source, not in parallel. An ideal current source forces 3 mA through whatever is connected, so the series resistor changes nothing at a–b: circuit 3 is just an ideal 3 mA source (no parallel R, i.e. \(R \to \infty\)), which cannot be transformed. Test: with a 4 kΩ load, circuit 3 delivers 3 mA, the proposal only \(12\ \text{V}/8\ \text{k}\Omega = 1.5\ \text{mA}\).</span></div>
+    </div>
+    <div class="ans" data-type="mc" data-name="power" data-label="(b) Terminals open: power in the 4 kΩ resistor" data-correct="b">
+      <div class="opt" data-v="a">0 W in both forms, because equivalent circuits behave identically.<span class="opt-fb">Wrong — the two forms are equivalent only <em>at the terminals</em> a–b. Inside, they are different circuits. In the transformed form the current source still pushes its 3 mA around, and with a–b open that current can only go through the 4 kΩ.</span></div>
+      <div class="opt" data-v="b">0 W in the original (series) form and 36 mW in the transformed (parallel) form, even though \(v_{ab} = 12\ \text{V}\) in both.<span class="opt-fb">Correct. Series form: with a–b open no current flows, so \(P = 0\). Parallel form: all 3 mA flows through the 4 kΩ, so \(P = I^2R = (3\ \text{mA})^2(4\ \text{k}\Omega) = 36\ \text{mW}\). The terminal voltage is 12 V in both, which is all the equivalence promises.</span></div>
+      <div class="opt" data-v="c">36 mW in both forms.<span class="opt-fb">Wrong — in the original series form, an open circuit at a–b means no current anywhere in the loop, so the 4 kΩ carries 0 A and dissipates 0 W.</span></div>
+      <div class="opt" data-v="d">36 mW in the original (series) form and 0 W in the transformed (parallel) form.<span class="opt-fb">Wrong — this is backwards. The series form has no closed path when a–b is open (0 W). The parallel form has a closed loop, current source → 4 kΩ, carrying the full 3 mA (36 mW).</span></div>
+    </div>
+  </div>
+  <div class="q-hint">A source transformation needs a <em>pair</em>: a voltage source with a resistor in <b>series</b> (same current), or a current source with a resistor in <b>parallel</b> (same two nodes). Look at how the 4 kΩ is connected in each circuit.</div>
+  <div class="q-hint">Test each proposal with two easy loads: an open circuit (compare \(v_{ab}\), including its sign) and a short circuit (compare the current and its direction). Both tests must agree.</div>
+  <div class="q-hint">For (b): with a–b open, in which of the two forms is there a closed path for current through the 4 kΩ?</div>
+  <div class="q-solution">
+    <p class="step">1. <b>Which circuits contain a transformable pair?</b> Circuit 1: the 4 kΩ carries the same current as the 12 V source (series), so it is a V–R pair. Circuit 2: the 4 kΩ sits across the voltage source (parallel), so this is not a pair; seen from a–b the circuit is an ideal 12 V source. Circuit 3: the 4 kΩ is in series with the current source, so this is not an I–R pair; seen from a–b the circuit is an ideal 3 mA source. Ideal sources without their resistor cannot be transformed (\(I = V/0\) or \(V = I\cdot\infty\)).</p>
+    <p class="step">2. <b>Transform circuit 1.</b> Same resistor, Ohm's law for the value: \(I = \dfrac{V}{R} = \dfrac{12\ \text{V}}{4\ \text{k}\Omega} = 3\ \text{mA}\), in parallel with 4 kΩ.</p>
+    <p class="step">3. <b>Orientation.</b> The + side of the 12 V source faces a, so the arrow points toward a. Check with an open circuit: series form \(v_{ab} = +12\ \text{V}\); parallel form \(v_{ab} = (3\ \text{mA})(4\ \text{k}\Omega) = +12\ \text{V}\) only if the current is pushed into a. So (a) = option b.</p>
+    <p class="step">4. <b>Internal power with a–b open.</b> Series form: no closed path, \(i = 0\), so \(P_{4\text{k}} = 0\). Parallel form: the 3 mA circulates through the 4 kΩ, so \(P_{4\text{k}} = (3\times10^{-3}\ \text{A})^2(4000\ \Omega) = 0.036\ \text{W} = 36\ \text{mW}\).</p>
+    <p class="answer">(a) Option b: circuit 1 ⇔ 3 mA ∥ 4 kΩ with the arrow toward a. (b) Option b: 0 W in the series form vs 36 mW in the parallel form; the terminal voltage (12 V) is the same, the internal power is not.</p>
+  </div>
+  <div class="q-check">Energy bookkeeping confirms (b): in the parallel form the current source delivers \(v_{ab}\,I = 12\ \text{V}\times3\ \text{mA} = 36\ \text{mW}\), and it all goes into the 4 kΩ. In the series form the source delivers 0 W because no current flows. Whatever is connected at a–b (here nothing) sees the same thing in both forms. Only quantities <em>at the terminals</em> are guaranteed to match.</div>
+  <div class="q-links">Links back: <a class="xref" data-lesson="st1" data-sec="st1-idea">Source transformation: the idea, the rule and the orientation</a> · <a class="xref" data-lesson="st1" data-sec="st1-assumptions">Assumptions &amp; limitations (ideal sources, equivalent only at the terminals)</a> · lesson st1 at <a class="ts" data-lesson="st1" data-t="1:00"></a> (the two forms drawn), <a class="ts" data-lesson="st1" data-t="2:20"></a> (orientation in the general drawing) and <a class="ts" data-lesson="st1" data-t="4:31"></a> ("identical … from these two points")</div>
+</article>
+
+<article class="q" id="srcxform-q2" data-level="2" data-kind="calculation" data-title="Voltage source with split series resistance → current source">
+  <div class="q-prompt">
+    <p>The sub-circuit below is connected to the rest of a circuit at terminals a and b. A \(V_s = 14\ \text{V}\) source has its <b>+ terminal at the bottom</b>, on the side of the lead that goes to b. \(R_1 = 2.2\ \text{k}\Omega\) is in the top lead (between the source and a). \(R_2 = 1.3\ \text{k}\Omega\) is in the bottom lead (between the source and b).</p>
+    <p>Replace the whole sub-circuit by <b>one</b> current source \(I_s\) in parallel with <b>one</b> resistor \(R\) between a and b, equivalent at the terminals. Give the magnitude of \(I_s\) (in A or mA), the direction of its arrow, and \(R\) (in Ω or kΩ).</p>
+  </div>
+  <figure class="circuit"><script type="application/json">{"parts":[
+   {"t":"BAT","a":[0,4],"b":[0,1],"label":"V_s","value":"14 V","plus":"a","side":-1},
+   {"t":"R","a":[0,1],"b":[3,1],"label":"R_1","value":"2.2 kΩ"},
+   {"t":"W","pts":[[3,1],[5,1]]},
+   {"t":"N","at":[5,1],"open":true,"label":"a","pos":"e"},
+   {"t":"R","a":[0,4],"b":[3,4],"label":"R_2","value":"1.3 kΩ","side":-1},
+   {"t":"W","pts":[[3,4],[5,4]]},
+   {"t":"N","at":[5,4],"open":true,"label":"b","pos":"e"}
+  ],"pad":1.4,"alt":"A 14 volt battery drawn vertically with its positive (long) plate at the bottom. Its top terminal goes through R1 = 2.2 kilohms to terminal a; its bottom (positive) terminal goes through R2 = 1.3 kilohms to terminal b."}</script>
+  <figcaption>The original sub-circuit. The battery's long plate (+) is at the bottom, so the + side faces terminal b.</figcaption></figure>
+  <div class="q-answers">
+    <div class="ans" data-type="num" data-name="is" data-label="\(|I_s|\)" data-value="0.004" data-unit="A"></div>
+    <div class="ans" data-type="mc" data-name="dir" data-label="Direction of the \(I_s\) arrow" data-correct="b">
+      <div class="opt" data-v="a">Up, toward terminal a.<span class="opt-fb">Wrong — that is the habit from drawings where + is on top. Here the + side faces b. With the arrow toward a, the open-circuit voltage would be \(v_{ab} = +14\ \text{V}\), but the original gives \(v_{ab} = -14\ \text{V}\) (a is on the − side).</span></div>
+      <div class="opt" data-v="b">Down, toward terminal b.<span class="opt-fb">Correct — the arrow points toward the terminal on the + side of the voltage source, which is b. Check: in a short from a to b, the original drives current out of its + side, i.e. out of b. The current source must also push its current out at b.</span></div>
+      <div class="opt" data-v="c">Either direction works; only the magnitude matters.<span class="opt-fb">Wrong — reversing the arrow reverses the sign of every terminal voltage and current. The polarity is part of the answer.</span></div>
+    </div>
+    <div class="ans" data-type="num" data-name="r" data-label="\(R\)" data-value="3500" data-unit="Ω"></div>
+  </div>
+  <div class="fb" data-for="is" data-match="49000">You multiplied: \(V\cdot R\) has units V·Ω, not amperes. To go from a voltage source to a current source, use Ohm's law the other way: \(I = V/R\).</div>
+  <div class="fb" data-for="is" data-match="49">That is 14 × 3.5, a product. Converting a series V–R pair to a current source divides: \(I = V/R\) (and V/kΩ gives mA).</div>
+  <div class="fb" data-for="is" data-match="0.0063636">You divided by \(R_1\) only. \(R_2\) is in the bottom lead, but it carries the same current as the source, so it is in series too. Use the total series resistance.</div>
+  <div class="fb" data-for="is" data-match="0.0107692">You divided by \(R_2\) only. \(R_1\) is also in series with the source (nothing branches off between them). Use the total series resistance.</div>
+  <div class="fb" data-for="r" data-match="2200">That is \(R_1\) alone. \(R_2\) is also in series with the source, even though it is in the other lead. The transformed resistor is the <em>whole</em> series resistance.</div>
+  <div class="fb" data-for="r" data-match="1300">That is \(R_2\) alone. \(R_1\) is also in series with the source. The transformed resistor is the <em>whole</em> series resistance.</div>
+  <div class="fb" data-for="r" data-match="817.14">You combined \(R_1\) and \(R_2\) in parallel. In the original circuit there is only one path through the source, so they are in series. The parallel connection only appears after the transformation, between the new current source and the total \(R\).</div>
+  <div class="q-hint">Which elements carry exactly the same current as the source? Combine them into one resistor first. Elements in a series string can be reordered without changing anything at a–b.</div>
+  <div class="q-hint">Then apply the conversion rule: \(I_s = V_s/R\), with the <em>same</em> \(R\) moved into parallel. For the direction, ask which terminal the + side of the source faces.</div>
+  <div class="q-hint">The total series resistance is 3.5 kΩ. With a–b open, the original gives \(v_{ab} = -14\ \text{V}\): which way must the arrow point to reproduce that?</div>
+  <div class="q-solution">
+    <p class="step">1. <b>Find the series resistance.</b> Going from a to b there is a single path: \(R_1\) → source → \(R_2\). All three carry the same current, so \(R_1\) and \(R_2\) are both in series with \(V_s\). Reorder the string as "source + one resistor": \(R = R_1 + R_2 = 2.2\ \text{k}\Omega + 1.3\ \text{k}\Omega = 3.5\ \text{k}\Omega\).</p>
+    <p class="step">2. <b>Value of the current source</b> (Ohm's law): \(I_s = \dfrac{V_s}{R} = \dfrac{14\ \text{V}}{3500\ \Omega} = 0.004\ \text{A} = 4\ \text{mA}\).</p>
+    <p class="step">3. <b>Direction.</b> The + side of \(V_s\) faces b, so the arrow points <b>toward b</b> (down).</p>
+    <p class="step">4. <b>Resistor.</b> The same 3.5 kΩ, now connected in parallel with the current source, directly between a and b.</p>
+    <figure class="circuit"><script type="application/json">{"parts":[
+     {"t":"I","a":[1,1],"b":[1,4],"label":"I_s","value":"4 mA","side":-1},
+     {"t":"W","pts":[[1,1],[3,1]]},
+     {"t":"W","pts":[[1,4],[3,4]]},
+     {"t":"R","a":[3,1],"b":[3,4],"label":"R","value":"3.5 kΩ"},
+     {"t":"W","pts":[[3,1],[5,1]]},
+     {"t":"W","pts":[[3,4],[5,4]]},
+     {"t":"N","at":[5,1],"open":true,"label":"a","pos":"e"},
+     {"t":"N","at":[5,4],"open":true,"label":"b","pos":"e"}
+    ],"alt":"Result: a 4 milliampere current source with its arrow pointing down toward b, in parallel with a 3.5 kilohm resistor, between terminals a (top) and b (bottom)."}</script>
+    <figcaption>The equivalent: 4 mA (arrow toward b) in parallel with 3.5 kΩ.</figcaption></figure>
+    <p class="answer">\(|I_s| = 4\ \text{mA}\), arrow pointing toward b, in parallel with \(R = 3.5\ \text{k}\Omega\).</p>
+  </div>
+  <div class="q-check">Open-circuit test: in the original no current flows, so there are no resistor drops and \(v_{ab} = -14\ \text{V}\) (a is on the − side). In the result, 4 mA is pushed into b and returns up through 3.5 kΩ to a, so \(v_{ba} = 4\ \text{mA}\times3.5\ \text{k}\Omega = 14\ \text{V}\), i.e. \(v_{ab} = -14\ \text{V}\) ✔. Short-circuit test: the original drives \(14\ \text{V}/3.5\ \text{k}\Omega = 4\ \text{mA}\) out of b, and so does the result ✔. Units: V/Ω = A.</div>
+  <div class="q-links">Links back: <a class="xref" data-lesson="st1" data-sec="st1-examples">Worked conversions (10 V + 2 Ω → 5 A ∥ 2 Ω)</a> · <a class="xref" data-lesson="st1" data-sec="st1-fig-flipped">Flipped polarity: + toward b means the arrow points toward b</a> · <a class="xref" data-lesson="st1" data-sec="st1-mistakes">Common mistakes</a> · lesson st1 at <a class="ts" data-lesson="st1" data-t="2:43"></a> ("perform Ohm's law" on the source and its resistor) and <a class="ts" data-lesson="st1" data-t="4:09"></a> ("R stays the same")</div>
+</article>
+
+<article class="q" id="srcxform-q3" data-level="3" data-kind="multistep" data-title="Two-source ladder: reduce to the load by repeated transformations">
+  <div class="q-prompt">
+    <p>In the ladder circuit below, the bottom rail is ground. \(V_1 = 24\ \text{V}\) (+ on top) in series with \(R_1 = 6\ \text{k}\Omega\) feeds node A. \(R_2 = 3\ \text{k}\Omega\) connects A to ground. \(R_3 = 2\ \text{k}\Omega\) connects A to node B. The load \(R_L = 4\ \text{k}\Omega\) connects B to ground. On the right, \(V_2 = 18\ \text{V}\) (+ on top) in series with \(R_4 = 6\ \text{k}\Omega\) also feeds node B.</p>
+    <p>Using source transformations and series/parallel combinations only, reduce everything except \(R_L\) to a <b>single current source \(I_{eq}\)</b> (arrow pointing up into node B) <b>in parallel with a single resistor \(R_{eq}\)</b> between B and ground. Then find the load voltage \(V_L\) (the voltage of B with respect to ground) and the load current \(I_L\) (downward through \(R_L\)).</p>
+  </div>
+  <figure class="circuit"><script type="application/json">{"parts":[
+   {"t":"BAT","a":[0,5],"b":[0,1],"label":"V_1","value":"24 V","side":-1},
+   {"t":"R","a":[0,1],"b":[3,1],"label":"R_1","value":"6 kΩ"},
+   {"t":"N","at":[3,1],"label":"A","pos":"n"},
+   {"t":"R","a":[3,1],"b":[3,5],"label":"R_2","value":"3 kΩ"},
+   {"t":"R","a":[3,1],"b":[7,1],"label":"R_3","value":"2 kΩ"},
+   {"t":"N","at":[7,1],"label":"B","pos":"n"},
+   {"t":"R","a":[7,1],"b":[7,5],"label":"R_L","value":"4 kΩ"},
+   {"t":"IARR","a":[7,1.25],"b":[7,2.35],"label":"I_L","side":-1},
+   {"t":"R","a":[7,1],"b":[10,1],"label":"R_4","value":"6 kΩ"},
+   {"t":"BAT","a":[10,5],"b":[10,1],"label":"V_2","value":"18 V"},
+   {"t":"W","pts":[[0,5],[10,5]]},
+   {"t":"N","at":[3,5]},
+   {"t":"N","at":[7,5]},
+   {"t":"G","at":[5,5]}
+  ],"pad":1.4,"alt":"Ladder circuit with a grounded bottom rail. Left: 24 volt battery V1, positive on top, then R1 = 6 kilohms along the top to node A. R2 = 3 kilohms from A down to ground. R3 = 2 kilohms along the top from A to node B. Load RL = 4 kilohms from B down to ground, with load current IL flowing downward. R4 = 6 kilohms along the top from B to the right, then 18 volt battery V2, positive on top, down to ground."}</script>
+  <figcaption>The ladder. Both batteries have their + plate on top. \(V_L\) is the voltage of node B relative to ground; \(I_L\) flows down through \(R_L\).</figcaption></figure>
+  <div class="q-answers">
+    <div class="ans" data-type="num" data-name="ieq" data-label="\(I_{eq}\)" data-value="0.005" data-unit="A"></div>
+    <div class="ans" data-type="num" data-name="req" data-label="\(R_{eq}\)" data-value="2400" data-unit="Ω"></div>
+    <div class="ans" data-type="num" data-name="vl" data-label="\(V_L\)" data-value="7.5" data-unit="V"></div>
+    <div class="ans" data-type="num" data-name="il" data-label="\(I_L\)" data-value="0.001875" data-unit="A"></div>
+  </div>
+  <div class="fb" data-for="ieq" data-match="0.007">4 mA + 3 mA: the 4 mA from transforming \(V_1\)–\(R_1\) was carried straight to node B. But \(R_3\) is in <em>series</em> between A and B, and a series resistor cannot be merged into a current-source/parallel-R pair. Transform the left part back to voltage form, add \(R_3\), then transform again.</div>
+  <div class="fb" data-for="ieq" data-match="0.006">This looks like \(R_2\) was skipped (24 V/(6 kΩ + 2 kΩ) = 3 mA, plus 3 mA). After the first transformation, the 6 kΩ and \(R_2\) both connect A to ground. Combine them in parallel before adding \(R_3\).</div>
+  <div class="fb" data-for="req" data-match="10000">You added the two final shunt resistors in series (4 kΩ + 6 kΩ). After both transformations they both connect node B to ground, so they are in <em>parallel</em>.</div>
+  <div class="fb" data-for="req" data-match="3428.57">That is 8 kΩ ∥ 6 kΩ, so \(R_2\) is missing from the left part. The 6 kΩ from the first transformation is in parallel with \(R_2\) before \(R_3\) is added in series.</div>
+  <div class="fb" data-for="req" data-match="1500">1.5 kΩ includes \(R_L\). \(R_{eq}\) is what the load <em>sees</em>, so leave the load out of the reduction (don't absorb it into a transformation). Bring it back only at the very end.</div>
+  <div class="fb" data-for="vl" data-match="12">12 V is \(I_{eq}R_{eq}\), the voltage at B with \(R_L\) disconnected. The load sits in parallel with \(R_{eq}\) and draws current, so the voltage across the combination is lower.</div>
+  <div class="fb" data-for="vl" data-match="10.5">This follows from \(I_{eq} = 7\ \text{mA}\): \(R_3\) was merged into a current-source pair. Transform back to a voltage source before adding a series resistor.</div>
+  <div class="fb" data-for="vl" data-match="14.2857">This uses \(R_{eq} = 10\ \text{k}\Omega\), the two final shunt resistors added in series. They both connect B to ground, so combine them in parallel.</div>
+  <div class="fb" data-for="il" data-match="0.005">Not all of \(I_{eq}\) goes through the load: \(R_{eq}\) is in parallel with \(R_L\) and takes its share. Use the current divider (or \(V_L/R_L\)).</div>
+  <div class="fb" data-for="il" data-match="0.003">12 V / 4 kΩ uses the open-circuit voltage at B. With \(R_L\) connected, B drops to \(I_{eq}(R_{eq}\parallel R_L)\).</div>
+  <div class="fb" data-for="il" data-match="0.002625">This is 10.5 V / 4 kΩ, which comes from \(I_{eq} = 7\ \text{mA}\). Check how \(R_3\) was handled: a series resistor needs the voltage form.</div>
+  <div class="q-hint">Start at the left end. Transform \(V_1\)–\(R_1\) into a current source, then look for resistors that are now in parallel.</div>
+  <div class="q-hint">Alternate the forms: the <b>current</b> form lets you combine <b>parallel</b> resistors, the <b>voltage</b> form lets you add <b>series</b> resistors. So transform back to voltage form before adding \(R_3\). Treat \(V_2\)–\(R_4\) the same way from the right.</div>
+  <div class="q-hint">After adding \(R_3\), the left part is 8 V in series with 4 kΩ, i.e. 2 mA ∥ 4 kΩ. The right part is 3 mA ∥ 6 kΩ. Both feed node B.</div>
+  <div class="q-solution">
+    <p class="step">1. <b>Transform \(V_1\)–\(R_1\)</b> (series pair, + toward A): \(I_1 = \dfrac{24\ \text{V}}{6\ \text{k}\Omega} = 4\ \text{mA}\), arrow up into A, in parallel with 6 kΩ.</p>
+    <p class="step">2. <b>Combine the parallel resistors at A.</b> The 6 kΩ and \(R_2\) both connect A to ground: \(6\ \text{k}\Omega \parallel 3\ \text{k}\Omega = \dfrac{6\cdot3}{6+3}\ \text{k}\Omega = 2\ \text{k}\Omega\). The left part is now 4 mA ∥ 2 kΩ.</p>
+    <p class="step">3. <b>Transform back, then add \(R_3\).</b> \(V = (4\ \text{mA})(2\ \text{k}\Omega) = 8\ \text{V}\) (+ toward A) in series with 2 kΩ. Now \(R_3\) is in series: \(2\ \text{k}\Omega + 2\ \text{k}\Omega = 4\ \text{k}\Omega\). The left part is 8 V in series with 4 kΩ, feeding B.</p>
+    <figure class="circuit"><script type="application/json">{"parts":[
+     {"t":"BAT","a":[0,5],"b":[0,1],"label":"8 V","side":-1},
+     {"t":"R","a":[0,1],"b":[4,1],"label":"4 kΩ","value":"(2 kΩ + R_3)"},
+     {"t":"N","at":[4,1],"label":"B","pos":"n"},
+     {"t":"R","a":[4,1],"b":[4,5],"label":"R_L","value":"4 kΩ"},
+     {"t":"R","a":[4,1],"b":[7,1],"label":"R_4","value":"6 kΩ"},
+     {"t":"BAT","a":[7,5],"b":[7,1],"label":"V_2","value":"18 V"},
+     {"t":"W","pts":[[0,5],[7,5]]},
+     {"t":"N","at":[4,5]},
+     {"t":"G","at":[2,5]}
+    ],"pad":1.4,"alt":"After step 3: an 8 volt battery, positive on top, in series with 4 kilohms feeds node B. RL = 4 kilohms from B to ground. R4 = 6 kilohms from B to the 18 volt battery V2, positive on top."}</script>
+    <figcaption>After step 3: the whole left side is 8 V in series with 4 kΩ.</figcaption></figure>
+    <p class="step">4. <b>Transform both voltage-source branches into current sources at B.</b> Left: \(\dfrac{8\ \text{V}}{4\ \text{k}\Omega} = 2\ \text{mA}\) ∥ 4 kΩ. Right: \(\dfrac{18\ \text{V}}{6\ \text{k}\Omega} = 3\ \text{mA}\) ∥ 6 kΩ. Both arrows point up into B (both + sides face B).</p>
+    <figure class="circuit"><script type="application/json">{"parts":[
+     {"t":"I","a":[0,5],"b":[0,1],"label":"2 mA","side":-1},
+     {"t":"R","a":[2,1],"b":[2,5],"label":"4 kΩ"},
+     {"t":"R","a":[4.5,1],"b":[4.5,5],"label":"R_L","value":"4 kΩ"},
+     {"t":"R","a":[7,1],"b":[7,5],"label":"6 kΩ"},
+     {"t":"I","a":[9,5],"b":[9,1],"label":"3 mA"},
+     {"t":"W","pts":[[0,1],[9,1]]},
+     {"t":"W","pts":[[0,5],[9,5]]},
+     {"t":"N","at":[4.5,1],"label":"B","pos":"n"},
+     {"t":"G","at":[4.5,5]}
+    ],"alt":"After step 4: everything between node B (top rail) and ground: a 2 milliampere source with arrow up, 4 kilohms, the load RL = 4 kilohms, 6 kilohms, and a 3 milliampere source with arrow up."}</script>
+    <figcaption>After step 4: two current sources and three resistors, all between B and ground.</figcaption></figure>
+    <p class="step">5. <b>Combine.</b> Parallel current sources add: \(I_{eq} = 2\ \text{mA} + 3\ \text{mA} = 5\ \text{mA}\). The source resistors are in parallel: \(R_{eq} = 4\ \text{k}\Omega \parallel 6\ \text{k}\Omega = \dfrac{24}{10}\ \text{k}\Omega = 2.4\ \text{k}\Omega\).</p>
+    <p class="step">6. <b>Bring back the load.</b> \(R_{eq} \parallel R_L = \dfrac{2.4\cdot4}{2.4+4}\ \text{k}\Omega = 1.5\ \text{k}\Omega\), so \(V_L = I_{eq}(R_{eq}\parallel R_L) = (5\ \text{mA})(1.5\ \text{k}\Omega) = 7.5\ \text{V}\) and \(I_L = \dfrac{V_L}{R_L} = \dfrac{7.5\ \text{V}}{4\ \text{k}\Omega} = 1.875\ \text{mA}\). (Current divider: \(5\ \text{mA}\cdot\dfrac{2.4}{2.4+4} = 1.875\ \text{mA}\).)</p>
+    <p class="step">7. <b>Verify by nodal analysis</b> of the original circuit (ground at the bottom). KCL at A: \(\dfrac{V_A-24}{6\text{k}} + \dfrac{V_A}{3\text{k}} + \dfrac{V_A-V_B}{2\text{k}} = 0\). KCL at B: \(\dfrac{V_B-V_A}{2\text{k}} + \dfrac{V_B-18}{6\text{k}} + \dfrac{V_B}{4\text{k}} = 0\). Multiply by 6 kΩ and 12 kΩ: \(6V_A - 3V_B = 24\) and \(-6V_A + 11V_B = 36\). Adding them gives \(8V_B = 60\), so \(V_B = 7.5\ \text{V}\) and \(V_A = 7.75\ \text{V}\) ✔.</p>
+    <p class="answer">\(I_{eq} = 5\ \text{mA}\) (up into B), \(R_{eq} = 2.4\ \text{k}\Omega\); \(V_L = 7.5\ \text{V}\), \(I_L = 1.875\ \text{mA}\).</p>
+  </div>
+  <div class="q-check">KCL at B with the node voltages: current arriving through \(R_3\) is \((7.75-7.5)/2\ \text{k}\Omega = 0.125\ \text{mA}\), and through \(R_4\) it is \((18-7.5)/6\ \text{k}\Omega = 1.75\ \text{mA}\). Their sum is 1.875 mA = \(I_L\) ✔. Bounds: \(V_L\) must be less than the open-circuit value \(I_{eq}R_{eq} = 12\ \text{V}\) (the load pulls it down) and, like every node voltage in this circuit, it must lie between 0 V and the largest source voltage (24 V). The Thévenin form gives the same result: 12 V in series with 2.4 kΩ into 4 kΩ gives \(12/6.4\ \text{k} = 1.875\ \text{mA}\) ✔.</div>
+  <div class="q-links">Links back: <a class="xref" data-lesson="st1" data-sec="st1-idea">Source transformation rule (same R, I = V/R, V = IR)</a> · <a class="xref" data-lesson="mt1" data-sec="mt1-step1">Millman step 1: transform every branch</a> · <a class="xref" data-lesson="tn2" data-sec="tn2-norton-theorem">Norton form (I_N ∥ R_N)</a> · lesson st1 at <a class="ts" data-lesson="st1" data-t="6:08"></a> (it takes experience to see when a transformation helps) · lesson mt1 at <a class="ts" data-lesson="mt1" data-t="5:40"></a> (a source transformation on each voltage source) and <a class="ts" data-lesson="mt1" data-t="20:07"></a> (transforming back)</div>
+</article>
+
+<article class="q" id="srcxform-q4" data-level="4" data-kind="troubleshooting" data-title="Debug a student's transformation (and the power trap)">
+  <div class="q-prompt">
+    <p>In the original circuit (first figure), a current source \(I_s = 5\ \text{mA}\) (arrow up) and \(R_s = 2\ \text{k}\Omega\) both connect node x to ground. From x, a \(V_2 = 5\ \text{V}\) source in the top wire (+ on the right, toward node y) leads to node y. The load \(R_L = 3\ \text{k}\Omega\) connects y to ground. \(V_L\) is the voltage of y with respect to ground.</p>
+    <p>A student transforms the \(I_s\)–\(R_s\) pair and draws the second figure. From it they find \(V_L = -3\ \text{V}\). They also compute the power in \(R_s\) from their drawing as \((1\ \text{mA})^2(2\ \text{k}\Omega) = 2\ \text{mW}\).</p>
+    <p>(a) Find the correct \(V_L\). (b) What is wrong in the student's transformed circuit? (c) Find the power actually dissipated in \(R_s\) in the <b>original</b> circuit (in W or mW).</p>
+  </div>
+  <figure class="circuit"><script type="application/json">{"parts":[
+   {"t":"I","a":[0,5],"b":[0,1],"label":"I_s","value":"5 mA","side":-1},
+   {"t":"W","pts":[[0,1],[2.5,1]]},
+   {"t":"R","a":[2.5,1],"b":[2.5,5],"label":"R_s","value":"2 kΩ"},
+   {"t":"N","at":[2.5,1],"label":"x","pos":"n"},
+   {"t":"BAT","a":[2.5,1],"b":[6,1],"label":"V_2","value":"5 V","lpos":[0,-1.25]},
+   {"t":"W","pts":[[6,1],[8,1]]},
+   {"t":"N","at":[8,1],"label":"y","pos":"n"},
+   {"t":"R","a":[8,1],"b":[8,5],"label":"R_L","value":"3 kΩ","side":-1},
+   {"t":"VM","a":[9.2,1.6],"b":[9.2,4.4],"label":"V_L"},
+   {"t":"W","pts":[[0,5],[8,5]]},
+   {"t":"N","at":[2.5,5]},
+   {"t":"G","at":[5,5]}
+  ],"pad":1.9,"padX":1.5,"alt":"Original circuit: a 5 milliampere current source with arrow up and a 2 kilohm resistor Rs, both between node x and ground. From x, a 5 volt battery V2 in the top wire with its positive plate on the right leads to node y. A 3 kilohm load RL connects y to ground; VL is marked plus at y, minus at ground."}</script>
+  <figcaption>Original circuit. \(V_2\) has its long plate (+) on the right, toward y.</figcaption></figure>
+  <figure class="circuit"><script type="application/json">{"parts":[
+   {"t":"BAT","a":[0,5],"b":[0,1],"label":"10 V","plus":"a","side":-1},
+   {"t":"R","a":[0,1],"b":[2.5,1],"label":"R_s","value":"2 kΩ"},
+   {"t":"N","at":[2.5,1],"label":"x","pos":"n"},
+   {"t":"BAT","a":[2.5,1],"b":[6,1],"label":"V_2","value":"5 V","lpos":[0,-1.25]},
+   {"t":"W","pts":[[6,1],[8,1]]},
+   {"t":"N","at":[8,1],"label":"y","pos":"n"},
+   {"t":"R","a":[8,1],"b":[8,5],"label":"R_L","value":"3 kΩ","side":-1},
+   {"t":"W","pts":[[0,5],[8,5]]},
+   {"t":"G","at":[4,5]},
+   {"t":"T","at":[4,6.7],"text":"student: V_L = −3 V","anchor":"middle","cls":"accent"}
+  ],"pad":1.9,"padX":1.5,"alt":"The student's transformed circuit: a 10 volt battery on the left with its positive (long) plate at the bottom, in series with Rs = 2 kilohms in the top wire to node x, then the 5 volt battery V2 (positive on the right) to node y, and the 3 kilohm load from y to ground. The student's result is VL = minus 3 volts."}</script>
+  <figcaption>The student's transformed circuit, exactly as drawn: the 10 V battery has its long plate (+) at the bottom.</figcaption></figure>
+  <div class="q-answers">
+    <div class="ans" data-type="num" data-name="vl" data-label="(a) \(V_L\)" data-value="9" data-unit="V"></div>
+    <div class="ans" data-type="mc" data-name="err" data-label="(b) The student's error" data-correct="a">
+      <div class="opt" data-v="a">The 10 V source is upside down: its + terminal must be on top, at the end the 5 mA arrow pointed to.<span class="opt-fb">Correct. Open-circuit test of the pair: the arrow pushes 5 mA up into x and it returns down through \(R_s\), so x sits at \(+10\ \text{V}\). The transformed pair must give the same, so + goes on top. Drawn upside down, the 10 V opposes \(V_2\) instead of aiding it.</span></div>
+      <div class="opt" data-v="b">\(R_s\) should have stayed in parallel with the new 10 V source instead of being moved into series.<span class="opt-fb">Wrong — moving \(R_s\) into series is the right step for I → V. A resistor in parallel with an ideal voltage source does nothing at the terminals. If \(R_s\) stayed there, the 10 V would sit directly across x–ground, and you would get \(V_L = 10 + 5 = 15\ \text{V}\).</span></div>
+      <div class="opt" data-v="c">The load should have been included: the pair should become \(5\ \text{mA}\times(2\ \text{k}\Omega + 3\ \text{k}\Omega) = 25\ \text{V}\) in series with 5 kΩ.<span class="opt-fb">Wrong — never absorb the load into a transformation. Only the current source and the resistor directly in parallel with it (\(R_s\)) form the pair. \(R_L\) is not in parallel with \(I_s\) (\(V_2\) is in between), and once it is absorbed, \(V_L\) can no longer be read off.</span></div>
+      <div class="opt" data-v="d">The value 10 V is too large: only part of the 5 mA flows through \(R_s\) once the load is connected, so the voltage source should be smaller.<span class="opt-fb">Wrong — the transformed value depends only on the pair itself: \(V = I_sR_s = 10\ \text{V}\), whatever is connected outside. The current split is what the rest of the analysis works out. It is not built into the transformation.</span></div>
+    </div>
+    <div class="ans" data-type="num" data-name="prs" data-label="(c) \(P_{R_s}\) (original circuit)" data-value="0.008" data-unit="W"></div>
+  </div>
+  <div class="fb" data-for="vl" data-match="-3">That is the student's result. Re-check the I → V step: which end of the new 10 V source must be + so that x has the same open-circuit voltage as in the original?</div>
+  <div class="fb" data-for="vl" data-match="15">15 V means the 2 kΩ dropped out of the loop: you left \(R_s\) in parallel with the 10 V source, where it has no effect. In the I → V direction the resistor moves into <em>series</em> with the new source.</div>
+  <div class="fb" data-for="vl" data-match="4">4 V is the voltage of node x (the top of the current source), not of y. The load is on the far side of \(V_2\), which lifts y above x.</div>
+  <div class="fb" data-for="vl" data-match="6">6 V = 10 V × 3/(2 + 3) leaves out \(V_2\). The 5 V source is in the same loop, and with the correct polarity it aids the 10 V source.</div>
+  <div class="fb" data-for="prs" data-match="0.018">18 mW is the power in the 2 kΩ of the (correct) <em>transformed</em> circuit, \((3\ \text{mA})^2(2\ \text{k}\Omega)\). The two forms match only at the pair's terminals (x and ground). In the original circuit \(R_s\) has \(V_x\) across it and carries a different current.</div>
+  <div class="fb" data-for="prs" data-match="0.05">\((5\ \text{mA})^2(2\ \text{k}\Omega)\) assumes all of \(I_s\) flows through \(R_s\). That is only true with nothing connected at x. Here part of the 5 mA continues through \(V_2\) to the load.</div>
+  <div class="fb" data-for="prs" data-match="0.002">That is the student's value from the reversed circuit. Even the corrected transformed circuit would not give the power in \(R_s\) of the original. Find \(V_x\) and use the original connection of \(R_s\).</div>
+  <div class="q-hint">Check each feature of the student's 10 V source against the I → V rule: the value (\(V = IR\)), where the resistor goes (series), and which end is +.</div>
+  <div class="q-hint">With nothing connected at x, the original pair pushes all 5 mA up into x and down through \(R_s\), so \(v_x = +10\ \text{V}\). Put the + of the 10 V source where it reproduces that, then write KVL around the single loop (both sources, \(R_s\), \(R_L\)).</div>
+  <div class="q-hint">The correct loop current is 3 mA and node x sits at 4 V. Node x is a terminal of the transformed pair, so \(V_x\) is the same in both circuits. The current in \(R_s\) is not.</div>
+  <div class="q-solution">
+    <p class="step">1. <b>Redo the transformation.</b> The pair is \(I_s \parallel R_s\) between x and ground. \(V = I_sR_s = (5\ \text{mA})(2\ \text{k}\Omega) = 10\ \text{V}\), with \(R_s = 2\ \text{k}\Omega\) in series, and + at the end the arrow points to: the top, toward x. The student's value and resistor placement are right, but the polarity is reversed. That is error (b) = option a.</p>
+    <figure class="circuit"><script type="application/json">{"parts":[
+     {"t":"BAT","a":[0,5],"b":[0,1],"label":"10 V","side":-1},
+     {"t":"R","a":[0,1],"b":[2.5,1],"label":"R_s","value":"2 kΩ"},
+     {"t":"N","at":[2.5,1],"label":"x","pos":"n"},
+     {"t":"BAT","a":[2.5,1],"b":[6,1],"label":"V_2","value":"5 V","lpos":[0,-1.25]},
+     {"t":"W","pts":[[6,1],[8,1]]},
+     {"t":"N","at":[8,1],"label":"y","pos":"n"},
+     {"t":"R","a":[8,1],"b":[8,5],"label":"R_L","value":"3 kΩ","side":-1},
+     {"t":"IARR","a":[8,1.2],"b":[8,2.3],"label":"3 mA"},
+     {"t":"W","pts":[[0,5],[8,5]]},
+     {"t":"G","at":[4,5]}
+    ],"pad":1.9,"padX":1.5,"alt":"Corrected transformed circuit: a 10 volt battery with its positive plate on top, in series with Rs = 2 kilohms to node x, then V2 = 5 volts (positive toward y) to node y, and RL = 3 kilohms to ground. The loop current is 3 milliamperes, flowing down through RL."}</script>
+    <figcaption>Corrected transformed circuit: + of the 10 V source on top. Both sources now drive the loop current clockwise.</figcaption></figure>
+    <p class="step">2. <b>KVL around the loop</b> (clockwise from ground, current \(I\) clockwise): \(+10\ \text{V} - I(2\ \text{k}\Omega) + 5\ \text{V} - I(3\ \text{k}\Omega) = 0\), so \(I = \dfrac{15\ \text{V}}{5\ \text{k}\Omega} = 3\ \text{mA}\).</p>
+    <p class="step">3. <b>Load voltage:</b> \(V_L = I R_L = (3\ \text{mA})(3\ \text{k}\Omega) = 9\ \text{V}\).</p>
+    <p class="step">4. <b>Node x</b> (a terminal of the pair, so valid in both forms): \(V_x = V_L - V_2 = 9 - 5 = 4\ \text{V}\). Equivalently, \(V_x = 10\ \text{V} - (3\ \text{mA})(2\ \text{k}\Omega) = 4\ \text{V}\).</p>
+    <p class="step">5. <b>Power in \(R_s\) in the original circuit.</b> There, \(R_s\) is connected from x to ground, so it has \(V_x\) across it: \(P_{R_s} = \dfrac{V_x^2}{R_s} = \dfrac{(4\ \text{V})^2}{2000\ \Omega} = 0.008\ \text{W} = 8\ \text{mW}\). Its current is \(4\ \text{V}/2\ \text{k}\Omega = 2\ \text{mA}\), and KCL at x gives \(5 = 2 + 3\) mA ✔. In the transformed circuit, the same-valued 2 kΩ carries the 3 mA loop current and dissipates \((3\ \text{mA})^2(2\ \text{k}\Omega) = 18\ \text{mW}\). That is a different number, because the equivalence holds only at x and ground.</p>
+    <p class="answer">(a) \(V_L = 9\ \text{V}\). (b) Option a: the transformed 10 V source must have + on top, toward x. (c) \(P_{R_s} = 8\ \text{mW}\), not the 18 mW the transformed circuit's 2 kΩ dissipates.</p>
+  </div>
+  <div class="q-check">Sign sense: the current source pushes current up into x, and \(V_2\) raises y above x. Both act to make y positive, so a negative \(V_L\) is a red flag. Power balance, original circuit: \(I_s\) delivers \(V_xI_s = 4\ \text{V}\times5\ \text{mA} = 20\ \text{mW}\) and \(V_2\) delivers \(5\ \text{V}\times3\ \text{mA} = 15\ \text{mW}\). The resistors absorb \(8\ \text{mW}\ (R_s) + 9^2/3000\ \text{W} = 27\ \text{mW}\ (R_L)\) = 35 mW ✔. Transformed circuit: \(10\ \text{V}\times3\ \text{mA} + 15\ \text{mW} = 45\ \text{mW} = 18 + 27\) ✔. \(R_L\) gets the same 27 mW in both; only the internal split differs.</div>
+  <div class="q-links">Links back: <a class="xref" data-lesson="st1" data-sec="st1-ex2">Example 2: 2 A ∥ 3 Ω → 6 V + 3 Ω (+ where the arrow pointed)</a> · <a class="xref" data-lesson="st1" data-sec="st1-mistakes">Common mistakes (arrow direction, keeping R in the wrong place)</a> · <a class="xref" data-lesson="st1" data-sec="st1-assumptions">Equivalent only at the terminals</a> · lesson st1 at <a class="ts" data-lesson="st1" data-t="5:44"></a> (V = IR, the resistor stays 3 Ω) and <a class="ts" data-lesson="st1" data-t="6:12"></a> (Example 2 drawn with + on the side the arrow pointed to) · lesson mt1 at <a class="ts" data-lesson="mt1" data-t="22:57"></a> (Norton → voltage form, \(V = I_NR_N\))</div>
+</article>

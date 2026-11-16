@@ -1,0 +1,536 @@
+<article class="q" id="thevenin-q1" data-level="1" data-kind="conceptual" data-title="Turning sources off for R&lt;sub&gt;TH&lt;/sub&gt;: what stays, what vanishes">
+  <div class="q-prompt">
+    <p>The circuit below contains an independent voltage source \(V_s = 12\,\text{V}\) (+ on top) and an independent current source \(I_s = 2\,\text{mA}\) (arrow pointing up). The current source is in a branch in series with \(R_4 = 5\,\text{k}\Omega\); that branch runs from the bottom rail up to the top rail at node x. \(R_1 = 6\,\text{k}\Omega\) feeds node x from the source, \(R_2 = 3\,\text{k}\Omega\) goes from x to the bottom rail, and \(R_3 = 2\,\text{k}\Omega\) leads from x to the open terminal a. Terminal b is the bottom rail.</p>
+    <p>You want the Thévenin resistance \(R_{TH}\) seen from terminals a–b. Answer both parts:</p>
+    <p><strong>(1)</strong> When you deactivate the sources to find \(R_{TH}\), what happens to \(R_4\)?<br><strong>(2)</strong> What is \(R_{TH}\)?</p>
+  </div>
+  <figure class="circuit"><script type="application/json">{"parts":[
+ {"t":"T","at":[1,-1.5],"text":" "},
+ {"t":"V","a":[0,6],"b":[0,0],"plus":"b","label":"V_s","value":"12 V","side":-1},
+ {"t":"W","pts":[[0,0],[1,0]]},
+ {"t":"R","a":[1,0],"b":[4,0],"label":"R_1","value":"6 kΩ"},
+ {"t":"W","pts":[[4,0],[9.5,0]]},
+ {"t":"N","at":[5,0],"label":"x","pos":"n"},
+ {"t":"R","a":[5,0],"b":[5,6],"label":"R_2","value":"3 kΩ"},
+ {"t":"N","at":[8,0]},
+ {"t":"R","a":[8,0],"b":[8,2.6],"label":"R_4","value":"5 kΩ"},
+ {"t":"I","a":[8,6],"b":[8,2.6],"label":"I_s","value":"2 mA"},
+ {"t":"R","a":[9.5,0],"b":[12.5,0],"label":"R_3","value":"2 kΩ"},
+ {"t":"W","pts":[[12.5,0],[13.5,0]]},
+ {"t":"N","at":[13.5,0],"open":true,"label":"a","pos":"e"},
+ {"t":"W","pts":[[0,6],[13.5,6]]},
+ {"t":"N","at":[5,6]},{"t":"N","at":[8,6]},
+ {"t":"N","at":[13.5,6],"open":true,"label":"b","pos":"e"}
+],"alt":"A 12 V source V_s, positive on top, feeds R1 = 6 kilohm to node x on the top rail. From x, R2 = 3 kilohm goes down to the bottom rail. Further right, a branch runs from the bottom rail up through a 2 mA current source I_s (arrow up) and then R4 = 5 kilohm to the top rail. The top rail continues through R3 = 2 kilohm to open terminal a. Terminal b is the bottom rail."}</script>
+    <figcaption>Circuit for question 1. Terminals a (top) and b (bottom rail) are open.</figcaption></figure>
+  <div class="q-answers">
+    <div class="ans" data-type="mc" data-name="r4" data-label="(1) What happens to \(R_4\) when the sources are deactivated?" data-correct="b">
+      <div class="opt" data-v="a">\(R_4\) ends up in parallel with \(R_2\), because the deactivated current source becomes a wire.<span class="opt-fb">Not right. That is what happens if you <em>short</em> the current source. A current source turned off means 0 A flows whatever the voltage, and the element that behaves like that is an open circuit. Replace \(I_s\) by a gap, not by a wire.</span></div>
+      <div class="opt" data-v="b">\(R_4\) drops out. The current source is replaced by an open, so \(R_4\) has one end dangling and cannot carry any current.<span class="opt-fb">Right. A deactivated current source is 0 A, which is an open circuit. The lower end of \(R_4\) then connects to nothing, so a test current from a to b can never pass through it, and it has no effect on \(R_{TH}\). (It has no effect on \(V_{TH}\) either: an ideal current source forces 2 mA through its own branch whatever \(R_4\) is.)</span></div>
+      <div class="opt" data-v="c">\(R_4\) is in series with \(R_3\) on the way to terminal a.<span class="opt-fb">Not right. Trace a test current entering at a: it goes through \(R_3\) and arrives at the top rail at node x. \(R_4\) is not on that path; it hangs off the rail in a separate branch. Touching the same node does not make two resistors "series". Series means the same current must flow through both.</span></div>
+      <div class="opt" data-v="d">\(R_4\) is shorted out by the wire that replaces \(V_s\).<span class="opt-fb">Not right. A short removes a resistor only if it connects that resistor's two ends together (the Q&amp;A in the first Thévenin lecture). The wire that replaces \(V_s\) joins the left end of \(R_1\) to the bottom rail. It does not span \(R_4\). What actually removes \(R_4\) is the <em>open</em> current source.</span></div>
+    </div>
+    <div class="ans" data-type="mc" data-name="rth" data-label="(2) \(R_{TH}\) seen from a–b" data-correct="c">
+      <div class="opt" data-v="a">\(R_{TH} = 2.00\,\text{k}\Omega\)<span class="opt-fb">This is \(R_1 \parallel R_2\) alone, so \(R_3\) was left out. \(R_3\) carries no current while you find \(V_{TH}\), because it leads to an open terminal. But for \(R_{TH}\) a test current entering at a must pass through it. Keep it: \(R_{TH} = R_3 + R_1 \parallel R_2\).</span></div>
+      <div class="opt" data-v="b">\(R_{TH} = 3.43\,\text{k}\Omega\)<span class="opt-fb">This is \(R_3 + (R_1 \parallel R_2 \parallel R_4) = 2 + 1.43\,\text{k}\Omega\). That is what you get if you <em>short</em> the current source, so that \(R_4\) becomes a third branch between the rails. Current sources are opened, not shorted.</span></div>
+      <div class="opt" data-v="c">\(R_{TH} = 4.00\,\text{k}\Omega\)<span class="opt-fb">Correct. Shorting \(V_s\) puts \(R_1\) between x and the bottom rail, in parallel with \(R_2\): \(6 \parallel 3 = 2\,\text{k}\Omega\). Opening \(I_s\) removes \(R_4\). Then add \(R_3\) in series: \(2 + 2 = 4\,\text{k}\Omega\).</span></div>
+      <div class="opt" data-v="d">\(R_{TH} = 5.00\,\text{k}\Omega\)<span class="opt-fb">This is \(R_3 + R_2\). It means \(V_s\) was opened (just removed) instead of being replaced by a wire, which leaves \(R_1\) dangling. A voltage source turned off is 0 V, which is a short, and that short puts \(R_1\) in parallel with \(R_2\).</span></div>
+    </div>
+  </div>
+  <div class="q-hint">For \(R_{TH}\), every <em>independent</em> source is turned off. Ask what each source becomes when its value is set to zero: a 0 V source, and a 0 A source.</div>
+  <div class="q-hint">Something with 0 V across it whatever the current is a wire. Something with 0 A through it whatever the voltage is a gap (an open). Redraw the circuit with \(V_s \to\) wire and \(I_s \to\) open, then check which resistors a test current from a to b can actually reach.</div>
+  <div class="q-hint">After the redraw, \(R_1\) runs from node x down to the bottom rail (through the wire that replaced \(V_s\)), right beside \(R_2\): \(R_1 \parallel R_2 = 2\,\text{k}\Omega\). Now look at which resistor every path from a has to pass through first.</div>
+  <div class="q-solution">
+    <p class="step"><strong>1. Deactivate the independent sources.</strong> The voltage source becomes a short (0 V), exactly as in the lectures. The current source becomes an open (0 A). The lectures only ever short voltage sources; the current-source rule is in the guide's additional-teaching box.</p>
+    <figure class="circuit"><script type="application/json">{"parts":[
+ {"t":"T","at":[1,-1.5],"text":" "},
+ {"t":"W","pts":[[0,6],[0,0],[1,0]]},
+ {"t":"T","at":[-0.3,3.1],"text":"short\n(was V_s)","anchor":"end","cls":"muted"},
+ {"t":"T","at":[-2.4,0],"text":" "},
+ {"t":"R","a":[1,0],"b":[4,0],"label":"R_1","value":"6 kΩ"},
+ {"t":"W","pts":[[4,0],[9.5,0]]},
+ {"t":"N","at":[5,0],"label":"x","pos":"n"},
+ {"t":"R","a":[5,0],"b":[5,6],"label":"R_2","value":"3 kΩ"},
+ {"t":"N","at":[8,0]},
+ {"t":"R","a":[8,0],"b":[8,2.6],"label":"R_4","value":"5 kΩ"},
+ {"t":"N","at":[8,2.6],"open":true},
+ {"t":"N","at":[8,4.4],"open":true},
+ {"t":"W","pts":[[8,4.4],[8,6]]},
+ {"t":"T","at":[8.4,3.6],"text":"open (was I_s)","anchor":"start","cls":"muted"},
+ {"t":"R","a":[9.5,0],"b":[12.5,0],"label":"R_3","value":"2 kΩ"},
+ {"t":"W","pts":[[12.5,0],[13.5,0]]},
+ {"t":"N","at":[13.5,0],"open":true,"label":"a","pos":"e"},
+ {"t":"W","pts":[[0,6],[13.5,6]]},
+ {"t":"N","at":[5,6]},{"t":"N","at":[8,6]},
+ {"t":"N","at":[13.5,6],"open":true,"label":"b","pos":"e"}
+],"alt":"The question 1 circuit with V_s replaced by a wire and I_s replaced by a gap. R4 now has its lower end unconnected. R1 runs from node x through the wire to the bottom rail, in parallel with R2; R3 leads from x to terminal a."}</script>
+      <figcaption>Sources deactivated (added for clarity): \(V_s\) is a wire, \(I_s\) is a gap.</figcaption></figure>
+    <p class="step"><strong>2. Part (1): \(R_4\).</strong> With \(I_s\) open, the lower end of \(R_4\) connects to nothing. No current can flow through a resistor with a dangling end, so \(R_4\) has no effect on \(R_{TH}\). Answer <strong>(b)</strong>.</p>
+    <p class="step"><strong>3. Parallel pair.</strong> Imagine a test current entering at a. It passes \(R_3\) and reaches node x, where it divides. Part goes down \(R_2\). The rest goes left through \(R_1\) and down the wire that replaced \(V_s\). Both parts rejoin on the bottom rail (b). Dividing node x and summing node b bound a parallel group:
+      \(R_1 \parallel R_2 = \dfrac{6 \times 3}{6 + 3} = \dfrac{18}{9} = 2\,\text{k}\Omega\).</p>
+    <p class="step"><strong>4. Series resistor.</strong> Every path from a starts through \(R_3\), so \(R_3\) is in series with the pair: \(R_{TH} = 2 + 2 = 4\,\text{k}\Omega\).</p>
+    <p class="answer">(1) (b): \(R_4\) drops out. (2) (c): \(R_{TH} = R_3 + R_1 \parallel R_2 = 4\,\text{k}\Omega\).</p>
+    <p class="step">For completeness (not asked): with both sources on and a–b open, KCL at x gives \(\frac{V_x - 12}{6\,\text{k}} + \frac{V_x}{3\,\text{k}} = 2\,\text{mA}\), so \(V_x = 8\,\text{V}\). \(R_3\) leads to an open terminal and drops 0 V, so \(V_{TH} = 8\,\text{V}\) (a positive). The Thévenin equivalent is 8 V in series with 4 kΩ.</p>
+  </div>
+  <div class="q-check">
+    <p><strong>Bounds.</strong> Every path from a starts through \(R_3\), so \(R_{TH} \ge R_3 = 2\,\text{k}\Omega\). The rest is a parallel pair, which must be smaller than its smallest branch (3 kΩ). So \(2\,\text{k}\Omega \lt R_{TH} \lt 5\,\text{k}\Omega\), and 4 kΩ fits.</p>
+    <p><strong>Does \(R_4\) really vanish?</strong> Try any other value for \(R_4\), even 50 kΩ. Neither \(V_{TH}\) nor \(R_{TH}\) changes (checked by full nodal analysis). A resistor in series with an ideal current source never shows up at the terminals.</p>
+    <p><strong>Lab version.</strong> To measure \(R_{TH}\) with an ohmmeter you would take the current source out (leave a gap) and put a wire where the voltage source was. You never short a real supply itself.</p>
+  </div>
+  <div class="q-links">Links back: <a class="xref" data-lesson="tn1" data-sec="tn1-rth">Finding \(R_{TH}\) (incl. the current-source box)</a> · <a class="xref" data-lesson="tn1" data-sec="tn1-qa">When does a short remove a resistor?</a> · <a class="xref" data-lesson="tn2" data-sec="tn2-thev-rth">\(R_{TH}\) as a separate problem</a> · \(R_{TH}\) definition <a class="ts" data-lesson="tn1" data-t="25:05"></a> · shorting a source = the superposition "disable" step <a class="ts" data-lesson="tn1" data-t="25:16"></a> · short in parallel makes a resistor disappear <a class="ts" data-lesson="tn1" data-t="44:35"></a> · deactivating the source in a worked example <a class="ts" data-lesson="tn2" data-t="14:21"></a></div>
+</article>
+
+<article class="q" id="thevenin-q2" data-level="2" data-kind="calculation" data-title="Thévenin with a voltage source and a current source (watch the sign)">
+  <div class="q-prompt">
+    <p>Find the Thévenin equivalent of the circuit below, seen from terminals a–b. Values: \(V_s = 24\,\text{V}\) (+ on top), \(R_1 = 4\,\Omega\), \(R_2 = 12\,\Omega\), \(R_3 = 2\,\Omega\), \(R_4 = 6\,\Omega\), and an ideal current source \(I_s = 5\,\text{A}\) whose arrow points <em>down</em>, from node y to the bottom rail. Terminal b is the bottom rail (the source's − side). Nothing is connected to a–b.</p>
+    <p>Report \(V_{TH} = V_{ab} = V_a - V_b\) in volts <strong>with its sign</strong> (a negative value means terminal b is the + terminal of the equivalent source), and \(R_{TH}\) in Ω.</p>
+  </div>
+  <figure class="circuit"><script type="application/json">{"parts":[
+ {"t":"T","at":[1,-1.5],"text":" "},
+ {"t":"V","a":[0,4],"b":[0,0],"plus":"b","label":"V_s","value":"24 V","side":-1},
+ {"t":"W","pts":[[0,0],[1,0]]},
+ {"t":"R","a":[1,0],"b":[4,0],"label":"R_1","value":"4 Ω"},
+ {"t":"W","pts":[[4,0],[6,0]]},
+ {"t":"N","at":[5,0],"label":"x","pos":"n"},
+ {"t":"R","a":[5,0],"b":[5,4],"label":"R_2","value":"12 Ω"},
+ {"t":"R","a":[6,0],"b":[9,0],"label":"R_3","value":"2 Ω"},
+ {"t":"W","pts":[[9,0],[11,0]]},
+ {"t":"N","at":[10,0],"label":"y","pos":"n"},
+ {"t":"I","a":[10,0],"b":[10,4],"label":"I_s","value":"5 A"},
+ {"t":"R","a":[11,0],"b":[14,0],"label":"R_4","value":"6 Ω"},
+ {"t":"W","pts":[[14,0],[15,0]]},
+ {"t":"N","at":[15,0],"open":true,"label":"a","pos":"e"},
+ {"t":"W","pts":[[0,4],[15,4]]},
+ {"t":"N","at":[5,4]},{"t":"N","at":[10,4]},
+ {"t":"N","at":[15,4],"open":true,"label":"b","pos":"e"}
+],"alt":"A 24 V source V_s, positive on top, feeds R1 = 4 ohm to node x. R2 = 12 ohm goes from x down to the bottom rail. R3 = 2 ohm continues from x to node y. A 5 A current source I_s goes from y down to the bottom rail, arrow pointing down. R4 = 6 ohm leads from y to open terminal a. Terminal b is the bottom rail."}</script>
+    <figcaption>Circuit for question 2. The current-source arrow points down, from y to the bottom rail.</figcaption></figure>
+  <div class="q-answers">
+    <div class="ans" data-type="num" data-name="vth" data-label="\(V_{TH} = V_a - V_b\)" data-value="-7" data-unit="V" data-tol="0.02"></div>
+    <div class="ans" data-type="num" data-name="rth" data-label="\(R_{TH}\)" data-value="11" data-unit="Ω" data-tol="0.02"></div>
+  </div>
+  <div class="fb" data-for="vth" data-match="7" data-tol="0.02">Right size, wrong sign. You found \(V_b - V_a\), or assumed a is the + terminal. Measure every node voltage from the bottom rail (b = 0 V). Node y ends up <em>below</em> 0 V, so a is lower than b and \(V_{TH} = V_a - V_b\) is negative. In the equivalent, the source's + faces b.</div>
+  <div class="fb" data-for="vth" data-match="18" data-tol="0.02">18 V is the open-circuit voltage from \(V_s\) alone (the divider value at node x). You left out, or switched off, the current source. Sources are deactivated only for \(R_{TH}\). For \(V_{TH}\) every source stays on, so add the current source's contribution (superposition), or include it in your KCL.</div>
+  <div class="fb" data-for="vth" data-match="3" data-tol="0.02">3 V is the voltage at node x. You treated \(R_3\) like a resistor leading to an open terminal and assumed it drops 0 V. It doesn't lead to a dead end: the current source pulls 5 A out of node y, and that 5 A can only arrive through \(R_3\). Only \(R_4\) carries no current.</div>
+  <div class="fb" data-for="vth" data-match="-3.818" data-tol="0.02">You let \(R_4\) carry current, as if its right-hand end were connected to b. That is the voltage you would get with \(R_4\) acting as a load across y–b. With a–b open, nothing completes \(R_4\)'s path, so it carries 0 A and drops 0 V: \(V_a = V_y\).</div>
+  <div class="fb" data-for="rth" data-match="6" data-tol="0.02">6 Ω is \(R_4\) alone. That is what you get if the current source is replaced by a wire, which shorts node y straight to the bottom rail. A current source turned off (0 A) is an open circuit, not a short.</div>
+  <div class="fb" data-for="rth" data-match="20" data-tol="0.02">20 Ω \(= R_4 + R_3 + R_2\): the voltage source was removed (left as a gap), so \(R_1\) is dangling. A voltage source turned off (0 V) is a short. That wire puts \(R_1\) in parallel with \(R_2\).</div>
+  <div class="fb" data-for="rth" data-match="5" data-tol="0.02">5 Ω leaves out \(R_4\). \(R_4\) carried no current in the \(V_{TH}\) problem, but \(R_{TH}\) is a new problem: a test current entering at a passes straight through \(R_4\). Redraw the circuit and keep every resistor.</div>
+  <div class="q-hint">\(V_{TH}\): leave a–b open and keep <em>both</em> sources on. \(R_4\) leads to an open terminal, so it carries no current and \(V_a = V_y\). \(R_3\) is different: the current source pulls current out of node y, and that current can only come through \(R_3\).</div>
+  <div class="q-hint">Superposition works well. (i) \(V_s\) alone, with \(I_s\) opened: a voltage divider sets node x, and nothing flows to the right of x. (ii) \(I_s\) alone, with \(V_s\) shorted: the 5 A flows up through \(R_1 \parallel R_2\), then through \(R_3\) into the current source. Add the two values of \(V_a\). For \(R_{TH}\): short \(V_s\), open \(I_s\), and redraw.</div>
+  <div class="q-hint">Intermediate values: \(V_s\) alone gives \(V_a = +18\,\text{V}\); \(I_s\) alone gives \(V_a = -25\,\text{V}\). With both sources on, \(V_x = 3\,\text{V}\) and \(V_y = V_x - (5\,\text{A})(2\,\Omega)\).</div>
+  <div class="q-solution">
+    <p><strong>Part 1: \(V_{TH}\)</strong> (a–b open, both sources on, superposition; b = 0 V reference)</p>
+    <p class="step"><strong>1. \(V_s\) alone</strong> (\(I_s\) opened). \(R_3\) and \(R_4\) now lead only to open ends, so they carry no current and drop 0 V. Node x is a voltage divider:
+      \(V_x' = 24 \cdot \dfrac{12}{4 + 12} = 18\,\text{V}\), so \(V_a' = 18\,\text{V}\).</p>
+    <p class="step"><strong>2. \(I_s\) alone</strong> (\(V_s\) shorted). \(R_1\) and \(R_2\) both connect x to the bottom rail: \(R_1 \parallel R_2 = \frac{4 \cdot 12}{16} = 3\,\Omega\). The source pushes 5 A down from y into the bottom rail. That current must return from the bottom rail up through the 3 Ω into x, and then from x to y through \(R_3\). Current flows from higher to lower potential through a resistor, so
+      \(V_x'' = 0 - (5)(3) = -15\,\text{V}\) and \(V_y'' = -15 - (5)(2) = -25\,\text{V}\). \(R_4\) still carries nothing, so \(V_a'' = -25\,\text{V}\).</p>
+    <p class="step"><strong>3. Add.</strong> \(V_a = 18 + (-25) = -7\,\text{V}\) and \(V_b = 0\), so \(V_{TH} = V_a - V_b = -7\,\text{V}\).<br>
+      <em>KCL check at x with both sources</em> (\(V_x = 18 - 15 = 3\,\text{V}\)): into x through \(R_1\): \((24 - 3)/4 = 5.25\,\text{A}\). Out through \(R_2\): \(3/12 = 0.25\,\text{A}\), and out through \(R_3\): 5 A. \(5.25 = 0.25 + 5\) ✓. Then \(V_y = 3 - 5 \times 2 = -7\,\text{V} = V_a\) ✓.</p>
+    <p><strong>Part 2: \(R_{TH}\)</strong> (new drawing)</p>
+    <p class="step"><strong>4. Deactivate.</strong> \(V_s \to\) wire, \(I_s \to\) open.</p>
+    <figure class="circuit"><script type="application/json">{"parts":[
+ {"t":"T","at":[1,-1.5],"text":" "},
+ {"t":"W","pts":[[0,4],[0,0],[1,0]]},
+ {"t":"T","at":[-0.3,2.1],"text":"short\n(was V_s)","anchor":"end","cls":"muted"},
+ {"t":"T","at":[-2.4,0],"text":" "},
+ {"t":"R","a":[1,0],"b":[4,0],"label":"R_1","value":"4 Ω"},
+ {"t":"W","pts":[[4,0],[6,0]]},
+ {"t":"N","at":[5,0],"label":"x","pos":"n"},
+ {"t":"R","a":[5,0],"b":[5,4],"label":"R_2","value":"12 Ω"},
+ {"t":"R","a":[6,0],"b":[9,0],"label":"R_3","value":"2 Ω"},
+ {"t":"W","pts":[[9,0],[11,0]]},
+ {"t":"N","at":[10,0],"label":"y","pos":"n"},
+ {"t":"W","pts":[[10,0],[10,1.2]]},
+ {"t":"N","at":[10,1.2],"open":true},
+ {"t":"N","at":[10,2.8],"open":true},
+ {"t":"W","pts":[[10,2.8],[10,4]]},
+ {"t":"T","at":[10.4,2.1],"text":"open (was I_s)","anchor":"start","cls":"muted"},
+ {"t":"R","a":[11,0],"b":[14,0],"label":"R_4","value":"6 Ω"},
+ {"t":"W","pts":[[14,0],[15,0]]},
+ {"t":"N","at":[15,0],"open":true,"label":"a","pos":"e"},
+ {"t":"W","pts":[[0,4],[15,4]]},
+ {"t":"N","at":[5,4]},{"t":"N","at":[10,4]},
+ {"t":"N","at":[15,4],"open":true,"label":"b","pos":"e"},
+ {"t":"T","at":[7.5,5.2],"text":"R_{TH} = 6 + 2 + (4 ∥ 12) = 11 Ω","cls":"accent"}
+],"alt":"The question 2 circuit with V_s replaced by a wire and I_s replaced by a gap. From terminal a: R4 = 6 ohm, then R3 = 2 ohm to node x, then R1 and R2 in parallel (3 ohm) to the bottom rail b. R_TH = 11 ohm."}</script>
+      <figcaption>Sources deactivated for \(R_{TH}\) (added for clarity).</figcaption></figure>
+    <p class="step"><strong>5. Reduce from the far end.</strong> \(R_1 \parallel R_2 = 3\,\Omega\) (both join x to the bottom rail). A test current entering at a passes \(R_4\), then \(R_3\), then that 3 Ω, with no splitting before x, so everything is in series:
+      \(R_{TH} = R_4 + R_3 + R_1 \parallel R_2 = 6 + 2 + 3 = 11\,\Omega\).</p>
+    <p class="answer">\(V_{TH} = V_{ab} = -7\,\text{V}\) (terminal b is +) and \(R_{TH} = 11\,\Omega\).</p>
+    <figure class="circuit"><script type="application/json">{"parts":[
+ {"t":"T","at":[1,-1.5],"text":" "},
+ {"t":"T","at":[-3.4,2],"text":" "},
+ {"t":"V","a":[0,0.5],"b":[0,3.5],"plus":"b","label":"7 V","value":"(+ toward b)","side":-1},
+ {"t":"W","pts":[[0,0.5],[0,0],[1,0]]},
+ {"t":"R","a":[1,0],"b":[4,0],"label":"R_{TH}","value":"11 Ω"},
+ {"t":"W","pts":[[4,0],[5,0]]},
+ {"t":"N","at":[5,0],"open":true,"label":"a","pos":"e"},
+ {"t":"W","pts":[[0,3.5],[0,4],[5,4]]},
+ {"t":"N","at":[5,4],"open":true,"label":"b","pos":"e"},
+ {"t":"VM","a":[6.3,0.4],"b":[6.3,3.6],"label":"V_{ab} = −7 V","lat":[6.65,2],"anchor":"start"},
+ {"t":"T","at":[9.8,2],"text":" "}
+],"alt":"Thevenin equivalent of question 2: a 7 V source with its positive terminal toward b, in series with 11 ohm to terminal a. V_ab = -7 V."}</script>
+      <figcaption>The Thévenin equivalent (added for clarity). The source's + faces b, so \(V_{ab} = -7\,\text{V}\). Drawing "−7 V with + toward a" means the same thing.</figcaption></figure>
+  </div>
+  <div class="q-check">
+    <p><strong>Why negative?</strong> On its own, the 5 A source drags node y down to −25 V by pulling current through \(R_3\) and \(R_1 \parallel R_2\). \(V_s\) only lifts it by 18 V. The two contributions have opposite signs, and the current source wins.</p>
+    <p><strong>Second method.</strong> Short a–b and find \(I_{SC}\) (current a→b through the wire): it comes out as \(-7/11 = -0.636\,\text{A}\), i.e. 0.636 A flowing from b to a. Then \(V_{OC}/I_{SC} = (-7)/(-0.636) = 11\,\Omega\) ✓ (checked by nodal analysis).</p>
+    <p><strong>Bounds on \(R_{TH}\).</strong> Every path from a goes through \(R_4\) and \(R_3\), so \(R_{TH} \ge 8\,\Omega\). The parallel pair adds less than its smallest branch (4 Ω), so \(R_{TH} \lt 12\,\Omega\). 11 Ω fits.</p>
+  </div>
+  <div class="q-links">Links back: <a class="xref" data-lesson="tn1" data-sec="tn1-vth">Finding \(V_{TH}\) (polarity: \(V_A - V_B\))</a> · <a class="xref" data-lesson="tn2" data-sec="tn2-thev-vth">A resistor that carries no current</a> · <a class="xref" data-lesson="tn1" data-sec="tn1-rth">Finding \(R_{TH}\)</a> · \(V_{TH}\) definition <a class="ts" data-lesson="tn1" data-t="17:40"></a> · no current through an open terminal <a class="ts" data-lesson="tn2" data-t="5:19"></a> · zero-current resistor drops 0 V <a class="ts" data-lesson="tn2" data-t="10:58"></a> · \(R_{TH}\) is a separate problem: short the source <a class="ts" data-lesson="tn2" data-t="13:15"></a></div>
+</article>
+
+<article class="q" id="thevenin-q3" data-level="3" data-kind="multistep" data-title="Norton first, then Thévenin, then a load">
+  <div class="q-prompt">
+    <p>Circuit values: \(V_s = 36\,\text{V}\) (+ on top), \(R_1 = 6\,\Omega\), \(R_2 = 12\,\Omega\), an ideal current source \(I_s = 2\,\text{A}\) whose arrow points <em>up</em> into node x, \(R_3 = 4\,\Omega\) from x to terminal a, and \(R_4 = 8\,\Omega\) connected directly across a–b. Terminal b is the bottom rail.</p>
+    <ol>
+      <li>Find the Norton equivalent at a–b. Report \(I_N\) as positive if it flows from a to b through a short across the terminals (the Norton arrow then points toward a), and \(R_N\) in Ω.</li>
+      <li>Convert it to the Thévenin equivalent and report \(V_{TH} = V_a - V_b\) (signed).</li>
+      <li>A load \(R_L = 6\,\Omega\) is connected across a–b. Using your equivalent, find the load current \(I_L\) (flowing from a through \(R_L\) to b), the load voltage \(V_L = V_{ab}\), and the power \(P_L\) absorbed by \(R_L\).</li>
+    </ol>
+  </div>
+  <figure class="circuit"><script type="application/json">{"parts":[
+ {"t":"T","at":[1,-1.5],"text":" "},
+ {"t":"V","a":[0,4],"b":[0,0],"plus":"b","label":"V_s","value":"36 V","side":-1},
+ {"t":"W","pts":[[0,0],[1,0]]},
+ {"t":"R","a":[1,0],"b":[4,0],"label":"R_1","value":"6 Ω"},
+ {"t":"W","pts":[[4,0],[9,0]]},
+ {"t":"N","at":[5,0],"label":"x","pos":"n"},
+ {"t":"R","a":[5,0],"b":[5,4],"label":"R_2","value":"12 Ω"},
+ {"t":"N","at":[7.5,0]},
+ {"t":"I","a":[7.5,4],"b":[7.5,0],"label":"I_s","value":"2 A"},
+ {"t":"R","a":[9,0],"b":[12,0],"label":"R_3","value":"4 Ω"},
+ {"t":"W","pts":[[12,0],[15,0]]},
+ {"t":"N","at":[13.5,0]},
+ {"t":"R","a":[13.5,0],"b":[13.5,4],"label":"R_4","value":"8 Ω"},
+ {"t":"N","at":[15,0],"open":true,"label":"a","pos":"e"},
+ {"t":"W","pts":[[0,4],[15,4]]},
+ {"t":"N","at":[5,4]},{"t":"N","at":[7.5,4]},{"t":"N","at":[13.5,4]},
+ {"t":"N","at":[15,4],"open":true,"label":"b","pos":"e"}
+],"alt":"A 36 V source V_s, positive on top, feeds R1 = 6 ohm to node x. From x, R2 = 12 ohm goes down to the bottom rail, and a 2 A current source I_s points up from the bottom rail into the top rail at x. R3 = 4 ohm continues to terminal a. R4 = 8 ohm is connected from a straight down to the bottom rail, which is terminal b."}</script>
+    <figcaption>Circuit for question 3. \(R_4\) sits directly across the terminals.</figcaption></figure>
+  <div class="q-answers">
+    <div class="ans" data-type="num" data-name="in" data-label="\(I_N\) (a→b through the short)" data-value="4" data-unit="A" data-tol="0.02"></div>
+    <div class="ans" data-type="num" data-name="rn" data-label="\(R_N\)" data-value="4" data-unit="Ω" data-tol="0.02"></div>
+    <div class="ans" data-type="num" data-name="vth" data-label="\(V_{TH} = V_a - V_b\)" data-value="16" data-unit="V" data-tol="0.02"></div>
+    <div class="ans" data-type="num" data-name="il" data-label="\(I_L\) (a→b through \(R_L\))" data-value="1.6" data-unit="A" data-tol="0.02"></div>
+    <div class="ans" data-type="num" data-name="vl" data-label="\(V_L = V_{ab}\)" data-value="9.6" data-unit="V" data-tol="0.02"></div>
+    <div class="ans" data-type="num" data-name="pl" data-label="\(P_L\)" data-value="15.36" data-unit="W" data-tol="0.02"></div>
+  </div>
+  <div class="fb" data-for="in" data-match="3" data-tol="0.02">3 A is the short-circuit current from \(V_s\) alone, so the 2 A current source was dropped. For \(I_N\) every independent source stays on (only \(R_N\) needs them turned off). Include \(I_s\) in the KCL at node x.</div>
+  <div class="fb" data-for="in" data-match="1" data-tol="0.02">1 A is the contribution of the current source alone, so the 36 V source is missing. Keep both sources on when you short a–b.</div>
+  <div class="fb" data-for="in" data-match="3.3333" data-tol="0.02">That is the current in \(R_1\), i.e. what \(V_s\) delivers, \((36 - V_x)/6\). It isn't the current in the short. At node x the 2 A from \(I_s\) joins it, and part of the total goes down \(R_2\). With a–b shorted, \(R_3\) is the only path to the short, so \(I_N = V_x / R_3\).</div>
+  <div class="fb" data-for="rn" data-match="2.6667" data-tol="0.02">2.67 Ω \(= R_4 \parallel R_3\): the current source was replaced by a wire, which shorts node x to the bottom rail. Turn a current source off by <em>opening</em> it.</div>
+  <div class="fb" data-for="rn" data-match="8" data-tol="0.02">8 Ω leaves out \(R_4\). \(R_4\) was bypassed only while a–b was shorted for \(I_N\). \(R_N\) is a new problem on the original circuit, where \(R_4\) sits directly across a–b, in parallel with everything else (like the 51 Ω in the Norton lecture's Example 2).</div>
+  <div class="fb" data-for="rn" data-match="5.3333" data-tol="0.02">5.33 Ω \(= R_4 \parallel (R_3 + R_2)\): the voltage source was opened, so \(R_1\) was lost. A voltage source turned off is a short, and that short puts \(R_1\) in parallel with \(R_2\).</div>
+  <div class="fb" data-for="vth" data-match="32" data-tol="0.02">32 V \(= I_N \times 8\,\Omega\): you multiplied by a resistance that is not \(R_N\). There is only one equivalent resistance, and \(R_{TH} = R_N\) (4 Ω here). \(V_{TH} = I_N R_N\).</div>
+  <div class="fb" data-for="vth" data-match="-16" data-tol="0.02">Sign flipped. \(I_N\) flows a→b through the short, so the Norton arrow points toward a, and a is the + terminal of the Thévenin source: \(V_{TH} = +I_N R_N\).</div>
+  <div class="fb" data-for="vth" data-match="1" data-tol="0.02">You divided: \(I_N / R_N\). With the Norton circuit open-circuited, all of \(I_N\) flows through \(R_N\), so \(V_{TH} = I_N \times R_N\).</div>
+  <div class="fb" data-for="il" data-match="2.6667" data-tol="0.02">\(16\,\text{V} / 6\,\Omega\) ignores \(R_{TH}\). In the Thévenin equivalent the load is in series with \(R_{TH}\): \(I_L = V_{TH}/(R_{TH} + R_L)\).</div>
+  <div class="fb" data-for="il" data-match="2.4" data-tol="0.02">That is the Norton current divider upside down. The share of \(I_N\) that goes into \(R_L\) is \(I_N \dfrac{R_N}{R_N + R_L}\): the <em>other</em> branch's resistance goes on top.</div>
+  <div class="fb" data-for="il" data-match="1.1429" data-tol="0.02">\(16/(8 + 6)\): you used 8 Ω for \(R_{TH}\), a value different from \(R_N\). \(R_{TH}\) and \(R_N\) are always the same number (4 Ω here).</div>
+  <div class="fb" data-for="vl" data-match="16" data-tol="0.02">16 V is the open-circuit voltage. Once \(R_L\) draws current, part of \(V_{TH}\) drops across \(R_{TH}\): \(V_L = V_{TH}\dfrac{R_L}{R_{TH} + R_L}\).</div>
+  <div class="fb" data-for="vl" data-match="6.4" data-tol="0.02">6.4 V is the drop across \(R_{TH}\) (\(I_L \times 4\,\Omega\)), not across the load. \(V_L = I_L R_L\).</div>
+  <div class="fb" data-for="pl" data-match="25.6" data-tol="0.02">25.6 W \(= V_{TH} \times I_L\) is the power delivered by the Thévenin source, and it includes the power lost in \(R_{TH}\). The load only gets \(I_L^2 R_L\).</div>
+  <div class="fb" data-for="pl" data-match="42.667" data-tol="0.02">\(V_{TH}^2 / R_L\) assumes the full 16 V is across the load. Use the actual load voltage: \(P_L = V_L^2/R_L = I_L^2 R_L\).</div>
+  <div class="fb" data-for="pl" data-match="10.24" data-tol="0.02">10.24 W is \(I_L^2 R_{TH}\), the power in the equivalent's internal resistance, not in the load.</div>
+  <div class="q-hint">\(I_N\): put a wire across a–b. What happens to \(R_4\)? Then the short sits at the end of \(R_3\), so \(I_N = V_x / R_3\). You need \(V_x\) with the short in place: write KCL at node x with both sources on.</div>
+  <div class="q-hint">With a–b shorted, \(R_2\) and \(R_3\) both run from x to 0 V. KCL at x (in = out): \(\dfrac{36 - V_x}{6} + 2 = \dfrac{V_x}{12} + \dfrac{V_x}{4}\). For \(R_N\), go back to the original circuit: short \(V_s\), open \(I_s\), and keep \(R_4\).</div>
+  <div class="q-hint">With the short in place \(V_x = 16\,\text{V}\). For \(R_N\), \(R_1 \parallel R_2 = 4\,\Omega\). After that: \(V_{TH} = I_N R_N\), then \(I_L = V_{TH}/(R_{TH} + R_L)\).</div>
+  <div class="q-solution">
+    <p><strong>Part 1: \(I_N\)</strong> (a–b shorted, both sources on)</p>
+    <p class="step"><strong>1. What does the short change?</strong> \(R_4\) has both ends on the short, so it has 0 V across it and carries 0 A. It drops out while you find \(I_N\). Now \(R_3\) runs from x to the 0 V rail, beside \(R_2\).</p>
+    <figure class="circuit"><script type="application/json">{"parts":[
+ {"t":"V","a":[0,4],"b":[0,0],"plus":"b","label":"V_s","value":"36 V","side":-1},
+ {"t":"W","pts":[[0,0],[1,0]]},
+ {"t":"R","a":[1,0],"b":[4,0],"label":"R_1","value":"6 Ω"},
+ {"t":"W","pts":[[4,0],[9,0]]},
+ {"t":"N","at":[5,0],"label":"x","pos":"n"},
+ {"t":"T","at":[6.2,-0.45],"text":"16 V","cls":"accent"},
+ {"t":"R","a":[5,0],"b":[5,4],"label":"R_2","value":"12 Ω"},
+ {"t":"N","at":[7.5,0]},
+ {"t":"I","a":[7.5,4],"b":[7.5,0],"label":"I_s","value":"2 A"},
+ {"t":"R","a":[9,0],"b":[12,0],"label":"R_3","value":"4 Ω"},
+ {"t":"W","pts":[[12,0],[15,0],[15,4]]},
+ {"t":"R","a":[13.5,0],"b":[13.5,4],"label":"R_4","value":"8 Ω (0 A)","side":-1},
+ {"t":"N","at":[13.5,0]},{"t":"N","at":[13.5,4]},
+ {"t":"IARR","a":[15,1.4],"b":[15,2.6],"label":"I_N = 4 A"},
+ {"t":"N","at":[15,0],"label":"a","pos":"ne"},
+ {"t":"N","at":[15,4],"label":"b","pos":"se"},
+ {"t":"W","pts":[[0,4],[15,4]]},
+ {"t":"N","at":[5,4]},{"t":"N","at":[7.5,4]},
+ {"t":"T","at":[10.5,4.8],"text":"0 V","cls":"muted"},
+ {"t":"T","at":[18,2],"text":" "}
+],"alt":"Question 3 with a wire across a and b. R4 is now shorted and carries 0 A. Node x is at 16 V. The current I_N = 4 A flows through R3 and down the short from a to b."}</script>
+      <figcaption>a–b shorted (added for clarity). \(R_4\) is bypassed, and \(I_N\) flows down the short from a to b.</figcaption></figure>
+    <p class="step"><strong>2. KCL at x</strong> (currents in = currents out):
+      \(\dfrac{36 - V_x}{6} + 2 = \dfrac{V_x}{12} + \dfrac{V_x}{4}\). Multiply by 12: \(72 - 2V_x + 24 = V_x + 3V_x\), so \(96 = 6V_x\) and \(V_x = 16\,\text{V}\).</p>
+    <p class="step"><strong>3. Current in the short.</strong> Everything that reaches the short goes through \(R_3\): \(I_N = \dfrac{V_x - 0}{R_3} = \dfrac{16}{4} = 4\,\text{A}\), flowing a→b, so the Norton arrow points toward a.<br>
+      <em>KCL check:</em> in through \(R_1\): \((36 - 16)/6 = 3.33\,\text{A}\), plus 2 A from \(I_s\), gives 5.33 A. Out: \(16/12 = 1.33\,\text{A}\) down \(R_2\) and 4 A through \(R_3\), which is also 5.33 A ✓. (Superposition gives the same: 3 A from \(V_s\) + 1 A from \(I_s\).)</p>
+    <p><strong>Part 2: \(R_N\)</strong> (new problem on the original circuit)</p>
+    <p class="step"><strong>4. Deactivate and reduce.</strong> Short \(V_s\) and open \(I_s\). \(R_4\) is back. \(R_1 \parallel R_2 = \frac{6 \cdot 12}{18} = 4\,\Omega\), in series with \(R_3\): \(4 + 4 = 8\,\Omega\). That path and \(R_4\) both connect a to b:
+      \(R_N = 8 \parallel 8 = 4\,\Omega\).</p>
+    <figure class="circuit"><script type="application/json">{"parts":[
+ {"t":"I","a":[0,3],"b":[0,0],"label":"I_N","value":"4 A","side":-1},
+ {"t":"W","pts":[[0,0],[5,0]]},
+ {"t":"W","pts":[[0,3],[5,3]]},
+ {"t":"R","a":[3,0],"b":[3,3],"label":"R_N","value":"4 Ω"},
+ {"t":"N","at":[3,0]},{"t":"N","at":[3,3]},
+ {"t":"N","at":[5,0],"open":true,"label":"a","pos":"e"},
+ {"t":"N","at":[5,3],"open":true,"label":"b","pos":"e"}
+],"alt":"Norton equivalent of question 3: a 4 A current source with its arrow pointing up toward terminal a, in parallel with R_N = 4 ohm."}</script>
+      <figcaption>Norton equivalent (added for clarity): 4 A, arrow toward a, in parallel with 4 Ω.</figcaption></figure>
+    <p><strong>Part 3: convert to Thévenin</strong></p>
+    <p class="step"><strong>5.</strong> \(R_{TH} = R_N = 4\,\Omega\) and \(V_{TH} = I_N R_N = 4 \times 4 = 16\,\text{V}\). The + is at a, the terminal the Norton arrow points to.</p>
+    <p><strong>Part 4: the load</strong></p>
+    <figure class="circuit"><script type="application/json">{"parts":[
+ {"t":"T","at":[1,-1.5],"text":" "},
+ {"t":"V","a":[0,3.5],"b":[0,0.5],"plus":"b","label":"V_{TH}","value":"16 V","side":-1},
+ {"t":"W","pts":[[0,0.5],[0,0],[1,0]]},
+ {"t":"R","a":[1,0],"b":[4,0],"label":"R_{TH}","value":"4 Ω"},
+ {"t":"W","pts":[[4,0],[7,0]]},
+ {"t":"N","at":[5.5,0],"open":true,"label":"a","pos":"n"},
+ {"t":"R","a":[7,0],"b":[7,4],"label":"R_L","value":"6 Ω","side":-1},
+ {"t":"IARR","a":[7,0.1],"b":[7,1.1],"label":"I_L = 1.6 A"},
+ {"t":"VM","a":[8.4,1.9],"b":[8.4,3.6],"label":"V_L = 9.6 V","lat":[8.8,2.75],"anchor":"start"},
+ {"t":"W","pts":[[0,3.5],[0,4],[7,4]]},
+ {"t":"N","at":[5.5,4],"open":true,"label":"b","pos":"s"},
+ {"t":"T","at":[11.5,2],"text":" "}
+],"alt":"Thevenin equivalent of question 3, 16 V with positive toward a in series with 4 ohm, driving a 6 ohm load between a and b. I_L = 1.6 A flows down through the load; V_L = 9.6 V across it."}</script>
+      <figcaption>Thévenin equivalent with the 6 Ω load (added for clarity).</figcaption></figure>
+    <p class="step"><strong>6.</strong> Series loop: \(I_L = \dfrac{V_{TH}}{R_{TH} + R_L} = \dfrac{16}{4 + 6} = 1.6\,\text{A}\) (a→b through \(R_L\)).
+      \(V_L = I_L R_L = 1.6 \times 6 = 9.6\,\text{V}\) (divider check: \(16 \cdot \frac{6}{10} = 9.6\,\text{V}\)).
+      \(P_L = I_L^2 R_L = 1.6^2 \times 6 = 15.36\,\text{W}\) (\(= V_L I_L = 9.6 \times 1.6\) ✓).</p>
+    <p class="answer">\(I_N = 4\,\text{A}\) (toward a), \(R_N = 4\,\Omega\); \(V_{TH} = 16\,\text{V}\) (a +), \(R_{TH} = 4\,\Omega\); with 6 Ω: \(I_L = 1.6\,\text{A}\), \(V_L = 9.6\,\text{V}\), \(P_L = 15.36\,\text{W}\).</p>
+  </div>
+  <div class="q-check">
+    <p><strong>Norton gives the same load.</strong> \(V_L = I_N (R_N \parallel R_L) = 4 \times \frac{4 \cdot 6}{10} = 4 \times 2.4 = 9.6\,\text{V}\) ✓. Solving the <em>original</em> circuit with the 6 Ω attached (full nodal analysis) also gives 9.6 V and 1.6 A. That agreement is what "equivalent at a–b" means, and it is exactly the Lab 5 test.</p>
+    <p><strong>\(V_{TH}\) directly.</strong> With a–b open, KCL at x and the \(R_3\)–\(R_4\) divider give \(V_x = 24\,\text{V}\) and \(V_a = 24 \cdot \frac{8}{12} = 16\,\text{V}\) ✓, matching \(I_N R_N\).</p>
+    <p><strong>Power bound</strong> (additional teaching; maximum power transfer comes later): no load can receive more than \(V_{TH}^2/(4R_{TH}) = 256/16 = 16\,\text{W}\), reached when \(R_L = R_{TH}\). 15.36 W is just under it, as expected for 6 Ω, which is close to 4 Ω. The equivalent says nothing about power <em>inside</em> the original circuit.</p>
+  </div>
+  <div class="q-links">Links back: <a class="xref" data-lesson="tn2" data-sec="tn2-norton-procedure">Finding \(I_N\) and \(R_N\)</a> · <a class="xref" data-lesson="tn3" data-sec="tn3-ex2-in">When the short removes a resistor</a> · <a class="xref" data-lesson="tn3" data-sec="tn3-ex2-rn">\(R_N\): start again from the original</a> · <a class="xref" data-lesson="tn2" data-sec="tn2-thev-norton">Thévenin ↔ Norton and polarity</a> · draw a short across a–b <a class="ts" data-lesson="tn2" data-t="24:27"></a> · \(R_N\) is found the same way as \(R_{TH}\) <a class="ts" data-lesson="tn2" data-t="25:11"></a> · "this 51 ohm resistor goes out the door" <a class="ts" data-lesson="tn3" data-t="26:12"></a> · "a new problem, don't rely on your previous solution" <a class="ts" data-lesson="tn3" data-t="35:27"></a> · proving equivalence with a load resistor <a class="ts" data-lesson="tn3" data-t="53:26"></a></div>
+</article>
+
+<article class="q" id="thevenin-q4" data-level="4" data-kind="special" data-title="Special case: a dependent source (test-source method)">
+  <div class="q-prompt">
+    <aside class="extra"><strong>Beyond the course videos.</strong> The EE 211 lectures never cover dependent (controlled) sources. Their rule "short the voltage sources" applies to <em>independent</em> sources only. This problem uses the methods from the dependent-source box in the guide's <a class="xref" data-lesson="tn1" data-sec="tn1-assumptions">Assumptions &amp; limitations</a> section (worked case: <a class="xref" data-lesson="tn1" data-sec="tn1-ex8">Example 8</a>).</aside>
+    <p>The diamond is a <strong>voltage-controlled current source</strong>. It drives a current of \(0.25\,v_x\) amperes (with \(v_x\) in volts) up from the bottom rail into node a. Here \(v_x\) is the voltage across \(R_2\), with + at node x. Values: \(V_s = 10\,\text{V}\) (+ on top), \(R_1 = 2\,\Omega\), \(R_2 = 4\,\Omega\), \(R_3 = 2\,\Omega\). Terminal b is the bottom rail.</p>
+    <p>Find \(V_{TH} = V_a - V_b\) and \(R_{TH}\) (use a test source at a–b, or \(V_{OC}/I_{SC}\)). Then find the current \(I_L\) through a load \(R_L = 20\,\Omega\) connected across a–b (flowing from a through \(R_L\) to b).</p>
+  </div>
+  <figure class="circuit"><script type="application/json">{"parts":[
+ {"t":"T","at":[1,-1.5],"text":" "},
+ {"t":"V","a":[0,4],"b":[0,0],"plus":"b","label":"V_s","value":"10 V","side":-1},
+ {"t":"W","pts":[[0,0],[1,0]]},
+ {"t":"R","a":[1,0],"b":[4,0],"label":"R_1","value":"2 Ω"},
+ {"t":"W","pts":[[4,0],[6,0]]},
+ {"t":"N","at":[5,0],"label":"x","pos":"n"},
+ {"t":"R","a":[5,0],"b":[5,4],"label":"R_2","value":"4 Ω"},
+ {"t":"VM","a":[4.3,1.3],"b":[4.3,2.7],"label":"v_x","lat":[3.85,2],"anchor":"end"},
+ {"t":"R","a":[6,0],"b":[9,0],"label":"R_3","value":"2 Ω"},
+ {"t":"W","pts":[[9,0],[12,0]]},
+ {"t":"N","at":[10.5,0]},
+ {"t":"DI","a":[10.5,4],"b":[10.5,0],"label":"0.25 v_x","value":"(A)"},
+ {"t":"N","at":[12,0],"open":true,"label":"a","pos":"e"},
+ {"t":"W","pts":[[0,4],[12,4]]},
+ {"t":"N","at":[5,4]},{"t":"N","at":[10.5,4]},
+ {"t":"N","at":[12,4],"open":true,"label":"b","pos":"e"}
+],"alt":"A 10 V source V_s, positive on top, feeds R1 = 2 ohm to node x. R2 = 4 ohm goes from x down to the bottom rail; v_x is the voltage across R2, plus at x. R3 = 2 ohm continues from x to node a. A diamond-shaped dependent current source of value 0.25 v_x amperes points up from the bottom rail into node a. Terminal a is at the right of the top wire and terminal b is the bottom rail."}</script>
+    <figcaption>Circuit for question 4. The dependent current source (diamond) points up into node a, and \(v_x\) is the voltage across \(R_2\).</figcaption></figure>
+  <div class="q-answers">
+    <div class="ans" data-type="num" data-name="vth" data-label="\(V_{TH} = V_a - V_b\)" data-value="15" data-unit="V" data-tol="0.02"></div>
+    <div class="ans" data-type="num" data-name="rth" data-label="\(R_{TH}\)" data-value="5" data-unit="Ω" data-tol="0.02"></div>
+    <div class="ans" data-type="num" data-name="il" data-label="\(I_L\) with \(R_L = 20\,\Omega\)" data-value="0.6" data-unit="A" data-tol="0.02"></div>
+  </div>
+  <div class="fb" data-for="vth" data-match="6.6667" data-tol="0.02">6.67 V is the plain voltage divider at node x with the dependent source switched off. A dependent source isn't an excitation you may turn off. It describes how the circuit behaves, and it stays in for \(V_{TH}\) (and for \(R_{TH}\)).</div>
+  <div class="fb" data-for="vth" data-match="10" data-tol="0.02">10 V is \(v_x\), the voltage at node x. You assumed \(R_3\) drops nothing because it leads to the open terminal. Here node a is not a dead end: the dependent source pushes \(0.25\,v_x\) into node a, and with a–b open that current can only return through \(R_3\). So \(V_a = v_x + (0.25\,v_x)R_3\).</div>
+  <div class="fb" data-for="vth" data-match="2.5" data-tol="0.02">This comes from reversing the dependent source, as if its current were taken <em>out</em> of node a. Its arrow points up into node a, so in KCL at a it is a current <em>entering</em> a.</div>
+  <div class="fb" data-for="rth" data-match="3.3333" data-tol="0.02">3.33 Ω \(= R_3 + R_1 \parallel R_2\): you zeroed (opened) the dependent source as if it were an independent one. Only independent sources are deactivated. Leave the \(0.25\,v_x\) source in, and apply a test source at a–b (or use \(V_{OC}/I_{SC}\)).</div>
+  <div class="fb" data-for="rth" data-match="2.5" data-tol="0.02">Sign slip on the dependent source in the test circuit. At node a, KCL reads \(I_{test} + 0.25\,v_x = (V_{test} - v_x)/R_3\). The dependent current <em>enters</em> node a, so it reduces the current the test source has to supply.</div>
+  <div class="fb" data-for="rth" data-match="7.5" data-tol="0.02">15 V / 2 A: your \(V_{OC}\) is right, but \(I_{SC}\) was found with the dependent source switched off. With a–b shorted, \(v_x\) changes (it becomes 4 V), and the dependent source still delivers \(0.25\,v_x\) into the short.</div>
+  <div class="fb" data-for="il" data-match="0.64286" data-tol="0.01">\(15/(3.33 + 20)\): \(V_{TH}\) is right, but \(R_{TH}\) was found with the dependent source zeroed. Redo \(R_{TH}\) with a test source, keeping the dependent source in.</div>
+  <div class="fb" data-for="il" data-match="0.28571" data-tol="0.02">Both \(V_{TH}\) and \(R_{TH}\) were found with the dependent source zeroed (6.67 V and 3.33 Ω). Keep the dependent source in both steps.</div>
+  <div class="fb" data-for="il" data-match="0.75" data-tol="0.02">15 V / 20 Ω leaves out \(R_{TH}\). In the equivalent, the load is in series with \(R_{TH}\): \(I_L = V_{TH}/(R_{TH} + R_L)\).</div>
+  <div class="q-hint">Treat the dependent source as an ordinary element with a rule attached: its current is always \(0.25\,v_x\). It never gets "turned off". Write every equation in terms of \(v_x\), which is just the node voltage at x (b = 0 V).</div>
+  <div class="q-hint">Open circuit: the \(0.25\,v_x\) entering node a can only leave through \(R_3\) toward x, so KCL at x is \(\dfrac{10 - v_x}{2} + 0.25\,v_x = \dfrac{v_x}{4}\). Test source: short the 10 V, keep the diamond, put \(V_{test} = 1\,\text{V}\) across a–b, and find the current \(I_{test}\) it supplies. Then \(R_{TH} = V_{test}/I_{test}\).</div>
+  <div class="q-hint">Values to check: open circuit \(v_x = 10\,\text{V}\). With \(V_{test} = 1\,\text{V}\): \(v_x = 0.4\,\text{V}\) and \(I_{test} = 0.2\,\text{A}\). (Short circuit: \(v_x = 4\,\text{V}\), \(I_{SC} = 3\,\text{A}\).)</div>
+  <div class="q-solution">
+    <p><strong>Part 1: \(V_{TH}\)</strong> (a–b open, every source in place, b = 0 V)</p>
+    <p class="step"><strong>1. Where does the dependent current go?</strong> \(0.25\,v_x\) enters node a. With a–b open, the only other element at a is \(R_3\), so \(R_3\) carries \(0.25\,v_x\) from a back to x. Unlike the lecture examples, the resistor leading to the terminal <em>does</em> carry current here.</p>
+    <p class="step"><strong>2. KCL at x</strong> (in = out): \(\dfrac{10 - v_x}{2} + 0.25\,v_x = \dfrac{v_x}{4}\), so \(5 - 0.5\,v_x + 0.25\,v_x = 0.25\,v_x\). That gives \(5 = 0.5\,v_x\), so \(v_x = 10\,\text{V}\).</p>
+    <p class="step"><strong>3. Terminal voltage.</strong> The current \(0.25 \times 10 = 2.5\,\text{A}\) flows a→x through \(R_3\), so a is higher than x: \(V_a = v_x + (2.5)(2) = 10 + 5 = 15\,\text{V}\). So \(V_{TH} = 15\,\text{V}\) (a +).</p>
+    <p><strong>Part 2: \(R_{TH}\) by the test-source method</strong></p>
+    <p class="step"><strong>4. Set up.</strong> Short the <em>independent</em> 10 V source and keep the dependent source. Connect \(V_{test} = 1\,\text{V}\) across a–b (+ at a). It supplies \(I_{test}\) into node a.</p>
+    <figure class="circuit"><script type="application/json">{"parts":[
+ {"t":"T","at":[1,-1.5],"text":" "},
+ {"t":"W","pts":[[0,4],[0,0],[1,0]]},
+ {"t":"T","at":[-0.3,2.1],"text":"short\n(was 10 V)","anchor":"end","cls":"muted"},
+ {"t":"T","at":[-2.4,0],"text":" "},
+ {"t":"R","a":[1,0],"b":[4,0],"label":"R_1","value":"2 Ω"},
+ {"t":"W","pts":[[4,0],[6,0]]},
+ {"t":"N","at":[5,0],"label":"x","pos":"n"},
+ {"t":"R","a":[5,0],"b":[5,4],"label":"R_2","value":"4 Ω"},
+ {"t":"VM","a":[4.3,1.3],"b":[4.3,2.7],"label":"v_x","lat":[3.85,2],"anchor":"end"},
+ {"t":"R","a":[6,0],"b":[9,0],"label":"R_3","value":"2 Ω"},
+ {"t":"W","pts":[[9,0],[14,0]]},
+ {"t":"N","at":[10.5,0]},
+ {"t":"DI","a":[10.5,4],"b":[10.5,0],"label":"0.25 v_x"},
+ {"t":"N","at":[12.3,0],"label":"a","pos":"s"},
+ {"t":"IARR","a":[14,0],"b":[12.6,0],"label":"I_{test}"},
+ {"t":"V","a":[14,4],"b":[14,0],"plus":"b","label":"V_{test}","value":"1 V"},
+ {"t":"W","pts":[[0,4],[14,4]]},
+ {"t":"N","at":[5,4]},{"t":"N","at":[10.5,4]},
+ {"t":"N","at":[12.3,4],"label":"b","pos":"n"},
+ {"t":"T","at":[16.6,2],"text":" "}
+],"alt":"Test-source circuit for question 4: the 10 V source replaced by a wire, the dependent source 0.25 v_x kept, and a 1 V test source connected across a and b with plus at a. The test current I_test flows from the test source into node a."}</script>
+      <figcaption>Test-source circuit (added for clarity). The dependent source stays in.</figcaption></figure>
+    <p class="step"><strong>5. KCL at x.</strong> \(R_1\) now goes from x to 0 V through the short, beside \(R_2\). The current arriving from a through \(R_3\) leaves through them: \(\dfrac{1 - v_x}{2} = \dfrac{v_x}{2} + \dfrac{v_x}{4}\). That gives \(0.5 = 1.25\,v_x\), so \(v_x = 0.4\,\text{V}\).</p>
+    <p class="step"><strong>6. KCL at a.</strong> In: \(I_{test}\) and the dependent \(0.25\,v_x = 0.1\,\text{A}\). Out: through \(R_3\), \((1 - 0.4)/2 = 0.3\,\text{A}\). So \(I_{test} = 0.3 - 0.1 = 0.2\,\text{A}\).</p>
+    <p class="step"><strong>7.</strong> \(R_{TH} = \dfrac{V_{test}}{I_{test}} = \dfrac{1\,\text{V}}{0.2\,\text{A}} = 5\,\Omega\).<br>
+      <em>Cross-check with \(V_{OC}/I_{SC}\):</em> short a–b (all sources on). KCL at x: \(\frac{10 - v_x}{2} = \frac{v_x}{4} + \frac{v_x}{2}\), so \(v_x = 4\,\text{V}\). The short carries \(R_3\)'s current \(4/2 = 2\,\text{A}\) plus the dependent \(0.25 \times 4 = 1\,\text{A}\): \(I_{SC} = 3\,\text{A}\). Then \(R_{TH} = 15/3 = 5\,\Omega\) ✓.<br>
+      <em>The trap:</em> zeroing the dependent source would give \(R_3 + R_1 \parallel R_2 = 2 + 1.33 = 3.33\,\Omega\), which is wrong.</p>
+    <p><strong>Part 3: the load</strong></p>
+    <p class="step"><strong>8.</strong> \(I_L = \dfrac{V_{TH}}{R_{TH} + R_L} = \dfrac{15}{5 + 20} = 0.6\,\text{A}\) (and \(V_L = 0.6 \times 20 = 12\,\text{V}\)).</p>
+    <p class="answer">\(V_{TH} = 15\,\text{V}\) (a +), \(R_{TH} = 5\,\Omega\), and \(I_L = 0.6\,\text{A}\) with the 20 Ω load.</p>
+  </div>
+  <div class="q-check">
+    <p><strong>Two independent routes agree.</strong> The test source and \(V_{OC}/I_{SC}\) both give 5 Ω. Solving the full original circuit with the 20 Ω load attached (nodal analysis) gives \(v_x = 8.8\,\text{V}\), \(V_a = 12\,\text{V}\) and \(I_L = 0.6\,\text{A}\), the same as the equivalent.</p>
+    <p><strong>\(V_{TH}\) is larger than the only independent source (15 V vs 10 V).</strong> A network of resistors and one independent source could never do that: every node voltage would stay between 0 and 10 V. The dependent source is an <em>active</em> element. With a–b open it delivers 2.5 A at 15 V, i.e. 37.5 W. For the same reason, \(R_{TH}\) can differ from the "sources-zeroed" value in either direction, and with other gains it can even come out negative.</p>
+    <p><strong>Units.</strong> The gain 0.25 A/V is a conductance (0.25 S), so \(0.25\,v_x\) really is in amperes.</p>
+  </div>
+  <div class="q-links">Links back: <a class="xref" data-lesson="tn1" data-sec="tn1-assumptions">Dependent sources: test source and \(V_{OC}/I_{SC}\) (Assumptions &amp; limitations box)</a> · <a class="xref" data-lesson="tn1" data-sec="tn1-ex8">Example 8 (CCVS, worked)</a> · <a class="xref" data-lesson="tn1" data-sec="tn1-rth">\(V_{OC}/I_{SC}\) alternative</a> · the videos' \(R_{TH}\) definition (voltage sources shorted) <a class="ts" data-lesson="tn1" data-t="25:05"></a> · finding the current in a short across the terminals <a class="ts" data-lesson="tn2" data-t="23:45"></a> · related idea: imagining a source across A–B that pushes a "fake" current <a class="ts" data-lesson="tn3" data-t="21:32"></a></div>
+</article>
+
+<article class="q" id="thevenin-b1" data-level="3" data-kind="multistep" data-title="Maximum power transfer from a supply with a bleeder resistor">
+  <div class="q-prompt">
+    <p>A supply \(V_s = 60\,\text{V}\) (+ on top) feeds terminal a through a series resistor \(R_1 = 20\,\Omega\). A bleeder resistor \(R_2 = 30\,\Omega\) is permanently connected from a to the bottom rail, which is terminal b. You may connect any load resistor \(R_L\) across a–b, and you want that load to receive as much power as possible.</p>
+    <ol>
+      <li>Which value of \(R_L\) receives the maximum power? (in Ω)</li>
+      <li>What is that maximum load power \(P_{max}\)? (in W)</li>
+      <li>A classmate connects \(R_L = 24\,\Omega\) instead. How much power \(P_L\) does that load receive? (in W)</li>
+      <li>With the load from part 1 connected, what share of the power delivered by the 60 V source reaches the load? Report the efficiency \(\eta = P_L / P_s\) as a percentage, where \(P_s\) is the power delivered by \(V_s\) in the circuit as drawn (not by an equivalent circuit).</li>
+    </ol>
+  </div>
+  <figure class="circuit"><script type="application/json">{"parts":[
+ {"t":"BOX","a":[-2.2,-1.4],"b":[6.9,5.1],"label":"source network"},
+ {"t":"V","a":[0,4],"b":[0,0],"plus":"b","label":"V_s","value":"60 V","side":-1},
+ {"t":"W","pts":[[0,0],[1,0]]},
+ {"t":"R","a":[1,0],"b":[4,0],"label":"R_1","value":"20 Ω"},
+ {"t":"W","pts":[[4,0],[10,0]]},
+ {"t":"N","at":[5.5,0]},
+ {"t":"R","a":[5.5,0],"b":[5.5,4],"label":"R_2","value":"30 Ω"},
+ {"t":"N","at":[7.6,0],"open":true,"label":"a","pos":"n"},
+ {"t":"R","a":[10,0],"b":[10,4],"label":"R_L","value":"(variable)","lpos":[0.55,0.75],"lanchor":"start"},
+ {"t":"ARROW","a":[9.35,2.75],"b":[10.65,1.25]},
+ {"t":"W","pts":[[0,4],[10,4]]},
+ {"t":"N","at":[5.5,4]},
+ {"t":"N","at":[7.6,4],"open":true,"label":"b","pos":"s"},
+ {"t":"T","at":[12.6,2],"text":" "}
+],"alt":"A dashed box labelled source network contains a 60 V source V_s, positive on top, a 20 ohm resistor R1 in series along the top wire, and a 30 ohm bleeder resistor R2 from the top wire down to the bottom rail. The top wire leaves the box at terminal a and the bottom rail at terminal b. A variable load resistor R_L, drawn with a diagonal arrow, is connected across a and b."}</script>
+    <figcaption>Circuit for bonus question 1. \(R_2\) belongs to the source side; \(R_L\) is the adjustable load across a–b.</figcaption></figure>
+  <div class="q-answers">
+    <div class="ans" data-type="num" data-name="rl" data-label="(1) \(R_L\) for maximum power" data-value="12" data-unit="Ω" data-tol="0.02"></div>
+    <div class="ans" data-type="num" data-name="pmax" data-label="(2) \(P_{max}\)" data-value="27" data-unit="W" data-tol="0.02"></div>
+    <div class="ans" data-type="num" data-name="p24" data-label="(3) \(P_L\) with \(R_L = 24\,\Omega\)" data-value="24" data-unit="W" data-tol="0.02"></div>
+    <div class="ans" data-type="num" data-name="eta" data-label="(4) \(\eta = P_L / P_s\) with the load from part 1" data-value="21.429" data-unit="%" data-tol="0.02"></div>
+  </div>
+  <div class="fb" data-for="rl" data-match="20" data-tol="0.02">20 Ω is \(R_1\) alone. Either you matched the load to the source's own series resistor, or you dropped \(R_2\) when finding \(R_{TH}\). In the lecture the whole source <em>was</em> one source and one resistor. Here the bleeder \(R_2\) is also part of the source network, so \(R_L\) must equal the Thévenin resistance of everything to the left of a–b. With \(V_s\) shorted, \(R_1\) and \(R_2\) both connect a to b: they are in parallel.</div>
+  <div class="fb" data-for="rl" data-match="30" data-tol="0.02">30 Ω is \(R_2\) alone. That happens if \(V_s\) is <em>opened</em> instead of shorted, which leaves \(R_1\) dangling. A voltage source turned off is 0 V, i.e. a wire, and that wire puts \(R_1\) in parallel with \(R_2\).</div>
+  <div class="fb" data-for="rl" data-match="50" data-tol="0.02">50 Ω \(= R_1 + R_2\): you added them in series. Look back from a–b with \(V_s\) replaced by a wire. A test current entering at a can go down \(R_2\) <em>or</em> through \(R_1\) and the wire. Two paths between the same two nodes means parallel, not series.</div>
+  <div class="fb" data-for="pmax" data-match="108" data-tol="0.02">108 W \(= V_{TH}^2/R_{TH}\): the 4 is missing. At the matched point only half of \(V_{TH}\) appears across the load (\(V_L = V_{TH}/2\)), so \(P_{max} = (V_{TH}/2)^2/R_L = V_{TH}^2/(4R_{TH})\).</div>
+  <div class="fb" data-for="pmax" data-match="16.2" data-tol="0.02">\(V_{TH}^2/(4 \times 20\,\Omega)\): your \(V_{TH}\) looks right, but you used \(R_1\) as \(R_{TH}\) and ignored \(R_2\), which is in parallel with it once \(V_s\) is shorted. The formula needs the Thévenin resistance seen from a–b.</div>
+  <div class="fb" data-for="pmax" data-match="45" data-tol="0.02">\(V_s^2/(4R_1) = 3600/80\) treats the 60 V supply and \(R_1\) as the whole source, as if the bleeder \(R_2\) were not there. \(R_2\) changes both numbers: \(V_{TH}\) becomes a voltage-divider value and \(R_{TH}\) a parallel combination. Thévenize the network at a–b first.</div>
+  <div class="fb" data-for="pmax" data-match="25.3125" data-tol="0.02">25.3 W is what a 20 Ω load really receives: you matched \(R_L\) to \(R_1\) and then solved the circuit correctly. It is less than the true maximum because 20 Ω is not \(R_{TH}\). Find \(R_{TH}\) at a–b with \(V_s\) shorted, and keep \(R_2\).</div>
+  <div class="fb" data-for="p24" data-match="54" data-tol="0.02">\(V_{TH}^2/R_L\) assumes all of \(V_{TH}\) appears across the load. In the equivalent, \(R_L\) is in series with \(R_{TH}\): find \(I_L = V_{TH}/(R_{TH} + R_L)\) first, then \(P_L = I_L^2 R_L\).</div>
+  <div class="fb" data-for="p24" data-match="13.5" data-tol="0.02">\(V_{TH}^2/(4R_L)\): the \(P_{max}\) formula only holds at the matched point \(R_L = R_{TH}\). For any other load use \(P_L = \dfrac{V_{TH}^2 R_L}{(R_{TH} + R_L)^2}\), or the loop current and \(I^2R\).</div>
+  <div class="fb" data-for="p24" data-match="36" data-tol="0.02">36 W \(= V_{TH} \times I_L\) is the power delivered by the Thévenin source, and it includes the power lost in \(R_{TH}\). The load only gets \(I_L^2 R_L\).</div>
+  <div class="fb" data-for="p24" data-match="44.628" data-tol="0.02">That is the power a 24 Ω load would get from 60 V behind 20 Ω <em>without</em> the bleeder. \(R_2\) sits in parallel with the load and takes its share of the current. Use the Thévenin equivalent at a–b, or solve the original circuit with \(R_2\) included.</div>
+  <div class="fb" data-for="eta" data-match="50" data-tol="0.02">50 % is the efficiency of the Thévenin <em>equivalent</em> at the matched point (load power vs. \(V_{TH} I_L\)). An equivalent only reproduces what happens at the terminals. In the real network the 60 V source also feeds \(R_2\), and the current in \(R_1\) is larger than the load current. Find \(P_s = V_s \times I_{R1}\) in the original circuit.</div>
+  <div class="fb" data-for="eta" data-match="30" data-tol="0.02">You used the load current (1.5 A) as the source current, \(P_s = 60 \times 1.5\). The source current also supplies the bleeder. KCL at a: \(I_{R1} = I_L + I_{R2}\).</div>
+  <div class="fb" data-for="eta" data-match="37.5" data-tol="0.02">37.5 % \(= R_L/(R_1 + R_L)\) is the efficiency of a single loop with \(R_1\) as the internal resistance, which leaves out the bleeder. \(R_2\) also draws power from the source. Compute \(P_s\) from the actual source current in the original circuit.</div>
+  <div class="fb" data-for="eta" data-match="0.21429" data-tol="0.02">Right ratio, but it is entered as a fraction. Multiply by 100 and report it as a percentage.</div>
+  <div class="q-hint">In the lecture, the theorem matches \(R_L\) to the source's internal resistance. Here the "source" is the whole network to the left of a–b: \(V_s\), \(R_1\) <em>and</em> \(R_2\). Remove \(R_L\) and replace that network by its Thévenin equivalent first.</div>
+  <div class="q-hint">\(R_{TH}\): short \(V_s\) and look back from a–b; \(R_1\) and \(R_2\) both connect a to b. \(V_{TH}\): with a–b open, \(R_1\) and \(R_2\) form a voltage divider. Then \(R_L = R_{TH}\), \(P_{max} = V_{TH}^2/(4R_{TH})\), and for any other load \(P_L = I_L^2 R_L\) with \(I_L = V_{TH}/(R_{TH} + R_L)\). For part 4 go back to the <em>original</em> circuit: the source current is the current in \(R_1\).</div>
+  <div class="q-hint">Values to check: \(V_{TH} = 36\,\text{V}\) and \(R_{TH} = 12\,\Omega\). With the matched load, \(V_{ab} = 18\,\text{V}\) and \(I_L = 1.5\,\text{A}\), and \(R_2\) carries \(18/30 = 0.6\,\text{A}\).</div>
+  <div class="q-solution">
+    <p><strong>Part A: Thévenin equivalent of the source network</strong> (remove \(R_L\))</p>
+    <p class="step"><strong>1. \(R_{TH}\).</strong> Replace \(V_s\) by a wire (0 V). Looking in from a, a test current can go down \(R_2\) to b, or left through \(R_1\) and down the wire to b. Both resistors connect a to b, so they are in parallel:
+      \(R_{TH} = R_1 \parallel R_2 = \dfrac{20 \times 30}{20 + 30} = \dfrac{600}{50} = 12\,\Omega\).</p>
+    <figure class="circuit"><script type="application/json">{"parts":[
+ {"t":"T","at":[1,-1.5],"text":" "},
+ {"t":"W","pts":[[0,4],[0,0],[1,0]]},
+ {"t":"T","at":[-0.3,2.1],"text":"short\n(was V_s)","anchor":"end","cls":"muted"},
+ {"t":"T","at":[-2.4,0],"text":" "},
+ {"t":"R","a":[1,0],"b":[4,0],"label":"R_1","value":"20 Ω"},
+ {"t":"W","pts":[[4,0],[7.6,0]]},
+ {"t":"N","at":[5.5,0]},
+ {"t":"R","a":[5.5,0],"b":[5.5,4],"label":"R_2","value":"30 Ω"},
+ {"t":"N","at":[7.6,0],"open":true,"label":"a","pos":"e"},
+ {"t":"W","pts":[[0,4],[7.6,4]]},
+ {"t":"N","at":[5.5,4]},
+ {"t":"N","at":[7.6,4],"open":true,"label":"b","pos":"e"},
+ {"t":"T","at":[3.8,5.2],"text":"R_{TH} = R_1 ∥ R_2 = 12 Ω","cls":"accent"},
+ {"t":"T","at":[9.4,2],"text":" "}
+],"alt":"The source network with V_s replaced by a wire. R1 = 20 ohm runs from terminal a through the wire to terminal b, and R2 = 30 ohm runs from a straight down to b, so they are in parallel: R_TH = 12 ohm."}</script>
+      <figcaption>Source shorted to find \(R_{TH}\) (added for clarity). \(R_1\) and \(R_2\) are in parallel between a and b.</figcaption></figure>
+    <p class="step"><strong>2. \(V_{TH}\).</strong> With a–b open the only loop is \(V_s\)–\(R_1\)–\(R_2\): \(I = \dfrac{60\,\text{V}}{20 + 30\,\Omega} = 1.2\,\text{A}\), so \(V_{TH} = V_{ab} = 1.2\,\text{A} \times 30\,\Omega = 36\,\text{V}\) (divider: \(60 \cdot \frac{30}{50} = 36\,\text{V}\)), with a positive.</p>
+    <p><strong>Part B: the load</strong></p>
+    <p class="step"><strong>3. Part 1.</strong> Maximum power transfer: \(R_L = R_{TH} = 12\,\Omega\). (Not 20 Ω: \(R_1\) is only part of the source network.)</p>
+    <p class="step"><strong>4. Part 2.</strong> \(P_{max} = \dfrac{V_{TH}^2}{4R_{TH}} = \dfrac{36^2}{4 \times 12} = \dfrac{1296}{48} = 27\,\text{W}\).<br>
+      Same thing step by step, as in the lecture's examples: \(I_L = \dfrac{36}{12 + 12} = 1.5\,\text{A}\), \(V_L = 1.5 \times 12 = 18\,\text{V}\) (half of \(V_{TH}\)), \(P_L = 18\,\text{V} \times 1.5\,\text{A} = 27\,\text{W}\) ✓.</p>
+    <figure class="circuit"><script type="application/json">{"parts":[
+ {"t":"T","at":[1,-1.5],"text":" "},
+ {"t":"V","a":[0,3.5],"b":[0,0.5],"plus":"b","label":"V_{TH}","value":"36 V","side":-1},
+ {"t":"W","pts":[[0,0.5],[0,0],[1,0]]},
+ {"t":"R","a":[1,0],"b":[4,0],"label":"R_{TH}","value":"12 Ω"},
+ {"t":"W","pts":[[4,0],[7,0]]},
+ {"t":"N","at":[5.5,0],"open":true,"label":"a","pos":"n"},
+ {"t":"R","a":[7,0],"b":[7,4],"label":"R_L","value":"12 Ω","side":-1},
+ {"t":"IARR","a":[7,0.1],"b":[7,1.1],"label":"I_L = 1.5 A"},
+ {"t":"VM","a":[8.4,1.9],"b":[8.4,3.6],"label":"V_L = 18 V","lat":[8.8,2.75],"anchor":"start"},
+ {"t":"W","pts":[[0,3.5],[0,4],[7,4]]},
+ {"t":"N","at":[5.5,4],"open":true,"label":"b","pos":"s"},
+ {"t":"T","at":[11.5,2],"text":" "}
+],"alt":"Thevenin equivalent of the source network, 36 V with positive toward a in series with 12 ohm, driving a matched 12 ohm load. I_L = 1.5 A flows down through the load and V_L = 18 V across it."}</script>
+      <figcaption>Thévenin equivalent with the matched 12 Ω load (added for clarity).</figcaption></figure>
+    <p class="step"><strong>5. Part 3.</strong> With \(R_L = 24\,\Omega = 2R_{TH}\): \(I_L = \dfrac{36}{12 + 24} = 1\,\text{A}\), \(V_L = 1 \times 24 = 24\,\text{V}\), \(P_L = 24\,\text{V} \times 1\,\text{A} = 24\,\text{W}\). The load voltage went <em>up</em> (24 V vs 18 V) but the current dropped from 1.5 A to 1 A, so the power is lower: \(24/27 = 89\,\%\) of the maximum.</p>
+    <p><strong>Part C: efficiency in the original circuit</strong> (part 4)</p>
+    <p class="step"><strong>6. Back to the real network.</strong> Equivalence guarantees the same terminal values, so with \(R_L = 12\,\Omega\) the original circuit also has \(V_{ab} = 18\,\text{V}\) and \(I_L = 1.5\,\text{A}\). The bleeder carries \(I_{R2} = 18/30 = 0.6\,\text{A}\). KCL at a: \(I_{R1} = I_L + I_{R2} = 1.5 + 0.6 = 2.1\,\text{A}\). (Check with Ohm's law: \(R_1\) drops \(60 - 18 = 42\,\text{V}\), and \(42/20 = 2.1\,\text{A}\) ✓.)</p>
+    <figure class="circuit"><script type="application/json">{"parts":[
+ {"t":"T","at":[1,-1.6],"text":" "},
+ {"t":"V","a":[0,4],"b":[0,0],"plus":"b","label":"V_s","value":"60 V","side":-1},
+ {"t":"W","pts":[[0,0],[1,0]]},
+ {"t":"R","a":[1,0],"b":[4,0],"label":"R_1","value":"20 Ω"},
+ {"t":"W","pts":[[4,0],[10,0]]},
+ {"t":"IARR","a":[4.1,0],"b":[5.4,0],"label":"2.1 A"},
+ {"t":"N","at":[5.5,0]},
+ {"t":"R","a":[5.5,0],"b":[5.5,4],"label":"R_2","value":"30 Ω"},
+ {"t":"IARR","a":[5.5,0.1],"b":[5.5,1.0],"label":"0.6 A"},
+ {"t":"N","at":[7.6,0],"open":true,"label":"a","pos":"n"},
+ {"t":"IARR","a":[8.2,0],"b":[9.6,0],"label":"1.5 A"},
+ {"t":"R","a":[10,0],"b":[10,4],"label":"R_L","value":"12 Ω","side":-1},
+ {"t":"VM","a":[11,0.6],"b":[11,3.4],"label":"18 V","lat":[11.3,2],"anchor":"start"},
+ {"t":"W","pts":[[0,4],[10,4]]},
+ {"t":"N","at":[5.5,4]},
+ {"t":"N","at":[7.6,4],"open":true,"label":"b","pos":"s"},
+ {"t":"T","at":[5,5.5],"text":"P_s = 60 V × 2.1 A = 126 W","cls":"accent"},
+ {"t":"T","at":[13,2],"text":" "}
+],"alt":"The original circuit with the matched 12 ohm load. 2.1 A flows from the source through R1 to node a; 0.6 A goes down the 30 ohm bleeder R2 and 1.5 A goes through the load, which has 18 V across it. The source delivers 60 V times 2.1 A = 126 W."}</script>
+      <figcaption>Original circuit with the matched load (added for clarity). The source current is larger than the load current.</figcaption></figure>
+    <p class="step"><strong>7. Power budget.</strong> Delivered by the source: \(P_s = V_s I_{R1} = 60\,\text{V} \times 2.1\,\text{A} = 126\,\text{W}\). Absorbed: \(R_1\): \(2.1^2 \times 20 = 88.2\,\text{W}\); \(R_2\): \(18^2/30 = 10.8\,\text{W}\); load: 27 W. Sum: \(88.2 + 10.8 + 27 = 126\,\text{W}\) ✓.</p>
+    <p class="step"><strong>8.</strong> \(\eta = \dfrac{P_L}{P_s} = \dfrac{27}{126} = 0.2143\), i.e. about 21.4 %.</p>
+    <p class="answer">(1) \(R_L = R_{TH} = 12\,\Omega\); (2) \(P_{max} = 27\,\text{W}\); (3) \(P_L = 24\,\text{W}\) with 24 Ω, less than 27 W; (4) \(\eta \approx 21.4\,\%\), well below the 50 % of the equivalent.</p>
+  </div>
+  <div class="q-check">
+    <p><strong>Load power around the match</strong> (each value also checked by nodal analysis of the original circuit, and a sweep of \(R_L\) from 0.1 Ω to 200 Ω peaks at 12 Ω):</p>
+    <table>
+      <tr><th>\(R_L\)</th><th>6 Ω</th><th>12 Ω</th><th>24 Ω</th><th>36 Ω</th></tr>
+      <tr><th>\(P_L\)</th><td>24 W</td><td><strong>27 W</strong></td><td>24 W</td><td>20.25 W</td></tr>
+    </table>
+    <p>6 Ω and 24 Ω give the same power because \(6 \times 24 = 144 = R_{TH}^2\) (the pair rule noted under the guide's power plot). Halving the matched load costs 11 %, exactly like the lecture's 5 Ω case (8.89 W instead of 10 W), and doubling it costs the same.</p>
+    <p><strong>The bleeder can only cost power.</strong> Without \(R_2\), the best possible load would get \(V_s^2/(4R_1) = 45\,\text{W}\). With it, \(P_{max} = \dfrac{V_s^2}{4R_1} \cdot \dfrac{R_2}{R_1 + R_2} = 45 \times 0.6 = 27\,\text{W}\), which is smaller, as it should be.</p>
+    <p><strong>Why not 50 %?</strong> The equivalent predicts 27 W lost in \(R_{TH}\), but the real network loses 99 W (88.2 W in \(R_1\) and 10.8 W in \(R_2\)). A Thévenin equivalent is equivalent only at the terminals. It gives the right load voltage, current and power, but says nothing about power inside the original circuit. Even with nothing connected, the supply delivers \(60^2/50 = 72\,\text{W}\) into \(R_1\) and \(R_2\).</p>
+    <p><strong>Units.</strong> \(\text{V}^2/\Omega = \text{V} \cdot \text{A} = \text{W}\) ✓.</p>
+  </div>
+  <div class="q-links">Links back: <a class="xref" data-lesson="tn4" data-sec="tn4-theorem">The maximum power transfer theorem</a> · <a class="xref" data-lesson="tn4" data-sec="tn4-compare">Loads below and above the match</a> · <a class="xref" data-lesson="tn4" data-sec="tn4-beyond">\(P_{max} = V_{TH}^2/(4R_{TH})\) and efficiency (additional teaching)</a> · <a class="xref" data-lesson="tn4" data-sec="tn4-mistakes">Matching to the wrong resistance</a> · <a class="xref" data-lesson="tn1" data-sec="tn1-rth">Thévenin procedure: finding \(R_{TH}\) with the source shorted</a> · a real source looks like a Thévenin equivalent <a class="ts" data-lesson="tn4" data-t="2:52"></a> · the theorem: maximum power when \(R_L = r_{int}\) <a class="ts" data-lesson="tn4" data-t="9:22"></a> · matched load <a class="ts" data-lesson="tn4" data-t="11:56"></a> · a larger load gets more voltage but less power <a class="ts" data-lesson="tn4" data-t="19:01"></a> · conclusion <a class="ts" data-lesson="tn4" data-t="20:56"></a></div>
+</article>

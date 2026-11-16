@@ -1,0 +1,439 @@
+<section class="g-sec" id="cl2-overview" data-kind="overview">
+<h2>Overview</h2>
+<p>This lecture puts numbers on the slow rise and fall of current in an inductor. Starting from a resistor-only circuit (current jumps instantly) and an inductor with no resistor (current would grow without limit), the instructor builds a series <b>RL circuit</b> and introduces the <b>L/R time constant</b> \(\tau = L/R\), the rule that the current needs <b>five time constants</b> to reach its final value, and the <b>universal time-constant chart</b> (63.2 %, 86.5 %, 95 %, 98.17 %, ≈100 % for rising current; 36.8 %, 13.5 %, … for falling current). He then uses the chart to find \(V_R\) and \(V_L\) after one and two time constants, and finally gives the exact exponential equations for \(i\), \(v_R\) and \(v_L\) and uses them on two problems (one rising, one decaying current).</p>
+<p><b>Parts of the video</b></p>
+<ul>
+<li><a class="ts" data-t="0:00"></a> Recap of Lecture 6: self-inductance, expanding/collapsing field, switch A → B</li>
+<li><a class="ts" data-t="1:41"></a> Resistor-only circuit (5 V, 5 Ω): the current steps up instantly</li>
+<li><a class="ts" data-t="4:00"></a> Why an inductor with no resistor would give "infinite" current</li>
+<li><a class="ts" data-t="5:38"></a> The series RL circuit (5 V, 5 Ω, 10 H) and \(\tau = L/R\)</li>
+<li><a class="ts" data-t="8:18"></a> Maximum current \(V/R = 1\) A, and the 5τ rule (\(\tau = 2\) s, 10 s to reach 1 A)</li>
+<li><a class="ts" data-t="12:49"></a> Universal time-constant chart for increasing current, with the values for this circuit</li>
+<li><a class="ts" data-t="21:39"></a> Decreasing current (switch moved to B): 36.8 %, 13.5 %, …</li>
+<li><a class="ts" data-t="28:19"></a> Example: 10 V, 12 Ω, 10 H — \(V_R\) and \(V_L\) after 1τ and 2τ</li>
+<li><a class="ts" data-t="39:11"></a> The exponential equations for increasing and decreasing current; \(\mathrm{e} \approx 2.71828\)</li>
+<li><a class="ts" data-t="42:40"></a> Example: 10 V, 10 kΩ, 10 H — current 1 ms after the switch closes</li>
+<li><a class="ts" data-t="44:54"></a> Example: 6 V, 2.2 kΩ, 50 mH — decaying current and \(V_R\) after 68 μs</li>
+<li><a class="ts" data-t="48:31"></a> General equations for \(v_R\) (build-up and decay) and \(v_L\); wrap-up</li>
+</ul>
+<p>The whole video belongs to this topic (Capacitors, Inductors and RC/RL circuits → RL). It continues <a class="xref" data-lesson="cl1">Introduction to inductors</a>; the same time-constant chart returns for capacitors in <a class="xref" data-lesson="cl4">RC time constant</a>.</p>
+</section>
+
+<section class="g-sec" id="cl2-objectives" data-kind="objectives">
+<h2>Learning objectives</h2>
+<p>After this lesson you should be able to:</p>
+<ul>
+<li>Explain why the current in a series RL circuit cannot jump instantly, and why a real circuit needs resistance to limit the final current.</li>
+<li>Compute the time constant \(\tau = L/R\) (in seconds) and the settling time \(5\tau\).</li>
+<li>Find the final (maximum) current \(I_{max} = V_s/R\) by treating the inductor as a plain wire once the current has stopped changing.</li>
+<li>Read and reproduce the universal time-constant chart: 63.2 %, 86.5 %, 95 %, 98.2 %, ≈100 % at 1τ…5τ for a rising current, and 36.8 %, 13.5 %, 5 %, 1.8 %, ≈0 % for a falling current.</li>
+<li>Use the chart to get the current at a whole number of time constants, then use Ohm's law for \(V_R\) and KVL for \(V_L\).</li>
+<li>Use \(i = \frac{V_s}{R}\left(1-\mathrm{e}^{-Rt/L}\right)\) and \(i = \frac{V_s}{R}\,\mathrm{e}^{-Rt/L}\) at any time \(t\), with correct unit prefixes (kΩ, mH, ms, μs).</li>
+<li>Write \(v_R\) and \(v_L\) for build-up and decay, and check that \(v_R + v_L = V_s\) during build-up.</li>
+</ul>
+</section>
+
+<section class="g-sec" id="cl2-prereqs" data-kind="prereqs">
+<h2>Prerequisites</h2>
+<dl>
+<dt>Ohm's law</dt><dd>\(V = IR\), so \(I = V/R\). Used here for the maximum current and for the resistor voltage at any instant (\(v_R = iR\)).</dd>
+<dt>Kirchhoff's voltage law (KVL)</dt><dd>Around any closed loop the voltage rises equal the drops. In a series loop with a source, R and L: \(V_s = v_R + v_L\) at every instant.</dd>
+<dt>Inductors and self-inductance (<a class="xref" data-lesson="cl1">Lecture 6</a>)</dt><dd>A coil makes a magnetic field when current flows. When the current changes, the changing field induces an EMF that opposes the change (self-inductance, Lenz's law). Inductance \(L\) is measured in henries (H).</dd>
+<dt>Inductor in steady DC</dt><dd>Once the current stops changing, an ideal inductor induces no voltage and behaves like a plain wire (0 Ω).</dd>
+<dt>Exponentials and e</dt><dd>\(\mathrm{e} \approx 2.71828\) is the base of natural logarithms; your calculator's <code>e^x</code> key computes \(\mathrm{e}^x\). \(\mathrm{e}^{-x}\) falls from 1 toward 0 as \(x\) grows.</dd>
+<dt>Metric prefixes</dt><dd>k = \(10^3\), m = \(10^{-3}\), μ = \(10^{-6}\). Convert to base units (Ω, H, s, A) before using the formulas.</dd>
+</dl>
+</section>
+
+<section class="g-sec" id="cl2-definitions" data-kind="definitions">
+<h2>Definitions &amp; symbols</h2>
+<table>
+<tr><th>Term / symbol</th><th>Meaning</th><th>Unit</th></tr>
+<tr><td>\(L\)</td><td>Inductance of the coil</td><td>henry (H); 1 mH = \(10^{-3}\) H</td></tr>
+<tr><td>\(R\)</td><td>Resistance in series with the inductor (the resistor that limits the current)</td><td>ohm (Ω)</td></tr>
+<tr><td>\(V_s\)</td><td>Applied DC source voltage</td><td>volt (V)</td></tr>
+<tr><td>\(\tau\) (tau)</td><td><b>Time constant</b> of the RL circuit, \(\tau = L/R\). Also called the "L/R" or "LR" time constant.</td><td>second (s)</td></tr>
+<tr><td>\(5\tau\)</td><td>Time the instructor uses for the current to reach its final value (max when rising, zero when falling)</td><td>s</td></tr>
+<tr><td>\(I_{max}\) ("max i")</td><td>Final, steady current when the inductor acts like a wire: \(V_s/R\)</td><td>A</td></tr>
+<tr><td>\(i\) (lower case)</td><td>Instantaneous current — the value at one instant while it is changing. Capital \(I\) is used for a steady DC value.</td><td>A</td></tr>
+<tr><td>\(v_R\), \(V_R\)</td><td>Voltage across the resistor</td><td>V</td></tr>
+<tr><td>\(v_L\), \(V_L\)</td><td>Voltage across the inductor (the induced EMF)</td><td>V</td></tr>
+<tr><td>Increasing current / build-up</td><td>Switch connects the source: the field expands and the current rises from 0 toward \(V_s/R\)</td><td>—</td></tr>
+<tr><td>Decreasing current / decay</td><td>Source removed (switch to B): the collapsing field keeps current flowing through the resistor while it dies away to 0</td><td>—</td></tr>
+<tr><td>Universal time-constant chart</td><td>Graph / table of the percentage of the final value reached after 1, 2, 3, 4, 5 time constants (rising and falling versions)</td><td>%</td></tr>
+<tr><td>\(\mathrm{e}\) (written ε, "epsilon", by the instructor)</td><td>Base of natural logarithms, ≈ 2.71828</td><td>—</td></tr>
+<tr><td>A / B switch positions</td><td>A: source connected to the RL branch. B: source disconnected, R and L form a closed loop on their own</td><td>—</td></tr>
+</table>
+<aside class="note">The instructor writes the exponential base as ε and calls it "epsilon". It is the same number most textbooks write as \(\mathrm{e}\) (Euler's number); this guide uses \(\mathrm{e}\).</aside>
+</section>
+
+<section class="g-sec" id="cl2-recap-l6" data-kind="lesson" data-ts="0-128">
+<h2>1. Recap: the switched inductor from Lecture 6</h2>
+<p><a class="ts" data-t="0:00"></a> The lecture opens with the diagram from <a class="xref" data-lesson="cl1">Lecture 6</a>: a battery, a two-position switch (A → B), an inductor in the middle branch and a resistor on the right.</p>
+<figure class="circuit" id="cl2-fig-recap">
+<script type="application/json">{"parts":[
+ {"t":"BAT","a":[0,5],"b":[0,2],"label":"V_s","plus":"b","side":-1},
+ {"t":"W","pts":[[0,2],[0,0],[3,0]]},
+ {"t":"W","pts":[[5,0],[7,0],[7,1.5]]},
+ {"t":"R","a":[7,1.5],"b":[7,3.5],"label":"R"},
+ {"t":"W","pts":[[7,3.5],[7,5],[0,5]]},
+ {"t":"W","pts":[[4,1],[3,0]]},
+ {"t":"L","a":[4,1],"b":[4,5],"label":"L"},
+ {"t":"N","at":[3,0],"open":true,"label":"A","pos":"n"},
+ {"t":"N","at":[5,0],"open":true,"label":"B","pos":"n"},
+ {"t":"N","at":[4,1],"open":true},
+ {"t":"N","at":[4,5]},
+ {"t":"ARROW","a":[3.3,-0.9],"b":[4.7,-0.9],"label":"A → B","lat":[4,-1.15]}
+],"alt":"Battery V_s on the left. Its top terminal goes to switch contact A. The switch blade (pole) connects to the top of inductor L, whose bottom goes to the bottom wire back to the battery. Contact B connects through a wire to resistor R on the right, which returns to the bottom wire. In position A the battery drives the inductor; in position B the inductor and resistor form a loop."}</script>
+<figcaption>The Lecture 6 circuit reviewed at <a class="ts" data-t="0:50"></a> (blade shown in position A). In A the source drives the inductor; in B the inductor discharges through R.</figcaption>
+</figure>
+<ul>
+<li><a class="ts" data-t="0:24"></a> When current flows, the inductor's magnetic field expands or collapses. That changing field induces an EMF that <b>opposes the instantaneous change in current</b>.</li>
+<li><a class="ts" data-t="0:48"></a> Switch to <b>A</b>: the expanding field opposes the rise, so the current takes time to climb to its maximum.</li>
+<li><a class="ts" data-t="1:15"></a> Switch to <b>B</b>: the collapsing field produces an EMF that keeps the current from dropping instantly to zero; it takes time to fall.</li>
+<li><a class="ts" data-t="1:41"></a> Goal of today: attach numbers to these curves using the <b>L/R time constant</b>.</li>
+</ul>
+<p>The current graph on the paper shows a dotted rectangle (what a resistor alone would do) and the red curve that rounds off at both switching instants.</p>
+</section>
+
+<section class="g-sec" id="cl2-r-only" data-kind="lesson" data-ts="128-338">
+<h2>2. Resistor only vs. inductor only</h2>
+<h3>2a. Resistor only: the current jumps instantly <a class="ts" data-t="2:08"></a></h3>
+<div class="example" id="cl2-ex1">
+<h3>Example 1 — 5 V across 5 Ω with a switch <a class="ts" data-t="2:08"></a></h3>
+<figure class="circuit" id="cl2-fig-ronly">
+<script type="application/json">{"parts":[
+ {"t":"BAT","a":[0,3.5],"b":[0,0.5],"label":"5 V","plus":"b","side":-1},
+ {"t":"W","pts":[[0,0.5],[0,0],[3,0],[3,0.5]]},
+ {"t":"R","a":[3,0.5],"b":[3,3.5],"label":"R","value":"5 Ω"},
+ {"t":"W","pts":[[3,3.5],[3,4],[2.5,4]]},
+ {"t":"SW","a":[0.5,4],"b":[2.5,4],"label":"switch","state":"open","side":-1},
+ {"t":"W","pts":[[0.5,4],[0,4],[0,3.5]]},
+ {"t":"IARR","a":[1,0],"b":[2.4,0],"label":"I = 1 A"}
+],"alt":"A 5 V battery in series with a 5 ohm resistor and an open switch. When the switch closes, 1 A flows."}</script>
+<figcaption>Resistor-only circuit drawn at <a class="ts" data-t="2:45"></a>.</figcaption>
+</figure>
+<p><b>Given:</b> \(V = 5\) V, \(R = 5\,\Omega\), switch closed at instant A. <b>Goal:</b> the current before and after closing.</p>
+<p class="step">1. Switch open: no path, so \(I = 0\) A. <a class="ts" data-t="2:35"></a></p>
+<p class="step">2. Switch closed: Ohm's law, \(I = \dfrac{V}{R} = \dfrac{5\,\text{V}}{5\,\Omega} = 1\,\text{A}\).</p>
+<p class="step">3. There is nothing to slow the change, so on paper the current goes from 0 to its final value <b>instantaneously</b> and then stays flat (it is DC). <a class="ts" data-t="3:29"></a></p>
+<p class="answer">\(I\) jumps from 0 A to 1 A the instant the switch closes.</p>
+<figure class="circuit" id="cl2-fig-step">
+<script type="application/json">{"parts": [{"t": "W", "pts": [[0, 0.4], [0, 4], [9, 4]]}, {"t": "T", "at": [0, 0.05], "text": "I (A)", "anchor": "start"}, {"t": "T", "at": [9.2, 4.1], "text": "t", "anchor": "start"}, {"t": "T", "at": [-0.2, 4.1], "text": "0", "anchor": "end"}, {"t": "T", "at": [-0.2, 1.6], "text": "1 A", "anchor": "end"}, {"t": "W", "pts": [[0, 4], [3, 4], [3, 1.5], [8.6, 1.5]]}, {"t": "W", "pts": [[3, 4], [3, 0.6]], "dashed": true}, {"t": "T", "at": [3, 0.4], "text": "A (switch closed)"}, {"t": "T", "at": [5.8, 1.15], "text": "resistor only: instant jump", "cls": "accent"}], "pad": 0.6, "alt": "Current versus time for the resistor-only circuit: zero before the switch is closed at instant A, then an instantaneous vertical jump to a flat 1 A."}</script>
+<figcaption>Current vs. time for the resistor-only circuit (graph drawn at <a class="ts" data-t="3:55"></a>; height relabelled 1 A, see the note below).</figcaption>
+</figure>
+<aside class="uncertain"><b>Possible board error.</b> At <a class="ts" data-t="3:29"></a> the instructor says the current becomes "5 amps", and the graph marks the top level as 5 on the I (A) axis. Next to the circuit he correctly writes 1 A, and 5 V ÷ 5 Ω = 1 A (he says "one amp" at <a class="ts" data-t="2:35"></a>). The step should go to <b>1 A</b>. The shape of the graph (an instant jump) is the point being made.</aside>
+</div>
+
+<h3>2b. Inductor with no resistor: "infinite" current <a class="ts" data-t="4:22"></a></h3>
+<p>Back in the Lecture 6 circuit, in position A the battery is connected directly across the inductor, with <b>no resistor</b>. An ideal inductor is just wire (0 Ω). Once the change is over, Ohm's law would give</p>
+<div class="formula">\[ I = \frac{V}{R} = \frac{V}{0\,\Omega} \;\rightarrow\; \infty \]</div>
+<p><a class="ts" data-t="5:12"></a> That cannot happen. In a real circuit the source or the wires would break down first. To describe the curve with numbers we need a <b>real circuit with resistance</b>, which leads to the series RL circuit. <a class="ts" data-t="5:38"></a></p>
+<aside class="instructor">The instructor admits that he oversimplified Lecture 6's circuit by leaving out a resistor in position A. Without R the final current is undefined (unbounded), so the time constant cannot be found either. <a class="ts" data-t="4:22"></a></aside>
+<aside class="extra">Real inductors have some winding resistance, and real sources have internal resistance, so the current never actually becomes infinite. It becomes as large as those small resistances allow, which can be large enough to damage parts. That is why every RL problem in this course includes a series resistor.</aside>
+</section>
+
+<section class="g-sec" id="cl2-tau" data-kind="lesson" data-ts="338-769">
+<h2>3. The series RL circuit and the L/R time constant</h2>
+<p><a class="ts" data-t="6:04"></a> The new circuit is a 5 V source, a 5 Ω resistor and a 10 H inductor in series, with a switch so that the current changes from 0 to something.</p>
+<figure class="circuit" id="cl2-fig-rl1">
+<script type="application/json">{"parts":[
+ {"t":"BAT","a":[0,4],"b":[0,1],"label":"5 V","plus":"b","side":-1},
+ {"t":"W","pts":[[0,1],[0,0],[3,0]]},
+ {"t":"R","a":[3,0],"b":[3,2],"label":"R","value":"5 Ω"},
+ {"t":"L","a":[3,2],"b":[3,5],"label":"L","value":"10 H"},
+ {"t":"W","pts":[[3,5],[3,6],[2.5,6]]},
+ {"t":"SW","a":[0.5,6],"b":[2.5,6],"label":"closes at t = 0","state":"open","side":-1},
+ {"t":"W","pts":[[0.5,6],[0,6],[0,4]]},
+ {"t":"IARR","a":[0.8,0],"b":[2.2,0],"label":"i"},
+ {"t":"T","at":[1.5,8.1],"text":"max i = 5 V ÷ 5 Ω = 1 A","cls":"accent"},
+ {"t":"T","at":[1.5,8.6],"text":"τ = 10 H ÷ 5 Ω = 2 s,  5τ = 10 s","cls":"accent"}
+],"alt":"Series RL circuit: 5 V battery, 5 ohm resistor, 10 H inductor and a switch at the bottom. Maximum current 1 A, time constant 2 s, 5 tau = 10 s."}</script>
+<figcaption>Series RL circuit drawn at <a class="ts" data-t="6:30"></a>, with the results written beside it by <a class="ts" data-t="11:58"></a>.</figcaption>
+</figure>
+
+<h3>3a. Definition of the time constant <a class="ts" data-t="6:52"></a></h3>
+<div class="formula">\[ \tau = \frac{L}{R} \]</div>
+<dl class="vardefs"><dt>\(\tau\)</dt><dd>one time constant, seconds (s)</dd><dt>\(L\)</dt><dd>inductance, henries (H)</dd><dt>\(R\)</dt><dd>resistance in series with the inductor, ohms (Ω)</dd></dl>
+<p>This is "one time constant". The name "L over R" (or "LR") time constant comes straight from this formula. It applies to a single inductor in series with a resistor (more general circuits: see the note below).</p>
+<aside class="extra"><b>Units check.</b> From \(v = L\,\frac{di}{dt}\), one henry is one volt·second per ampere, and one ohm is one volt per ampere. So \(\frac{\text{H}}{\Omega} = \frac{\text{V·s/A}}{\text{V/A}} = \text{s}\). A larger \(L\) (more stored energy, stronger opposition) makes the circuit slower. A larger \(R\) makes it faster.</aside>
+<aside class="extra"><b>Which R? (beyond this video)</b> In this lecture there is only one resistor, so \(R\) is obvious. When an inductor sits in a bigger network, the \(R\) in \(\tau = L/R\) is the <b>Thévenin resistance seen by the inductor's two terminals</b> (sources turned off), for the switch position you are analysing. If the current builds up through one resistor and decays through a different one, the build-up and decay have <b>different</b> time constants. In every example in this lecture the build-up and decay paths contain the same resistor, so one τ serves both.</aside>
+
+<h3>3b. Maximum (final) current <a class="ts" data-t="9:09"></a></h3>
+<p>Once the current stops changing, the inductor acts like a wire, so the only thing limiting the current is \(R\):</p>
+<div class="formula">\[ I_{max} = \frac{V_s}{R} \]</div>
+<dl class="vardefs"><dt>\(I_{max}\)</dt><dd>final (steady) current, A</dd><dt>\(V_s\)</dt><dd>source voltage, V</dd><dt>\(R\)</dt><dd>series resistance, Ω</dd></dl>
+<p>Here \(I_{max} = 5\,\text{V}/5\,\Omega = 1\,\text{A}\). <a class="ts" data-t="9:34"></a> So the current goes from 0 A to 1 A, but not instantly.</p>
+
+<h3>3c. Five time constants to reach the maximum <a class="ts" data-t="10:06"></a></h3>
+<p>The <b>value</b> of the final current comes from Ohm's law. The <b>time</b> it takes comes from τ: it takes <b>5 time constants</b> to reach the maximum value.</p>
+<div class="formula">\[ t_{\text{to max}} \approx 5\tau = 5\,\frac{L}{R} \]</div>
+<dl class="vardefs"><dt>\(t_{\text{to max}}\)</dt><dd>time for the current to reach its final value, s</dd></dl>
+<div class="example" id="cl2-ex2">
+<h3>Example 2 — τ and settling time for 5 V, 5 Ω, 10 H <a class="ts" data-t="11:05"></a></h3>
+<p><b>Given:</b> \(V_s = 5\) V, \(R = 5\,\Omega\), \(L = 10\) H (circuit above). <b>Goal:</b> \(I_{max}\), \(\tau\), and the time to reach \(I_{max}\).</p>
+<p class="step">1. Final current: \(I_{max} = \dfrac{5\,\text{V}}{5\,\Omega} = 1\,\text{A}\). <a class="ts" data-t="9:34"></a></p>
+<p class="step">2. Time constant: \(\tau = \dfrac{L}{R} = \dfrac{10\,\text{H}}{5\,\Omega} = 2\,\text{s}\). <a class="ts" data-t="11:05"></a></p>
+<p class="step">3. Time to reach the maximum: \(5\tau = 5 \times 2\,\text{s} = 10\,\text{s}\). <a class="ts" data-t="11:34"></a></p>
+<p class="answer">\(\tau = 2\) s. The current rises from 0 A to 1 A in about 10 s.</p>
+</div>
+<aside class="instructor">Where does the "5" come from? The instructor treats it as a given: it is always 5 time constants (<a class="ts" data-t="12:26"></a>). The percentages on the chart in the next section are also given rather than derived in this lecture. The equations at the end of the video (Section 7) show where they come from.</aside>
+<aside class="extra">Strictly, an exponential never quite reaches its final value. After 5τ it is at 99.3 %, which is close enough to call "steady state" for practical work. That is the reason for the 5τ rule.</aside>
+</section>
+
+<section class="g-sec" id="cl2-chart-rise" data-kind="lesson" data-ts="769-1299">
+<h2>4. The universal time-constant chart: increasing current</h2>
+<p><a class="ts" data-t="12:49"></a> To describe the curve between 0 and 5τ, the instructor plots <b>percent of maximum value</b> on the vertical axis (100 % = 1 A here) against time in time constants. <a class="ts" data-t="14:13"></a> The 5τ interval is split into five equal chunks, 1τ through 5τ.</p>
+<table>
+<tr><th>Time</th><th>% of max (as given in the video)</th><th>Exact \(1-\mathrm{e}^{-n}\)</th><th>Time in Example 2 (\(\tau = 2\) s)</th><th>Current in Example 2 (\(I_{max} = 1\) A)</th></tr>
+<tr><td>1τ <a class="ts" data-t="14:41"></a></td><td>63.2 %</td><td>63.21 %</td><td>2 s</td><td>0.63 A</td></tr>
+<tr><td>2τ <a class="ts" data-t="15:10"></a></td><td>86.5 %</td><td>86.47 %</td><td>4 s</td><td>0.87 A (0.865 rounded)</td></tr>
+<tr><td>3τ <a class="ts" data-t="15:35"></a></td><td>95.02 % ≈ 95 %</td><td>95.02 %</td><td>6 s</td><td>0.95 A</td></tr>
+<tr><td>4τ <a class="ts" data-t="16:02"></a></td><td>98.17 %</td><td>98.17 %</td><td>8 s</td><td>0.98 A</td></tr>
+<tr><td>5τ</td><td>100 % ("max value")</td><td>99.33 %</td><td>10 s</td><td>1 A</td></tr>
+</table>
+<figure class="circuit" id="cl2-fig-chart-rise">
+<script type="application/json">{"parts": [{"t": "W", "pts": [[0, 0.4], [0, 6.0], [11.2, 6.0]]}, {"t": "T", "at": [0, 0.05], "text": "% of max value (current)", "anchor": "start"}, {"t": "T", "at": [11.399999999999999, 6.1], "text": "t", "anchor": "start"}, {"t": "T", "at": [-0.2, 6.1], "text": "0 %", "anchor": "end"}, {"t": "W", "pts": [[0, 1.0], [11.0, 1.0]], "dashed": true}, {"t": "T", "at": [-0.2, 1.12], "text": "100 %", "anchor": "end"}, {"t": "W", "pts": [[0.0, 6.0], [0.196, 5.532], [0.393, 5.108], [0.589, 4.724], [0.786, 4.376], [0.982, 4.06], [1.179, 3.774], [1.375, 3.514], [1.571, 3.279], [1.768, 3.066], [1.964, 2.873], [2.161, 2.697], [2.357, 2.539], [2.554, 2.395], [2.75, 2.264], [2.946, 2.146], [3.143, 2.039], [3.339, 1.942], [3.536, 1.853], [3.732, 1.774], [3.929, 1.701], [4.125, 1.636], [4.321, 1.576], [4.518, 1.522], [4.714, 1.473], [4.911, 1.429], [5.107, 1.389], [5.304, 1.353], [5.5, 1.32], [5.696, 1.29], [5.893, 1.263], [6.089, 1.238], [6.286, 1.216], [6.482, 1.196], [6.679, 1.177], [6.875, 1.161], [7.071, 1.146], [7.268, 1.132], [7.464, 1.12], [7.661, 1.109], [7.857, 1.098], [8.054, 1.089], [8.25, 1.081], [8.446, 1.073], [8.643, 1.066], [8.839, 1.06], [9.036, 1.055], [9.232, 1.049], [9.429, 1.045], [9.625, 1.041], [9.821, 1.037], [10.018, 1.033], [10.214, 1.03], [10.411, 1.027], [10.607, 1.025], [10.804, 1.023], [11.0, 1.02]]}, {"t": "W", "pts": [[2.0, 6.0], [2.0, 2.839]], "dashed": true}, {"t": "N", "at": [2.0, 2.839]}, {"t": "T", "at": [2.15, 3.589], "text": "63.2 %\n0.63 A", "anchor": "start"}, {"t": "W", "pts": [[4.0, 6.0], [4.0, 1.677]], "dashed": true}, {"t": "N", "at": [4.0, 1.677]}, {"t": "T", "at": [4.15, 2.427], "text": "86.5 %\n0.87 A", "anchor": "start"}, {"t": "W", "pts": [[6.0, 6.0], [6.0, 1.249]], "dashed": true}, {"t": "N", "at": [6.0, 1.249]}, {"t": "T", "at": [6.15, 1.999], "text": "95 %\n0.95 A", "anchor": "start"}, {"t": "W", "pts": [[8.0, 6.0], [8.0, 1.092]], "dashed": true}, {"t": "N", "at": [8.0, 1.092]}, {"t": "T", "at": [8.15, 1.842], "text": "98.17 %\n0.98 A", "anchor": "start"}, {"t": "W", "pts": [[10.0, 6.0], [10.0, 1.034]], "dashed": true}, {"t": "N", "at": [10.0, 1.034]}, {"t": "T", "at": [10.15, 1.784], "text": "≈100 %\n1 A", "anchor": "start"}, {"t": "W", "pts": [[0, 2.839], [2.0, 2.839]], "dashed": true}, {"t": "W", "pts": [[0, 1.677], [4.0, 1.677]], "dashed": true}, {"t": "T", "at": [-0.2, 2.959], "text": "63.2 %", "anchor": "end"}, {"t": "T", "at": [-0.2, 1.797], "text": "86.5 %", "anchor": "end"}, {"t": "W", "pts": [[2.0, 5.88], [2.0, 6.12]]}, {"t": "T", "at": [2.0, 6.6], "text": "1τ"}, {"t": "T", "at": [2.0, 7.05], "text": "2 s", "cls": "accent"}, {"t": "W", "pts": [[4.0, 5.88], [4.0, 6.12]]}, {"t": "T", "at": [4.0, 6.6], "text": "2τ"}, {"t": "T", "at": [4.0, 7.05], "text": "4 s", "cls": "accent"}, {"t": "W", "pts": [[6.0, 5.88], [6.0, 6.12]]}, {"t": "T", "at": [6.0, 6.6], "text": "3τ"}, {"t": "T", "at": [6.0, 7.05], "text": "6 s", "cls": "accent"}, {"t": "W", "pts": [[8.0, 5.88], [8.0, 6.12]]}, {"t": "T", "at": [8.0, 6.6], "text": "4τ"}, {"t": "T", "at": [8.0, 7.05], "text": "8 s", "cls": "accent"}, {"t": "W", "pts": [[10.0, 5.88], [10.0, 6.12]]}, {"t": "T", "at": [10.0, 6.6], "text": "5τ"}, {"t": "T", "at": [10.0, 7.05], "text": "10 s", "cls": "accent"}], "pad": 0.6, "alt": "Universal time-constant chart for increasing current: an exponential curve rising from 0 percent at t = 0 to 63.2 percent at 1 tau (0.63 A, 2 s), 86.5 percent at 2 tau (0.87 A, 4 s), 95 percent at 3 tau (0.95 A, 6 s), 98.17 percent at 4 tau (0.98 A, 8 s) and about 100 percent at 5 tau (1 A, 10 s)."}</script>
+<figcaption>Universal time-constant chart for increasing current, with the times and currents for the 5 V / 5 Ω / 10 H circuit, as completed at <a class="ts" data-t="19:45"></a> and named at <a class="ts" data-t="20:39"></a>. Redrawn to scale.</figcaption>
+</figure>
+<div class="example" id="cl2-ex2b">
+<h3>Example 2 (continued) — current at each time constant <a class="ts" data-t="17:16"></a></h3>
+<p class="step">1. Convert time constants to seconds: \(1\tau = 2\) s, \(2\tau = 4\) s, \(3\tau = 6\) s, \(4\tau = 8\) s, \(5\tau = 10\) s. <a class="ts" data-t="17:16"></a></p>
+<p class="step">2. At 1τ (2 s): \(i = 0.632 \times 1\,\text{A} = 0.63\,\text{A}\). <a class="ts" data-t="17:42"></a></p>
+<p class="step">3. At 2τ (4 s): \(i = 0.865 \times 1\,\text{A} \approx 0.87\,\text{A}\). <a class="ts" data-t="18:55"></a></p>
+<p class="step">4. At 3τ (6 s): \(i = 0.95 \times 1\,\text{A} = 0.95\,\text{A}\); at 4τ (8 s): \(i = 0.9817 \times 1\,\text{A} \approx 0.98\,\text{A}\). <a class="ts" data-t="19:27"></a></p>
+<p class="step">5. At 5τ (10 s): the maximum, 1 A.</p>
+<p class="answer">0.63 A at 2 s, 0.87 A at 4 s, 0.95 A at 6 s, 0.98 A at 8 s, 1 A at 10 s.</p>
+</div>
+<p><a class="ts" data-t="19:51"></a> The chart is called the <b>universal time-constant chart</b>. It is "universal" because the percentages do not depend on the particular L, R or V. They apply to anything that changes this way, and the instructor says it will come back for another component (the capacitor, <a class="xref" data-lesson="cl4">RC time constant</a>). There is also a version for decaying current (next section). <a class="ts" data-t="21:04"></a> Equations that give the value <i>between</i> the marked points come later (Section 7).</p>
+<aside class="extra"><b>Quick memory aid.</b> In each time constant the current covers 63.2 % of the distance that is <i>still left</i>. After 1τ, 36.8 % is left. After 2τ, \(0.368^2 = 13.5\,\%\) is left, so it is at 86.5 %. After 3τ, \(0.368^3 \approx 5\,\%\) is left (95 %), and so on.</aside>
+</section>
+
+<section class="g-sec" id="cl2-chart-decay" data-kind="lesson" data-ts="1299-1699">
+<h2>5. Decreasing current: the collapsing field</h2>
+<p><a class="ts" data-t="21:39"></a> The same idea works when the current is <b>decreasing</b>: it starts at 100 % (here 1 A) and ends at 0 %, and again takes five time constants. With 10 H and 5 Ω that is \(5 \times 2\,\text{s} = 10\,\text{s}\). <a class="ts" data-t="22:34"></a></p>
+<figure class="circuit" id="cl2-fig-decay">
+<script type="application/json">{"parts":[
+ {"t":"BAT","a":[0,5],"b":[0,2],"label":"V_s","plus":"b","side":-1},
+ {"t":"W","pts":[[0,2],[0,0],[3,0]]},
+ {"t":"W","pts":[[5,0],[7,0],[7,6],[0,6],[0,5]]},
+ {"t":"W","pts":[[4,1],[5,0]]},
+ {"t":"L","a":[4,1],"b":[4,4],"label":"L","value":"10 H"},
+ {"t":"R","a":[4,4],"b":[4,6],"label":"R","value":"5 Ω"},
+ {"t":"N","at":[3,0],"open":true,"label":"A","pos":"n"},
+ {"t":"N","at":[5,0],"open":true,"label":"B","pos":"n"},
+ {"t":"N","at":[4,1],"open":true},
+ {"t":"N","at":[4,6]},
+ {"t":"ARROW","a":[3.3,-0.9],"b":[4.7,-0.9],"label":"A → B","lat":[4,-1.15]},
+ {"t":"IARR","a":[5,6],"b":[6.2,6],"label":"i","side":-1},
+ {"t":"IARR","a":[7,4],"b":[7,2],"label":"i"}
+],"alt":"Switch in position B: the battery is disconnected. The 10 H inductor and 5 ohm resistor in the middle branch form a loop with the right-hand wire through contact B. The current keeps flowing down through L and R, along the bottom and back up the right-hand wire."}</script>
+<figcaption>De-energizing circuit drawn at <a class="ts" data-t="23:18"></a> (switch moved to B). Current arrows added for clarity: the inductor keeps its current flowing in the same direction, now around the L–R loop.</figcaption>
+</figure>
+<p><a class="ts" data-t="23:18"></a> With the switch at A, the current rises. Moving the switch to B removes the source. The energy stored in the inductor's magnetic field is released: the <b>collapsing field induces a voltage</b> that drives current through the 5 Ω resistor. The current falls from its maximum, 1 A, to its minimum, 0 A, in 5τ = 10 s. <a class="ts" data-t="24:02"></a></p>
+<p><a class="ts" data-t="25:18"></a> The decreasing chart is the "inverse" of the increasing one: subtract each rising percentage from 100 %.</p>
+<table>
+<tr><th>Time</th><th>Calculation</th><th>% of max remaining</th><th>Time (τ = 2 s)</th><th>Current (from 1 A)</th></tr>
+<tr><td>0</td><td>—</td><td>100 %</td><td>0 s</td><td>1 A</td></tr>
+<tr><td>1τ <a class="ts" data-t="25:18"></a></td><td>100 % − 63.2 %</td><td>36.8 %</td><td>2 s</td><td>0.37 A</td></tr>
+<tr><td>2τ <a class="ts" data-t="26:04"></a></td><td>100 % − 86.5 %</td><td>13.5 %</td><td>4 s</td><td>0.14 A</td></tr>
+<tr><td>3τ</td><td>100 % − 95.02 %</td><td>4.98 % ≈ 5 %</td><td>6 s</td><td>0.05 A</td></tr>
+<tr><td>4τ</td><td>100 % − 98.17 %</td><td>1.83 %</td><td>8 s</td><td>0.02 A</td></tr>
+<tr><td>5τ</td><td>100 % − 100 %</td><td>0 % (exactly 0.67 %)</td><td>10 s</td><td>≈ 0 A</td></tr>
+</table>
+<p>The instructor works out 36.8 % and 13.5 % on the paper and leaves the rest ("and so on", <a class="ts" data-t="26:45"></a>). The 3τ–5τ rows above are completed with the same subtraction. The currents in the last column are the percentages applied to 1 A.</p>
+<figure class="circuit" id="cl2-fig-chart-decay">
+<script type="application/json">{"parts": [{"t": "W", "pts": [[0, 0.4], [0, 6.0], [11.2, 6.0]]}, {"t": "T", "at": [0, 0.05], "text": "% of max value (current)", "anchor": "start"}, {"t": "T", "at": [11.399999999999999, 6.1], "text": "t", "anchor": "start"}, {"t": "T", "at": [-0.2, 6.1], "text": "0 %", "anchor": "end"}, {"t": "W", "pts": [[0, 1.0], [11.0, 1.0]], "dashed": true}, {"t": "T", "at": [-0.2, 1.12], "text": "100 %", "anchor": "end"}, {"t": "W", "pts": [[0.0, 1.0], [0.196, 1.468], [0.393, 1.892], [0.589, 2.276], [0.786, 2.624], [0.982, 2.94], [1.179, 3.226], [1.375, 3.486], [1.571, 3.721], [1.768, 3.934], [1.964, 4.127], [2.161, 4.303], [2.357, 4.461], [2.554, 4.605], [2.75, 4.736], [2.946, 4.854], [3.143, 4.961], [3.339, 5.058], [3.536, 5.147], [3.732, 5.226], [3.929, 5.299], [4.125, 5.364], [4.321, 5.424], [4.518, 5.478], [4.714, 5.527], [4.911, 5.571], [5.107, 5.611], [5.304, 5.647], [5.5, 5.68], [5.696, 5.71], [5.893, 5.737], [6.089, 5.762], [6.286, 5.784], [6.482, 5.804], [6.679, 5.823], [6.875, 5.839], [7.071, 5.854], [7.268, 5.868], [7.464, 5.88], [7.661, 5.891], [7.857, 5.902], [8.054, 5.911], [8.25, 5.919], [8.446, 5.927], [8.643, 5.934], [8.839, 5.94], [9.036, 5.945], [9.232, 5.951], [9.429, 5.955], [9.625, 5.959], [9.821, 5.963], [10.018, 5.967], [10.214, 5.97], [10.411, 5.973], [10.607, 5.975], [10.804, 5.977], [11.0, 5.98]]}, {"t": "W", "pts": [[2.0, 6.0], [2.0, 4.161]], "dashed": true}, {"t": "N", "at": [2.0, 4.161]}, {"t": "T", "at": [2.2, 3.211], "text": "36.8 %\n0.37 A", "anchor": "start"}, {"t": "W", "pts": [[4.0, 6.0], [4.0, 5.323]], "dashed": true}, {"t": "N", "at": [4.0, 5.323]}, {"t": "T", "at": [4.2, 4.373], "text": "13.5 %\n0.14 A", "anchor": "start"}, {"t": "W", "pts": [[6.0, 6.0], [6.0, 5.751]], "dashed": true}, {"t": "N", "at": [6.0, 5.751]}, {"t": "T", "at": [6.2, 4.801], "text": "5.0 %\n0.05 A", "anchor": "start", "cls": "muted"}, {"t": "W", "pts": [[8.0, 6.0], [8.0, 5.908]], "dashed": true}, {"t": "N", "at": [8.0, 5.908]}, {"t": "T", "at": [8.2, 4.958], "text": "1.8 %\n0.02 A", "anchor": "start", "cls": "muted"}, {"t": "W", "pts": [[10.0, 6.0], [10.0, 5.966]], "dashed": true}, {"t": "N", "at": [10.0, 5.966]}, {"t": "T", "at": [10.2, 5.016], "text": "0.7 %\n≈0 A", "anchor": "start", "cls": "muted"}, {"t": "W", "pts": [[0, 4.161], [2.0, 4.161]], "dashed": true}, {"t": "W", "pts": [[0, 5.323], [4.0, 5.323]], "dashed": true}, {"t": "T", "at": [-0.2, 4.281], "text": "36.8 %", "anchor": "end"}, {"t": "T", "at": [-0.2, 5.443], "text": "13.5 %", "anchor": "end"}, {"t": "W", "pts": [[2.0, 5.88], [2.0, 6.12]]}, {"t": "T", "at": [2.0, 6.6], "text": "1τ"}, {"t": "T", "at": [2.0, 7.05], "text": "2 s", "cls": "accent"}, {"t": "W", "pts": [[4.0, 5.88], [4.0, 6.12]]}, {"t": "T", "at": [4.0, 6.6], "text": "2τ"}, {"t": "T", "at": [4.0, 7.05], "text": "4 s", "cls": "accent"}, {"t": "W", "pts": [[6.0, 5.88], [6.0, 6.12]]}, {"t": "T", "at": [6.0, 6.6], "text": "3τ"}, {"t": "T", "at": [6.0, 7.05], "text": "6 s", "cls": "accent"}, {"t": "W", "pts": [[8.0, 5.88], [8.0, 6.12]]}, {"t": "T", "at": [8.0, 6.6], "text": "4τ"}, {"t": "T", "at": [8.0, 7.05], "text": "8 s", "cls": "accent"}, {"t": "W", "pts": [[10.0, 5.88], [10.0, 6.12]]}, {"t": "T", "at": [10.0, 6.6], "text": "5τ"}, {"t": "T", "at": [10.0, 7.05], "text": "10 s", "cls": "accent"}], "pad": 0.6, "alt": "Universal time-constant chart for decreasing current: an exponential decay from 100 percent (1 A) at t = 0 to 36.8 percent at 1 tau (2 s), 13.5 percent at 2 tau (4 s), about 5 percent at 3 tau, 1.8 percent at 4 tau and about 0 at 5 tau (10 s)."}</script>
+<figcaption>Universal time-constant chart for decreasing current (drawn at <a class="ts" data-t="27:09"></a>, labelled at <a class="ts" data-t="28:03"></a>). The 36.8 % and 13.5 % points are from the video; the grey 3τ–5τ labels were added for clarity.</figcaption>
+</figure>
+<p><a class="ts" data-t="27:09"></a> The magnetic field does not hold infinite energy, so as it dissipates the current falls from 100 % (1 A) to 0 %.</p>
+<aside class="extra"><b>Current continuity and the inductive kick.</b> At the instant the switch moves to B, the inductor current is still 1 A. An inductor's current cannot change instantly. So the resistor suddenly carries 1 A, and the inductor's voltage flips polarity to push it, \(v_L = -v_R = -1\,\text{A} \times 5\,\Omega = -5\) V at \(t = 0^+\). If the decay path had more resistance, the same 1 A would produce a <i>larger</i> voltage. For example, with 20 Ω instead of 5 Ω: \(1\,\text{A} \times 20\,\Omega = 20\) V, four times the 5 V source, and \(\tau = 10\,\text{H}/20\,\Omega = 0.5\) s (gone in about 2.5 s). If the switch simply opened with no path at all, the "resistance" would be enormous and so would the voltage spike (the inductive kick seen as the spike at B on the Lecture 6 graph). See <a class="xref" data-lesson="cl1">Lecture 6</a> and the inductor lab in <a class="xref" data-lesson="cl3">cl3</a>.</aside>
+</section>
+
+<section class="g-sec" id="cl2-ex-12ohm" data-kind="lesson" data-ts="1699-2351">
+<h2>6. Using the chart: V<sub>R</sub> and V<sub>L</sub> after 1τ and 2τ</h2>
+<div class="example" id="cl2-ex3">
+<h3>Example 3 — 10 V, 12 Ω, 10 H: what is \(V_R\) after one time constant? <a class="ts" data-t="28:19"></a></h3>
+<figure class="circuit" id="cl2-fig-ex12">
+<script type="application/json">{"parts":[
+ {"t":"BAT","a":[0,4],"b":[0,1],"label":"10 V","plus":"b","side":-1},
+ {"t":"W","pts":[[0,1],[0,0],[3,0]]},
+ {"t":"R","a":[3,0],"b":[3,2],"label":"R","value":"12 Ω","side":-1},
+ {"t":"L","a":[3,2],"b":[3,5],"label":"L","value":"10 H","side":-1},
+ {"t":"W","pts":[[3,5],[3,6],[2.5,6]]},
+ {"t":"SW","a":[0.5,6],"b":[2.5,6],"label":"closed","state":"closed","side":-1},
+ {"t":"W","pts":[[0.5,6],[0,6],[0,4]]},
+ {"t":"IARR","a":[0.8,0],"b":[2.2,0],"label":"i"},
+ {"t":"VM","a":[3.7,0.35],"b":[3.7,1.65],"label":"V_R","lat":[4.5,1]},
+ {"t":"VM","a":[3.7,2.4],"b":[3.7,4.6],"label":"V_L","lat":[4.5,3.5]}
+],"alt":"Series circuit: 10 V battery, 12 ohm resistor, 10 H inductor and a closed switch. V_R is measured across the resistor and V_L across the inductor, both positive at the top."}</script>
+<figcaption>Circuit drawn at <a class="ts" data-t="28:48"></a> and redrawn with the switch closed at <a class="ts" data-t="33:44"></a> ("@ 1τ = 0.83 sec").</figcaption>
+</figure>
+<p><b>Given:</b> \(V_s = 10\) V, \(R = 12\,\Omega\), \(L = 10\) H, switch closes at \(t = 0\) (current starts at 0). <b>Goal:</b> \(V_R\) (and \(V_L\)) after 1τ. The instructor then repeats the calculation for 2τ.</p>
+<p class="step">1. <b>Final current.</b> The inductor ends up acting like a wire, so only the 12 Ω limits the current: \(I_{max} = \dfrac{10\,\text{V}}{12\,\Omega} = 0.83\,\text{A}\). <a class="ts" data-t="30:14"></a></p>
+<p class="step">2. <b>Time constant.</b> \(\tau = \dfrac{L}{R} = \dfrac{10\,\text{H}}{12\,\Omega} = 0.83\,\text{s}\). It takes \(5\tau = 5 \times 0.83\,\text{s} \approx 4.17\,\text{s}\) to reach 0.83 A. <a class="ts" data-t="31:02"></a></p>
+<p class="step">3. <b>Current at 1τ</b> (from the chart, 63.2 %): \(i_{1\tau} = I_{max} \times 0.632 = 0.83\,\text{A} \times 0.632 = 0.52\,\text{A}\). <a class="ts" data-t="32:56"></a></p>
+<p class="step">4. <b>Resistor voltage</b> (Ohm's law, at \(t = 0.83\) s): \(V_R = i R = 0.52\,\text{A} \times 12\,\Omega = 6.24\,\text{V}\). <a class="ts" data-t="35:01"></a></p>
+<p class="step">5. <b>Inductor voltage</b> (KVL around the loop): \(V_L = V_s - V_R = 10\,\text{V} - 6.24\,\text{V} = 3.76\,\text{V}\). <a class="ts" data-t="35:30"></a></p>
+<p class="answer">After 1τ (0.83 s): \(i = 0.52\) A, \(V_R = 6.24\) V, \(V_L = 3.76\) V (board values; with unrounded numbers 0.527 A, 6.32 V, 3.68 V).</p>
+<p class="step">6. <b>Current at 2τ</b> (1.67 s): \(i_{2\tau} = I_{max} \times 0.864 = 0.72\,\text{A}\). <a class="ts" data-t="36:48"></a></p>
+<p class="step">7. \(V_R = 0.72\,\text{A} \times 12\,\Omega = 8.64\,\text{V}\). <a class="ts" data-t="37:33"></a></p>
+<p class="step">8. \(V_L = 10\,\text{V} - 8.64\,\text{V} = 1.36\,\text{V}\). <a class="ts" data-t="37:57"></a></p>
+<p class="answer">After 2τ (1.67 s): \(i = 0.72\) A, \(V_R = 8.64\) V, \(V_L = 1.36\) V (unrounded: 0.721 A, 8.65 V, 1.35 V).</p>
+<aside class="uncertain"><b>Possible board error (rounding).</b> The board rounds \(I_{max}\) to 0.83 A and \(i_{1\tau}\) to 0.52 A before multiplying by 12 Ω, which gives 6.24 V and 3.76 V. Without early rounding: \(i_{1\tau} = 0.8333 \times 0.6321 = 0.527\) A, so \(V_R = 0.6321 \times 10\,\text{V} = 6.32\) V and \(V_L = 0.3679 \times 10\,\text{V} = 3.68\) V. At 2τ the board uses 0.864 (the chart says 86.5 %; exact 86.47 %). The correct values are \(V_R = 8.65\) V and \(V_L = 1.35\) V, close to the board's 8.64 V and 1.36 V. The method is right; just keep more digits until the end.</aside>
+</div>
+<p><a class="ts" data-t="32:29"></a> <b>Notation:</b> the instructor uses lower-case \(i\) for an instantaneous (changing) current, and capital \(I\) for a steady DC value.</p>
+<figure class="circuit" id="cl2-fig-vrvl">
+<script type="application/json">{"parts": [{"t": "W", "pts": [[0, 0.4], [0, 6.0], [11.2, 6.0]]}, {"t": "T", "at": [0, 0.05], "text": "voltage (100 % = V_s = 10 V)", "anchor": "start"}, {"t": "T", "at": [11.399999999999999, 6.1], "text": "t", "anchor": "start"}, {"t": "T", "at": [-0.2, 6.1], "text": "0 %", "anchor": "end"}, {"t": "W", "pts": [[0, 1.0], [11.0, 1.0]], "dashed": true}, {"t": "T", "at": [-0.2, 1.12], "text": "100 %", "anchor": "end"}, {"t": "W", "pts": [[0.0, 6.0], [0.196, 5.532], [0.393, 5.108], [0.589, 4.724], [0.786, 4.376], [0.982, 4.06], [1.179, 3.774], [1.375, 3.514], [1.571, 3.279], [1.768, 3.066], [1.964, 2.873], [2.161, 2.697], [2.357, 2.539], [2.554, 2.395], [2.75, 2.264], [2.946, 2.146], [3.143, 2.039], [3.339, 1.942], [3.536, 1.853], [3.732, 1.774], [3.929, 1.701], [4.125, 1.636], [4.321, 1.576], [4.518, 1.522], [4.714, 1.473], [4.911, 1.429], [5.107, 1.389], [5.304, 1.353], [5.5, 1.32], [5.696, 1.29], [5.893, 1.263], [6.089, 1.238], [6.286, 1.216], [6.482, 1.196], [6.679, 1.177], [6.875, 1.161], [7.071, 1.146], [7.268, 1.132], [7.464, 1.12], [7.661, 1.109], [7.857, 1.098], [8.054, 1.089], [8.25, 1.081], [8.446, 1.073], [8.643, 1.066], [8.839, 1.06], [9.036, 1.055], [9.232, 1.049], [9.429, 1.045], [9.625, 1.041], [9.821, 1.037], [10.018, 1.033], [10.214, 1.03], [10.411, 1.027], [10.607, 1.025], [10.804, 1.023], [11.0, 1.02]]}, {"t": "W", "pts": [[0.0, 1.0], [0.196, 1.468], [0.393, 1.892], [0.589, 2.276], [0.786, 2.624], [0.982, 2.94], [1.179, 3.226], [1.375, 3.486], [1.571, 3.721], [1.768, 3.934], [1.964, 4.127], [2.161, 4.303], [2.357, 4.461], [2.554, 4.605], [2.75, 4.736], [2.946, 4.854], [3.143, 4.961], [3.339, 5.058], [3.536, 5.147], [3.732, 5.226], [3.929, 5.299], [4.125, 5.364], [4.321, 5.424], [4.518, 5.478], [4.714, 5.527], [4.911, 5.571], [5.107, 5.611], [5.304, 5.647], [5.5, 5.68], [5.696, 5.71], [5.893, 5.737], [6.089, 5.762], [6.286, 5.784], [6.482, 5.804], [6.679, 5.823], [6.875, 5.839], [7.071, 5.854], [7.268, 5.868], [7.464, 5.88], [7.661, 5.891], [7.857, 5.902], [8.054, 5.911], [8.25, 5.919], [8.446, 5.927], [8.643, 5.934], [8.839, 5.94], [9.036, 5.945], [9.232, 5.951], [9.429, 5.955], [9.625, 5.959], [9.821, 5.963], [10.018, 5.967], [10.214, 5.97], [10.411, 5.973], [10.607, 5.975], [10.804, 5.977], [11.0, 5.98]]}, {"t": "W", "pts": [[2.0, 6.0], [2.0, 2.839]], "dashed": true}, {"t": "N", "at": [2.0, 2.839]}, {"t": "N", "at": [2.0, 4.161]}, {"t": "W", "pts": [[4.0, 6.0], [4.0, 1.677]], "dashed": true}, {"t": "N", "at": [4.0, 1.677]}, {"t": "N", "at": [4.0, 5.323]}, {"t": "T", "at": [2.15, 2.589], "text": "6.32 V", "anchor": "end"}, {"t": "T", "at": [1.85, 4.761], "text": "3.68 V", "anchor": "end"}, {"t": "T", "at": [4.15, 1.427], "text": "8.65 V", "anchor": "end"}, {"t": "T", "at": [4.2, 5.123], "text": "1.35 V", "anchor": "start"}, {"t": "T", "at": [8.6, 0.65], "text": "v_R → 10 V", "cls": "accent", "anchor": "start"}, {"t": "T", "at": [8.6, 5.55], "text": "v_L → 0 V", "cls": "accent", "anchor": "start"}, {"t": "W", "pts": [[2.0, 5.88], [2.0, 6.12]]}, {"t": "T", "at": [2.0, 6.6], "text": "1τ"}, {"t": "T", "at": [2.0, 7.05], "text": "0.83 s", "cls": "accent"}, {"t": "W", "pts": [[4.0, 5.88], [4.0, 6.12]]}, {"t": "T", "at": [4.0, 6.6], "text": "2τ"}, {"t": "T", "at": [4.0, 7.05], "text": "1.67 s", "cls": "accent"}, {"t": "W", "pts": [[6.0, 5.88], [6.0, 6.12]]}, {"t": "T", "at": [6.0, 6.6], "text": "3τ"}, {"t": "T", "at": [6.0, 7.05], "text": "2.5 s", "cls": "accent"}, {"t": "W", "pts": [[8.0, 5.88], [8.0, 6.12]]}, {"t": "T", "at": [8.0, 6.6], "text": "4τ"}, {"t": "T", "at": [8.0, 7.05], "text": "3.33 s", "cls": "accent"}, {"t": "W", "pts": [[10.0, 5.88], [10.0, 6.12]]}, {"t": "T", "at": [10.0, 6.6], "text": "5τ"}, {"t": "T", "at": [10.0, 7.05], "text": "4.17 s", "cls": "accent"}], "pad": 0.6, "alt": "Voltages in the 10 V, 12 ohm, 10 H circuit after the switch closes: v_R rises from 0 toward 10 V (6.32 V at 1 tau, 8.65 V at 2 tau) while v_L falls from 10 V toward 0 (3.68 V at 1 tau, 1.35 V at 2 tau). At every instant v_R + v_L = 10 V."}</script>
+<figcaption>(Added for clarity.) \(v_R\) and \(v_L\) for the 10 V / 12 Ω / 10 H circuit, exact values. \(v_R\) follows the current curve; \(v_L\) starts at the full 10 V and decays to 0. At every instant they add to 10 V.</figcaption>
+</figure>
+<p><a class="ts" data-t="38:22"></a> <b>Trend:</b> as time goes on, the inductor's voltage heads to <b>zero</b>. Once the current reaches 100 % of its maximum, the inductor behaves like a wire with no voltage drop. <a class="ts" data-t="38:47"></a> All of the source voltage then appears across the resistor, the only element limiting the current.</p>
+<aside class="instructor">The instructor stresses that KVL holds at every instant during the transient (<a class="ts" data-t="35:57"></a>), so once you know \(V_R\) you get \(V_L = V_s - V_R\) for free.</aside>
+<aside class="note">In this example \(I_{max}\) and \(\tau\) are both "0.83". That is a coincidence: \(V_s = 10\) V and \(L = 10\) H happen to share the same digits, and both are divided by 12. One is in amperes and the other in seconds.</aside>
+</section>
+
+<section class="g-sec" id="cl2-equations" data-kind="lesson" data-ts="2351-2560">
+<h2>7. Exact equations for increasing and decreasing current</h2>
+<p><a class="ts" data-t="39:11"></a> The universal chart shows the relationship well, but it is clumsy to remember and use, and it says nothing about times <b>between</b> whole time constants. The instructor's prepared notes (<a class="ts" data-t="40:01"></a>) say there is a more accurate equation that is easier to use for these problems.</p>
+<h3>Increasing current (current build-up) <a class="ts" data-t="40:27"></a></h3>
+<div class="formula">\[ i = \frac{V_s}{R}\left(1 - \mathrm{e}^{-Rt/L}\right) = I_{max}\left(1 - \mathrm{e}^{-t/\tau}\right) \]</div>
+<dl class="vardefs"><dt>\(i\)</dt><dd>instantaneous current at time \(t\), A</dd><dt>\(V_s\)</dt><dd>source voltage, V</dd><dt>\(R\)</dt><dd>series resistance, Ω</dd><dt>\(L\)</dt><dd>inductance, H</dd><dt>\(t\)</dt><dd>time since the switch closed, s</dd><dt>\(\mathrm{e}\)</dt><dd>2.71828… (the instructor's ε)</dd></dl>
+<p>Applies when the current starts at 0 and the switch connects \(V_s\), \(R\) and \(L\) in series (labelled 13-12 in the notes). The \(V_s/R\) in front is just Ohm's law, the final current. The exponent \(-Rt/L\) is \(-t/\tau\). <a class="ts" data-t="40:57"></a></p>
+<h3>Decreasing current (current decay) <a class="ts" data-t="42:14"></a></h3>
+<div class="formula">\[ i = \frac{V_s}{R}\,\mathrm{e}^{-Rt/L} = I_{max}\,\mathrm{e}^{-t/\tau} \]</div>
+<dl class="vardefs"><dt>\(i\)</dt><dd>instantaneous current, A</dd><dt>\(V_s/R\)</dt><dd>the current at the moment the decay starts (the full maximum current), A</dd><dt>\(t\)</dt><dd>time since the switch moved to B, s</dd></dl>
+<p>Applies when the inductor starts at full current \(V_s/R\) and then decays through the same \(R\) (labelled 13-13 in the notes).</p>
+<p><a class="ts" data-t="41:22"></a> The number \(\mathrm{e} \approx 2.71828\) (the base of natural logarithms) appears because the chart's curve is an exponential. Most calculators have an \(\mathrm{e}^x\) key; it is "just a number, like π". <a class="ts" data-t="41:48"></a></p>
+<aside class="uncertain"><b>Wording to watch.</b> At <a class="ts" data-t="41:22"></a> the curve is described as "a logarithmic scale / logarithmic curve". The axes are ordinary linear axes, and the curve is an <b>exponential</b> (the inverse of a logarithm), which is why \(\mathrm{e}\) appears. Also, at <a class="ts" data-t="42:14"></a> the formula is read aloud as "e raised to the time constant". The exponent is actually \(-Rt/L = -t/\tau\) (time <i>divided by</i> the time constant, with a minus sign), as the paper shows.</aside>
+<aside class="extra"><b>Where the chart percentages come from.</b> Put \(t = n\tau\) into the equations: rising, \(1 - \mathrm{e}^{-n}\) = 0.632, 0.865, 0.950, 0.982, 0.993 for \(n = 1 \ldots 5\). Falling, \(\mathrm{e}^{-n}\) = 0.368, 0.135, 0.050, 0.018, 0.007. So the "given" chart values are just these two formulas evaluated at whole time constants.</aside>
+<aside class="extra"><b>Solving for time (not done in the video).</b> Take the natural log of both sides. Rising: \(t = -\tau \ln\!\left(1 - \frac{i}{I_{max}}\right)\). Falling: \(t = \tau \ln\!\left(\frac{I_{0}}{i}\right)\), where \(I_0\) is the starting current. <i>Practice:</i> in the 5 V / 5 Ω / 10 H circuit (τ = 2 s), the current reaches 0.5 A at \(t = -2\,\text{s} \times \ln(0.5) = 1.39\) s. In Example 5 below (τ = 22.7 μs, \(I_0\) = 2.73 mA), it decays to 1 mA at \(t = 22.7\,\mu\text{s} \times \ln(2.73) \approx 22.8\,\mu\text{s}\).</aside>
+</section>
+
+<section class="g-sec" id="cl2-ex-1ms" data-kind="lesson" data-ts="2560-2694">
+<h2>8. Example: current 1 ms after the switch closes</h2>
+<div class="example" id="cl2-ex4">
+<h3>Example 4 — 10 V, 10 kΩ, 10 H, find i at t = 1 ms <a class="ts" data-t="42:40"></a></h3>
+<figure class="circuit" id="cl2-fig-ex1ms">
+<script type="application/json">{"parts":[
+ {"t":"BAT","a":[0,4],"b":[0,1],"label":"V_s","value":"10 V","plus":"b","side":-1},
+ {"t":"W","pts":[[0,1],[0,0],[1,0]]},
+ {"t":"SW","a":[1,0],"b":[3,0],"label":"t = 0","state":"open"},
+ {"t":"W","pts":[[3,0],[4,0]]},
+ {"t":"L","a":[4,0],"b":[4,3],"label":"L","value":"10 H"},
+ {"t":"R","a":[4,3],"b":[4,5],"label":"R","value":"10 kΩ"},
+ {"t":"W","pts":[[4,5],[0,5],[0,4]]}
+],"alt":"10 V source, switch at the top, 10 H inductor and 10 kilohm resistor in series."}</script>
+<figcaption>Circuit from the instructor's notes at <a class="ts" data-t="43:05"></a>.</figcaption>
+</figure>
+<p><b>Given:</b> \(V_s = 10\) V, \(R = 10\,\text{k}\Omega = 10\,000\,\Omega\), \(L = 10\) H, current starts at 0 and the switch closes at \(t = 0\). <b>Goal:</b> \(i\) at \(t = 1\) ms \(= 0.001\) s.</p>
+<p class="step">1. Bearings: the current rises from 0 toward \(I_{max} = 10\,\text{V}/10\,\text{k}\Omega = 1\,\text{mA}\), so use the <b>increasing-current</b> equation. <a class="ts" data-t="43:05"></a></p>
+<p class="step">2. Substitute into \(i = \dfrac{V_s}{R}\left(1 - \mathrm{e}^{-Rt/L}\right)\) with \(R = 10\,000\,\Omega\), \(t = 0.001\,\text{s}\), \(L = 10\,\text{H}\): \(i = \dfrac{10\,\text{V}}{10\,\text{k}\Omega}\left(1 - \mathrm{e}^{-(10\,000)(0.001)/10}\right)\). <a class="ts" data-t="43:31"></a></p>
+<p class="step">3. Exponent: \(\dfrac{Rt}{L} = \dfrac{10\,000 \times 0.001}{10} = 1\). This makes sense: \(\tau = L/R = 10/10\,000 = 1\) ms, so \(t\) is exactly 1τ.</p>
+<p class="step">4. \(i = 1\,\text{mA} \times (1 - \mathrm{e}^{-1}) = 1\,\text{mA} \times (1 - 0.3679) = 0.632\,\text{mA}\). <a class="ts" data-t="44:03"></a></p>
+<p class="answer">\(i(1\,\text{ms}) = 0.632\) mA, which is 63.2 % of the 1 mA maximum, as the chart predicts for 1τ.</p>
+</div>
+</section>
+
+<section class="g-sec" id="cl2-ex-68us" data-kind="lesson" data-ts="2694-2911">
+<h2>9. Example: decaying current after 68 μs</h2>
+<div class="example" id="cl2-ex5">
+<h3>Example 5 — 6 V, 2.2 kΩ, 50 mH, switch moved from A to B <a class="ts" data-t="44:54"></a></h3>
+<figure class="circuit" id="cl2-fig-ex68">
+<script type="application/json">{"parts":[
+ {"t":"BAT","a":[0,5],"b":[0,2],"label":"V_s","value":"6 V","plus":"b","side":-1},
+ {"t":"W","pts":[[0,2],[0,0],[3,0]]},
+ {"t":"W","pts":[[5,0],[7,0],[7,6],[0,6],[0,5]]},
+ {"t":"W","pts":[[4,1],[5,0]]},
+ {"t":"R","a":[4,1],"b":[4,3],"label":"R","value":"2.2 kΩ"},
+ {"t":"L","a":[4,3],"b":[4,6],"label":"L","value":"50 mH"},
+ {"t":"N","at":[3,0],"open":true,"label":"A","pos":"n"},
+ {"t":"N","at":[5,0],"open":true,"label":"B","pos":"n"},
+ {"t":"N","at":[4,1],"open":true},
+ {"t":"N","at":[4,6]},
+ {"t":"ARROW","a":[3.3,-0.9],"b":[4.7,-0.9],"label":"A → B","lat":[4,-1.15]},
+ {"t":"IARR","a":[7,4],"b":[7,2],"label":"i"}
+],"alt":"6 V source connected to contact A. The switch pole feeds a 2.2 kilohm resistor and a 50 mH inductor in series down to the bottom wire. Contact B connects through the right-hand wire to the bottom. With the switch at B the source is out of the circuit and R and L form a loop."}</script>
+<figcaption>Circuit from the notes at <a class="ts" data-t="44:50"></a> (switch moved to B). The current arrow here follows inductor-current continuity; see the note on the instructor's arrow below.</figcaption>
+</figure>
+<p><b>Given:</b> \(V_s = 6\) V, \(R = 2.2\,\text{k}\Omega = 2200\,\Omega\), \(L = 50\,\text{mH} = 0.050\) H. The switch has been at A long enough for the current to be at its maximum (field fully built up), then moves to B at \(t = 0\). <b>Goal:</b> \(i\) and \(V_R\) at \(t = 68\,\mu\text{s}\). <a class="ts" data-t="44:54"></a></p>
+<p class="step">1. Starting current (maximum, inductor = wire): \(I_{max} = \dfrac{6\,\text{V}}{2.2\,\text{k}\Omega} = 2.7\,\text{mA}\) (2.727 mA). <a class="ts" data-t="45:48"></a></p>
+<p class="step">2. The current falls from 2.7 mA to 0 A in about 5τ: \(5\,\dfrac{L}{R} = 5\left(\dfrac{0.050}{2200}\right) = 0.000113\,\text{s} \approx 113\,\mu\text{s}\) (τ = 22.7 μs). <a class="ts" data-t="46:16"></a></p>
+<p class="step">3. Decreasing current, so use \(i = \dfrac{V_s}{R}\,\mathrm{e}^{-Rt/L}\) with \(R = 2200\,\Omega\), \(t = 0.000068\,\text{s}\), \(L = 0.050\,\text{H}\): \(i = \dfrac{6\,\text{V}}{2200\,\Omega}\,\mathrm{e}^{-(2200)(0.000068)/0.050}\). <a class="ts" data-t="46:45"></a></p>
+<p class="step">4. Exponent: \(\dfrac{Rt}{L} = \dfrac{2200 \times 0.000068}{0.050} = 2.992\) (so \(t \approx 3\tau\)). \(\mathrm{e}^{-2.992} = 0.0502\).</p>
+<p class="step">5. \(i = 2.727\,\text{mA} \times 0.0502 = 0.136\,\text{mA}\). <a class="ts" data-t="47:14"></a></p>
+<p class="step">6. Resistor voltage, Ohm's law: \(V_R = 0.136\,\text{mA} \times 2200\,\Omega = 0.299\,\text{V}\). <a class="ts" data-t="47:39"></a></p>
+<p class="answer">At 68 μs: \(i = 0.136\) mA and \(V_R \approx 0.30\) V (board: 0.299 V; unrounded 0.301 V).</p>
+<aside class="note">Check with the chart: 68 μs ≈ 3τ, and the falling chart gives ≈ 5 % at 3τ. 5 % of 2.73 mA ≈ 0.136 mA ✓.</aside>
+<aside class="uncertain"><b>Rounding / board details.</b> (1) \(5\tau = 113.6\,\mu\text{s}\); the notes truncate it to 113 μs (≈114 μs if rounded). (2) \(V_R\) from the unrounded current is \(6\,\text{V} \times \mathrm{e}^{-2.992} = 0.301\) V; the 0.299 V on the paper comes from using 0.136 mA. (3) The curved arrow labelled I on the paper appears to run from the switch toward B and down the right-hand wire. The battery's long plate appears to be on top, so during build-up the current flows down through R and L. By continuity it keeps that direction after the switch moves, which means it returns <i>up</i> the right-hand wire into B, as drawn in the figure above. Only the magnitude is used in the calculation, so the answers are unaffected.</aside>
+</div>
+<aside class="instructor">The instructor's advice (<a class="ts" data-t="47:39"></a>): the equations themselves are easy to use. What matters more is an overall sense of the problem: what the maximum and minimum values are, whether the current is increasing or decreasing, and how self-inductance creates an EMF that opposes the rise or sustains the current during decay. Then fill in specific values with the equations.</aside>
+</section>
+
+<section class="g-sec" id="cl2-vgeneral" data-kind="lesson" data-ts="2911-3023">
+<h2>10. General equations for v<sub>R</sub> and v<sub>L</sub></h2>
+<p><a class="ts" data-t="48:31"></a> Multiplying the current equations by \(R\) (Ohm's law) gives the resistor voltage, and KVL gives the inductor voltage:</p>
+<table>
+<tr><th>Quantity</th><th>Current build-up (increasing)</th><th>Current decay (decreasing)</th></tr>
+<tr><td>\(i\)</td><td>\(\dfrac{V_s}{R}\left(1 - \mathrm{e}^{-Rt/L}\right)\)</td><td>\(\dfrac{V_s}{R}\,\mathrm{e}^{-Rt/L}\)</td></tr>
+<tr><td>\(v_R\)</td><td>\(V_s\left(1 - \mathrm{e}^{-Rt/L}\right)\)</td><td>\(V_s\,\mathrm{e}^{-Rt/L}\)</td></tr>
+<tr><td>\(v_L\)</td><td>\(V_s\,\mathrm{e}^{-Rt/L}\)</td><td>\(V_s\,\mathrm{e}^{-Rt/L}\) (same size, opposite polarity — see note)</td></tr>
+</table>
+<div class="formula">\[ v_R = V_s\left(1-\mathrm{e}^{-Rt/L}\right)\ \text{(build-up)},\qquad v_R = V_s\,\mathrm{e}^{-Rt/L}\ \text{(decay)},\qquad v_L = V_s\,\mathrm{e}^{-Rt/L}\ \text{(both)} \]</div>
+<dl class="vardefs"><dt>\(v_R\)</dt><dd>voltage across the resistor, V</dd><dt>\(v_L\)</dt><dd>voltage across the inductor, V</dd><dt>\(V_s\)</dt><dd>source voltage (build-up) or \(I_{max}R\) at the start of the decay, V</dd></dl>
+<p>These come from the notes at <a class="ts" data-t="48:55"></a> and <a class="ts" data-t="49:20"></a>. With them you can find the voltage across each component at any time, for both rising and falling current. <a class="ts" data-t="49:36"></a></p>
+<p><b>Checks:</b> during build-up, \(v_R + v_L = V_s(1-\mathrm{e}^{-Rt/L}) + V_s\mathrm{e}^{-Rt/L} = V_s\) (KVL ✓). At \(t = 0\), \(v_L = V_s\) (the inductor takes the whole source voltage and the current is 0). As \(t \to \infty\), \(v_L \to 0\) (wire). Example 3 at 1τ: \(v_R = 10(1-\mathrm{e}^{-1}) = 6.32\) V and \(v_L = 10\,\mathrm{e}^{-1} = 3.68\) V.</p>
+<aside class="extra"><b>Polarity during decay.</b> With the source removed, R and L form a loop by themselves, so KVL gives \(v_L = -v_R\). The inductor now acts as the source, and its voltage has the opposite polarity to the build-up. The \(v_L\) formula on the paper gives the size. Also note that the decay formulas assume the decay starts from the full current \(V_s/R\) and runs through the same \(R\). Otherwise use \(i = I_0\,\mathrm{e}^{-t/\tau'}\) with \(\tau' = L/R'\) for the decay path.</aside>
+<p><a class="ts" data-t="50:01"></a> Wrap-up: this finishes LR circuits for now. You can find currents and component voltages for increasing and decreasing current, and you should have a good feel for the universal time-constant chart. (The video ends with a sign-off.)</p>
+</section>
+
+<section class="g-sec" id="cl2-assumptions" data-kind="assumptions">
+<h2>Assumptions &amp; limitations</h2>
+<ul>
+<li><b>Ideal inductor.</b> The inductor is treated as pure wire (0 Ω) at steady state. A real coil's winding resistance adds to \(R\), which lowers \(I_{max}\) and shortens τ.</li>
+<li><b>One resistor in series, DC source, ideal switch.</b> All formulas here assume a single series R and L driven by a constant \(V_s\). For other networks, replace \(R\) by the Thévenin resistance seen by the inductor (and \(V_s/R\) by the Thévenin final current).</li>
+<li><b>Starting conditions.</b> The build-up equation assumes the current starts at 0. The decay equation as written assumes it starts at the full \(V_s/R\) and decays through the same \(R\). Different start values or a different decay resistance change the formula and the time constant.</li>
+<li><b>5τ ≈ final value</b> is an engineering approximation: after 5τ the current is at 99.3 % (rising) or 0.7 % (falling) of its full change, not exactly 100 % or 0 %.</li>
+<li><b>Chart only at whole time constants.</b> The universal chart gives values only at 1τ, 2τ, …; for any other time use the exponential equations.</li>
+<li><b>The no-resistor case is not physical.</b> With \(R = 0\) the final current and τ are undefined (infinite). Real circuits always contain some resistance.</li>
+<li><b>\(v_L\) during decay.</b> The formula \(V_s\mathrm{e}^{-Rt/L}\) gives its size; its polarity is reversed compared with build-up.</li>
+</ul>
+</section>
+
+<section class="g-sec" id="cl2-mistakes" data-kind="mistakes">
+<h2>Common mistakes</h2>
+<aside class="mistake"><b>Using τ = R/L or τ = RL.</b> The RL time constant is \(L/R\). Check the units: H/Ω = s. (For capacitors it is \(RC\), see <a class="xref" data-lesson="cl4">cl4</a>; don't mix them up.)</aside>
+<aside class="mistake"><b>Forgetting prefixes.</b> Convert 10 kΩ → 10 000 Ω, 50 mH → 0.050 H, 68 μs → 0.000068 s, 1 ms → 0.001 s before computing \(Rt/L\). A prefix slip changes the exponent by a factor of 1000 and the answer completely.</aside>
+<aside class="mistake"><b>Mixing up the two charts.</b> 63.2 % is how far a <i>rising</i> current has got after 1τ; 36.8 % is what is <i>left</i> of a falling current after 1τ. Decide first whether the current is increasing or decreasing (the instructor's "get your bearings" step).</aside>
+<aside class="mistake"><b>Wrong exponent.</b> The exponent is \(-Rt/L = -t/\tau\), negative and with time on top. Not \(-L/(Rt)\), not \(-t\tau\), and not "e to the time constant". Quick check: at \(t = \tau\) the exponent must equal −1.</aside>
+<aside class="mistake"><b>Using the calculator's EXP / EE key instead of \(\mathrm{e}^x\).</b> On many calculators EXP or EE means "×10^". Use the \(\mathrm{e}^x\) (shift-ln) key.</aside>
+<aside class="mistake"><b>Rounding too early.</b> In Example 3, rounding to 0.83 A and 0.52 A gave \(V_R = 6.24\) V instead of 6.32 V. Keep 3–4 significant figures until the final answer.</aside>
+<aside class="mistake"><b>Thinking the inductor voltage is constant.</b> \(v_L\) is largest (= \(V_s\)) right after switching and decays to 0. At steady state the whole source voltage is across R.</aside>
+<aside class="mistake"><b>Assuming the current jumps.</b> Only the resistor-only circuit has an instant jump. An inductor's current is continuous: right after any switching it has the same value it had just before.</aside>
+<aside class="mistake"><b>Using the build-up τ for a decay through a different resistor.</b> Recompute τ = L/R for the path the current actually flows through after switching (this lecture's examples happen to use the same R both ways).</aside>
+</section>
+
+<section class="g-sec" id="cl2-recap" data-kind="recap">
+<h2>Recap &amp; formula sheet</h2>
+<p>An inductor opposes changes in its current, so in a series RL circuit the current rises (or falls) along an exponential curve instead of jumping. The speed is set by \(\tau = L/R\). After about 5τ the change is complete. The final current is \(V_s/R\) because the inductor ends up acting like a wire. The universal time-constant chart gives the percentage reached at each whole time constant. The exponential equations give the value at any time. \(v_R\) follows the current, \(v_L\) decays from \(V_s\) to 0, and KVL (\(v_R + v_L = V_s\)) holds throughout the build-up.</p>
+<div class="formula-sheet">
+<p><b>Time constant:</b> \(\tau = \dfrac{L}{R}\) — τ in s, L in H, R in Ω (H/Ω = s).</p>
+<p><b>Settling time:</b> \(t \approx 5\tau\) to reach max (rising) or zero (falling).</p>
+<p><b>Final current:</b> \(I_{max} = \dfrac{V_s}{R}\) (inductor = wire at steady state).</p>
+<p><b>Increasing current:</b> \(i = \dfrac{V_s}{R}\left(1-\mathrm{e}^{-Rt/L}\right) = I_{max}\left(1-\mathrm{e}^{-t/\tau}\right)\)</p>
+<p><b>Decreasing current:</b> \(i = \dfrac{V_s}{R}\,\mathrm{e}^{-Rt/L} = I_{max}\,\mathrm{e}^{-t/\tau}\)</p>
+<p><b>Resistor voltage:</b> build-up \(v_R = V_s\left(1-\mathrm{e}^{-Rt/L}\right)\); decay \(v_R = V_s\,\mathrm{e}^{-Rt/L}\); always \(v_R = iR\).</p>
+<p><b>Inductor voltage:</b> \(v_L = V_s\,\mathrm{e}^{-Rt/L}\) (size, build-up or decay); during build-up \(v_L = V_s - v_R\) (KVL).</p>
+<p><b>Universal chart (rising):</b> 1τ 63.2 %, 2τ 86.5 %, 3τ 95 %, 4τ 98.2 %, 5τ ≈ 100 % (99.3 %).</p>
+<p><b>Universal chart (falling):</b> 1τ 36.8 %, 2τ 13.5 %, 3τ 5.0 %, 4τ 1.8 %, 5τ ≈ 0 % (0.7 %).</p>
+<p><b>e:</b> \(\mathrm{e} \approx 2.71828\) (instructor writes ε).</p>
+<p><b>Solve for time (extra):</b> rising \(t = -\tau\ln\!\left(1-\dfrac{i}{I_{max}}\right)\); falling \(t = \tau\ln\!\left(\dfrac{I_0}{i}\right)\).</p>
+</div>
+<table>
+<tr><th>Example</th><th>Values</th><th>Key results</th></tr>
+<tr><td><a href="#cl2-ex1">1</a> <a class="ts" data-t="2:08"></a></td><td>5 V, 5 Ω (no L)</td><td>instant step to 1 A</td></tr>
+<tr><td><a href="#cl2-ex2">2</a> <a class="ts" data-t="11:05"></a></td><td>5 V, 5 Ω, 10 H</td><td>\(I_{max}\) = 1 A, τ = 2 s, 5τ = 10 s; 0.63 / 0.87 / 0.95 / 0.98 / 1 A at 2 / 4 / 6 / 8 / 10 s; decay 36.8 %, 13.5 %</td></tr>
+<tr><td><a href="#cl2-ex3">3</a> <a class="ts" data-t="28:19"></a></td><td>10 V, 12 Ω, 10 H</td><td>\(I_{max}\) = 0.83 A, τ = 0.83 s; 1τ: 0.52 A, \(V_R\) = 6.24 V, \(V_L\) = 3.76 V; 2τ: 0.72 A, 8.64 V, 1.36 V</td></tr>
+<tr><td><a href="#cl2-ex4">4</a> <a class="ts" data-t="42:40"></a></td><td>10 V, 10 kΩ, 10 H, t = 1 ms</td><td>i = 0.632 mA</td></tr>
+<tr><td><a href="#cl2-ex5">5</a> <a class="ts" data-t="44:54"></a></td><td>6 V, 2.2 kΩ, 50 mH, decay, t = 68 μs</td><td>\(I_0\) = 2.7 mA, 5τ ≈ 113 μs, i = 0.136 mA, \(V_R\) = 0.299 V</td></tr>
+</table>
+</section>

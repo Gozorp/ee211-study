@@ -1,0 +1,584 @@
+<section class="g-sec" id="cl1-overview" data-kind="overview">
+<h2>Overview</h2>
+<p>This lecture introduces a new circuit element, the <strong>inductor</strong>. Physically it is just a coil of wire, and its key property, <strong>inductance</strong> \(L\) (measured in henries), <em>opposes a change in current</em>. The instructor shows that an inductor stores energy in its magnetic field (\(E = LI^2/2\)). He then explains how an expanding or collapsing magnetic field creates a <strong>back EMF</strong> (a "temporary backwards battery") that keeps the current from changing instantly. This process is called <strong>self-inductance</strong>. He finishes with the factors that set inductance, the different inductor symbols and types, and how to combine inductors in series and in parallel.</p>
+<p>This lecture is all theory. The instructor says he will show how to <em>calculate</em> the rising and falling current curves next time (see <a class="xref" data-lesson="cl2">Inductors: L/R time constant</a>).</p>
+<h3>Parts of the video</h3>
+<ul>
+<li><a class="ts" data-t="0:00"></a> What an inductor is physically, and its schematic symbol</li>
+<li><a class="ts" data-t="1:19"></a> Resistance opposes the <em>flow</em> of current; inductance opposes a <em>change</em> in current. Teaser: with constant current an inductor acts like a plain wire.</li>
+<li><a class="ts" data-t="4:10"></a> Inductors store energy in a magnetic field: 5 A through 20 H, the henry, the field picture, \(E = LI^2/2 = 250\,\text{J}\)</li>
+<li><a class="ts" data-t="12:43"></a> Selector-switch circuit: an <em>expanding</em> field (current increasing) and a <em>collapsing</em> field (current decreasing)</li>
+<li><a class="ts" data-t="18:43"></a> A changing field induces an EMF in the opposite direction: the "temporary backwards battery", back EMF / counter EMF / CEMF</li>
+<li><a class="ts" data-t="28:34"></a> What the back EMF does to the current: no instantaneous rise. Definition of <em>self-inductance</em>.</li>
+<li><a class="ts" data-t="34:34"></a> Switching from A to B: the collapsing field, a back EMF of the other polarity, and the current decaying slowly</li>
+<li><a class="ts" data-t="40:15"></a> Factors that determine inductance: turns, cross-sectional area, length, relative permeability of the core (\(\mu_r\))</li>
+<li><a class="ts" data-t="48:01"></a> Inductor types and symbols: air core, iron core, powdered iron/ferrite core, variable, tapped</li>
+<li><a class="ts" data-t="56:45"></a> Inductors in series (10 H + 10 H) and in parallel (10 H ∥ 5 H)</li>
+<li><a class="ts" data-t="1:00:28"></a> Wrap-up and preview of the next lecture</li>
+</ul>
+</section>
+
+<section class="g-sec" id="cl1-objectives" data-kind="objectives">
+<h2>Learning objectives</h2>
+<p>After this lesson you should be able to:</p>
+<ul>
+<li>Describe an inductor physically (a coil of wire) and recognise its schematic symbol and its variants (air core, iron core, powdered iron/ferrite core, variable, tapped).</li>
+<li>State the difference between resistance (opposes the flow of current) and inductance (opposes a <em>change</em> in current).</li>
+<li>Say what an inductor does when its current is constant: it behaves like a plain wire.</li>
+<li>State the unit of inductance (henry, H) and compute the energy stored in an inductor's magnetic field with \(E = \tfrac{1}{2}LI^2\).</li>
+<li>Explain when the magnetic field expands (current increasing) and when it collapses (current decreasing).</li>
+<li>Explain back EMF (counter EMF, CEMF): when it appears, which way it acts, and why it is only temporary.</li>
+<li>Sketch the inductor's back-EMF voltage and the circuit current versus time when a switch is thrown, for both the "energise" (A) and "de-energise" (B) positions.</li>
+<li>Define self-inductance in your own words.</li>
+<li>List the four factors that set inductance and say whether each one raises or lowers \(L\).</li>
+<li>Find the total inductance of inductors in series and in parallel, including the product-over-sum shortcut for two inductors.</li>
+</ul>
+</section>
+
+<section class="g-sec" id="cl1-prereqs" data-kind="prereqs">
+<h2>Prerequisites</h2>
+<dl>
+<dt>Current, voltage and resistance</dt>
+<dd>Current \(I\) (amps) is the flow of charge. Voltage (volts) is what pushes it. Resistance \(R\) (ohms) is the property that opposes that flow. This lecture builds its definition of inductance by comparing it with resistance.</dd>
+<dt>Ideal sources</dt>
+<dd>A constant (DC) voltage source such as a battery keeps a fixed voltage. A constant current source keeps a fixed current (5 A in this lecture's first circuit) whatever is connected to it. Remember the battery symbol: the long plate is the + terminal.</dd>
+<dt>Energy and the joule</dt>
+<dd>Energy is measured in joules (J). The instructor compares an inductor to a battery: both can store energy and release it later.</dd>
+<dt>Switches</dt>
+<dd>A switch makes or breaks a connection. The "selector switch" in this lecture is a single-pole, double-throw switch: one common terminal can be connected to contact A <em>or</em> to contact B.</dd>
+<dt>Series and parallel resistors</dt>
+<dd>\(R_T = R_1 + R_2 + \dots\) in series, \(R_T = 1/(1/R_1 + 1/R_2 + \dots)\) in parallel, and \(R_1R_2/(R_1+R_2)\) for two in parallel. Inductors combine with exactly the same formulas.</dd>
+<dt>Graphs versus time</dt>
+<dd>You should be comfortable reading a sketch of a voltage or current against time, with the moment a switch is thrown marked on the time axis.</dd>
+</dl>
+</section>
+
+<section class="g-sec" id="cl1-definitions" data-kind="definitions">
+<h2>Definitions &amp; symbols</h2>
+<table>
+<tr><th>Term / symbol</th><th>Meaning</th><th>Where</th></tr>
+<tr><td>Inductor</td><td>A component that is physically a coil (loops) of wire. Its schematic symbol looks like a resistor drawn with rounded humps that mimic the loops.</td><td><a class="ts" data-t="0:00"></a></td></tr>
+<tr><td>Inductance, \(L\)</td><td>The property that <strong>opposes a change in current</strong>. (\(I\) was already taken for current, so inductance uses \(L\).)</td><td><a class="ts" data-t="2:10"></a></td></tr>
+<tr><td>Henry, H</td><td>The unit of inductance, e.g. \(L = 20\,\text{H}\).</td><td><a class="ts" data-t="6:11"></a></td></tr>
+<tr><td>Magnetic field (B)</td><td>The field that builds up around a coil when current flows through it. The inductor stores its energy in this field.</td><td><a class="ts" data-t="8:27"></a></td></tr>
+<tr><td>\(E\)</td><td>Energy stored in the inductor's magnetic field, in joules (J).</td><td><a class="ts" data-t="9:44"></a></td></tr>
+<tr><td>Expanding magnetic field</td><td>The field growing outward while the current is <em>increasing</em>.</td><td><a class="ts" data-t="14:40"></a></td></tr>
+<tr><td>Collapsing magnetic field</td><td>The field shrinking inward while the current is <em>decreasing</em>. Its stored energy is given up to the circuit (here, to a resistor).</td><td><a class="ts" data-t="17:32"></a></td></tr>
+<tr><td>EMF</td><td>Electromotive force, which is simply a voltage.</td><td><a class="ts" data-t="19:45"></a></td></tr>
+<tr><td>Back EMF = counter EMF = CEMF</td><td>The voltage an inductor produces in itself, while its field is changing, in the direction that <em>opposes</em> the change that caused it. The instructor calls it a "temporary backwards battery".</td><td><a class="ts" data-t="27:14"></a></td></tr>
+<tr><td>Self-inductance</td><td>"The action of generating a back-EMF which opposes the original change in current which caused it" (board definition).</td><td><a class="ts" data-t="31:58"></a></td></tr>
+<tr><td>Turn</td><td>One loop of wire in the coil.</td><td><a class="ts" data-t="40:47"></a></td></tr>
+<tr><td>Cross-sectional area, \(A\)</td><td>The area of each loop seen end-on. It goes as the square of the coil diameter.</td><td><a class="ts" data-t="41:31"></a></td></tr>
+<tr><td>Relative permeability, \(\mu_r\)</td><td>How well the core material can concentrate magnetic field lines. A greater \(\mu_r\) gives more \(L\).</td><td><a class="ts" data-t="44:39"></a></td></tr>
+<tr><td>Core</td><td>The material in the centre of the coil: air, iron, powdered iron or ferrite.</td><td><a class="ts" data-t="45:35"></a></td></tr>
+<tr><td>Variable inductor</td><td>An inductor whose \(L\) can be adjusted, for example with a threaded core that screws in and out. Drawn with a diagonal arrow through the symbol.</td><td><a class="ts" data-t="51:14"></a></td></tr>
+<tr><td>Tapped inductor</td><td>A coil with more than two leads (taps). Picking different taps selects more or fewer turns, and so more or less \(L\).</td><td><a class="ts" data-t="55:04"></a></td></tr>
+<tr><td>\(L_T\)</td><td>Total (equivalent) inductance of a series or parallel combination.</td><td><a class="ts" data-t="58:01"></a></td></tr>
+</table>
+</section>
+
+<section class="g-sec" id="cl1-what" data-kind="lesson" data-ts="0-79">
+<h2>1. What an inductor is</h2>
+<p><a class="ts" data-t="0:00"></a> Physically, an inductor is <strong>nothing more than a loop of wire</strong>. Take any wire, wind it into a coil, and you have an inductor.</p>
+<p><a class="ts" data-t="0:26"></a> The schematic symbol looks a little like a resistor, but it is drawn with curved humps instead of zigzags. The humps mimic the loops of the coil.</p>
+<figure class="circuit" id="cl1-fig-symbol">
+<script type="application/json">{"parts":[
+ {"t":"W","pts":[[0,0],[1,0]]},
+ {"t":"L","a":[1,0],"b":[4,0],"label":"L"},
+ {"t":"W","pts":[[4,0],[5,0]]},
+ {"t":"N","at":[0,0],"open":true},
+ {"t":"N","at":[5,0],"open":true}
+],"alt":"Inductor schematic symbol: a wire with four rounded humps between two terminals"}</script>
+<figcaption>Inductor schematic symbol (physically, loops of wire), as drawn at <a class="ts" data-t="0:40"></a></figcaption>
+</figure>
+</section>
+
+<section class="g-sec" id="cl1-property" data-kind="lesson" data-ts="79-250">
+<h2>2. Inductance opposes a <em>change</em> in current</h2>
+<p><a class="ts" data-t="1:19"></a> The instructor sets up the definition by comparing it with the property you already know:</p>
+<ul>
+<li><strong>Resistance (R) is a property that opposes the flow of current.</strong></li>
+<li><a class="ts" data-t="2:10"></a> <strong>Inductance (L) is a property that opposes a change in current.</strong></li>
+</ul>
+<p>The symbol is \(L\) because \(I\) is already used for current.</p>
+<aside class="instructor"><p><a class="ts" data-t="2:53"></a> He asks you to "think about that for a second". Inductance shows up <strong>only when the current is changing</strong>. For an inductor to do anything at all, its current has to change. This idea runs through the whole lecture.</p></aside>
+<h3>Teaser: constant current means "just a wire"</h3>
+<p><a class="ts" data-t="3:17"></a> If the current through an inductor is <strong>constant</strong>, the inductor looks just like a straight wire, with essentially zero resistance. As far as the circuit is concerned, it does nothing.</p>
+<p><a class="ts" data-t="4:04"></a> If the current <strong>changes</strong>, for example from 0 A to 1 A, then "we're gonna see something that happens". That something is the back EMF of Sections 5 to 7.</p>
+<aside class="extra">
+<p>The usual equation for this behaviour is \(v_L = L\,\dfrac{di}{dt}\). The voltage across an ideal inductor is proportional to how fast its current is changing. If \(i\) is constant, \(di/dt = 0\) and \(v_L = 0\), exactly like a wire. This equation is <em>not</em> presented in this video. The next lectures build the quantitative picture (<a class="xref" data-lesson="cl2">L/R time constant</a>).</p>
+<p>A practical consequence: in a DC circuit that has settled (all currents constant), you can replace every ideal inductor with a short circuit (a wire) when you analyse it.</p>
+</aside>
+</section>
+
+<section class="g-sec" id="cl1-energy" data-kind="lesson" data-ts="250-763">
+<h2>3. Inductors store energy in a magnetic field</h2>
+<p><a class="ts" data-t="4:10"></a> The second key fact (board, in green): <strong>inductors store energy in the form of a magnetic field</strong> around them.</p>
+<h3>The example circuit and the unit of inductance</h3>
+<p><a class="ts" data-t="5:29"></a> To show this, the instructor drives an inductor with a <strong>constant current source of 5 A</strong>. He uses a current source because it keeps the picture simple.</p>
+<p><a class="ts" data-t="6:11"></a> The amount of inductance is measured in <strong>henries</strong>: <em>unit of inductance: Henry (H)</em>. You can change a coil's inductance by adding turns or making it bigger or smaller (Section 8). For now, he simply sets \(L = 20\,\text{H}\) <a class="ts" data-t="7:08"></a>.</p>
+<figure class="circuit" id="cl1-fig-energy-ckt">
+<script type="application/json">{"parts":[
+ {"t":"I","a":[0,3],"b":[0,0],"label":"I","value":"5 A"},
+ {"t":"W","pts":[[0,0],[3,0]]},
+ {"t":"IARR","a":[1.2,0],"b":[1.8,0]},
+ {"t":"L","a":[3,0],"b":[3,3],"label":"L","value":"20 H"},
+ {"t":"W","pts":[[3,3],[0,3]]}
+],"alt":"A 5 A constant current source, arrow pointing up, connected in a loop with a 20 H inductor"}</script>
+<figcaption>5 A constant current source driving a 20 H inductor, as drawn at <a class="ts" data-t="7:30"></a> (source arrow points up, so current circulates clockwise)</figcaption>
+</figure>
+<h3>The physical picture</h3>
+<p><a class="ts" data-t="7:58"></a> Physically, the inductor is a coil of wire. Push current through it (to the left in his drawing) and <strong>a magnetic field builds up around the coil</strong> <a class="ts" data-t="8:27"></a>. The field lines (labelled B) run through the centre of the coil and curve back around the outside on themselves <a class="ts" data-t="8:51"></a>. You do not need the physics of magnetic fields to use inductors, and the course does not go into it.</p>
+<figure class="circuit" id="cl1-fig-field">
+<script type="application/json">{"parts":[
+ {"t":"W","pts":[[2.66,2.0],[2.64,2.306],[2.584,2.566],[2.499,2.739],[2.4,2.8],[2.301,2.739],[2.216,2.566],[2.16,2.306],[2.14,2.0],[2.16,1.694],[2.216,1.434],[2.301,1.261],[2.4,1.2],[2.499,1.261],[2.584,1.434],[2.64,1.694],[2.66,2.0]]},
+ {"t":"W","pts":[[3.28,2.0],[3.26,2.306],[3.204,2.566],[3.119,2.739],[3.02,2.8],[2.921,2.739],[2.836,2.566],[2.78,2.306],[2.76,2.0],[2.78,1.694],[2.836,1.434],[2.921,1.261],[3.02,1.2],[3.119,1.261],[3.204,1.434],[3.26,1.694],[3.28,2.0]]},
+ {"t":"W","pts":[[3.9,2.0],[3.88,2.306],[3.824,2.566],[3.739,2.739],[3.64,2.8],[3.541,2.739],[3.456,2.566],[3.4,2.306],[3.38,2.0],[3.4,1.694],[3.456,1.434],[3.541,1.261],[3.64,1.2],[3.739,1.261],[3.824,1.434],[3.88,1.694],[3.9,2.0]]},
+ {"t":"W","pts":[[4.52,2.0],[4.5,2.306],[4.444,2.566],[4.359,2.739],[4.26,2.8],[4.161,2.739],[4.076,2.566],[4.02,2.306],[4.0,2.0],[4.02,1.694],[4.076,1.434],[4.161,1.261],[4.26,1.2],[4.359,1.261],[4.444,1.434],[4.5,1.694],[4.52,2.0]]},
+ {"t":"W","pts":[[2.4,2.8],[2.4,3.6]]},
+ {"t":"W","pts":[[4.26,2.8],[4.26,3.6]]},
+ {"t":"ARROW","a":[0.6,2],"b":[6.2,2],"label":"B","lat":[5.3,1.75]},
+ {"t":"W","pts":[[6.2,2],[6.8,1.4],[6.8,0.5],[0,0.5],[0,1.4],[0.6,2]],"dashed":true},
+ {"t":"ARROW","a":[3.8,0.5],"b":[2.8,0.5]},
+ {"t":"W","pts":[[6.2,2],[6.8,2.6],[6.8,4.4],[0,4.4],[0,2.6],[0.6,2]],"dashed":true},
+ {"t":"ARROW","a":[3.8,4.4],"b":[2.8,4.4]},
+ {"t":"ARROW","a":[4.2,3.95],"b":[2.5,3.95],"label":"I","lat":[3.35,3.75]}
+],"alt":"Coil with current I flowing to the left; magnetic field B passes through the coil to the right and returns around the outside to the left"}</script>
+<figcaption>Coil with current \(I\) and its magnetic field \(B\): lines through the coil, returning around the outside. Redrawn from the sketch at <a class="ts" data-t="9:18"></a> (coil loops seen from the side).</figcaption>
+</figure>
+<h3>How much energy is stored?</h3>
+<p><a class="ts" data-t="9:18"></a> The magnetic field stores energy, and the amount is:</p>
+<div class="formula">\[ E = \frac{L I^2}{2} \]</div>
+<dl class="vardefs">
+<dt>\(E\)</dt><dd>energy stored in the magnetic field, joules (J)</dd>
+<dt>\(L\)</dt><dd>inductance, henries (H)</dd>
+<dt>\(I\)</dt><dd>current through the inductor, amps (A)</dd>
+</dl>
+<p>Use it whenever you know the inductance and the current flowing through it at that moment. The energy depends on the current <em>squared</em>, so doubling the current gives four times the energy.</p>
+
+<div class="example" id="cl1-ex1">
+<h3>Example 1 — Energy stored in a 20 H inductor carrying 5 A <a class="ts" data-t="10:36"></a></h3>
+<p><strong>Given:</strong> \(L = 20\,\text{H}\), \(I = 5\,\text{A}\) (from the constant current source above).</p>
+<p><strong>Find:</strong> the energy \(E\) stored in the inductor's magnetic field.</p>
+<p class="step">1. Write the formula: \(E = \dfrac{L I^2}{2}\).</p>
+<p class="step">2. Substitute, keeping units: \(E = \dfrac{(20\,\text{H})(5\,\text{A})^2}{2}\).</p>
+<p class="step">3. Square the current first: \((5\,\text{A})^2 = 25\,\text{A}^2\).</p>
+<p class="step">4. Multiply and divide: \(E = \dfrac{20 \times 25}{2} = \dfrac{500}{2} = 250\). Units: \(\text{H}\cdot\text{A}^2 = \text{J}\).</p>
+<p class="answer">\(E = 250\,\text{J}\) is stored in the magnetic field of the 20 H inductor carrying 5 A. <a class="ts" data-t="11:00"></a></p>
+</div>
+
+<h3>An energy-storage device, like a battery but different</h3>
+<p><a class="ts" data-t="11:00"></a> You can think of an inductor as an <strong>energy storage device</strong>. You have already used another one, the battery (a constant voltage source). A battery stores its energy in its <em>chemistry</em>. An inductor stores its energy in its <em>magnetic field</em>. The mechanism differs, but both can store energy and release it.</p>
+<aside class="instructor"><p><a class="ts" data-t="11:51"></a> The two things to pay attention to so far: (a) an inductor is a <strong>storage device for energy</strong>, and (b) inductance is a property that <strong>opposes a change in current</strong>. The energy-storage picture alone does not explain the opposition to change. That is what the rest of the lecture does.</p></aside>
+</section>
+
+<section class="g-sec" id="cl1-fields" data-kind="lesson" data-ts="763-1123">
+<h2>4. Expanding and collapsing magnetic fields</h2>
+<p><a class="ts" data-t="12:43"></a> Two situations can occur. To show both, the instructor draws a circuit with a battery \(V\), an inductor \(L\), a resistor, and a <strong>selector switch</strong> whose common terminal is on top of the inductor <a class="ts" data-t="13:39"></a>. In position <strong>A</strong> the inductor is connected to the battery. In position <strong>B</strong> it is disconnected from the battery and connected to the resistor instead.</p>
+<figure class="circuit" id="cl1-fig-switch-a">
+<script type="application/json">{"parts":[
+ {"t":"BAT","a":[0,4],"b":[0,0],"plus":"b","label":"V"},
+ {"t":"W","pts":[[0,0],[1.5,0]]},
+ {"t":"SW","a":[1.5,0],"b":[3.5,0],"label":"A","state":"closed"},
+ {"t":"N","at":[3.5,0]},
+ {"t":"SW","a":[3.5,0],"b":[5.5,0],"label":"B","state":"open"},
+ {"t":"W","pts":[[5.5,0],[7,0]]},
+ {"t":"L","a":[3.5,0],"b":[3.5,4],"label":"L"},
+ {"t":"IARR","a":[3.5,0.35],"b":[3.5,1.15],"label":"I","side":-1},
+ {"t":"R","a":[7,0],"b":[7,4],"label":"R"},
+ {"t":"W","pts":[[0,4],[7,4]]},
+ {"t":"N","at":[3.5,4]}
+],"alt":"Battery V, selector switch in position A connecting the battery to inductor L; position B would connect L to resistor R"}</script>
+<figcaption>Selector-switch circuit in position A, as drawn at <a class="ts" data-t="14:00"></a>. The single selector switch is redrawn here as two contacts, A and B; only one is ever closed. The battery's + (long plate) is on top.</figcaption>
+</figure>
+<h3>Position A: current increasing, so the field expands</h3>
+<p><a class="ts" data-t="14:15"></a> Suppose there is no magnetic field in the inductor yet (zero current). Flip the switch to <strong>A</strong> and current starts to flow into the inductor. Going from zero to some current is a <strong>change in current</strong>. As current flows in, a magnetic field builds up around the coil. The instructor calls this an <strong>expanding magnetic field</strong> <a class="ts" data-t="14:40"></a>: the field lines move outward and get larger.</p>
+<p><a class="ts" data-t="16:01"></a> <strong>An expanding magnetic field happens whenever the current is increasing.</strong></p>
+<h3>Position B: current decreasing, so the field collapses</h3>
+<p><a class="ts" data-t="16:26"></a> Once the field has built up, the inductor holds stored energy. Flip the switch to <strong>B</strong>. This disconnects the battery and gives the stored energy a path to dissipate through the resistor <a class="ts" data-t="16:52"></a>. Current flows through the resistor and the field <strong>collapses</strong> <a class="ts" data-t="17:32"></a>. The field lines fall inward, and energy is taken out of the inductor and dissipated in the resistor.</p>
+<figure class="circuit" id="cl1-fig-switch-b">
+<script type="application/json">{"parts":[
+ {"t":"BAT","a":[0,4],"b":[0,0],"plus":"b","label":"V"},
+ {"t":"W","pts":[[0,0],[1.5,0]]},
+ {"t":"SW","a":[1.5,0],"b":[3.5,0],"label":"A","state":"open"},
+ {"t":"N","at":[3.5,0]},
+ {"t":"SW","a":[3.5,0],"b":[5.5,0],"label":"B","state":"closed"},
+ {"t":"W","pts":[[5.5,0],[7,0]]},
+ {"t":"L","a":[3.5,0],"b":[3.5,4],"label":"L"},
+ {"t":"IARR","a":[3.5,0.35],"b":[3.5,1.15],"label":"I","side":-1},
+ {"t":"R","a":[7,0],"b":[7,4],"label":"R","side":-1},
+ {"t":"IARR","a":[7,3.6],"b":[7,2.8],"label":"I"},
+ {"t":"W","pts":[[0,4],[7,4]]},
+ {"t":"N","at":[3.5,4]}
+],"alt":"Same circuit with the switch in position B: inductor L now connected only to resistor R; inductor current continues downward through L and up through R"}</script>
+<figcaption>Position B (switch moved at <a class="ts" data-t="17:14"></a>): the battery is disconnected and the inductor's stored energy drives current around the L–R loop. The current arrows are added for clarity: the inductor current keeps its original direction.</figcaption>
+</figure>
+<figure class="circuit" id="cl1-fig-expand-collapse">
+<script type="application/json">{"parts":[
+ {"t":"W","pts":[[2,-0.6],[2,0]]},
+ {"t":"L","a":[2,0],"b":[2,3]},
+ {"t":"W","pts":[[2,3],[2,3.6]]},
+ {"t":"ARROW","a":[0.2,0.2],"b":[0.2,2.8],"label":"I","lat":[-0.25,1.6]},
+ {"t":"ARROW","a":[2.5,1.5],"b":[3.6,1.5]},
+ {"t":"ARROW","a":[1.6,1.5],"b":[0.7,1.5]},
+ {"t":"T","at":[2,4.4],"text":"A: expanding field","bold":true},
+ {"t":"T","at":[2,4.9],"text":"I is increasing"},
+ {"t":"W","pts":[[8,-0.6],[8,0]]},
+ {"t":"L","a":[8,0],"b":[8,3]},
+ {"t":"W","pts":[[8,3],[8,3.6]]},
+ {"t":"ARROW","a":[9.6,1.5],"b":[8.5,1.5]},
+ {"t":"ARROW","a":[6.6,1.5],"b":[7.6,1.5]},
+ {"t":"T","at":[8,4.4],"text":"B: collapsing field","bold":true},
+ {"t":"T","at":[8,4.9],"text":"I is decreasing"}
+],"alt":"Left: inductor with field arrows pointing outward, labelled expanding field, I is increasing. Right: inductor with field arrows pointing inward, labelled collapsing field, I is decreasing"}</script>
+<figcaption>Board summary: field arrows outward while current increases (switch at A, drawn at <a class="ts" data-t="15:35"></a>); arrows inward while current decreases (switch at B, drawn at <a class="ts" data-t="18:14"></a>)</figcaption>
+</figure>
+<p><a class="ts" data-t="18:14"></a> In summary: <strong>current increasing → expanding magnetic field; current decreasing → collapsing magnetic field.</strong> The instructor set this up because a <em>changing</em> magnetic field, whether expanding or collapsing, produces the interesting effect in the next section.</p>
+<aside class="uncertain"><p>On the board, the green arrow drawn for position B (<a class="ts" data-t="17:14"></a>) curves from the switch over to the resistor and down its side. It marks the <em>new path</em> through the resistor. Read literally as a current direction, it would point down through the resistor. By current continuity, though, the inductor's current keeps flowing in its original direction (down through L), so it flows <em>up</em> through R, as in the figure above. The instructor does not discuss the direction explicitly.</p></aside>
+</section>
+
+<section class="g-sec" id="cl1-backemf" data-kind="lesson" data-ts="1123-1714">
+<h2>5. Back EMF: the "temporary backwards battery"</h2>
+<p><a class="ts" data-t="19:11"></a> The key statement, written on the board in red:</p>
+<blockquote><strong>As the magnetic field increases, and only during this change, an EMF (electromotive force), AKA a voltage, is produced in the opposite direction.</strong></blockquote>
+<aside class="instructor"><p><a class="ts" data-t="20:32"></a> "This is subtle so please pay attention here." The EMF exists <em>only during the change</em>, and it is produced in the <em>opposite direction</em>.</p></aside>
+<p><a class="ts" data-t="20:49"></a> Here is what happens. Start with zero field and send current through the coil. The magnetic field expands. As it expands, <strong>it moves through the coils of the inductor itself and produces a voltage</strong>. Just by putting current through it, the inductor "starts acting like a battery".</p>
+<h3>A simpler circuit</h3>
+<p><a class="ts" data-t="21:44"></a> To make this concrete, the instructor redraws the circuit with just a battery, a switch and the inductor.</p>
+<figure class="circuit" id="cl1-fig-simple">
+<script type="application/json">{"parts":[
+ {"t":"BAT","a":[0,3],"b":[0,0],"plus":"b","label":"V"},
+ {"t":"W","pts":[[0,0],[1,0]]},
+ {"t":"SW","a":[1,0],"b":[3,0],"label":"switch","state":"open","arrow":true},
+ {"t":"W","pts":[[3,0],[4,0]]},
+ {"t":"L","a":[4,0],"b":[4,3],"label":"L"},
+ {"t":"W","pts":[[4,3],[0,3]]},
+ {"t":"T","at":[2,4.1],"text":"switch open: I = 0 A"},
+ {"t":"T","at":[2,4.7],"text":"switch closed: I > 0 A"}
+],"alt":"Battery V, switch (about to be closed) and inductor L in a single loop; open: 0 A, closed: I greater than 0 A"}</script>
+<figcaption>Battery, switch and inductor, as drawn at <a class="ts" data-t="22:10"></a>. Closing the switch takes the current from 0 A to I &gt; 0 A.</figcaption>
+</figure>
+<p><a class="ts" data-t="22:10"></a> With the switch open there are 0 A. Close the switch and the current becomes greater than 0 A. That produces an expanding magnetic field. As the field expands, it moves through the inductor's own coils and produces a voltage <strong>opposite to the change that created it</strong> <a class="ts" data-t="22:36"></a>. The inductor creates its own EMF in the opposite direction, temporarily <a class="ts" data-t="23:28"></a>. The effect is that it <strong>opposes the instantaneous change in current</strong>.</p>
+<h3>Model: two batteries facing each other</h3>
+<p><a class="ts" data-t="24:16"></a> The instructor redraws the loop as two batteries: the source on the left and the inductor, acting as a battery, on the right. Both have their + terminal on top, so they push against each other around the loop.</p>
+<figure class="circuit" id="cl1-fig-backbattery">
+<script type="application/json">{"parts":[
+ {"t":"BAT","a":[0,3],"b":[0,0],"plus":"b","label":"V","value":"source"},
+ {"t":"W","pts":[[0,0],[4,0]]},
+ {"t":"BAT","a":[4,3],"b":[4,0],"plus":"b","label":"back EMF","value":"(inductor)"},
+ {"t":"W","pts":[[4,3],[0,3]]}
+],"padX":3,"alt":"Source battery on the left and a second battery representing the inductor on the right, both with + on top, so they oppose each other"}</script>
+<figcaption>"Temporary backwards battery": the inductor's back EMF opposes the source, as drawn at <a class="ts" data-t="25:43"></a>. Both + terminals are at the top.</figcaption>
+</figure>
+<h3>Graph of the voltages</h3>
+<p><a class="ts" data-t="24:16"></a> He plots voltage (vertical) against time (horizontal):</p>
+<ul>
+<li>While the switch is open, the inductor has 0 V applied and no current.</li>
+<li><a class="ts" data-t="24:41"></a> When the switch closes, the applied voltage steps up to some value (blue on the board).</li>
+<li><a class="ts" data-t="25:19"></a> That causes a change in current, which gives an expanding field, which gives an EMF opposite to the voltage that created it. This is the <strong>temporary backwards battery</strong> <a class="ts" data-t="25:43"></a>. He shows it by drawing the line <em>downward</em> (red), opposite to the source.</li>
+<li><a class="ts" data-t="26:34"></a> The backwards battery exists only while \(I\) is increasing. After some time the current stops changing and the field is "as big as it's going to get". With no more changing field, the voltage is no longer produced, so it <strong>tapers off</strong> to zero <a class="ts" data-t="27:14"></a>.</li>
+</ul>
+<figure class="scope" id="cl1-fig-v-graph">
+<script type="application/json">{"type":"scope","cols":10,"rows":6,"ch":"Qualitative sketch: voltage vs time (no scale)","traces":[
+ {"fn":"x<3?0:2.2","label":"applied voltage"},
+ {"fn":"x<3?0:-2.2*exp(-(x-3)/1.3)","label":"back EMF"}],
+ "marks":[{"type":"vline","x":3,"label":"switch closed"},{"type":"text","x":6.5,"y":-1.2,"text":"back EMF tapers off"}],
+ "alt":"Applied voltage steps up when the switch closes; the back EMF jumps to an equal and opposite (negative) value and decays back to zero"}</script>
+<figcaption>Applied voltage and back EMF after the switch closes, redrawn from <a class="ts" data-t="27:30"></a>. Shape only: the lecture gives no values.</figcaption>
+</figure>
+<h3>Names for the back EMF</h3>
+<p><a class="ts" data-t="27:14"></a> This opposing voltage is called a <strong>back EMF</strong>. <a class="ts" data-t="27:42"></a> You will also see <strong>counter EMF</strong>, abbreviated <strong>CEMF</strong>. It is a counter voltage, countering whatever caused the change. All three mean the same thing:</p>
+<div class="formula">\[ \text{counter EMF} = \text{CEMF} = \text{back EMF} \]</div>
+<aside class="extra">
+<p>The physics behind this has names you may meet in physics courses. <strong>Faraday's law</strong> says a changing magnetic field through a coil induces a voltage. <strong>Lenz's law</strong> says the induced voltage always opposes the change that produced it. The lecture describes both effects without naming them. In circuit form, the size of the back EMF is \(L\,di/dt\): a faster change in current gives a larger back EMF, and no change gives none.</p>
+<p>In the ideal battery-switch-inductor circuit (no resistance at all), the current would keep ramping up. The tapering in the sketch comes from the resistance that every real circuit has (wire, battery, coil). Lecture <a class="xref" data-lesson="cl2">cl2</a> puts a resistor in the circuit and calculates these curves.</p>
+</aside>
+</section>
+
+<section class="g-sec" id="cl1-selfind" data-kind="lesson" data-ts="1714-2074">
+<h2>6. What the back EMF does to the current: self-inductance</h2>
+<p><a class="ts" data-t="28:34"></a> So what happens to the current? The voltage source tries to make current flow, but the back EMF opposes that flow. So the current <strong>cannot change instantly</strong>. It takes time. The back EMF does not stay at its maximum. It goes to some value, the change stops, and the back EMF "peters off" <a class="ts" data-t="29:51"></a>.</p>
+<p><a class="ts" data-t="30:17"></a> On a new sheet he plots current against time. When the switch is thrown, the current "wanted" to jump straight up (red dotted line). The inductor does not allow that: it acts as a temporary backwards battery and prevents the instantaneous change <a class="ts" data-t="30:46"></a>. The current actually <strong>rises gradually</strong> (blue curve) <a class="ts" data-t="31:11"></a>.</p>
+<figure class="scope" id="cl1-fig-i-graph">
+<script type="application/json">{"type":"scope","cols":10,"rows":6,"ch":"Qualitative sketch: current vs time (no scale)","traces":[
+ {"fn":"x<3?0:2.5","color":3,"label":"what the current 'wanted' to do"},
+ {"fn":"x<3?0:2.5*(1-exp(-(x-3)/1.3))","color":1,"label":"actual current"}],
+ "marks":[{"type":"vline","x":3,"label":"switch thrown"}],
+ "alt":"Current versus time: an instant step would be expected, but the actual current rises gradually and levels off"}</script>
+<figcaption>Current after the switch is thrown: the instantaneous step that does not happen, and the gradual rise that does. Redrawn from <a class="ts" data-t="31:11"></a>.</figcaption>
+</figure>
+<p><a class="ts" data-t="31:35"></a> This is why inductance was defined as a property that <strong>opposes a change in current</strong>. Only during the change does anything happen, and what you see is the non-instantaneous rise of current.</p>
+<h3>Self-inductance</h3>
+<p><a class="ts" data-t="31:58"></a> This whole process is called <strong>self-inductance</strong>. Board definition <a class="ts" data-t="32:30"></a>:</p>
+<blockquote><strong>Self-inductance:</strong> the action of generating a back-EMF which opposes the original change in current which caused it.</blockquote>
+<p><a class="ts" data-t="33:33"></a> Why the name? To <em>induce</em> means to cause. The inductor is inducing a voltage <em>in itself</em>, hence <em>self</em>-inductance.</p>
+<p><a class="ts" data-t="34:03"></a> The whole story, in order:</p>
+<ol>
+<li>A change in current (switch closed)</li>
+<li>→ an expanding magnetic field</li>
+<li>→ a temporary backwards battery (back EMF) in the inductor</li>
+<li>→ the back EMF opposes the attempted flow of current</li>
+<li>→ the current cannot rise instantaneously; it rises gradually</li>
+</ol>
+<p>That whole sequence is self-inductance.</p>
+<aside class="extra">
+<p><strong>Inductor-current continuity.</strong> The rule this section builds toward, and one you will use constantly: <em>the current through an inductor cannot change instantaneously.</em> Just after a switch is thrown, the inductor's current equals what it was just before.</p>
+<ul>
+<li>An inductor with zero current at the moment of switching therefore acts like an <strong>open circuit</strong> at that instant: its current is still 0.</li>
+<li>Once everything has settled and the current is constant, it acts like a <strong>short circuit</strong> (a wire), as the instructor said at <a class="ts" data-t="3:43"></a>.</li>
+</ul>
+<p>The capacitor has the mirror-image rule: its <em>voltage</em> cannot change instantaneously (<a class="xref" data-lesson="cl3">Capacitors: introduction</a>, <a class="xref" data-lesson="cl4">RC time constant</a>).</p>
+</aside>
+</section>
+
+<section class="g-sec" id="cl1-collapse" data-kind="lesson" data-ts="2074-2415">
+<h2>7. Switching to B: the collapsing field</h2>
+<p><a class="ts" data-t="34:34"></a> Now flip the selector switch from A to B. Assume that in position A the field had already grown as large as it could <a class="ts" data-t="35:07"></a>. Moving to B produces a <strong>collapsing magnetic field</strong>. The collapsing field again creates a temporary battery, which induces a voltage that is applied to the resistor <a class="ts" data-t="35:32"></a>.</p>
+<h3>Voltage graph: A then B</h3>
+<p><a class="ts" data-t="36:19"></a> He extends the voltage graph. The switch goes from nothing to A at the first mark and from A to B at the second.</p>
+<ul>
+<li>At <strong>A</strong> (field expanding): the back EMF is induced in the negative direction, so the current rises slowly <a class="ts" data-t="36:37"></a>.</li>
+<li>At <strong>B</strong> (field collapsing): "that same exact back EMF", except now it is created in the <strong>positive direction</strong> <a class="ts" data-t="37:04"></a>.</li>
+<li><a class="ts" data-t="37:32"></a> Again it is only temporary. The field cannot collapse forever. Once all the stored energy has been "siphoned off", there is no field left and no more back EMF.</li>
+</ul>
+<figure class="scope" id="cl1-fig-ab-v">
+<script type="application/json">{"type":"scope","cols":10,"rows":6,"ch":"Qualitative sketch: voltages vs time (no scale)","traces":[
+ {"fn":"x<2?0:(x<6?2.2:0)","label":"applied voltage (A to B)"},
+ {"fn":"x<2?0:(x<6?-2.2*exp(-(x-2)/0.9):2.2*exp(-(x-6)/0.9))","label":"back EMF"}],
+ "marks":[{"type":"vline","x":2,"label":"to A"},{"type":"vline","x":6,"label":"to B"}],
+ "alt":"Applied voltage is a rectangle between switching to A and switching to B; back EMF is a negative spike decaying after A and a positive spike decaying after B"}</script>
+<figcaption>Back EMF is negative (opposing the source) after switching to A and positive after switching to B. Redrawn from <a class="ts" data-t="38:10"></a>; the board also sketches the slowly rising current inside the rectangle (green curve, <a class="ts" data-t="37:02"></a>).</figcaption>
+</figure>
+<h3>Current graph: A then B</h3>
+<p><a class="ts" data-t="37:56"></a> Even though the field is collapsing, the back EMF still matters. The current through the resistor <strong>does not drop instantly</strong> from its value to zero. It takes time, as long as the back EMF takes to dissipate <a class="ts" data-t="38:24"></a>.</p>
+<figure class="scope" id="cl1-fig-ab-i">
+<script type="application/json">{"type":"scope","cols":10,"rows":6,"ch":"Qualitative sketch: current vs time (no scale)","traces":[
+ {"fn":"x<2?0:(x<6?2.5:0)","color":3,"label":"instant change (does not happen)"},
+ {"fn":"x<2?0:(x<6?2.5*(1-exp(-(x-2)/0.9)):2.5*(1-exp(-4/0.9))*exp(-(x-6)/0.9))","color":2,"label":"actual current"}],
+ "marks":[{"type":"vline","x":2,"label":"to A"},{"type":"vline","x":6,"label":"to B"}],
+ "alt":"Current rises gradually after switching to A and falls gradually after switching to B, instead of following the instant rectangular change"}</script>
+<figcaption>Current rises slowly after A and falls slowly after B, redrawn from the graph labelled "Current" at <a class="ts" data-t="39:18"></a>. The dotted rectangle on the board is the instant change that the inductor prevents.</figcaption>
+</figure>
+<p><a class="ts" data-t="38:49"></a> His one-line summary of the graph:</p>
+<ul>
+<li>Current is at zero.</li>
+<li>The switch is thrown to A: expanding magnetic field, back EMF generated, current rises slowly.</li>
+<li>The switch is thrown to B: back EMF generated in the positive direction, and it keeps the current from falling instantly.</li>
+</ul>
+<p><a class="ts" data-t="39:50"></a> He deliberately keeps this part of the lecture to theory. Calculating these curves is the subject of the next lecture (<a class="xref" data-lesson="cl2">Inductors: L/R time constant</a>).</p>
+<aside class="extra">
+<p><strong>Inductive kick (flyback).</strong> Position B matters for a reason. The resistor gives the inductor's current somewhere to go. If you simply <em>opened</em> the circuit with nothing else connected, the current would have to drop almost instantly. A huge \(di/dt\) means a huge back EMF, often hundreds or thousands of volts across the opening contacts, which can spark or damage parts. This "inductive kick" is why relay coils and motors usually have a flyback diode or resistor across them, and it is how ignition coils make sparks. This is not covered in the video.</p>
+</aside>
+</section>
+
+<section class="g-sec" id="cl1-factors" data-kind="lesson" data-ts="2415-2881">
+<h2>8. Factors that determine inductance</h2>
+<p><a class="ts" data-t="40:15"></a> How do you quantify, or change, how much inductance a coil has? Starting from a simple coil of wire as the reference <a class="ts" data-t="40:47"></a>, the instructor lists four factors:</p>
+<table>
+<tr><th>#</th><th>Factor</th><th>Effect on \(L\) (board wording)</th><th>Why (as explained)</th><th>Time</th></tr>
+<tr><td>1</td><td>Number of turns (each loop is a turn)</td><td>More turns = more \(L\)</td><td>More loops of wire give more magnetic field.</td><td><a class="ts" data-t="40:47"></a></td></tr>
+<tr><td>2</td><td>Cross-sectional area \(A\) of the coil</td><td>"Square of the coil diameter. If you double the area, \(L\) doubles."</td><td>Each loop seen from the side is a circle. More area gives more inductance.</td><td><a class="ts" data-t="41:31"></a></td></tr>
+<tr><td>3</td><td>Length of the coil</td><td>The longer the coil, without changing anything else, the less \(L\)</td><td>Stretching the coil spreads the turns out, so it is less able to concentrate the magnetic field lines.</td><td><a class="ts" data-t="42:59"></a></td></tr>
+<tr><td>4</td><td>Relative permeability of the core, \(\mu_r\)</td><td>The greater the \(\mu_r\), the more \(L\)</td><td>Some core materials concentrate magnetic fields far better than air.</td><td><a class="ts" data-t="44:39"></a></td></tr>
+</table>
+<p><a class="ts" data-t="43:46"></a> For the length factor, note the condition "without changing any other factor". You are not adding turns, only stretching the same coil out.</p>
+<h3>Cores</h3>
+<p><a class="ts" data-t="45:08"></a> A bare coil of wire has <strong>air</strong> in its centre: an <strong>air-core inductor</strong> <a class="ts" data-t="45:35"></a>. Air "only has so much capacity for a magnetic field". You can put other materials in the centre that hold a field much better, especially ferrous (iron-based) metals that magnetise easily, such as a chunk of iron <a class="ts" data-t="46:01"></a>. The cores listed on the board <a class="ts" data-t="46:25"></a>:</p>
+<ul>
+<li>Air</li>
+<li>Iron</li>
+<li>Powdered iron</li>
+<li>Ferrite (which he says is essentially the same thing as powdered iron)</li>
+</ul>
+<p><a class="ts" data-t="47:07"></a> Each core material has its own ability to concentrate magnetic fields. Iron concentrates field lines better than air, so iron has a higher \(\mu_r\), and <strong>the greater the \(\mu_r\), the more inductance</strong>.</p>
+<aside class="uncertain"><p>Possible verbal slip at <a class="ts" data-t="47:32"></a>: the audio says iron has a higher \(\mu_r\), then "air has a greater mu sub R". From the surrounding explanation and the board ("the greater the \(\mu_r\) = the more L"), he means <strong>iron has a greater \(\mu_r\) than air</strong>. Air's \(\mu_r\) is about 1; iron's is much larger.</p></aside>
+<aside class="extra">
+<p>No formula for inductance is given in the video. For a long, thin coil (solenoid) the standard approximation is</p>
+<div class="formula">\[ L \approx \frac{N^2 \mu_0 \mu_r A}{\ell} \]</div>
+<dl class="vardefs">
+<dt>\(N\)</dt><dd>number of turns</dd>
+<dt>\(\mu_0\)</dt><dd>permeability of free space, \(4\pi\times10^{-7}\,\text{H/m}\)</dd>
+<dt>\(\mu_r\)</dt><dd>relative permeability of the core (about 1 for air)</dd>
+<dt>\(A\)</dt><dd>cross-sectional area of the coil, m²</dd>
+<dt>\(\ell\)</dt><dd>length of the coil, m</dd>
+</dl>
+<p>It matches all four rules above. Note that \(L\) grows with \(N^2\), so doubling the turns gives about four times the inductance. Also, because \(A = \pi d^2/4\), doubling the <em>diameter</em> quadruples the area and so roughly quadruples \(L\). Doubling the <em>area</em> doubles \(L\), which is what the board says.</p>
+</aside>
+</section>
+
+<section class="g-sec" id="cl1-types" data-kind="lesson" data-ts="2881-3405">
+<h2>9. Inductor types and schematic symbols</h2>
+<p><a class="ts" data-t="48:33"></a> You will see several different inductor symbols on schematics. For analysis, what matters in the end is the number of henries. Here they are for completeness.</p>
+<figure class="circuit" id="cl1-fig-types">
+<script type="application/json">{"parts":[
+ {"t":"T","at":[0,0.1],"text":"Air core","anchor":"start"},
+ {"t":"L","a":[6,0],"b":[9,0]},
+ {"t":"T","at":[0,1.9],"text":"Iron core","anchor":"start"},
+ {"t":"L","a":[6,1.8],"b":[9,1.8]},
+ {"t":"W","pts":[[6.85,1.42],[8.15,1.42]]},
+ {"t":"W","pts":[[6.85,1.3],[8.15,1.3]]},
+ {"t":"T","at":[0,3.7],"text":"Powdered iron / ferrite","anchor":"start"},
+ {"t":"L","a":[6,3.6],"b":[9,3.6]},
+ {"t":"W","pts":[[6.85,3.22],[8.15,3.22]],"dashed":true},
+ {"t":"W","pts":[[6.85,3.1],[8.15,3.1]],"dashed":true},
+ {"t":"T","at":[0,5.5],"text":"Variable","anchor":"start"},
+ {"t":"L","a":[6,5.4],"b":[9,5.4]},
+ {"t":"ARROW","a":[6.95,6],"b":[8.1,4.8]},
+ {"t":"T","at":[0,7.3],"text":"Tapped","anchor":"start"},
+ {"t":"L","a":[6,7.2],"b":[9,7.2]},
+ {"t":"W","pts":[[7.175,7.2],[7.175,8]]},
+ {"t":"W","pts":[[7.5,7.2],[7.5,8]]},
+ {"t":"W","pts":[[7.825,7.2],[7.825,8]]},
+ {"t":"N","at":[7.175,8],"open":true},
+ {"t":"N","at":[7.5,8],"open":true},
+ {"t":"N","at":[7.825,8],"open":true}
+],"alt":"Five inductor symbols: air core (plain), iron core (two solid lines above), powdered iron or ferrite core (two dashed lines above), variable (diagonal arrow through), tapped (extra leads coming out of the coil)"}</script>
+<figcaption>Inductor symbols drawn between <a class="ts" data-t="48:33"></a> and <a class="ts" data-t="56:19"></a>: air core, iron core (two solid lines), powdered iron/ferrite core (two dashed lines), variable (diagonal arrow) and tapped (extra leads). Redrawn.</figcaption>
+</figure>
+<h3>Air core and iron core</h3>
+<p><a class="ts" data-t="48:33"></a> The plain symbol is an <strong>air-core inductor</strong>. Shove a chunk of iron into the centre and you get an <strong>iron-core inductor</strong>, drawn with <strong>two solid lines</strong> beside (above) the coil <a class="ts" data-t="49:02"></a>. The lines tell whoever reads the schematic that the core is iron, not air.</p>
+<p><a class="ts" data-t="49:29"></a> Again, this doesn't really matter for analysis. If an air-core inductor is \(L = 10\) (H) and an iron-core inductor is \(L = 10\) (H), they are essentially the same inductor. The difference is physical size: the air-core inductor has to be <strong>physically larger</strong> to concentrate the same amount of magnetic field <a class="ts" data-t="49:55"></a>.</p>
+<h3>Powdered iron or ferrite core</h3>
+<p><a class="ts" data-t="49:55"></a> Same symbol, but with <strong>two dashed lines</strong> instead of solid ones <a class="ts" data-t="50:19"></a>. To make powdered iron or ferrite, iron is ground into filings, mixed with a glue and moulded <a class="ts" data-t="50:49"></a>. Think of the solid iron lines as "ground up" into dashes.</p>
+<h3>Variable inductor</h3>
+<p><a class="ts" data-t="51:14"></a> To show that any component is <strong>variable</strong> (adjustable) on a schematic, draw a diagonal arrow through it. Physically <a class="ts" data-t="52:03"></a>, if you open an old radio (he mentions the 1980s), you may find a small shiny metal can with a coloured screw on top and two wires out of the bottom <a class="ts" data-t="52:29"></a>. Inside is a coil with a <strong>threaded core</strong> (the screw) <a class="ts" data-t="52:55"></a>:</p>
+<ul>
+<li>Turn the screw <strong>clockwise</strong> and the core goes deeper into the coil: more core inside means <strong>more inductance</strong> <a class="ts" data-t="53:23"></a>.</li>
+<li>Turn it <strong>counter-clockwise</strong> ("anti-clockwise") and the core backs out, leaving more air inside the coil: <strong>less inductance</strong> <a class="ts" data-t="53:48"></a>.</li>
+</ul>
+<p><a class="ts" data-t="54:12"></a> This was used in radio electronics from the 1920s and 30s onward to <em>tune</em> a circuit by adjusting the inductance slightly. Afterwards a drop of glue is often put on top to lock the setting <a class="ts" data-t="54:38"></a>.</p>
+<h3>Tapped inductor</h3>
+<p><a class="ts" data-t="55:04"></a> A <strong>tapped inductor</strong> has more than two wires. Extra leads are attached partway along the coil <a class="ts" data-t="55:25"></a>. Connecting between two taps that are close together includes fewer turns, so <strong>less inductance</strong>. Taps farther apart include more turns, so <strong>more inductance</strong>. You can change \(L\) just by clipping onto a different tap <a class="ts" data-t="55:50"></a>. He mentions they are used in microwave/radio and other advanced circuits, sometimes as a large coil with many taps.</p>
+<aside class="instructor"><p><a class="ts" data-t="56:19"></a> From a practical point of view, "a Henry is a Henry". The core type and symbol tell you how the inductor is built. In circuit analysis you only need its inductance value.</p></aside>
+</section>
+
+<section class="g-sec" id="cl1-combine" data-kind="lesson" data-ts="3405-3628">
+<h2>10. Inductors in series and in parallel</h2>
+<p><a class="ts" data-t="56:45"></a> Inductance combines exactly the way resistance does.</p>
+<h3>Series</h3>
+<div class="formula">\[ L_T = L_1 + L_2 + \dots + L_n \]</div>
+<dl class="vardefs">
+<dt>\(L_T\)</dt><dd>total (equivalent) inductance, H</dd>
+<dt>\(L_1 \dots L_n\)</dt><dd>the individual inductances in series, H</dd>
+</dl>
+<p><a class="ts" data-t="57:37"></a> "Inductance in series does the same thing that resistance in series does: it just adds." It applies to inductors carrying the same current, one after another.</p>
+
+<div class="example" id="cl1-ex2">
+<h3>Example 2 — Two 10 H iron-core inductors in series <a class="ts" data-t="57:12"></a></h3>
+<figure class="circuit" id="cl1-fig-series">
+<script type="application/json">{"parts":[
+ {"t":"BAT","a":[0,4.5],"b":[0,1.5],"plus":"b"},
+ {"t":"W","pts":[[0,1.5],[0,0],[3,0]]},
+ {"t":"L","a":[3,0],"b":[3,3],"label":"L_1","value":"10 H","lpos":[1.6,0]},
+ {"t":"W","pts":[[3.42,0.9],[3.42,2.1]]},
+ {"t":"W","pts":[[3.54,0.9],[3.54,2.1]]},
+ {"t":"L","a":[3,3],"b":[3,6],"label":"L_2","value":"10 H","lpos":[1.6,0]},
+ {"t":"W","pts":[[3.42,3.9],[3.42,5.1]]},
+ {"t":"W","pts":[[3.54,3.9],[3.54,5.1]]},
+ {"t":"W","pts":[[3,6],[0,6],[0,4.5]]},
+ {"t":"T","at":[6.4,3.1],"text":"⇒","size":22},
+ {"t":"W","pts":[[8,0.6],[8,1.5]]},
+ {"t":"L","a":[8,1.5],"b":[8,4.5],"label":"L_T","value":"20 H"},
+ {"t":"W","pts":[[8,4.5],[8,5.4]]}
+],"alt":"A battery driving two 10 H iron-core inductors in series, replaced by a single 20 H equivalent inductor"}</script>
+<figcaption>Two iron-core inductors in series, \(L_1 = L_2 = 10\,\text{H}\), and the single equivalent \(L_T = 20\,\text{H}\), as drawn at <a class="ts" data-t="58:26"></a></figcaption>
+</figure>
+<p><strong>Given:</strong> \(L_1 = 10\,\text{H}\), \(L_2 = 10\,\text{H}\), in series (he makes them iron core "to make it fun"; the core type does not change the math).</p>
+<p><strong>Find:</strong> the single equivalent inductance \(L_T\).</p>
+<p class="step">1. Series inductances add: \(L_T = L_1 + L_2\).</p>
+<p class="step">2. Substitute: \(L_T = 10\,\text{H} + 10\,\text{H}\).</p>
+<p class="answer">\(L_T = 20\,\text{H}\). The two inductors can be replaced by one 20 H inductor. <a class="ts" data-t="58:26"></a></p>
+</div>
+
+<h3>Parallel</h3>
+<p><a class="ts" data-t="58:26"></a> "If it adds in series… you're not going to be shocked": parallel inductance follows the parallel-resistor rule, "the inverse of the summation of the inductances inverted".</p>
+<div class="formula">\[ L_T = \frac{1}{\dfrac{1}{L_1} + \dfrac{1}{L_2} + \dots + \dfrac{1}{L_n}} \qquad \text{for two: } L_T = \frac{L_1 L_2}{L_1 + L_2} \]</div>
+<dl class="vardefs">
+<dt>\(L_T\)</dt><dd>total (equivalent) inductance of the parallel group, H</dd>
+<dt>\(L_1 \dots L_n\)</dt><dd>inductances connected across the same two nodes, H</dd>
+</dl>
+<p>The product-over-sum form works only for <strong>two</strong> inductors at a time. The equivalent parallel inductance is always smaller than the smallest one.</p>
+
+<div class="example" id="cl1-ex3">
+<h3>Example 3 — 10 H in parallel with 5 H (air core) <a class="ts" data-t="59:30"></a></h3>
+<figure class="circuit" id="cl1-fig-parallel">
+<script type="application/json">{"parts":[
+ {"t":"BAT","a":[0,3.5],"b":[0,0.5],"plus":"b"},
+ {"t":"W","pts":[[0,0.5],[0,0],[5,0]]},
+ {"t":"L","a":[2.5,0],"b":[2.5,4],"label":"L_1","value":"10 H"},
+ {"t":"L","a":[5,0],"b":[5,4],"label":"L_2","value":"5 H"},
+ {"t":"W","pts":[[0,3.5],[0,4],[5,4]]},
+ {"t":"N","at":[2.5,0]},
+ {"t":"N","at":[2.5,4]},
+ {"t":"T","at":[7.4,2.1],"text":"⇒","size":22},
+ {"t":"W","pts":[[9,0.4],[9,0.5]]},
+ {"t":"L","a":[9,0.5],"b":[9,3.5],"label":"L_T","value":"3.33 H"},
+ {"t":"W","pts":[[9,3.5],[9,3.6]]}
+],"alt":"A battery across a 10 H inductor in parallel with a 5 H inductor, equivalent to a single 3.33 H inductor"}</script>
+<figcaption>10 H and 5 H air-core inductors in parallel and their equivalent \(L_T = 3.\overline{3}\,\text{H}\), as drawn at <a class="ts" data-t="1:00:25"></a></figcaption>
+</figure>
+<p><strong>Given:</strong> \(L_1 = 10\,\text{H}\) and \(L_2 = 5\,\text{H}\) in parallel (air core).</p>
+<p><strong>Find:</strong> \(L_T\).</p>
+<p class="step">1. Two inductors, so use product over sum: \(L_T = \dfrac{L_1 L_2}{L_1 + L_2}\).</p>
+<p class="step">2. Substitute: \(L_T = \dfrac{(5\,\text{H})(10\,\text{H})}{5\,\text{H} + 10\,\text{H}} = \dfrac{50\,\text{H}^2}{15\,\text{H}}\).</p>
+<p class="step">3. Divide: \(\dfrac{50}{15} = \dfrac{10}{3} = 3.333\ldots\), in henries.</p>
+<p class="step">4. Check with the reciprocal form: \(\dfrac{1}{1/10 + 1/5} = \dfrac{1}{0.1 + 0.2} = \dfrac{1}{0.3} = 3.33\,\text{H}\). ✓ It is smaller than the smallest inductor (5 H), as it must be.</p>
+<p class="answer">\(L_T = 3.\overline{3}\,\text{H} \approx 3.33\,\text{H}\) <a class="ts" data-t="59:55"></a></p>
+</div>
+<aside class="extra"><p>These series and parallel formulas assume the inductors do not share magnetic field, i.e. no <em>mutual inductance</em>. That holds when they are physically separated or shielded. Coils wound close together or on a common core can add or subtract from each other's field, and then the simple formulas no longer hold. This is a topic for later courses.</p></aside>
+</section>
+
+<section class="g-sec" id="cl1-assumptions" data-kind="assumptions">
+<h2>Assumptions &amp; limitations</h2>
+<ul>
+<li><strong>Ideal inductor.</strong> "Acts like a wire when current is constant" assumes the coil's wire resistance is negligible. A real coil has some winding resistance, so with steady DC it behaves like a small resistor.</li>
+<li><strong>\(E = LI^2/2\)</strong> gives the energy stored at an instant when the current is \(I\). If the current changes, the stored energy changes with it. When the current is zero there is no field and no stored energy.</li>
+<li><strong>Back EMF exists only while the current (and field) is changing.</strong> It is temporary. Once the current is constant, it is gone.</li>
+<li><strong>The graphs are qualitative.</strong> The lecture gives no time scale or values for the voltage and current curves. Their exact shape (exponential, with time constant \(L/R\)) is derived in <a class="xref" data-lesson="cl2">cl2</a>.</li>
+<li><strong>Factor rules are "all else equal".</strong> Each rule (turns, area, length, \(\mu_r\)) assumes the other factors are held constant. For example, length matters "without changing anything else".</li>
+<li><strong>Core type and symbol do not change the analysis.</strong> Only the value in henries does. Core material affects physical size and other real-world properties not covered here.</li>
+<li><strong>Series/parallel formulas</strong> assume the inductors are not magnetically coupled (see the extra note in Section 10). Product-over-sum applies to exactly two inductors.</li>
+</ul>
+</section>
+
+<section class="g-sec" id="cl1-mistakes" data-kind="mistakes">
+<h2>Common mistakes</h2>
+<aside class="mistake"><p><strong>"Inductance opposes current."</strong> No. Inductance opposes a <em>change</em> in current. With a constant current an ideal inductor is just a wire. If your reasoning has an inductor limiting a steady DC current, re-check it.</p></aside>
+<aside class="mistake"><p><strong>Forgetting to square the current or to divide by 2 in \(E = LI^2/2\).</strong> 20 H at 5 A is \(20\times25/2 = 250\,\text{J}\), not \(20\times5/2 = 50\,\text{J}\) and not \(500\,\text{J}\). Check that the answer is in joules and that doubling \(I\) would quadruple \(E\).</p></aside>
+<aside class="mistake"><p><strong>Thinking the back EMF is permanent.</strong> It appears only while the field is expanding or collapsing, then tapers to zero. That is why the instructor keeps saying "temporary" backwards battery.</p></aside>
+<aside class="mistake"><p><strong>Getting the back-EMF direction wrong.</strong> When current is being increased (switch to A), the back EMF opposes the source. When current is decreasing (switch to B), it reverses and tries to keep the current going. Either way, it opposes the <em>change</em>.</p></aside>
+<aside class="mistake"><p><strong>Drawing the current as a step.</strong> When a switch is thrown, inductor current never jumps. Sketch it rising or falling gradually.</p></aside>
+<aside class="mistake"><p><strong>Mixing up the series and parallel rules.</strong> Inductors follow the <em>resistor</em> rules: series adds, parallel uses reciprocals. (Capacitors are the other way round, which you will meet in <a class="xref" data-lesson="cl3">cl3</a>.) Check: a parallel result must be smaller than the smallest inductor, and a series result larger than the largest.</p></aside>
+<aside class="mistake"><p><strong>Using product-over-sum for three or more inductors at once.</strong> \(L_1L_2/(L_1+L_2)\) is only for two. For more, use the reciprocal formula or combine two at a time.</p></aside>
+<aside class="mistake"><p><strong>Diameter versus area.</strong> The board says doubling the <em>area</em> doubles \(L\). Doubling the <em>diameter</em> makes the area four times larger, since area goes as diameter squared.</p></aside>
+<aside class="mistake"><p><strong>Mixing up the length rule.</strong> A longer coil with the same number of turns has <em>less</em> inductance, not more. The turns are spread out and concentrate the field less.</p></aside>
+</section>
+
+<section class="g-sec" id="cl1-recap" data-kind="recap">
+<h2>Recap &amp; formula sheet</h2>
+<ul>
+<li>An inductor is a coil of wire. Its property, inductance \(L\) in henries (H), <strong>opposes a change in current</strong>. With constant current, it is just a wire.</li>
+<li>It stores energy in its <strong>magnetic field</strong>: \(E = LI^2/2\) (20 H at 5 A gives 250 J).</li>
+<li>Increasing current gives an <strong>expanding</strong> field. Decreasing current gives a <strong>collapsing</strong> field.</li>
+<li>A changing field cuts the inductor's own turns and induces a <strong>back EMF</strong> (counter EMF, CEMF): a temporary backwards battery that opposes the change and dies away once the change stops.</li>
+<li>So inductor current <strong>cannot change instantaneously</strong>. It rises gradually when energised (A) and falls gradually when de-energised (B). The whole process is <strong>self-inductance</strong>.</li>
+<li>More turns, larger area, shorter coil and higher \(\mu_r\) core each give more \(L\). Cores: air, iron, powdered iron, ferrite.</li>
+<li>Symbols: air core (plain), iron (two solid lines), powdered iron/ferrite (two dashed lines), variable (diagonal arrow), tapped (extra leads). "A henry is a henry."</li>
+<li>Inductors combine like resistors: series adds, parallel uses reciprocals.</li>
+<li><a class="ts" data-t="1:00:28"></a> The instructor admits self-inductance is not very intuitive and strongly suggests rewatching. He also says he will link another person's explanation as an extra resource. Next lecture: calculating these curves (<a class="xref" data-lesson="cl2">L/R time constant</a>).</li>
+</ul>
+<div class="formula-sheet">
+<p><strong>Energy stored in an inductor</strong></p>
+\[ E = \frac{L I^2}{2} \]
+<p>\(E\) energy (J), \(L\) inductance (H), \(I\) current (A).</p>
+<p><strong>Inductors in series</strong></p>
+\[ L_T = L_1 + L_2 + \dots + L_n \]
+<p><strong>Inductors in parallel</strong></p>
+\[ L_T = \frac{1}{\frac{1}{L_1} + \frac{1}{L_2} + \dots + \frac{1}{L_n}} \qquad L_T = \frac{L_1 L_2}{L_1 + L_2}\ \text{(two only)} \]
+<p>\(L_T\) total inductance (H).</p>
+<p><strong>Names</strong></p>
+\[ \text{counter EMF} = \text{CEMF} = \text{back EMF} \]
+<p><strong>Factor trends (no formula in the video):</strong> more turns → more \(L\); area doubled → \(L\) doubled; longer coil (all else equal) → less \(L\); greater \(\mu_r\) → more \(L\).</p>
+<p><em>Not from the video (see extras):</em> \(v_L = L\,di/dt\); \(L \approx N^2\mu_0\mu_r A/\ell\).</p>
+</div>
+</section>

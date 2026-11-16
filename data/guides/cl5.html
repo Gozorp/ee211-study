@@ -1,0 +1,540 @@
+<section class="g-sec" id="cl5-overview" data-kind="overview">
+<h2>Overview</h2>
+<p>This lecture (LectLab 29, 8 Dec 2020) takes the inductor from the transient (switch-closing) world of <a class="xref" data-lesson="cl1">Intro to Inductors</a> and <a class="xref" data-lesson="cl2">L/R Time Constant</a> into <strong>AC</strong>. The instructor defines <strong>reactance</strong> as "resistance for AC". For an inductor it is the <strong>inductive reactance \(X_L = 2\pi f L\)</strong>, measured in ohms, and it grows with frequency because a faster-changing signal produces more back EMF. Reactances obey Ohm's law and the usual series/parallel rules.</p>
+<p>He then poses a puzzle: in a <strong>series RL circuit</strong>, 10 V across R plus 10 V across L add up to a 14.14 V source, not 20 V. He resolves it with <strong>phasors</strong>. The current is common to both parts, \(V_R\) is in phase with it and \(V_L\) leads it by 90°, so the voltages add as perpendicular vectors (Pythagoras). This leads to the <strong>circuit phase angle</strong> \(\theta\) and to <strong>impedance</strong> \(Z = \sqrt{R^2 + X_L^2}\), the total opposition to AC. Ohm's law then works with \(X_L\) and \(Z\) as well.</p>
+<p><strong>Parts of the video</strong></p>
+<ul>
+<li><a class="ts" data-t="0:00"></a> Recap (voltage leads current in an inductor). Reactance \(X\) defined, inductive reactance \(X_L\), unit Ω — <a href="#cl5-reactance">§1</a></li>
+<li><a class="ts" data-t="3:12"></a> The same real coil (10 H, 100 Ω of wire) on DC and on 10 V<sub>pk</sub> AC (\(X_L \approx 10\) kΩ) — <a href="#cl5-reactance">§1</a></li>
+<li><a class="ts" data-t="7:18"></a> Reactance is a function of back EMF: higher frequency or inductance gives more \(X_L\) — <a href="#cl5-xl-freq">§2</a></li>
+<li><a class="ts" data-t="11:23"></a> \(X_L = 2\pi f L\); 5 H at 60 Hz = 1884 Ω; Ohm's law: 25 V / 5 mA = 5 kΩ — <a href="#cl5-xl-formula">§3</a></li>
+<li><a class="ts" data-t="14:56"></a> Reactances in series (2 kΩ + 6 kΩ = 8 kΩ) and parallel (5 kΩ ∥ 5 kΩ = 2.5 kΩ) — <a href="#cl5-series-parallel">§4</a></li>
+<li><a class="ts" data-t="19:35"></a> The series RL puzzle: 10 V + 10 V = 14.14 V? Peak/peak-to-peak/RMS consistency — <a href="#cl5-puzzle">§5</a></li>
+<li><a class="ts" data-t="23:19"></a> Phasor explanation: common current, R in phase, L leads by 90°, \(V_T = \sqrt{V_R^2 + V_L^2}\); KVL still holds — <a href="#cl5-phasors">§6</a></li>
+<li><a class="ts" data-t="37:33"></a> Circuit phase angle; example 50 V / 40 V / 30 V gives \(\theta = 36.9^\circ\) — <a href="#cl5-phase-angle">§7</a></li>
+<li><a class="ts" data-t="42:06"></a> Impedance \(Z\): total opposition to AC at a given frequency, in Ω — <a href="#cl5-impedance">§8</a></li>
+<li><a class="ts" data-t="46:13"></a> Impedance of a series RL circuit: \(Z = \sqrt{R^2 + X_L^2}\) — <a href="#cl5-z-series">§9</a></li>
+<li><a class="ts" data-t="50:53"></a> Ohm's law everywhere: \(V_L = I_T X_L\), \(V_R = I_T R\), \(V_T = I_T Z\) (video ends at 53:41) — <a href="#cl5-ohm">§10</a></li>
+</ul>
+<aside class="note"><p><strong>Scope note.</strong> The whole video is on topic. It is a pure "paper" lecture: no LTspice simulation and no oscilloscope measurement are shown. The only tool on screen is a Windows calculator, at 33:30. Complex-number notation (\(Z = R + jX_L\), polar form), the impedance-triangle trigonometry beyond the sine, current/voltage-divider calculations with a given \(R\) and \(X_L\), and the \(\omega L\) form are <em>not</em> used in the video. They appear below only inside "Additional teaching" boxes, with every number checked in Python/numpy. Phasor basics come from the previous lecture; see <a class="xref" data-lesson="os3">Period, frequency, ω (phasor intro)</a>.</p></aside>
+</section>
+
+<section class="g-sec" id="cl5-objectives" data-kind="objectives">
+<h2>Learning objectives</h2>
+<p>After this lesson you should be able to…</p>
+<ul>
+<li>define reactance and inductive reactance, give its symbol (\(X\), \(X_L\)) and unit (Ω), and explain why it exists only for AC (changing current);</li>
+<li>explain, using back EMF, why \(X_L\) increases with both frequency and inductance, and sketch \(X_L\) versus \(f\) (a straight line through the origin);</li>
+<li>calculate \(X_L = 2\pi f L\) with \(f\) in Hz and \(L\) in H (e.g. 5 H at 60 Hz ≈ 1885 Ω);</li>
+<li>use Ohm's law with reactance (\(X_L = V_L/I_L\), \(V_L = I X_L\));</li>
+<li>combine inductive reactances in series (add) and in parallel (reciprocal rule, or product-over-sum for two);</li>
+<li>explain why \(V_R + V_L \ne V_T\) in a series RL circuit, and find \(V_T = \sqrt{V_R^2 + V_L^2}\) from a phasor diagram;</li>
+<li>apply the rule that all amplitudes in a calculation must be the same kind (all peak, all peak-to-peak or all RMS);</li>
+<li>define the circuit phase angle (between \(V_T\) and \(I_T\)) and compute it, e.g. \(\theta = \sin^{-1}(V_L/V_T)\);</li>
+<li>define impedance \(Z\) (Ω), explain why it depends on frequency, and compute \(Z = \sqrt{R^2 + X_L^2}\) for a series RL circuit;</li>
+<li>use Ohm's law with impedance: \(V_T = I_T Z\), \(V_R = I_T R\), \(V_L = I_T X_L\).</li>
+</ul>
+</section>
+
+<section class="g-sec" id="cl5-prereqs" data-kind="prereqs">
+<h2>Prerequisites</h2>
+<dl>
+<dt>Inductors and back EMF</dt><dd>An inductor is a coil of wire. A <em>changing</em> current makes a changing magnetic field, which induces a voltage (back EMF) that opposes the change. The faster the change, the bigger the back EMF (\(v_L = L\,di/dt\)). See <a class="xref" data-lesson="cl1">Intro to Inductors</a>.</dd>
+<dt>Inductor at DC steady state</dt><dd>Once a DC current has stopped changing (after about \(5\tau\), \(\tau = L/R\)), there is no back EMF, and an ideal inductor behaves like a plain wire (a short). See <a class="xref" data-lesson="cl2">L/R Time Constant</a>.</dd>
+<dt>Ohm's law, KVL, series and parallel resistance</dt><dd>\(V = IR\). The sum of voltage rises and drops around a closed loop is zero. Series resistances add, and parallel resistances combine as \(1/R_T = \sum 1/R_k\) (two in parallel: \(R_1R_2/(R_1+R_2)\)).</dd>
+<dt>Peak, peak-to-peak and RMS</dt><dd>For a sine, \(V_{pp} = 2V_p\) and \(V_{rms} = V_p/\sqrt{2}\). An AC amplitude must always say which one it is. See <a class="xref" data-lesson="os1">AC vs DC, Vp/Vpp/Vrms</a>.</dd>
+<dt>Frequency, period, ω</dt><dd>\(f = 1/T\) in Hz (cycles per second), and \(\omega = 2\pi f\) in rad/s. See <a class="xref" data-lesson="os3">Period, frequency, ω</a>.</dd>
+<dt>Phasors (from LectLab 28)</dt><dd>A phasor is a rotating vector whose length is the peak value. Its projection on the y-axis is the instantaneous value. For a <strong>resistor</strong>, V and I are <strong>in phase</strong> (phasors point the same way). For an <strong>inductor</strong>, V <strong>leads</strong> I by 90° ("<strong>ELI</strong> the ICE man": in L, E (voltage) comes before I). Introduced in the lecture summarised in <a class="xref" data-lesson="os3">os3 (phasor intro outline)</a>.</dd>
+<dt>Right-triangle trigonometry</dt><dd>For a right triangle with legs \(a\), \(b\) and hypotenuse \(c\): \(c = \sqrt{a^2+b^2}\) (Pythagoras), \(\sin\theta = \text{opp}/\text{hyp}\), \(\cos\theta = \text{adj}/\text{hyp}\), \(\tan\theta = \text{opp}/\text{adj}\). Use the inverse functions with the calculator in <strong>degree</strong> mode.</dd>
+</dl>
+</section>
+
+<section class="g-sec" id="cl5-definitions" data-kind="definitions">
+<h2>Definitions &amp; symbols</h2>
+<table>
+<tr><th>Term / symbol</th><th>Meaning</th><th>Unit</th></tr>
+<tr><td>Reactance \(X\)</td><td>Opposition to <em>AC</em> current. Written on the page as "think of R for AC". It exists only when the voltage/current is changing.</td><td>Ω</td></tr>
+<tr><td>Inductive reactance \(X_L\)</td><td>The reactance produced by an inductor (its back EMF): \(X_L = 2\pi f L\).</td><td>Ω</td></tr>
+<tr><td>\(f\)</td><td>Frequency of the AC source.</td><td>Hz</td></tr>
+<tr><td>\(L\)</td><td>Inductance.</td><td>H (henry)</td></tr>
+<tr><td>DC resistance of a coil ("dc R")</td><td>The ordinary resistance of the wire the inductor is wound from. It is present for DC and AC alike. An <em>ideal</em> inductor has none.</td><td>Ω</td></tr>
+<tr><td>\(X_{LT}\)</td><td>Total (equivalent) inductive reactance of several inductors.</td><td>Ω</td></tr>
+<tr><td>Series RL circuit</td><td>A resistor and an inductor in series with an AC source.</td><td>—</td></tr>
+<tr><td>\(V_T\) (also \(V_{ac}\)), \(I_T\)</td><td>Total (source) voltage and total current.</td><td>V, A</td></tr>
+<tr><td>\(V_R\), \(V_L\)</td><td>Voltage across the resistor and across the inductor (magnitudes).</td><td>V</td></tr>
+<tr><td>Phasor diagram</td><td>Drawing of the phasors (arrows) of the circuit's voltages and currents at one instant, showing their relative angles.</td><td>—</td></tr>
+<tr><td>In phase</td><td>Two sinusoids that peak and cross zero at the same time (phasors point the same way).</td><td>—</td></tr>
+<tr><td>Leads / lags</td><td>A quantity that reaches its peak earlier <em>leads</em>; the later one <em>lags</em>. In an inductor, V leads I by 90°.</td><td>° </td></tr>
+<tr><td>ELI the ICE man</td><td>Mnemonic: in an inductor (L) voltage (E) comes before current (I); in a capacitor (C) current comes before voltage.</td><td>—</td></tr>
+<tr><td>Circuit phase angle \(\theta\)</td><td>The phase angle between the total voltage \(V_T\) and the total current \(I_T\).</td><td>°</td></tr>
+<tr><td>Impedance \(Z\)</td><td>The total opposition a circuit offers to AC current at a given frequency: the combination of all resistances and reactances.</td><td>Ω</td></tr>
+<tr><td>Impedance triangle <em>(added)</em></td><td>Right triangle with \(R\) along the horizontal, \(X_L\) vertical and \(Z\) as hypotenuse. Same shape as the voltage triangle (\(V_R\), \(V_L\), \(V_T\)).</td><td>Ω</td></tr>
+<tr><td>\(j\) <em>(added, not used in the video)</em></td><td>Engineering symbol for \(\sqrt{-1}\). It marks a 90° rotation, so \(Z = R + jX_L\).</td><td>—</td></tr>
+</table>
+</section>
+
+<section class="g-sec" id="cl5-reactance" data-kind="lesson" data-ts="0-399">
+<h2>1. Reactance: "think of R for AC"</h2>
+<p><strong>Recap</strong> <a class="ts" data-t="0:00"></a>: last lecture showed that for an inductor, <strong>voltage leads current</strong>. An inductor also <strong>opposes AC</strong>, and this opposition is called <strong>reactance</strong> <a class="ts" data-t="0:16"></a>.</p>
+<p><strong>Reactance vs resistance</strong> <a class="ts" data-t="0:34"></a>. The instructor says the two "might as well be the same thing", except that reactance is the resistance that appears when AC is applied. With DC "reactance doesn't exist". You need a <em>changing</em> voltage or a changing current <a class="ts" data-t="1:00"></a>. Through Ohm's law a change of voltage goes with a change of current, and vice versa.</p>
+<p>The page reads <a class="ts" data-t="1:24"></a> <a class="ts" data-t="2:16"></a> <a class="ts" data-t="2:43"></a>:</p>
+<ul>
+<li><strong>Reactance: (X)</strong> an opposition to AC current. "think of R for AC"</li>
+<li><strong>For an Inductor</strong> → <strong>Inductive Reactance \(X_L\)</strong> (subscript L because the inductor creates it)</li>
+<li><strong>\(X_L\): unit ohm Ω</strong>, since it behaves as a resistance</li>
+</ul>
+<h3>The same real coil on DC and on AC</h3>
+<p><strong>DC</strong> <a class="ts" data-t="3:12"></a>: a 10 V battery drives an inductor of <strong>10 H</strong> <a class="ts" data-t="3:49"></a>. The inductor also has <strong>resistance, 100 Ω</strong>, because "at the end of the day your inductor is nothing more than a coil of wire" <a class="ts" data-t="3:49"></a>. The instructor holds up a spool of copper wire to make the point <a class="ts" data-t="4:22"></a>. In schematics we treat wire resistance as negligible, but in a physical inductor the long winding adds up. The <em>ideal</em> inductor of the previous lectures ignored this resistance <a class="ts" data-t="4:33"></a>.</p>
+<p><strong>AC</strong> <a class="ts" data-t="4:58"></a>: now the same coil is driven by an AC source of 10 V. With AC you must say what the 10 V means: 10 V <em>peak</em>, <em>peak-to-peak</em> or <em>RMS</em>? He chooses <strong>10 V<sub>pk</sub></strong>, though "it really doesn't matter for this example" <a class="ts" data-t="5:25"></a>. The coil still has \(L = 10\) H and its <strong>DC resistance of 100 Ω</strong> <a class="ts" data-t="5:50"></a>. It now <em>also</em> has an <strong>inductive reactance</strong>, roughly \(X_L \approx 10\) kΩ <a class="ts" data-t="6:18"></a> <a class="ts" data-t="6:37"></a>, "we'll see where we get that number from".</p>
+<figure class="circuit" id="cl5-fig-dc-ac">
+<script type="application/json">{"parts":[
+ {"t":"BAT","a":[0,5],"b":[0,1],"label":"10 V","plus":"b","side":-1},
+ {"t":"W","pts":[[0,1],[0,0],[3,0]]},
+ {"t":"L","a":[3,0],"b":[3,3],"label":"L = 10 H"},
+ {"t":"R","a":[3,3],"b":[3,5],"label":"R = 100 Ω","value":"(wire)"},
+ {"t":"W","pts":[[3,5],[3,6],[0,6],[0,5]]},
+ {"t":"T","at":[1.8,7.3],"text":"DC","bold":true},
+ {"t":"VAC","a":[9,5],"b":[9,1],"label":"10 V_{pk}","side":-1},
+ {"t":"W","pts":[[9,1],[9,0],[12,0]]},
+ {"t":"L","a":[12,0],"b":[12,6],"label":"X_L ≈ 10 kΩ\nL = 10 H","value":"dc R = 100 Ω"},
+ {"t":"W","pts":[[12,6],[9,6],[9,5]]},
+ {"t":"T","at":[10.8,7.3],"text":"AC","bold":true}
+],"padX":3.2,"alt":"Left: a 10 V battery driving a 10 henry inductor in series with its 100 ohm wire resistance. Right: a 10 volt peak AC source driving the same coil, labelled X_L approximately 10 kilohms, L = 10 H, dc R = 100 ohms."}</script>
+<figcaption>The page at <a class="ts" data-t="6:44"></a>: one coil (10 H, 100 Ω of wire resistance) on DC (left) and on 10 V<sub>pk</sub> AC (right). On AC it has the same \(L\) and the same "dc R", <em>plus</em> an inductive reactance \(X_L \approx 10\) kΩ.</figcaption>
+</figure>
+<aside class="uncertain"><p><strong>Frequency not stated.</strong> No frequency is given for the AC source, and the video never returns to explain the "≈ 10 kΩ". With \(X_L = 2\pi f L\) (§3), 10 kΩ with 10 H corresponds to \(f = X_L/(2\pi L) = 10\,000/(2\pi\cdot 10) \approx 159\) Hz. At 60 Hz the same coil would have \(X_L = 2\pi(60)(10) \approx 3770\) Ω. Treat 10 kΩ as an illustrative number.</p></aside>
+<aside class="extra"><p><strong>What the two circuits do (not computed in the video).</strong> On DC, after the switch-on transient (\(\tau = L/R = 10/100 = 0.1\) s, settled after \(5\tau = 0.5\) s, see <a class="xref" data-lesson="cl2">L/R time constant</a>), the coil is "just a wire" of 100 Ω, so \(I = 10\,\text{V}/100\,\Omega = 100\) mA. On AC the 10 kΩ of reactance dominates and the current is only about 1 mA peak. The full calculation is Extra example A in <a href="#cl5-ohm">§10</a>. Reactance is why the same coil passes DC easily but chokes AC.</p></aside>
+</section>
+
+<section class="g-sec" id="cl5-xl-freq" data-kind="lesson" data-ts="399-654">
+<h2>2. Why \(X_L\) depends on frequency and inductance</h2>
+<p>New page, headed "\(X_L\) &amp; frequency" <a class="ts" data-t="7:18"></a>, with the statement <strong>"Reactance is a function of Back EMF"</strong>. The instructor says you don't need to worry about the back-EMF details at this point <a class="ts" data-t="7:42"></a>, only about what changes when the frequency changes.</p>
+<p><strong>Same sine, double the frequency</strong> <a class="ts" data-t="8:05"></a>. He draws a sine labelled \(f\), then one labelled \(2f\) on the same axes. What changes in the applied voltage (or current) is its <strong>rate of change</strong> <a class="ts" data-t="8:36"></a>. He marks the starting slopes in red and blue: the \(2f\) wave rises more steeply. A higher frequency means a higher rate of change, hence <strong>more back EMF</strong>, and the inductive reactance is affected by this <a class="ts" data-t="9:01"></a>.</p>
+<figure class="scope" id="cl5-fig-f2f">
+<script type="application/json">{"type":"scope","ch":"applied voltage","vdiv":"(arbitrary units)","tdiv":"(same time axis)","cols":10,"rows":8,
+"traces":[{"shape":"sine","amp":3,"period":8,"label":"frequency f"},{"shape":"sine","amp":3,"period":4,"label":"frequency 2f"},{"fn":"x<1.3 ? 2.356*x : NaN","color":1},{"fn":"x<0.7 ? 4.712*x : NaN","color":2}],
+"marks":[{"type":"text","x":3.6,"y":-3.6,"text":"2f: twice the slope → more back EMF","anchor":"start"}],
+"alt":"Two sine waves of equal amplitude on the same time axis, one at frequency f and one at 2f. Straight tangent lines at the origin show the 2f wave starts with twice the slope."}</script>
+<figcaption>(Redrawn to scale for clarity.) The page at <a class="ts" data-t="8:50"></a>: sines at \(f\) and \(2f\) with their starting slopes marked. Same amplitude, but the \(2f\) wave changes twice as fast, so the inductor's back EMF, and with it \(X_L\), is larger.</figcaption>
+</figure>
+<p><strong>The graph</strong> <a class="ts" data-t="9:37"></a>: plotting \(X_L\) against frequency, the reactance increases as the frequency increases. On the page it is a straight line rising from the origin (frame <a class="ts" data-t="10:00"></a>). \(X_L\) also <strong>increases with inductance</strong>: the higher the inductance, the more reactance <a class="ts" data-t="10:03"></a>. A red note under the heading lists the two factors, frequency and inductance <a class="ts" data-t="10:45"></a>.</p>
+<figure class="circuit" id="cl5-fig-xl-f">
+<script type="application/json">{"parts":[
+ {"t":"ARROW","a":[0,5],"b":[0,0],"label":"X_L (Ω)","lat":[0,-0.4]},
+ {"t":"ARROW","a":[0,5],"b":[8.5,5],"label":"f (Hz)","lat":[9.3,5.15]},
+ {"t":"W","pts":[[0,5],[7,1.2]]},
+ {"t":"W","pts":[[0,5],[3.8,0.6]],"dashed":true},
+ {"t":"T","at":[5.2,3.4],"text":"X_L = 2πfL","anchor":"start","cls":"accent"},
+ {"t":"T","at":[4.0,0.6],"text":"larger L (steeper)","anchor":"start","cls":"muted"},
+ {"t":"T","at":[0.2,5.75],"text":"f = 0 (DC): X_L = 0","anchor":"start","cls":"muted"}
+],"alt":"Graph of inductive reactance versus frequency: a straight line from the origin, X_L = 2 pi f L. A steeper dashed line shows a larger inductance. At f = 0 the reactance is zero."}</script>
+<figcaption>\(X_L\) versus \(f\), as sketched at <a class="ts" data-t="10:00"></a>: a straight line through the origin. (The dashed "larger L" line and the labels are added for clarity.)</figcaption>
+</figure>
+<aside class="extra"><p><strong>Where \(2\pi f L\) comes from (not derived in the video).</strong> Let the inductor current be \(i(t) = I_p\sin(2\pi f t)\). The inductor law (<a class="xref" data-lesson="cl1">cl1</a>) gives \(v_L = L\,\dfrac{di}{dt} = L\cdot 2\pi f\,I_p\cos(2\pi f t)\).</p>
+<ol>
+<li>The voltage is a <em>cosine</em> while the current is a sine: the voltage peaks a quarter cycle earlier, which is "V leads I by 90°" (ELI).</li>
+<li>The voltage amplitude is \(V_p = 2\pi f L\, I_p\). The steepest slope of the current is \(2\pi f I_p\) (proportional to \(f\)), and the back EMF is \(L\) times that slope.</li>
+<li>So the ratio of amplitudes is \(V_p/I_p = 2\pi f L\), which is exactly \(X_L\). It is proportional to \(f\) (the rate-of-change argument above) and to \(L\).</li>
+</ol>
+<p><strong>The two extremes.</strong> At <strong>DC</strong>, \(f = 0\) gives \(X_L = 0\): the steady-state inductor is a short circuit (just its wire resistance), as in <a class="xref" data-lesson="cl1">cl1</a>/<a class="xref" data-lesson="cl2">cl2</a>. At <strong>very high frequency</strong>, \(X_L \to \infty\): the inductor behaves almost like an open circuit. This is why inductors are used as "chokes" to block high-frequency signals while passing DC.</p></aside>
+</section>
+
+<section class="g-sec" id="cl5-xl-formula" data-kind="lesson" data-ts="654-896">
+<h2>3. The inductive-reactance formula \(X_L = 2\pi f L\)</h2>
+<p>The "nice little equation" <a class="ts" data-t="10:54"></a>, boxed on the page <a class="ts" data-t="11:23"></a>:</p>
+<div class="formula">\[ X_L = 2\pi f L \]</div>
+<dl class="vardefs"><dt>\(X_L\)</dt><dd>inductive reactance (Ω)</dd><dt>\(f\)</dt><dd>frequency of the AC, <strong>in Hz</strong> (written "f in Hz" beside the box)</dd><dt>\(L\)</dt><dd>inductance, <strong>in H</strong> ("L in H")</dd><dt>\(2\pi\)</dt><dd>radians per cycle (see <a class="xref" data-lesson="os3">ω = 2πf</a>)</dd></dl>
+<p>This applies to an ideal inductor in a sinusoidal AC circuit of frequency \(f\). "We do need to keep our base units" <a class="ts" data-t="12:33"></a>: convert mH to H and kHz to Hz before substituting.</p>
+<div class="example" id="cl5-ex1"><h3>Example 1 — \(X_L\) of a 5 H inductor in a 60 Hz circuit <a class="ts" data-t="11:41"></a></h3>
+<p><strong>Given (page at <a class="ts" data-t="12:55"></a>):</strong> "Ex. \(X_L\) of a 5H in 60Hz AC circuit": \(L = 5\) H, \(f = 60\) Hz. <strong>Goal:</strong> \(X_L\).</p>
+<p class="step">1. Formula: \(X_L = 2\pi f L\), with base units Hz and H <a class="ts" data-t="12:07"></a>.</p>
+<p class="step">2. Substitute: \(X_L = 2\pi(60\,\text{Hz})(5\,\text{H})\) <a class="ts" data-t="12:54"></a>.</p>
+<p class="step">3. Arithmetic: \(2\pi \times 60 = 376.99\); \(376.99 \times 5 = 1884.96\).</p>
+<p class="step">4. Units: Hz × H = (1/s)(V·s/A) = V/A = Ω.</p>
+<p class="answer">\(X_L \approx 1885\,\Omega\). The board shows <strong>1884 Ω</strong> <a class="ts" data-t="13:26"></a>: "reactance is an opposition to AC current, specifically 1884 ohms".</p>
+</div>
+<aside class="uncertain"><p><strong>Rounding.</strong> \(2\pi(60)(5) = 1884.96\ \Omega\), which rounds to <strong>1885 Ω</strong>. The board's 1884 Ω is the truncated value. The difference is negligible, but on a test write 1885 Ω (or 1.88 kΩ).</p></aside>
+<p><strong>Ohm's law also applies</strong> <a class="ts" data-t="13:27"></a> (red heading "Ohms law is also applicable"). Reactance is an opposition measured in ohms, so \(X_L = V_L/I_L\) <a class="ts" data-t="14:41"></a>: "like I said it really is a resistance".</p>
+<div class="formula">\[ X_L = \frac{V_L}{I_L} \qquad\Longleftrightarrow\qquad V_L = I_L X_L \]</div>
+<dl class="vardefs"><dt>\(V_L\)</dt><dd>AC voltage across the inductor (V)</dd><dt>\(I_L\)</dt><dd>AC current through it (A), the same kind of amplitude as \(V_L\) (both RMS or both peak)</dd></dl>
+<div class="example" id="cl5-ex2"><h3>Example 2 — Reactance from a voltage and a current <a class="ts" data-t="13:50"></a></h3>
+<p><strong>Given (page at <a class="ts" data-t="14:50"></a>):</strong> "Ex \(X_L\) of Ind. with 25v across &amp; 5mA through it". <strong>Goal:</strong> \(X_L\).</p>
+<p class="step">1. Ohm's law for the reactance: \(X_L = V_L / I_L\) <a class="ts" data-t="14:15"></a>.</p>
+<p class="step">2. Substitute in base units: \(X_L = \dfrac{25\,\text{V}}{5\,\text{mA}} = \dfrac{25}{0.005}\,\Omega\).</p>
+<p class="answer">\(X_L = 5000\,\Omega = 5\,\text{k}\Omega\) of reactance <a class="ts" data-t="14:41"></a>.</p>
+</div>
+<aside class="note"><p>At <a class="ts" data-t="14:15"></a> the instructor says "the resistance, i.e. the inductance is equal to 25 V / 5 mA". He means the <em>reactance</em>: 5 kΩ is \(X_L\), not \(L\) (inductance is in henries). The page correctly writes \(X_L\).</p></aside>
+<aside class="extra"><p><strong>Same formula with ω.</strong> Since \(\omega = 2\pi f\) (<a class="xref" data-lesson="os3">os3</a>), \(X_L = \omega L\). For Example 1, \(\omega = 2\pi\cdot 60 = 377\) rad/s and \(X_L = 377 \times 5 = 1885\ \Omega\). Most textbooks write \(\omega L\).</p>
+<p><strong>\(X_L\) is proportional to \(f\): the 5 H inductor at different frequencies</strong> (computed, not from the video):</p>
+<table>
+<tr><th>\(f\)</th><th>\(X_L = 2\pi f(5\,\text{H})\)</th><th>Behaviour</th></tr>
+<tr><td>0 Hz (DC)</td><td>0 Ω</td><td>short (wire) at steady state</td></tr>
+<tr><td>1 Hz</td><td>31.4 Ω</td><td></td></tr>
+<tr><td>60 Hz</td><td>1885 Ω</td><td>Example 1</td></tr>
+<tr><td>120 Hz</td><td>3770 Ω</td><td>double \(f\) → double \(X_L\)</td></tr>
+<tr><td>1 kHz</td><td>31.4 kΩ</td><td>strongly opposes the current</td></tr>
+</table>
+<p><strong>Going backwards.</strong> If \(X_L\) is known (e.g. from Ohm's law as in Example 2) and \(f\) is known, \(L = X_L/(2\pi f)\). If \(L\) is known, \(f = X_L/(2\pi L)\).</p></aside>
+</section>
+
+<section class="g-sec" id="cl5-series-parallel" data-kind="lesson" data-ts="896-1175">
+<h2>4. Inductive reactances in series and in parallel</h2>
+<p>"Let's also talk about a couple of properties of this reactance" <a class="ts" data-t="14:56"></a>. The page is headed "\(X_L\) in parallel &amp; Series".</p>
+<p><strong>Series</strong> <a class="ts" data-t="15:10"></a>: the total inductive reactance is the sum of the individual reactances.</p>
+<div class="formula">\[ X_{LT} = X_{L1} + X_{L2} + \dots + X_{Ln} \qquad\text{(series)} \]</div>
+<dl class="vardefs"><dt>\(X_{LT}\)</dt><dd>total (equivalent) inductive reactance (Ω)</dd><dt>\(X_{Lk}\)</dt><dd>reactance of the k-th inductor (Ω)</dd></dl>
+<div class="example" id="cl5-ex3"><h3>Example 3 — Two inductive reactances in series <a class="ts" data-t="15:38"></a></h3>
+<p><strong>Given (page at <a class="ts" data-t="16:40"></a>):</strong> AC source with \(X_{L1} = 2\,\text{k}\Omega\) and \(X_{L2} = 6\,\text{k}\Omega\) in series. <strong>Goal:</strong> \(X_{LT}\).</p>
+<figure class="circuit" id="cl5-fig-xl-series">
+<script type="application/json">{"parts":[
+ {"t":"VAC","a":[0,4.5],"b":[0,1.5]},
+ {"t":"W","pts":[[0,1.5],[0,0],[3,0]]},
+ {"t":"L","a":[3,0],"b":[3,3],"label":"X_{L1}","value":"2 kΩ"},
+ {"t":"L","a":[3,3],"b":[3,6],"label":"X_{L2}","value":"6 kΩ"},
+ {"t":"W","pts":[[3,6],[0,6],[0,4.5]]},
+ {"t":"T","at":[6.3,3.25],"text":"⇒","size":24},
+ {"t":"L","a":[8.5,1.5],"b":[8.5,4.5],"label":"X_{LT}","value":"8 kΩ"},
+ {"t":"N","at":[8.5,1.5],"open":true},
+ {"t":"N","at":[8.5,4.5],"open":true}
+],"alt":"AC source with two inductors in series, X_L1 = 2 kilohms and X_L2 = 6 kilohms, equivalent to a single inductor with X_LT = 8 kilohms."}</script>
+<figcaption>Series inductive reactances as drawn at <a class="ts" data-t="16:40"></a>: 2 kΩ + 6 kΩ is equivalent to one 8 kΩ reactance.</figcaption>
+</figure>
+<p class="step">1. Series rule: \(X_{LT} = X_{L1} + X_{L2}\).</p>
+<p class="step">2. \(X_{LT} = 2\,\text{k}\Omega + 6\,\text{k}\Omega\).</p>
+<p class="answer">\(X_{LT} = 8\,\text{k}\Omega\) <a class="ts" data-t="16:14"></a>.</p>
+</div>
+<p>(At <a class="ts" data-t="16:42"></a> a student with an open microphone asks to see the previous page again. The instructor shows it, then continues.)</p>
+<p><strong>Parallel</strong> <a class="ts" data-t="17:08"></a>: "exactly what you think it's going to do". As with parallel resistors ("parallel to parallel resistance, pun intended"):</p>
+<div class="formula">\[ X_{LT} = \frac{1}{\dfrac{1}{X_{L1}} + \dfrac{1}{X_{L2}} + \dots + \dfrac{1}{X_{Ln}}} \qquad\qquad X_{LT} = \frac{X_{L1}\,X_{L2}}{X_{L1} + X_{L2}}\ \ \text{(two only)} \]</div>
+<dl class="vardefs"><dt>\(X_{LT}\)</dt><dd>equivalent reactance of inductors in parallel (Ω); always smaller than the smallest branch</dd></dl>
+<p>The product-over-sum form is the instructor's "go-to" because it avoids "a bunch of inverses on my calculator" <a class="ts" data-t="18:01"></a>. It only works for <strong>two</strong> reactances at a time.</p>
+<div class="example" id="cl5-ex4"><h3>Example 4 — Two equal inductive reactances in parallel <a class="ts" data-t="18:01"></a></h3>
+<p><strong>Given (page at <a class="ts" data-t="19:00"></a>):</strong> AC source across \(X_{L1} = 5\,\text{k}\Omega\) in parallel with \(X_{L2} = 5\,\text{k}\Omega\). <strong>Goal:</strong> \(X_{LT}\).</p>
+<figure class="circuit" id="cl5-fig-xl-parallel">
+<script type="application/json">{"parts":[
+ {"t":"VAC","a":[0,4],"b":[0,0]},
+ {"t":"W","pts":[[0,0],[6,0]]},
+ {"t":"W","pts":[[0,4],[6,4]]},
+ {"t":"L","a":[3,0],"b":[3,4],"label":"X_{L1}","value":"5 kΩ"},
+ {"t":"L","a":[6,0],"b":[6,4],"label":"X_{L2}","value":"5 kΩ"},
+ {"t":"T","at":[9.2,2.25],"text":"⇒","size":24},
+ {"t":"L","a":[11,0.5],"b":[11,3.5],"label":"X_{LT}","value":"2.5 kΩ"},
+ {"t":"N","at":[11,0.5],"open":true},
+ {"t":"N","at":[11,3.5],"open":true}
+],"alt":"AC source across two 5 kilohm inductive reactances in parallel, equivalent to a single 2.5 kilohm inductive reactance."}</script>
+<figcaption>Parallel inductive reactances as drawn at <a class="ts" data-t="19:00"></a>: 5 kΩ ∥ 5 kΩ is equivalent to 2.5 kΩ.</figcaption>
+</figure>
+<p class="step">1. Product over sum: \(X_{LT} = \dfrac{(5\,\text{k}\Omega)(5\,\text{k}\Omega)}{5\,\text{k}\Omega + 5\,\text{k}\Omega} = \dfrac{25\,\text{M}\Omega^2}{10\,\text{k}\Omega}\).</p>
+<p class="step">2. Check with reciprocals: \(\dfrac{1}{5000} + \dfrac{1}{5000} = 0.0004\), and \(1/0.0004 = 2500\ \Omega\).</p>
+<p class="answer">\(X_{LT} = 2.5\,\text{k}\Omega\) <a class="ts" data-t="18:52"></a>. Two equal reactances in parallel give half of one.</p>
+</div>
+<aside class="instructor"><p><strong>Take-away</strong> <a class="ts" data-t="19:10"></a>: memorise \(X_L = 2\pi f L\). After that, treat reactance "just like any other resistance": apply Ohm's law to it and combine it in series and parallel.</p></aside>
+<aside class="extra"><p><strong>Why this works, and its limit.</strong> All the inductors see the same frequency, so \(X_L = 2\pi f L\) scales every branch by the same factor \(2\pi f\). Adding reactances in series is therefore the same as adding inductances (\(L_T = L_1 + L_2\)), and the parallel rule matches \(1/L_T = 1/L_1 + 1/L_2\) (series/parallel inductors, <a class="xref" data-lesson="cl1">cl1</a>). Example: 2 kΩ and 6 kΩ at 60 Hz are 5.31 H and 15.9 H, and 21.2 H gives 8 kΩ. These rules are for <strong>reactances of the same kind only</strong> (all inductive, no coupling between the coils). You <strong>cannot</strong> add a resistance and a reactance this way: \(R\) and \(X_L\) act 90° apart, which is exactly the "wrench" of the next section.</p></aside>
+</section>
+
+<section class="g-sec" id="cl5-puzzle" data-kind="lesson" data-ts="1175-1399">
+<h2>5. The series RL puzzle: 10 V + 10 V = 14.14 V?</h2>
+<p>"Here's where … I throw a wrench in everything" <a class="ts" data-t="19:35"></a>: a circuit with both a resistance and an inductance. The resistor is at the top and the inductor at the bottom, in series with an AC source <a class="ts" data-t="20:00"></a>. The voltage drops are <a class="ts" data-t="20:30"></a>:</p>
+<ul>
+<li>\(V_R = 10\) V across the resistor,</li>
+<li>\(V_L = 10\) V across the inductor,</li>
+<li>total source voltage \(V_{ac} = 14.14\) V <a class="ts" data-t="20:55"></a>.</li>
+</ul>
+<figure class="circuit" id="cl5-fig-series-rl">
+<script type="application/json">{"parts":[
+ {"t":"VAC","a":[0,5],"b":[0,1],"label":"V_{ac}","value":"14.14 V","side":-1},
+ {"t":"W","pts":[[0,1],[0,0],[3,0]]},
+ {"t":"R","a":[3,0],"b":[3,3],"label":"R","value":"V_R = 10 V"},
+ {"t":"L","a":[3,3],"b":[3,6],"label":"L","value":"V_L = 10 V"},
+ {"t":"W","pts":[[3,6],[0,6],[0,5]]},
+ {"t":"IARR","a":[0,0],"b":[3,0],"label":"I (same everywhere)"}
+],"pad":1.4,"padX":2.8,"alt":"Series RL circuit: AC source of 14.14 volts, resistor with 10 volts across it on top, inductor with 10 volts across it below; one current flows through all of them."}</script>
+<figcaption>"Series RL" with its voltage drops, as on the page at <a class="ts" data-t="23:15"></a>. The current arrow is added. "Series Circuit: I is the same" is written below it at <a class="ts" data-t="24:30"></a>.</figcaption>
+</figure>
+<p><strong>The objection</strong> <a class="ts" data-t="21:16"></a>: "I think it should be 20", because KVL says the voltages around a closed loop sum to zero <a class="ts" data-t="21:43"></a>. Start at 14.14 V and lose 10 V across R; that leaves 4.14 V, yet the inductor drops another 10 V. The instructor insists that "this is completely true": apply 14.14 V to this series resistor and inductor and you really do measure 10 V across each <a class="ts" data-t="22:07"></a>. This is a <strong>series RL circuit</strong>: R and L, in series.</p>
+<h3>Rule: all amplitudes must be the same kind</h3>
+<p>The page does not say whether these are peak, peak-to-peak or RMS values <a class="ts" data-t="22:35"></a>. Whatever they are, they are all the same kind. If one is peak, all three are peak; if one is RMS, all are RMS; if one is peak-to-peak, all are peak-to-peak <a class="ts" data-t="22:59"></a>. Leaving it unspecified means the demonstration works for any of the three.</p>
+<aside class="instructor"><p>Pick one kind of amplitude (peak, peak-to-peak or RMS) and use it for <em>every</em> voltage and current in the calculation <a class="ts" data-t="22:35"></a>. "If this is peak this is peak and this is peak."</p></aside>
+<aside class="extra"><p><strong>The same circuit described three ways</strong> (computed). For a sine, every amplitude scales by the same factor (\(\times 2\) for peak-to-peak, \(\div\sqrt{2}\) for RMS), so the relationship survives as long as you don't mix kinds:</p>
+<table>
+<tr><th>If the values are…</th><th>\(V_R\)</th><th>\(V_L\)</th><th>\(V_T\)</th><th>Check \(\sqrt{V_R^2+V_L^2}\)</th></tr>
+<tr><td>peak</td><td>10 V<sub>pk</sub></td><td>10 V<sub>pk</sub></td><td>14.14 V<sub>pk</sub></td><td>14.14 ✓</td></tr>
+<tr><td>converted to RMS (÷√2)</td><td>7.07 V<sub>rms</sub></td><td>7.07 V<sub>rms</sub></td><td>10.0 V<sub>rms</sub></td><td>10.0 ✓</td></tr>
+<tr><td>converted to peak-to-peak (×2)</td><td>20 V<sub>pp</sub></td><td>20 V<sub>pp</sub></td><td>28.28 V<sub>pp</sub></td><td>28.28 ✓</td></tr>
+</table>
+<p>Mixing kinds breaks it. If the source is set to 14.14 V<sub>pk</sub> on a function generator and you read \(V_R\) with a DMM (which shows RMS, 7.07 V), the numbers no longer fit the formulas. Scopes show peak/peak-to-peak, DMMs show RMS; see <a class="xref" data-lesson="os1">os1</a>.</p></aside>
+</section>
+
+<section class="g-sec" id="cl5-phasors" data-kind="lesson" data-ts="1399-2185">
+<h2>6. Phasors explain it: adding \(V_R\) and \(V_L\) as vectors</h2>
+<h3>Step 1 — In a series circuit the current is the same</h3>
+<p>"Why is this happening? … series circuit, what's the same about a series circuit?" <a class="ts" data-t="23:19"></a>. The class answers: the <strong>current</strong>. \(I\) is the same at every point in a series circuit <a class="ts" data-t="23:48"></a>. This gives one common reference for both components.</p>
+<h3>Step 2 — Phasor diagram for each component</h3>
+<ul>
+<li><strong>Resistor</strong> <a class="ts" data-t="24:04"></a>: the current and the voltage are <strong>in phase</strong> <a class="ts" data-t="24:39"></a>. They "express themselves at the exact same time" <a class="ts" data-t="25:08"></a>. The page reads "V &amp; I <u>In Phase</u> for a R", with \(I_R\) and \(V_R\) drawn along the same horizontal direction.</li>
+<li><strong>Inductor</strong> <a class="ts" data-t="25:35"></a>: "ELI the ICE man": the voltage changes before the current. <strong>Voltage leads current for an inductor by 90°</strong> <a class="ts" data-t="26:00"></a>. He draws the inductor current horizontally and the voltage 90° ahead of it, pointing up <a class="ts" data-t="26:30"></a>.</li>
+</ul>
+<figure class="circuit" id="cl5-fig-phasor-rl">
+<script type="application/json">{"parts":[
+ {"t":"W","pts":[[-1,0],[4,0]]},
+ {"t":"W","pts":[[0,-3.5],[0,1.5]]},
+ {"t":"ARROW","a":[0,0],"b":[3.2,0],"label":"V_R","lat":[3.0,0.75]},
+ {"t":"ARROW","a":[0,-0.2],"b":[2.2,-0.2],"label":"I_R","lat":[1.6,-0.55]},
+ {"t":"T","at":[1.5,2.6],"text":"R only: V and I in phase","cls":"muted"},
+ {"t":"W","pts":[[7,0],[12,0]]},
+ {"t":"W","pts":[[8,-3.5],[8,1.5]]},
+ {"t":"ARROW","a":[8,0],"b":[10.2,0],"label":"I_L","lat":[9.6,0.75]},
+ {"t":"ARROW","a":[8,0],"b":[8,-3.2],"label":"V_L","lat":[7.75,-2.6],"anchor":"end"},
+ {"t":"T","at":[8.25,-0.35],"text":"90°","anchor":"start","cls":"accent"},
+ {"t":"T","at":[9.5,2.6],"text":"L only: V_L leads I_L by 90°","cls":"muted"}
+],"alt":"Two phasor diagrams. Left, resistor: V_R and I_R both point to the right (in phase). Right, inductor: I_L points right and V_L points straight up, 90 degrees ahead."}</script>
+<figcaption>The two single-component phasor diagrams on the page at <a class="ts" data-t="27:35"></a>: "V &amp; I In Phase for a R" and "ELI the ICE man — Voltage Leads Current for Inductor by 90°". Phasors rotate counter-clockwise, so "ahead" means 90° further counter-clockwise (up).</figcaption>
+</figure>
+<h3>Step 3 — Overlay them on the common current</h3>
+<p>Because the current is the same in a series circuit, the two diagrams can be lined up on their current phasors <a class="ts" data-t="27:01"></a>. Then \(V_R\) points along the current and \(V_L\) points upward. The two voltages are always 90° apart. The instructor demonstrates with two marker pens held at right angles and rotated together, "as my markers spin around the phasor diagram" <a class="ts" data-t="27:25"></a>.</p>
+<p>On a fresh page <a class="ts" data-t="27:50"></a> he draws the combined diagram. The current \(I_R\) &amp; \(I_L\), i.e. \(I_T\) since they are in series, lies along the horizontal axis <a class="ts" data-t="28:28"></a>. \(V_R\) lies along it, and \(V_L\) is 90° ahead, "with the voltage of the inductor leading the current" <a class="ts" data-t="29:26"></a>.</p>
+<h3>Step 4 — Why the magnitudes can't simply be added</h3>
+<p>The instantaneous value is the projection of each phasor on the <em>y</em>-axis <a class="ts" data-t="29:47"></a>. At the instant drawn, the resistor voltage's projection is <strong>zero</strong> while the inductor voltage is at its <strong>full magnitude</strong> <a class="ts" data-t="30:13"></a>. The two voltages "express themselves at different points in time", but both affect the total. "We can't just simply add these two voltages and expect Kirchhoff's voltage law to hold true. Kirchhoff's voltage law <em>is</em> holding true; however, you're gonna have to put these two together" <a class="ts" data-t="30:37"></a>.</p>
+<p>The page states: <strong>"\(V_T\) is the addition of \(V_L\) &amp; \(V_R\) phasors"</strong> <a class="ts" data-t="31:13"></a>, and \(V_T\) is drawn as the diagonal of the rectangle formed by \(V_R\) and \(V_L\).</p>
+<figure class="circuit" id="cl5-fig-phasor-sum">
+<script type="application/json">{"parts":[
+ {"t":"W","pts":[[-1,0],[5.5,0]]},
+ {"t":"W","pts":[[0,-5],[0,2]]},
+ {"t":"ARROW","a":[0,0],"b":[4,0],"label":"V_R = 10 V","lat":[3.5,0.7]},
+ {"t":"ARROW","a":[0,0],"b":[0,-4],"label":"V_L = 10 V","lat":[-0.25,-3.6],"anchor":"end"},
+ {"t":"ARROW","a":[0,0],"b":[4,-4],"label":"V_T = 14.14 V","lat":[4.25,-4.25],"anchor":"start"},
+ {"t":"W","pts":[[0,-4],[4,-4]],"dashed":true},
+ {"t":"W","pts":[[4,0],[4,-4]],"dashed":true},
+ {"t":"T","at":[1.25,-0.35],"text":"45°","anchor":"start","cls":"accent"},
+ {"t":"ARROW","a":[0,1.4],"b":[2.5,1.4],"label":"I_T = I_R = I_L (reference)","lat":[2.7,1.55],"anchor":"start"}
+],"alt":"Combined phasor diagram for the series RL circuit: V_R = 10 V along the current direction, V_L = 10 V straight up, and V_T = 14.14 V as the diagonal at 45 degrees. The common current I_T is the horizontal reference."}</script>
+<figcaption>Combined phasor diagram (page at <a class="ts" data-t="32:20"></a>, values from <a class="ts" data-t="23:15"></a>). \(V_R\) is along the common current, \(V_L\) is 90° ahead, and \(V_T\) is their vector sum. The current is drawn just below the axis here so it is not hidden under \(V_R\); the 45° label is added.</figcaption>
+</figure>
+<h3>Step 5 — Pythagoras</h3>
+<p>"How do I take this vector and this vector and calculate the magnitude of the resultant vector?" <a class="ts" data-t="31:43"></a>. The class suggests squaring and adding; "it's a theorem…", Pythagorean, written "Pthag!!!" <a class="ts" data-t="32:36"></a>. \(V_R\) and \(V_L\) are perpendicular, so \(V_T\) is the hypotenuse:</p>
+<div class="formula">\[ V_T = \sqrt{V_R^2 + V_L^2} \]</div>
+<dl class="vardefs"><dt>\(V_T\)</dt><dd>magnitude of the total (source) voltage (V)</dd><dt>\(V_R\)</dt><dd>magnitude of the resistor voltage (V)</dd><dt>\(V_L\)</dt><dd>magnitude of the inductor voltage (V); all three the same kind (pk, pp or rms)</dd></dl>
+<p>This applies to a <strong>series</strong> circuit of a resistance and a (pure) inductive reactance, where the two voltages are exactly 90° apart.</p>
+<div class="example" id="cl5-ex5"><h3>Example 5 — Resolving the 10 V + 10 V puzzle <a class="ts" data-t="33:04"></a></h3>
+<p><strong>Given:</strong> \(V_R = 10\) V, \(V_L = 10\) V (series RL, same amplitude kind). <strong>Goal:</strong> \(V_T\), and check it against the 14.14 V source.</p>
+<p class="step">1. The voltages are 90° apart (R in phase with \(I\), L leading \(I\) by 90°), so they add as perpendicular phasors: \(V_T = \sqrt{V_R^2 + V_L^2}\).</p>
+<p class="step">2. Substitute: \(V_T = \sqrt{10^2 + 10^2} = \sqrt{100 + 100} = \sqrt{200}\) <a class="ts" data-t="33:30"></a>.</p>
+<p class="step">3. The calculator shows 14.142135623730950488… <a class="ts" data-t="33:50"></a>.</p>
+<p class="answer">\(V_T = 14.14\) V, exactly the source voltage <a class="ts" data-t="33:57"></a>. KVL is satisfied once the voltages are added as phasors.</p>
+</div>
+<aside class="note"><p>At <a class="ts" data-t="33:04"></a> the instructor says "14.42" while reading the board, but the board and the calculator both show <strong>14.14</strong> V. It is a slip of the tongue.</p></aside>
+<p><strong>The logic in three steps</strong> (his recap at <a class="ts" data-t="33:57"></a> <a class="ts" data-t="34:23"></a>):</p>
+<ol>
+<li>The current is the same at every point in a series circuit. This lets the two phasor diagrams be merged.</li>
+<li>ELI the ICE man tells where the inductor voltage points relative to that current (90° ahead).</li>
+<li>The total voltage is the vector sum of the two. Pythagoras gives the length of the hypotenuse, which is the length of the \(V_T\) phasor <a class="ts" data-t="34:48"></a>. "Pythag just lets us add those two phasors that are influencing the total voltage at different points in time" <a class="ts" data-t="35:12"></a>.</li>
+</ol>
+<aside class="instructor"><p><strong>Big picture</strong> <a class="ts" data-t="35:28"></a>: this is still Kirchhoff's voltage law. All earlier KVL circuits had only resistors, so every voltage was in phase with the current. The phasor addition was "happening behind the scenes" and simple addition worked. As soon as a circuit has <strong>reactance</strong>, you get these 90° relationships and must add phasors <a class="ts" data-t="35:54"></a>.</p></aside>
+<aside class="extra"><p><strong>KVL holds at every instant (check, not from the video).</strong> Take the peak values: \(v_R(t) = 10\sin(\omega t)\) (in phase with \(i\)), \(v_L(t) = 10\sin(\omega t + 90^\circ) = 10\cos(\omega t)\), and the source \(v_T(t) = 14.14\sin(\omega t + 45^\circ)\).</p>
+<ul>
+<li>At \(\omega t = 0^\circ\): \(v_R = 0\), \(v_L = 10\), \(v_T = 14.14\sin 45^\circ = 10\) → \(0 + 10 = 10\) ✓</li>
+<li>At \(\omega t = 45^\circ\): \(v_R = 7.07\), \(v_L = 7.07\), \(v_T = 14.14\) (its peak) → \(7.07 + 7.07 = 14.14\) ✓</li>
+<li>At \(\omega t = 270^\circ\): \(v_R = -10\), \(v_L = 0\), \(v_T = 14.14\sin 315^\circ = -10\) → ✓</li>
+</ul>
+<p>The instantaneous voltages always add exactly (KVL). The <em>peaks</em> do not add, because the two peaks happen at different times. numpy check: \(\max|v_R + v_L - v_T| \approx 2\times10^{-15}\).</p>
+<p><strong>In complex notation</strong> (used in later courses): \(\mathbf{V}_R = 10\angle 0^\circ = 10\), \(\mathbf{V}_L = 10\angle 90^\circ = j10\), so \(\mathbf{V}_T = 10 + j10 = 14.14\angle 45^\circ\) V. The real part is the horizontal component and the \(j\) part the vertical one.</p></aside>
+<figure class="scope" id="cl5-fig-inst">
+<script type="application/json">{"type":"scope","ch":"v_R, v_L, v_T","vdiv":"5 V/div","tdiv":"1 cycle = 8 div","cols":10,"rows":8,
+"traces":[{"fn":"2*sin(2*PI*x/8)","label":"v_R (10 V pk)"},{"fn":"2*cos(2*PI*x/8)","label":"v_L (10 V pk, leads 90°)"},{"fn":"2.828*sin(2*PI*x/8+PI/4)","label":"v_T = v_R + v_L (14.14 V pk)"}],
+"marks":[{"type":"vline","x":1},{"type":"text","x":1.15,"y":-3.6,"text":"ωt = 45°: 7.07 + 7.07 = 14.14 V","anchor":"start"},{"type":"vline","x":6},{"type":"text","x":5.5,"y":3.5,"text":"ωt = 270°: −10 + 0 = −10 V","anchor":"start"}],
+"alt":"Three sine waves over one and a quarter cycles: v_R of 10 V peak, v_L of 10 V peak leading by 90 degrees, and their sum v_T of 14.14 V peak, which peaks at 45 degrees when both components are 7.07 V."}</script>
+<figcaption>(Added for clarity — not shown in the video.) Time waveforms for Example 5 at 5 V/div. \(v_T\) peaks (14.14 V) at a moment when neither \(v_R\) nor \(v_L\) is at its peak, so the peaks cannot simply add. The instantaneous values always do.</figcaption>
+</figure>
+</section>
+
+<section class="g-sec" id="cl5-phase-angle" data-kind="lesson" data-ts="2185-2526">
+<h2>7. The circuit phase angle \(\theta\)</h2>
+<p>After redrawing the phasor diagram with an angle marked between \(V_R\) and \(V_T\) <a class="ts" data-t="36:25"></a>, the instructor continues: we also want the <strong>angle</strong> of the total voltage <a class="ts" data-t="37:33"></a>.</p>
+<ul>
+<li>If \(V_L\) is much larger than \(V_R\), \(V_T\) points more steeply: a <strong>greater</strong> angle.</li>
+<li>If \(V_R\) is greater than \(V_L\), the angle is <strong>shallower</strong>.</li>
+<li>In the 10 V/10 V drawing the two are equal (45°), but "that's definitely not going to be true for most circuits" <a class="ts" data-t="37:57"></a>.</li>
+</ul>
+<p>This angle is the <strong>circuit phase angle</strong> <a class="ts" data-t="37:57"></a>. On the page <a class="ts" data-t="38:45"></a>: <strong>"Circuit Phase Angle: The phase angle between \(V_T\) &amp; \(I_T\)."</strong> Any AC circuit has a phase angle between its total voltage and its total current. In the series RL diagram \(I_T\) lies along \(V_R\), so the angle can be read between \(V_R\) and \(V_T\).</p>
+<div class="example" id="cl5-ex6"><h3>Example 6 — Phase angle of a 50 V series RL circuit <a class="ts" data-t="39:09"></a></h3>
+<p><strong>Given (page at <a class="ts" data-t="41:55"></a>):</strong> series RL, \(V_T = 50\) V, \(V_R = 40\) V, \(V_L = 30\) V <a class="ts" data-t="39:34"></a>. <strong>Goal:</strong> the circuit phase angle \(\theta\).</p>
+<figure class="circuit" id="cl5-fig-angle-ex">
+<script type="application/json">{"parts":[
+ {"t":"VAC","a":[0,5],"b":[0,1],"label":"V_T","value":"50 V","side":-1},
+ {"t":"W","pts":[[0,1],[0,0],[3,0]]},
+ {"t":"R","a":[3,0],"b":[3,3],"label":"R","value":"V_R = 40 V"},
+ {"t":"L","a":[3,3],"b":[3,6],"label":"L","value":"V_L = 30 V"},
+ {"t":"W","pts":[[3,6],[0,6],[0,5]]},
+ {"t":"W","pts":[[8.5,4],[14,4]]},
+ {"t":"W","pts":[[9,0],[9,5.6]]},
+ {"t":"ARROW","a":[9,4],"b":[13,4],"label":"V_R = 40 V","lat":[11.6,4.7]},
+ {"t":"ARROW","a":[9,4],"b":[9,1],"label":"V_L = 30 V","lat":[8.75,1.4],"anchor":"end"},
+ {"t":"ARROW","a":[9,4],"b":[13,1],"label":"V_T = 50 V","lat":[13.25,0.85],"anchor":"start"},
+ {"t":"W","pts":[[9,1],[13,1]],"dashed":true},
+ {"t":"W","pts":[[13,4],[13,1]],"dashed":true},
+ {"t":"T","at":[10.3,3.7],"text":"θ","anchor":"start","cls":"accent"},
+ {"t":"ARROW","a":[9,5.3],"b":[11.5,5.3],"label":"I_T","lat":[11.8,5.45],"anchor":"start"}
+],"alt":"Left: series RL circuit with a 50 V source, 40 V across the resistor and 30 V across the inductor. Right: phasor diagram with V_R = 40 V along the current I_T, V_L = 30 V straight up and V_T = 50 V as the diagonal at angle theta."}</script>
+<figcaption>Circuit and phasor diagram from the page at <a class="ts" data-t="41:10"></a>, drawn to scale (1 grid unit = 10 V). On the page the current \(I_T\) is drawn along \(V_R\); here it is shown just below the axis.</figcaption>
+</figure>
+<p class="step">1. Expectation <a class="ts" data-t="40:01"></a>: the current value is not needed. \(V_R\) (40 V) is larger than \(V_L\) (30 V), so \(V_T\) leans toward the horizontal and "I expect to get a number of degrees that is less than 45" <a class="ts" data-t="40:32"></a>.</p>
+<p class="step">2. Check the triangle: \(\sqrt{40^2 + 30^2} = \sqrt{1600 + 900} = \sqrt{2500} = 50\) V, consistent with \(V_T\) by the Pythagorean theorem <a class="ts" data-t="41:14"></a>.</p>
+<p class="step">3. Choose a trig function <a class="ts" data-t="40:51"></a>: sine = opposite / hypotenuse. Opposite \(\theta\) is \(V_L\); the hypotenuse is \(V_T\): \(\sin\theta = \dfrac{\text{Opp}}{\text{Hyp}} = \dfrac{30\,\text{V}}{50\,\text{V}} = 0.6\). (He first says "divided by 40 volts" and corrects himself to 50 <a class="ts" data-t="41:14"></a>.)</p>
+<p class="step">4. Invert: \(\theta = \sin^{-1}(0.6) = 36.87^\circ\) (calculator in degree mode).</p>
+<p class="answer">\(\theta = 36.9^\circ\) <a class="ts" data-t="41:39"></a>, less than 45° as predicted. The total voltage leads the total current by 36.9°.</p>
+</div>
+<aside class="extra"><p><strong>Other ways to get the same angle</strong> (all give 36.87°, checked in numpy):</p>
+<ul>
+<li>\(\tan\theta = \dfrac{V_L}{V_R} = \dfrac{30}{40} = 0.75 \Rightarrow \theta = \tan^{-1}(0.75) = 36.87^\circ\). This uses only the two component voltages, so you don't need \(V_T\) first.</li>
+<li>\(\cos\theta = \dfrac{V_R}{V_T} = \dfrac{40}{50} = 0.8 \Rightarrow \theta = 36.87^\circ\).</li>
+</ul>
+<p>Since \(V_R = I_T R\) and \(V_L = I_T X_L\) share the same current, \(\tan\theta = V_L/V_R = X_L/R\). So <strong>\(\theta = \tan^{-1}(X_L/R)\)</strong>: the phase angle depends only on the ratio of reactance to resistance. For a series RL circuit, \(0^\circ \le \theta \le 90^\circ\): 0° for pure resistance, 90° for pure inductance, 45° when \(X_L = R\) (Example 5).</p></aside>
+</section>
+
+<section class="g-sec" id="cl5-impedance" data-kind="lesson" data-ts="2526-2773">
+<h2>8. Impedance \(Z\)</h2>
+<p>The series RL circuit has two kinds of opposition: the <strong>resistance</strong> of the resistor and the <strong>inductive reactance</strong> of the inductor <a class="ts" data-t="42:06"></a>. Their combination is the <strong>impedance</strong> <a class="ts" data-t="42:31"></a>: "impedance is all resistances, all reactances". It combines every resistance and reactance in the circuit <a class="ts" data-t="42:54"></a>.</p>
+<p><strong>Impedance depends on frequency</strong> <a class="ts" data-t="43:36"></a>. The resistance of a resistor is the same at any frequency. Reactance, however, comes from back EMF; back EMF depends on the rate of change; and the rate of change depends on frequency <a class="ts" data-t="44:02"></a>. So impedance always belongs to a particular frequency.</p>
+<p>The page reads (complete at <a class="ts" data-t="46:10"></a>):</p>
+<ul>
+<li><strong>Impedance: is the total opposition a circuit offers to AC current at a given frequency</strong> <a class="ts" data-t="44:28"></a></li>
+<li>• Combination of all R resistances &amp; X reactances…</li>
+<li><strong>Symbol \(Z\), in Ωs</strong> <a class="ts" data-t="45:30"></a></li>
+</ul>
+<aside class="instructor"><p>"That's the takeaway" <a class="ts" data-t="45:15"></a>: combine all the resistances and all the reactances into one complete opposition to whatever AC current or voltage drives the circuit.</p></aside>
+<aside class="extra"><p><strong>"Combination" does not mean "sum".</strong> In a series RL circuit, \(R\) and \(X_L\) are 90° apart, just like \(V_R\) and \(V_L\), so they combine by Pythagoras (next section), not by adding. With only resistors, \(Z = R\). With only one inductor (ideal), \(Z = X_L\).</p></aside>
+</section>
+
+<section class="g-sec" id="cl5-z-series" data-kind="lesson" data-ts="2773-3053">
+<h2>9. Impedance of a series RL circuit: \(Z = \sqrt{R^2 + X_L^2}\)</h2>
+<p>"Let's … put all of this together" <a class="ts" data-t="46:13"></a>. The circuit is a source of total voltage \(V_T\) at frequency \(f\), an inductor \(L\) with reactance \(X_L\), and a resistor \(R\), all in series. \(X_L = 2\pi f L\) is written beside it <a class="ts" data-t="46:48"></a>.</p>
+<figure class="circuit" id="cl5-fig-z-ckt">
+<script type="application/json">{"parts":[
+ {"t":"VAC","a":[0,4.5],"b":[0,1.5],"label":"V_T","value":"at f","side":-1},
+ {"t":"W","pts":[[0,1.5],[0,0],[1,0]]},
+ {"t":"L","a":[1,0],"b":[4,0],"label":"L","value":"X_L"},
+ {"t":"W","pts":[[4,0],[5,0]]},
+ {"t":"R","a":[5,0],"b":[5,6],"label":"R"},
+ {"t":"W","pts":[[5,6],[0,6],[0,4.5]]},
+ {"t":"T","at":[7,0.2],"text":"X_L = 2πfL","anchor":"start","cls":"accent"}
+],"pad":1.5,"padX":2.5,"alt":"Series RL circuit: an AC source V_T at frequency f, an inductor L with reactance X_L in the top wire, and a resistor R on the right side."}</script>
+<figcaption>The general series RL circuit on the page at <a class="ts" data-t="47:20"></a>. Here the inductor comes first and the resistor second; the order does not matter.</figcaption>
+</figure>
+<p><strong>Where each opposition points</strong> <a class="ts" data-t="47:27"></a>:</p>
+<ul>
+<li><strong>R only:</strong> the voltage is in phase with the current, and the resistance "is in phase with … the voltage across the resistor" <a class="ts" data-t="48:18"></a>. Draw \(R\) along the horizontal, with \(V_R\) and \(I_R\).</li>
+<li><strong>L only:</strong> the voltage leads the current <a class="ts" data-t="47:53"></a>, and the inductive reactance "occurs the same as the voltage" <a class="ts" data-t="48:18"></a>. Draw \(X_L\) pointing up, with \(V_L\), 90° ahead of \(I_L\).</li>
+</ul>
+<p>The total opposition, the impedance, is therefore the hypotenuse of \(R\) (horizontal) and \(X_L\) (vertical): "yet again, Pythag" <a class="ts" data-t="49:12"></a>.</p>
+<div class="formula">\[ Z = \sqrt{R^2 + X_L^2} \]</div>
+<dl class="vardefs"><dt>\(Z\)</dt><dd>impedance of the series RL circuit (Ω)</dd><dt>\(R\)</dt><dd>total series resistance (Ω), including any coil wire resistance</dd><dt>\(X_L\)</dt><dd>inductive reactance \(2\pi f L\) (Ω) at the source frequency</dd></dl>
+<p>This formula is for a resistance and an inductive reactance <strong>in series</strong>, at one frequency.</p>
+<figure class="circuit" id="cl5-fig-z-triangle">
+<script type="application/json">{"parts":[
+ {"t":"W","pts":[[-0.6,4],[5,4]]},
+ {"t":"W","pts":[[0,0.2],[0,4.8]]},
+ {"t":"ARROW","a":[0,4],"b":[4,4],"label":"R","lat":[3.6,4.7]},
+ {"t":"ARROW","a":[0,4],"b":[0,1],"label":"X_L","lat":[-0.25,1.3],"anchor":"end"},
+ {"t":"ARROW","a":[0,4],"b":[4,1],"label":"Z = √(R² + X_L²)","lat":[4.2,0.85],"anchor":"start"},
+ {"t":"W","pts":[[0,1],[4,1]],"dashed":true},
+ {"t":"W","pts":[[4,4],[4,1]],"dashed":true},
+ {"t":"T","at":[1.3,3.7],"text":"θ","anchor":"start","cls":"accent"},
+ {"t":"W","pts":[[10.4,4],[16,4]]},
+ {"t":"W","pts":[[11,0.2],[11,5.6]]},
+ {"t":"ARROW","a":[11,4],"b":[15,4],"label":"V_R = I_T R","lat":[14.2,4.7]},
+ {"t":"ARROW","a":[11,4],"b":[11,1],"label":"V_L = I_T X_L","lat":[10.75,1.3],"anchor":"end"},
+ {"t":"ARROW","a":[11,4],"b":[15,1],"label":"V_T = I_T Z","lat":[15.2,0.85],"anchor":"start"},
+ {"t":"W","pts":[[11,1],[15,1]],"dashed":true},
+ {"t":"W","pts":[[15,4],[15,1]],"dashed":true},
+ {"t":"T","at":[12.3,3.7],"text":"θ","anchor":"start","cls":"accent"},
+ {"t":"ARROW","a":[11,5.3],"b":[13.5,5.3],"label":"I_T","lat":[13.8,5.45],"anchor":"start"}
+],"alt":"Left: impedance diagram with R horizontal, X_L vertical and Z as the hypotenuse, Z equals the square root of R squared plus X_L squared. Right: the matching voltage phasor diagram, V_R = I_T R horizontal along the current I_T, V_L = I_T X_L vertical, V_T = I_T Z as the hypotenuse."}</script>
+<figcaption>Left: the impedance diagram from the page at <a class="ts" data-t="49:45"></a>. Right: the voltage diagram he adds at <a class="ts" data-t="53:25"></a>. Every voltage is the common current times the matching opposition, so the two triangles have the same shape (same \(\theta\)). The θ labels are added.</figcaption>
+</figure>
+<p><strong>Order doesn't matter</strong> <a class="ts" data-t="49:38"></a>. The formula is the same whether the inductor or the resistor comes first: both still carry the same current, and that common current is "the thing that allows you to put the phasors together" <a class="ts" data-t="50:02"></a>.</p>
+<aside class="instructor"><p><strong>Series vs parallel</strong> <a class="ts" data-t="50:02"></a>. If R and L were in <em>parallel</em>, "that's not the same". The currents differ and the <em>voltage</em> is common, so you would line the phasors up on the voltage instead <a class="ts" data-t="50:19"></a>. That is why he stressed that the current is the same for each series component: in series you overlay on the current phasor. (Parallel RL is not worked in this video.)</p></aside>
+<aside class="extra"><p><strong>Complex (rectangular and polar) form — not used in the video.</strong> Write the horizontal direction as real and the vertical (90° ahead) as imaginary (\(j\)):</p>
+<div class="formula">\[ \mathbf{Z} = R + jX_L = |Z|\angle\theta, \qquad |Z| = \sqrt{R^2 + X_L^2}, \qquad \theta = \tan^{-1}\!\frac{X_L}{R} \]</div>
+<dl class="vardefs"><dt>\(R + jX_L\)</dt><dd>rectangular form: real part = resistance, imaginary part = reactance (Ω)</dd><dt>\(|Z|\angle\theta\)</dt><dd>polar form: magnitude (Ω) and angle (°), the same \(\theta\) as the circuit phase angle</dd></dl>
+<p>Converting back: \(R = |Z|\cos\theta\), \(X_L = |Z|\sin\theta\). Example: \(R = 400\ \Omega\), \(X_L = 300\ \Omega\) gives \(\mathbf{Z} = 400 + j300 = 500\angle 36.87^\circ\ \Omega\), and \(500\cos 36.87^\circ = 400\), \(500\sin 36.87^\circ = 300\) ✓. Series impedances add as complex numbers (\(\mathbf{Z}_T = \mathbf{Z}_1 + \mathbf{Z}_2\)), which is the same as adding the horizontal and vertical parts separately.</p></aside>
+</section>
+
+<section class="g-sec" id="cl5-ohm" data-kind="lesson" data-ts="3053-3221">
+<h2>10. Ohm's law with reactance and impedance</h2>
+<p>One more phasor diagram <a class="ts" data-t="50:53"></a>. The page shows \(V_L = I\,X_L\) <a class="ts" data-t="51:24"></a>. "That sure looks like Ohm's law, and it is": the voltage across the inductor equals the current through it times its reactance. "For all practical purposes this reactance, and similarly impedance, is nothing more than a resistance" <a class="ts" data-t="51:24"></a>. The difference is that they act at different times within the cycle, which is why phasor diagrams become "a little more chaotic". You can think of reactance "like a resistance that varies at which point you're at in that sine wave" <a class="ts" data-t="51:48"></a>.</p>
+<p>Labelling the common current \(I_T\) <a class="ts" data-t="52:13"></a>, the page ends with (frame <a class="ts" data-t="53:25"></a>):</p>
+<div class="formula">\[ V_L = I_T X_L \qquad V_R = I_T R \qquad V_T = I_T Z, \quad Z = \sqrt{R^2 + X_L^2} \]</div>
+<dl class="vardefs"><dt>\(I_T\)</dt><dd>total (common series) current (A)</dd><dt>\(V_L, V_R, V_T\)</dt><dd>inductor, resistor and total voltage magnitudes (V)</dd><dt>\(X_L, R, Z\)</dt><dd>inductive reactance, resistance, impedance (Ω)</dd></dl>
+<p>These relate <strong>magnitudes</strong> (all peak, or all RMS) in a series RL circuit. "Now you can see easily here how Ohm's law is all over the place" <a class="ts" data-t="53:11"></a>. The video ends here.</p>
+<aside class="extra"><p><strong>Reading the "varying resistance" picture carefully.</strong> \(X_L\) itself does <em>not</em> change during the cycle: for a given \(f\) and \(L\) it is a fixed number of ohms. What varies is the <em>instantaneous</em> ratio \(v_L(t)/i(t)\). It swings from 0 to ±∞ because \(v_L\) and \(i\) are 90° out of step (when \(i = 0\), \(v_L\) is at its peak). Ohm's law with \(X_L\) or \(Z\) is therefore used with <strong>amplitudes</strong> (peak or RMS), never with instantaneous values.</p></aside>
+<aside class="extra"><p><strong>Solving a series RL circuit (method, not in the video).</strong> Given \(V_T\), \(f\), \(L\), \(R\):</p>
+<ol>
+<li>\(X_L = 2\pi f L\)</li>
+<li>\(Z = \sqrt{R^2 + X_L^2}\), \(\theta = \tan^{-1}(X_L/R)\)</li>
+<li>\(I_T = V_T / Z\) (Ohm's law with impedance)</li>
+<li>\(V_R = I_T R\), \(V_L = I_T X_L\). Equivalently, as a voltage divider: \(V_R = V_T\,\dfrac{R}{Z}\), \(V_L = V_T\,\dfrac{X_L}{Z}\).</li>
+<li>Check: \(\sqrt{V_R^2 + V_L^2} = V_T\). Note that \(V_R + V_L \gt V_T\) whenever both are non-zero (the sides of a triangle are longer together than the hypotenuse), which is the "puzzle" of §5.</li>
+</ol>
+<p><strong>Extra example A — the coil from §1</strong> (10 V<sub>pk</sub>, \(L = 10\) H, coil resistance 100 Ω, \(X_L \approx 10\) kΩ). The winding resistance is in series with the ideal inductance, so this is a series RL circuit:</p>
+<p class="step">1. Frequency that gives 10 kΩ: \(f = X_L/(2\pi L) = 10\,000/(62.83) = 159.2\) Hz.</p>
+<p class="step">2. \(Z = \sqrt{100^2 + 10\,000^2} = \sqrt{10\,000 + 100\,000\,000} = 10\,000.5\ \Omega\); \(\theta = \tan^{-1}(10\,000/100) = 89.43^\circ\) (almost a pure inductor).</p>
+<p class="step">3. \(I_T = 10\,\text{V}_{pk}/10\,000.5\ \Omega = 0.99995\) mA ≈ <strong>1.00 mA<sub>pk</sub></strong>, compared with 100 mA on DC (§1).</p>
+<p class="step">4. \(V_R = (1.00\,\text{mA})(100\,\Omega) = 0.100\) V<sub>pk</sub>; \(V_L = (0.99995\,\text{mA})(10\,000\,\Omega) = 9.9995\) V<sub>pk</sub>. Check: \(\sqrt{0.1^2 + 9.9995^2} = 10.000\) V ✓, while \(0.1 + 9.9995 = 10.0995 \ne 10\).</p>
+<p><strong>Extra example B — completing Example 6.</strong> Example 6 gave only voltages. <em>Suppose</em> (hypothetical value, not from the video) \(R = 400\ \Omega\):</p>
+<p class="step">1. \(I_T = V_R/R = 40\,\text{V}/400\,\Omega = 0.1\) A.</p>
+<p class="step">2. \(X_L = V_L/I_T = 30\,\text{V}/0.1\,\text{A} = 300\ \Omega\) (Ohm's law with reactance).</p>
+<p class="step">3. \(Z = \sqrt{400^2 + 300^2} = 500\ \Omega\); \(V_T = I_T Z = 0.1 \times 500 = 50\) V ✓; \(\theta = \tan^{-1}(300/400) = 36.87^\circ\) ✓.</p>
+<p class="step">4. Divider check: \(V_R = 50\cdot 400/500 = 40\) V, \(V_L = 50\cdot 300/500 = 30\) V ✓. With complex numbers: \(50\cdot\dfrac{400}{400 + j300} = 32 - j24\) (magnitude 40 V) and \(50\cdot\dfrac{j300}{400 + j300} = 18 + j24\) (magnitude 30 V); their sum is \(50 + j0\) ✓. At 60 Hz this \(X_L\) would need \(L = 300/(2\pi\cdot 60) = 0.796\) H.</p>
+<p>Notice \(R + X_L = 700\ \Omega \ne Z = 500\ \Omega\). Adding them arithmetically would give the wrong current (71 mA instead of 100 mA).</p></aside>
+</section>
+
+<section class="g-sec" id="cl5-assumptions" data-kind="assumptions">
+<h2>Assumptions &amp; limitations</h2>
+<ul>
+<li><strong>Sinusoidal steady state, one frequency.</strong> Reactance, phasors and impedance describe a circuit driven by a single sine wave after any switch-on transient has died out. Switching transients are handled with \(\tau = L/R\) (<a class="xref" data-lesson="cl2">cl2</a>), not with reactance.</li>
+<li><strong>\(X_L = 2\pi f L\)</strong> is for an <em>ideal</em> inductor. A real coil also has wire resistance ("dc R"), which acts in series with the ideal inductance. Include it in \(R\) when it is not negligible. (Real coils also have core losses and winding capacitance at high frequency; not covered.)</li>
+<li><strong>DC:</strong> \(X_L = 0\), so at DC steady state an inductor is only its wire resistance. "Reactance doesn't exist" for unchanging current.</li>
+<li><strong>Series/parallel reactance rules</strong> combine reactances of the <em>same kind</em> (all inductive, uncoupled, same frequency). Resistance and reactance cannot be added arithmetically.</li>
+<li><strong>\(V_T = \sqrt{V_R^2 + V_L^2}\) and \(Z = \sqrt{R^2 + X_L^2}\)</strong> hold for a <strong>series</strong> R–L combination, where the common current makes the two voltages exactly 90° apart. Parallel RL needs the voltage as the reference and combines currents instead (mentioned, not taught, at 50:02).</li>
+<li><strong>Ohm's law with \(X_L\) and \(Z\)</strong> relates amplitudes (all peak, all peak-to-peak or all RMS), not instantaneous values.</li>
+<li><strong>Circuit phase angle</strong> formulas (\(\sin\theta = V_L/V_T\), \(\tan\theta = X_L/R\)) assume the series RL geometry. For series RL, \(0^\circ \le \theta \le 90^\circ\), with voltage leading current.</li>
+<li>The \(\sqrt{2}\) in 14.14 V comes from two <em>equal</em> perpendicular 10 V legs. It is unrelated to the peak/RMS factor, even though it is the same number.</li>
+</ul>
+</section>
+
+<section class="g-sec" id="cl5-mistakes" data-kind="mistakes">
+<h2>Common mistakes</h2>
+<ul>
+<li><strong>Adding \(V_R + V_L\) to get the source voltage.</strong> 10 V + 10 V = 20 V is wrong; the answer is 14.14 V. In any circuit with reactance, add voltages as phasors (Pythagoras for series RL). <em>Spot it:</em> the "sum" comes out larger than the source.</li>
+<li><strong>Adding \(R + X_L\) to get \(Z\).</strong> With 400 Ω and 300 Ω, \(Z = 500\ \Omega\), not 700 Ω. Use \(\sqrt{R^2 + X_L^2}\).</li>
+<li><strong>Mixing amplitude kinds.</strong> A source given in V<sub>pk</sub> with component voltages measured in V<sub>rms</sub> (e.g. on a DMM) will not satisfy the formulas. Convert everything to one kind first (§5).</li>
+<li><strong>Forgetting \(2\pi\), or using \(\omega\) and \(2\pi\) together.</strong> \(X_L = 2\pi f L = \omega L\). \(fL\) is \(2\pi\) times too small; \(2\pi\omega L\) is \(2\pi\) times too large.</li>
+<li><strong>Wrong units.</strong> \(f\) in Hz (not kHz) and \(L\) in H (not mH) "keep our base units". 5 mH at 60 Hz is \(2\pi(60)(0.005) = 1.88\ \Omega\), not 1885 Ω.</li>
+<li><strong>Using the wrong side in the trig.</strong> \(\sin\theta = V_L/V_T\) (opposite over hypotenuse). Using \(V_R/V_T = 0.8\) with sine gives \(\sin^{-1}(0.8) = 53.13^\circ\), which is the complementary angle. Sanity check: if \(V_R \gt V_L\), \(\theta\) must be below 45°.</li>
+<li><strong>Calculator in radian mode.</strong> \(\sin^{-1}(0.6)\) shows 0.6435 (radians) instead of 36.87°.</li>
+<li><strong>Confusing inductance and reactance.</strong> \(L\) is in henries and is a property of the coil. \(X_L\) is in ohms and depends on \(f\) as well. (The instructor briefly says "inductance" for reactance at 14:15.)</li>
+<li><strong>Thinking an inductor "blocks DC".</strong> It is the reverse: at DC steady state \(X_L = 0\) and the inductor is a wire. It opposes AC, more and more as the frequency rises.</li>
+<li><strong>Lining up phasors on the wrong reference.</strong> In series, use the common current; in parallel, the common voltage.</li>
+</ul>
+</section>
+
+<section class="g-sec" id="cl5-recap" data-kind="recap">
+<h2>Recap &amp; formula sheet</h2>
+<p><strong>Reactance</strong> is the AC version of resistance, measured in ohms. An inductor's <strong>inductive reactance</strong> \(X_L = 2\pi f L\) comes from back EMF. It rises in proportion to frequency and inductance and is zero at DC. Reactances obey Ohm's law and combine in series/parallel like resistors. In a <strong>series RL</strong> circuit the common current is the reference: \(V_R\) is in phase with it and \(V_L\) leads it by 90° (ELI). The voltages therefore add as perpendicular phasors, \(V_T = \sqrt{V_R^2 + V_L^2}\) (10 V and 10 V make 14.14 V, and KVL still holds). The angle between \(V_T\) and \(I_T\) is the <strong>circuit phase angle</strong> (50/40/30 V gives 36.9°). <strong>Impedance</strong> \(Z\) is the total opposition at a given frequency; for series RL, \(Z = \sqrt{R^2 + X_L^2}\) and \(V_T = I_T Z\). Keep every amplitude the same kind (peak, peak-to-peak or RMS).</p>
+<div class="formula-sheet">
+<table>
+<tr><th>Formula</th><th>Variables &amp; units</th><th>Use / condition</th></tr>
+<tr><td>\(X_L = 2\pi f L\) \((= \omega L)\)</td><td>\(X_L\) Ω, \(f\) Hz, \(L\) H, \(\omega\) rad/s</td><td>inductive reactance of an ideal inductor at frequency \(f\)</td></tr>
+<tr><td>\(X_L = \dfrac{V_L}{I_L}\), \(V_L = I X_L\)</td><td>\(V_L\) V, \(I_L\) A (same amplitude kind)</td><td>Ohm's law for a reactance</td></tr>
+<tr><td>\(X_{LT} = X_{L1} + X_{L2} + \dots + X_{Ln}\)</td><td>Ω</td><td>inductive reactances in series</td></tr>
+<tr><td>\(X_{LT} = \dfrac{1}{1/X_{L1} + \dots + 1/X_{Ln}}\); two: \(\dfrac{X_{L1}X_{L2}}{X_{L1}+X_{L2}}\)</td><td>Ω</td><td>inductive reactances in parallel</td></tr>
+<tr><td>\(V_T = \sqrt{V_R^2 + V_L^2}\)</td><td>V (all pk, pp or rms)</td><td>series RL: phasor (Pythagorean) sum of the voltages</td></tr>
+<tr><td>\(\sin\theta = \dfrac{V_L}{V_T}\) (also \(\tan\theta = \dfrac{V_L}{V_R} = \dfrac{X_L}{R}\), \(\cos\theta = \dfrac{V_R}{V_T}\))</td><td>\(\theta\) in °</td><td>circuit phase angle between \(V_T\) and \(I_T\), series RL</td></tr>
+<tr><td>\(Z = \sqrt{R^2 + X_L^2}\)</td><td>\(Z\), \(R\), \(X_L\) in Ω</td><td>impedance of series RL at one frequency</td></tr>
+<tr><td>\(V_T = I_T Z\), \(V_R = I_T R\), \(V_L = I_T X_L\)</td><td>V, A, Ω</td><td>Ohm's law in a series RL circuit (magnitudes)</td></tr>
+<tr><td><em>(added)</em> \(\mathbf{Z} = R + jX_L = |Z|\angle\tan^{-1}(X_L/R)\)</td><td>Ω, °</td><td>rectangular/polar form of the series RL impedance</td></tr>
+<tr><td><em>(added)</em> \(V_R = V_T\dfrac{R}{Z}\), \(V_L = V_T\dfrac{X_L}{Z}\)</td><td>V</td><td>voltage division in series RL (magnitudes)</td></tr>
+<tr><td>\(V_{pp} = 2V_p\), \(V_{rms} = V_p/\sqrt{2}\)</td><td>V</td><td>convert so that all amplitudes are the same kind</td></tr>
+</table>
+</div>
+</section>

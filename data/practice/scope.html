@@ -1,0 +1,247 @@
+<article class="q" id="scope-q1" data-level="1" data-kind="conceptual" data-title="What the scope settings mean: the 170 V / 340 V / 120 V outlet on the grid">
+  <div class="q-prompt">
+    <p>The screen below recreates the course's wall-outlet measurement (the instructor checked that his scope was rated for 300 V RMS before probing the outlet; never probe mains with an instrument or probe that is not rated for it). Settings: CH1 at <strong>50 V/div</strong>, time base <strong>5 ms/div</strong>, <strong>DC coupling</strong>. The probe attenuation set in the scope matches the probe, so the screen shows true voltages. The channel's 0 V marker (1▸) is on the horizontal centre line.</p>
+    <p>The grid is 10 divisions across and 8 down (4 above and 4 below the centre line). The small ticks on the two centre axes are 0.2 div apart. The crests of the sine sit <strong>3.4 div</strong> above the centre line and the troughs <strong>3.4 div</strong> below it (read it at the crest on the vertical centre axis). The frequency readout says 60.00 Hz.</p>
+    <p>Answer all three parts.</p>
+  </div>
+  <figure class="scope" id="scope-q1-fig"><script type="application/json">{"type":"scope","ch":"CH1","vdiv":"50 V/div","tdiv":"5 ms/div","coupling":"DC","info":"F 60.00 Hz","cols":10,"rows":8,
+"traces":[{"fn":"3.4*cos(2*PI*0.3*(x-5))","label":"CH1"}],
+"marks":[{"type":"text","x":0.05,"y":-0.12,"text":"1▸","anchor":"start"}],
+"alt":"Oscilloscope screen at 50 volts per division and 5 milliseconds per division showing three cycles of a 60 hertz sine wave. The crests reach 3.4 divisions above the centre line and the troughs 3.4 divisions below it."}</script>
+    <figcaption>Screen for question 1: the 60 Hz outlet voltage at 50 V/div and 5 ms/div (DC coupling, 0 V on the centre line).</figcaption></figure>
+  <div class="q-answers">
+    <div class="ans" data-type="mc" data-name="amp" data-label="(1) Which set of values describes this voltage?" data-correct="a">
+      <div class="opt" data-v="a">170 V peak, 340 V peak-to-peak, about 120 V RMS<span class="opt-fb">Correct. Peak runs from the centre line (0 V) to a crest: 3.4 div × 50 V/div = 170 V. Peak-to-peak runs from a trough to a crest: 6.8 div × 50 V/div = 340 V. For a sine, \(V_{RMS} = V_{pk}/\sqrt2 = 0.707 \times 170 = 120\,\text{V}\). That is the "120 V" of a US outlet. All three numbers describe the same waveform.</span></div>
+      <div class="opt" data-v="b">340 V peak, 680 V peak-to-peak, about 240 V RMS<span class="opt-fb">Not right. 340 V is the trough-to-crest distance (6.8 div), which is the <em>peak-to-peak</em> value. Peak is measured from the 0 V centre line up to a crest, which is only 3.4 div here.</span></div>
+      <div class="opt" data-v="c">120 V peak, 240 V peak-to-peak, about 85 V RMS<span class="opt-fb">Not right. This takes the outlet's "120 V" to be its peak. The screen shows the crest at 3.4 div × 50 V/div = 170 V above 0 V. The 120 V figure is the RMS value. On the grid it is a level about 2.4 div high, below the crest, not a feature of the trace.</span></div>
+      <div class="opt" data-v="d">3.4 V peak, 6.8 V peak-to-peak, about 2.4 V RMS<span class="opt-fb">Not right. These are division counts, not volts. Each vertical division is worth 50 V, so multiply: 3.4 div × 50 V/div = 170 V.</span></div>
+      <div class="opt" data-v="e">170 V peak, 340 V peak-to-peak, about 240 V RMS<span class="opt-fb">Peak and peak-to-peak are right, but the RMS was taken from the peak-to-peak value (0.707 × 340 V = 240 V). The 0.707 factor converts the <em>peak</em>: 0.707 × 170 V = 120 V.</span></div>
+    </div>
+    <div class="ans" data-type="mc" data-name="vdiv" data-label="(2) Your lab partner switches CH1 to 20 V/div &quot;to make the trace bigger and easier to read&quot;. What happens?" data-correct="c">
+      <div class="opt" data-v="a">The trace gets smaller, because each division is now worth fewer volts.<span class="opt-fb">Not right. Fewer volts per division means the same voltage needs <em>more</em> divisions, so the trace gets taller: 50/20 = 2.5 times taller.</span></div>
+      <div class="opt" data-v="b">The measured voltage changes: the scope now shows 20/50 × 170 V = 68 V peak.<span class="opt-fb">Not right. Volts/div is only the scale of the display, like changing the scale on a graph's axis. The outlet still delivers 170 V peak. What changes is how many divisions that voltage takes up on the screen.</span></div>
+      <div class="opt" data-v="c">The trace gets 2.5 times taller. The crests would need 170 V ÷ 20 V/div = 8.5 div above the centre line, but only 4 div exist, so the tops and bottoms run off the screen and the peaks can no longer be read.<span class="opt-fb">Correct. A sine centred on the screen fits only if \(V_{pk}/(\text{V/div}) \le 4\), that is \(\text{V/div} \ge V_{pk}/4 = 42.5\,\text{V}\). The smallest standard setting that meets this is 50 V/div (crest at 3.4 div), the one used above. It is the same reason the instructor went from 500 mV/div to 2 V/div for a 5 V peak in the diode lab.</span></div>
+      <div class="opt" data-v="d">Nothing changes on the screen; only the V/div label in the readout changes.<span class="opt-fb">Not right. The drawn height in divisions is (voltage) ÷ (V/div), so a new scale redraws the trace. Only the signal itself stays the same.</span></div>
+    </div>
+    <div class="ans" data-type="mc" data-name="tdiv" data-label="(3) At 5 ms/div, how many complete cycles of the 60 Hz outlet voltage fit across the 10-division screen?" data-correct="b">
+      <div class="opt" data-v="a">0.3 cycle<span class="opt-fb">Not right. 5 ms × 60 Hz = 0.3 is the fraction of a cycle in <em>one</em> division. The whole screen spans 10 div × 5 ms/div = 50 ms.</span></div>
+      <div class="opt" data-v="b">3 cycles<span class="opt-fb">Correct. The screen spans 10 div × 5 ms/div = 50 ms. One period is \(T = 1/60\,\text{Hz} = 16.7\,\text{ms}\), and 50 ms ÷ 16.7 ms = 3 cycles, each 3.33 div wide. The instructor counted "one, two, about three cycles" at this setting.</span></div>
+      <div class="opt" data-v="c">10 cycles<span class="opt-fb">Not right. This counts one cycle per division. Time/div is the time one division represents (5 ms), not the period. One 16.7 ms period spans 16.7/5 = 3.33 div.</span></div>
+      <div class="opt" data-v="d">12 cycles<span class="opt-fb">Not right. 60 ÷ 5 = 12 mixes a frequency with a time per division and has no meaning. Cycles on the screen = (screen time) × f = 0.050 s × 60 Hz = 3.</span></div>
+    </div>
+  </div>
+  <div class="q-hint">Volts/div and time/div tell you what one square of the grid is worth. Peak is measured from the centre (0 V) line, peak-to-peak from a trough to a crest, and for a sine \(V_{RMS} = 0.707\,V_{pk}\).</div>
+  <div class="q-hint">The height of a trace in divisions is (voltage) ÷ (V/div), and the screen has 4 divisions above the centre line. The width of the screen in time is 10 div × (time/div).</div>
+  <div class="q-hint">Numbers to check against: 3.4 div × 50 V/div = 170 V; 170 V ÷ 20 V/div = 8.5 div; 10 × 5 ms = 50 ms compared with \(T = 1/60\,\text{Hz} = 16.7\,\text{ms}\).</div>
+  <div class="q-solution">
+    <p class="step"><strong>1. What the settings mean.</strong> 50 V/div: every vertical division is 50 V. 5 ms/div: every horizontal division is 5 ms, so the 10-division screen shows 50 ms. With DC coupling and the 0 V marker on the centre line, heights are measured from that line.</p>
+    <p class="step"><strong>2. Peak.</strong> \(V_{pk} = 3.4\,\text{div} \times 50\,\tfrac{\text{V}}{\text{div}} = 170\,\text{V}\).</p>
+    <p class="step"><strong>3. Peak-to-peak.</strong> Trough to crest is \(3.4 + 3.4 = 6.8\) div, so \(V_{pp} = 6.8 \times 50 = 340\,\text{V}\) \(= 2V_{pk}\).</p>
+    <p class="step"><strong>4. RMS (sine).</strong> \(V_{RMS} = \dfrac{V_{pk}}{\sqrt2} = \dfrac{170\,\text{V}}{1.414} = 120.2\,\text{V} \approx 120\,\text{V}\). Part (1) is <strong>(a)</strong>.</p>
+    <p class="step"><strong>5. Changing to 20 V/div.</strong> The crest would be drawn at \(170/20 = 8.5\) div, but only 4 div exist above the centre line, so the trace is cut off. To fit, \(\text{V/div} \ge V_{pp}/8 = 340/8 = 42.5\,\text{V}\). The next standard step is 50 V/div. Part (2) is <strong>(c)</strong>.</p>
+    <p class="step"><strong>6. Cycles on screen.</strong> \(T = 1/f = 1/60 = 16.7\,\text{ms}\) = 3.33 div at 5 ms/div. The screen holds \(50\,\text{ms} / 16.7\,\text{ms} = 3\) cycles. Part (3) is <strong>(b)</strong>.</p>
+    <figure class="scope" id="scope-q1-sol"><script type="application/json">{"type":"scope","ch":"CH1","vdiv":"50 V/div","tdiv":"5 ms/div","coupling":"DC","info":"F 60.00 Hz","cols":10,"rows":8,
+"traces":[{"fn":"3.4*cos(2*PI*0.3*(x-5))","label":"CH1"}],
+"marks":[{"type":"text","x":0.05,"y":-0.12,"text":"1▸","anchor":"start"},
+{"type":"hline","y":3.4},{"type":"hline","y":2.404},{"type":"hline","y":-3.4},
+{"type":"text","x":3.333,"y":3.55,"text":"+170 V (3.4 div)"},{"type":"text","x":3.333,"y":2.55,"text":"120 V RMS level"},
+{"type":"span","x1":9.9,"y1":-3.4,"x2":9.9,"y2":3.4},{"type":"text","x":8.333,"y":-2.2,"text":"p-p: 6.8 div"},{"type":"text","x":8.333,"y":-2.7,"text":"= 340 V"},{"type":"text","x":8.333,"y":-3.3,"text":"−170 V"},
+{"type":"span","x1":5,"y1":3.75,"x2":8.333,"y2":3.75,"label":"T = 3.33 div = 16.7 ms"}],
+"alt":"The same screen annotated: crest line at plus 170 volts (3.4 divisions), a dashed level at 120 volts RMS, trough line at minus 170 volts, a vertical dimension of 6.8 divisions equal to 340 volts peak-to-peak, and one period of 3.33 divisions equal to 16.7 milliseconds."}</script>
+      <figcaption>Annotated screen: peak, peak-to-peak and one period. The 120 V RMS level is drawn only for comparison. The scope does not show RMS as a height.</figcaption></figure>
+    <p class="answer">(1) a: 170 V peak = 340 V p-p ≈ 120 V RMS. (2) c: at 20 V/div the crests need 8.5 div and run off the screen. (3) b: 3 cycles.</p>
+  </div>
+  <div class="q-check">
+    <p><strong>Same numbers as the course.</strong> 170 V peak = 340 V peak-to-peak = 120 V RMS is exactly the instructor's outlet example. For any sine, \(V_{pp}/V_{RMS} = 2\sqrt2 = 2.83\), and 340/120 = 2.83.</p>
+    <p><strong>Screen use.</strong> At 50 V/div the trace fills 6.8 of the 8 divisions (85 %), so this is the best standard setting. At 100 V/div it would still fit but would use only 3.4 div, which makes the reading less precise.</p>
+    <p><strong>Safety.</strong> 120 V RMS is well inside a 300 V RMS rating. Always compare RMS with RMS (300 V RMS ≈ 424 V peak).</p>
+  </div>
+  <div class="q-links">Links back: <a class="xref" data-lesson="os1" data-sec="os1-magnitude">peak, peak-to-peak and RMS</a> <a class="ts" data-lesson="os1" data-t="16:25"></a> · <a class="xref" data-lesson="os3" data-sec="os3-outlet">340 V p-p = 170 V peak = 120 V RMS</a> <a class="ts" data-lesson="os3" data-t="15:09"></a> · <a class="xref" data-lesson="os1" data-sec="os1-scope-demo">what the scope screen shows</a> <a class="ts" data-lesson="os1" data-t="45:22"></a> · three cycles of 60 Hz at 5 ms/div <a class="ts" data-lesson="os1" data-t="47:36"></a> · <a class="xref" data-lesson="os2" data-sec="os2-vdiv">fitting the signal into the 8 divisions</a> <a class="ts" data-lesson="os2" data-t="1:17:31"></a> · the trace "a bit high", so the vertical scale is changed <a class="ts" data-lesson="os1" data-t="1:20:10"></a> · scope rating checked before probing the outlet <a class="ts" data-lesson="os1" data-t="1:23:26"></a></div>
+</article>
+
+<article class="q" id="scope-q2" data-level="2" data-kind="calculation" data-title="Reading a sine off the grid: Vpp, Vpk, period and frequency">
+  <div class="q-prompt">
+    <p>A function generator is connected straight to CH1. The probe is 1× and the scope's probe setting is 1×, so the screen shows true voltages. Settings: <strong>200 mV/div</strong>, <strong>100 μs/div</strong>, <strong>DC coupling</strong>. The 0 V marker (1▸) is on the centre line, and the waveform is a sine centred on 0 V.</p>
+    <p>Read the screen. Grid lines are 1 div apart, and the small ticks on the centre axes are 0.2 div apart. The crest that touches the vertical centre axis is the easiest place to read the height. Find:</p>
+    <p><strong>(1)</strong> the peak-to-peak voltage \(V_{pp}\); <strong>(2)</strong> the peak voltage \(V_{pk}\); <strong>(3)</strong> the period \(T\); <strong>(4)</strong> the frequency \(f\).</p>
+    <p>Give voltages in V (mV is fine), the period in s (μs or ms is fine) and the frequency in Hz (kHz is fine).</p>
+  </div>
+  <figure class="scope" id="scope-q2-fig"><script type="application/json">{"type":"scope","ch":"CH1","vdiv":"200 mV/div","tdiv":"100 µs/div","coupling":"DC","probe":"1×","cols":10,"rows":8,
+"traces":[{"fn":"3.2*sin(2*PI*(x-4)/4)","label":"CH1"}],
+"marks":[{"type":"text","x":0.05,"y":-0.12,"text":"1▸","anchor":"start"}],
+"alt":"Oscilloscope screen at 200 millivolts per division and 100 microseconds per division showing two and a half cycles of a sine wave. The crests reach 3.2 divisions above the centre line, the troughs 3.2 divisions below it, and the rising zero crossings are at 0, 4 and 8 divisions from the left edge."}</script>
+    <figcaption>Screen for question 2 (200 mV/div, 100 μs/div, DC coupling, 0 V on the centre line).</figcaption></figure>
+  <div class="q-answers">
+    <div class="ans" data-type="num" data-name="vpp" data-label="(1) \(V_{pp}\)" data-value="1.28" data-unit="V" data-tol="0.03"></div>
+    <div class="ans" data-type="num" data-name="vpk" data-label="(2) \(V_{pk}\)" data-value="0.64" data-unit="V" data-tol="0.03"></div>
+    <div class="ans" data-type="num" data-name="T" data-label="(3) \(T\)" data-value="0.0004" data-unit="s" data-tol="0.03"></div>
+    <div class="ans" data-type="num" data-name="f" data-label="(4) \(f\)" data-value="2500" data-unit="Hz" data-tol="0.03"></div>
+  </div>
+  <div class="fb" data-for="vpp" data-match="0.64" data-tol="0.03">That is the <strong>peak</strong> value, from the centre line to a crest. Peak-to-peak runs from a trough all the way to a crest, which is twice as many divisions.</div>
+  <div class="fb" data-for="vpp" data-match="6.4" data-tol="0.03">6.4 is the number of <em>divisions</em> from trough to crest, not volts. Multiply by the vertical scale: each division is 200 mV.</div>
+  <div class="fb" data-for="vpp" data-match="32" data-tol="0.03">You divided the divisions by the scale (6.4 ÷ 0.2). "V/div" means volts <em>per</em> division, so volts = divisions × V/div.</div>
+  <div class="fb" data-for="vpk" data-match="1.28" data-tol="0.03">That is the <strong>peak-to-peak</strong> value (trough to crest). Peak is measured from the 0 V centre line up to one crest only.</div>
+  <div class="fb" data-for="vpk" data-match="3.2" data-tol="0.03">3.2 is the number of divisions from the centre line to the crest. Convert it to volts with the 200 mV/div scale.</div>
+  <div class="fb" data-for="vpk" data-match="16" data-tol="0.03">You divided by the scale (3.2 ÷ 0.2). Volts = divisions <em>×</em> V/div.</div>
+  <div class="fb" data-for="T" data-match="0.0002" data-tol="0.03">That is only <strong>half a cycle</strong>, for example from a rising zero crossing to the next (falling) one, or from a crest to the next trough. A period ends where the waveform repeats: the same level <em>and</em> the same direction.</div>
+  <div class="fb" data-for="T" data-match="0.0008" data-tol="0.03">That spans <strong>two</strong> cycles (for example from the first crest to the last crest on the screen). Count the divisions between two <em>neighbouring</em> repeats.</div>
+  <div class="fb" data-for="f" data-match="5000" data-tol="0.03">This comes from half a period (2 div). Measure one full cycle, between two points where the waveform repeats, and then take \(f = 1/T\).</div>
+  <div class="fb" data-for="f" data-match="1250" data-tol="0.03">This is 1 over a time that spans two cycles. Use the time of <em>one</em> cycle.</div>
+  <div class="q-hint">Count divisions first, then multiply by the scale in the readout: V/div for voltages, time/div for times.</div>
+  <div class="q-hint">\(V_{pp}\): trough to crest. \(V_{pk}\): centre line (0 V) to crest. \(T\): between two points where the cycle repeats, such as two neighbouring rising zero crossings or two neighbouring crests. Then \(f = 1/T\).</div>
+  <div class="q-hint">The crest on the vertical centre axis is 3 grid lines plus 1 small tick above the centre: 3.2 div. The rising zero crossings are at 0, 4 and 8 div from the left edge.</div>
+  <div class="q-solution">
+    <p class="step"><strong>1. Peak-to-peak.</strong> Crest at +3.2 div, trough at −3.2 div, so trough to crest is 6.4 div. \(V_{pp} = 6.4\,\text{div} \times 0.2\,\tfrac{\text{V}}{\text{div}} = 1.28\,\text{V}\).</p>
+    <p class="step"><strong>2. Peak.</strong> From the 0 V centre line to the crest: \(V_{pk} = 3.2\,\text{div} \times 0.2\,\tfrac{\text{V}}{\text{div}} = 0.64\,\text{V} = 640\,\text{mV}\). Check: \(V_{pp} = 2V_{pk}\).</p>
+    <p class="step"><strong>3. Period.</strong> Rising zero crossings at 0, 4 and 8 div (crests at 1, 5 and 9 div), so one cycle is 4 div. \(T = 4\,\text{div} \times 100\,\tfrac{\mu\text{s}}{\text{div}} = 400\,\mu\text{s} = 0.4\,\text{ms}\).</p>
+    <p class="step"><strong>4. Frequency.</strong> \(f = \dfrac{1}{T} = \dfrac{1}{0.4\,\text{ms}} = 2.5\,\text{kHz} = 2500\,\text{Hz}\). With the instructor's unit trick, 1 divided by milliseconds gives kilohertz: \(1/0.4 = 2.5\), so 2.5 kHz.</p>
+    <figure class="scope" id="scope-q2-sol"><script type="application/json">{"type":"scope","ch":"CH1","vdiv":"200 mV/div","tdiv":"100 µs/div","coupling":"DC","probe":"1×","cols":10,"rows":8,
+"traces":[{"fn":"3.2*sin(2*PI*(x-4)/4)","label":"CH1"}],
+"marks":[{"type":"text","x":0.05,"y":-0.12,"text":"1▸","anchor":"start"},
+{"type":"hline","y":3.2},{"type":"hline","y":-3.2},
+{"type":"text","x":7,"y":3.35,"text":"+3.2 div = +0.64 V"},{"type":"text","x":9.2,"y":-3.05,"text":"−3.2 div"},
+{"type":"span","x1":3,"y1":-3.2,"x2":3,"y2":3.2},{"type":"text","x":3.12,"y":2.85,"text":"6.4 div","anchor":"start"},{"type":"text","x":3.12,"y":2.35,"text":"= 1.28 V","anchor":"start"},
+{"type":"span","x1":3,"y1":-3.6,"x2":7,"y2":-3.6,"label":"T = 4 div = 400 µs"}],
+"alt":"The question 2 screen annotated: crest line at plus 3.2 divisions (0.64 volts), trough line at minus 3.2 divisions, a vertical dimension of 6.4 divisions equal to 1.28 volts peak-to-peak, and one period from trough to trough of 4 divisions equal to 400 microseconds."}</script>
+      <figcaption>Annotated screen: 6.4 div peak-to-peak, and one period of 4 div (trough to trough; crest to crest gives the same).</figcaption></figure>
+    <p class="answer">\(V_{pp} = 1.28\,\text{V}\), \(V_{pk} = 0.64\,\text{V}\), \(T = 400\,\mu\text{s}\), \(f = 2.5\,\text{kHz}\)</p>
+  </div>
+  <div class="q-check">
+    <p><strong>Count the cycles.</strong> The screen spans 10 div × 100 μs = 1 ms. At 2.5 kHz that holds 2.5 cycles, and 2.5 cycles is what you see.</p>
+    <p><strong>Scale choice.</strong> The trace uses 6.4 of the 8 divisions. The next smaller setting, 100 mV/div, would need 12.8 div and run off the screen, so 200 mV/div is the best choice.</p>
+    <p><strong>Units.</strong> 1/μs gives MHz, 1/ms gives kHz, 1/s gives Hz. 400 μs = 0.4 ms, so 1/0.4 ms = 2.5 kHz, not 2.5 Hz.</p>
+  </div>
+  <div class="q-links">Links back: <a class="xref" data-lesson="os2" data-sec="os2-vdiv">amplitude by counting divisions</a> <a class="ts" data-lesson="os2" data-t="1:18:21"></a> · <a class="xref" data-lesson="os2" data-sec="os2-period">period with two cursors one cycle apart</a> <a class="ts" data-lesson="os2" data-t="1:19:12"></a> · \(f = 1/T\) and the ms → kHz trick <a class="ts" data-lesson="os2" data-t="1:20:03"></a> · <a class="xref" data-lesson="os1" data-sec="os1-scope-demo">frequency, cycles and period on the screen</a> <a class="ts" data-lesson="os1" data-t="46:01"></a></div>
+</article>
+
+<article class="q" id="scope-q3" data-level="3" data-kind="multistep" data-title="Wrong probe setting plus a DC offset: recover the real signal">
+  <div class="q-prompt">
+    <p>A function generator is set to a sine wave with a DC offset. You view it on CH1 through a <strong>10× probe</strong> (the slide switch on the probe body is on ×10), but the channel menu was left at <strong>probe 1×</strong>. The probe divides the signal by 10 and the scope does not know it, so <strong>every voltage on the screen is 10× too small</strong>. The probe does not affect the time base.</p>
+    <p>Screen settings as displayed (with the wrong 1× setting): <strong>200 mV/div</strong>, <strong>50 μs/div</strong>, <strong>DC coupling</strong>. The channel's 0 V marker (1▸) is on the centre line (vertical position 0), and grid lines are 1 div apart. The AC part of the signal is a sine.</p>
+    <p>Find the <strong>actual</strong> values at the probe tip:</p>
+    <p><strong>(1)</strong> the peak-to-peak voltage \(V_{pp}\); <strong>(2)</strong> the peak \(V_{pk}\) of the AC part, measured from the DC level to a crest; <strong>(3)</strong> the DC level \(V_{DC}\) (the average of the signal); <strong>(4)</strong> the RMS value of the AC part only, \(V_{RMS(ac)}\); <strong>(5)</strong> the frequency \(f\); <strong>(6)</strong> the angular frequency \(\omega\) in rad/s.</p>
+  </div>
+  <figure class="scope" id="scope-q3-fig"><script type="application/json">{"type":"scope","ch":"CH1","vdiv":"200 mV/div","tdiv":"50 µs/div","coupling":"DC","probe":"1×","cols":10,"rows":8,
+"traces":[{"fn":"1+2*cos(2*PI*x/5)","label":"CH1"}],
+"marks":[{"type":"text","x":0.05,"y":-0.12,"text":"1▸","anchor":"start"}],
+"alt":"Oscilloscope screen labelled 200 millivolts per division, 50 microseconds per division, DC coupling, probe 1x. A sine wave with crests 3 divisions above the centre line at 0, 5 and 10 divisions from the left edge, and troughs 1 division below the centre line at 2.5 and 7.5 divisions. The 0 volt marker is on the centre line."}</script>
+    <figcaption>Screen for question 3 as displayed. The scope thinks the probe is 1×, but the probe is set to ×10.</figcaption></figure>
+  <div class="q-answers">
+    <div class="ans" data-type="num" data-name="vpp" data-label="(1) actual \(V_{pp}\)" data-value="8" data-unit="V" data-tol="0.03"></div>
+    <div class="ans" data-type="num" data-name="vpk" data-label="(2) actual \(V_{pk}\) of the AC part" data-value="4" data-unit="V" data-tol="0.03"></div>
+    <div class="ans" data-type="num" data-name="vdc" data-label="(3) actual \(V_{DC}\)" data-value="2" data-unit="V" data-tol="0.03"></div>
+    <div class="ans" data-type="num" data-name="vrms" data-label="(4) \(V_{RMS(ac)}\)" data-value="2.828427" data-unit="V" data-tol="0.03"></div>
+    <div class="ans" data-type="num" data-name="f" data-label="(5) \(f\)" data-value="4000" data-unit="Hz" data-tol="0.03"></div>
+    <div class="ans" data-type="num" data-name="w" data-label="(6) \(\omega\)" data-value="25132.74" data-unit="rad/s" data-tol="0.03"></div>
+  </div>
+  <div class="fb" data-for="vpp" data-match="0.8" data-tol="0.03">0.8 V is what the screen <em>claims</em> (4 div × 200 mV/div). You forgot the <strong>10× probe</strong>. It delivers one tenth of the signal to a scope that was not told about it, so multiply every voltage reading by 10.</div>
+  <div class="fb" data-for="vpp" data-match="20" data-tol="0.03">You divided the divisions by the displayed scale (4 ÷ 0.2). Volts = divisions <em>×</em> V/div, and then the probe correction is applied on top.</div>
+  <div class="fb" data-for="vpp" data-match="0.08" data-tol="0.03">You divided by 10 instead of multiplying. The probe makes the signal at the scope input 10× <em>smaller</em>, so the true signal is 10× <em>larger</em> than the screen says.</div>
+  <div class="fb" data-for="vpk" data-match="6" data-tol="0.03">6 V is the highest voltage measured from <strong>0 V</strong> (crest at 3 div × 2 V/div). It includes the DC offset. The peak of the AC part is measured from the DC level (the middle of the swing) to a crest.</div>
+  <div class="fb" data-for="vpk" data-match="0.4" data-tol="0.03">Right reading, but you forgot the <strong>10× probe</strong>: the screen shows only one tenth of the true voltage.</div>
+  <div class="fb" data-for="vpk" data-match="8" data-tol="0.03">That is the <strong>peak-to-peak</strong> value (trough to crest). The peak of the AC part is half of it.</div>
+  <div class="fb" data-for="vdc" data-match="0.2" data-tol="0.03">Right number of divisions, but you forgot the <strong>10× probe</strong> correction.</div>
+  <div class="fb" data-for="vdc" data-match="0" data-tol="0.03">A pure sine averages to 0 V, but this trace is not centred on the 0 V marker: the middle of its swing sits 1 div above it. With DC coupling, that shift <em>is</em> the DC level.</div>
+  <div class="fb" data-for="vdc" data-match="6" data-tol="0.03">6 V is the crest, not the average. The DC level is the middle of the swing, halfway between the crest (+3 div) and the trough (−1 div).</div>
+  <div class="fb" data-for="vdc" data-match="-2" data-tol="0.03">−2 V is the trough (the lowest point), not the average. The DC level is the middle of the swing, halfway between the trough and the crest.</div>
+  <div class="fb" data-for="vrms" data-match="0.2828" data-tol="0.03">Correct method, but you forgot the <strong>10× probe</strong>. Correct the amplitude first, then convert it to RMS.</div>
+  <div class="fb" data-for="vrms" data-match="5.657" data-tol="0.03">You applied \(1/\sqrt2\) to the <strong>peak-to-peak</strong> value. The sine conversion \(V_{RMS} = V_{pk}/\sqrt2\) uses the peak (half of \(V_{pp}\)).</div>
+  <div class="fb" data-for="vrms" data-match="3.464" data-tol="0.03">That is the RMS of the <em>whole</em> signal, DC included: \(\sqrt{V_{DC}^2 + V_{RMS(ac)}^2}\). The question asks for the AC part only, which is what an AC-coupled RMS measurement would show.</div>
+  <div class="fb" data-for="vrms" data-match="4.243" data-tol="0.03">You converted the highest voltage measured from 0 V (6 V) with \(1/\sqrt2\). That 6 V includes the DC offset. Use the peak of the AC part, measured from the DC level.</div>
+  <div class="fb" data-for="f" data-match="8000" data-tol="0.03">You timed <strong>half a cycle</strong> (crest to the next trough, 2.5 div). A period runs from a crest to the next <em>crest</em>.</div>
+  <div class="fb" data-for="f" data-match="400" data-tol="0.03">The 10× probe affects only the <em>voltage</em>. Time/div is set by the scope's time base, so the period needs no correction.</div>
+  <div class="fb" data-for="f" data-match="40000" data-tol="0.03">The 10× probe affects only the <em>voltage</em>. Do not multiply the time or the frequency by 10.</div>
+  <div class="fb" data-for="w" data-match="4000" data-tol="0.03">That is \(f\) in Hz, not \(\omega\). Angular frequency counts radians per second, and one cycle is \(2\pi\) radians, so \(\omega = 2\pi f\).</div>
+  <div class="fb" data-for="w" data-match="50265" data-tol="0.03">The \(2\pi\) is right, but your frequency came from half a period. Time a full cycle, crest to crest, first.</div>
+  <div class="fb" data-for="w" data-match="636.6" data-tol="0.03">You divided by \(2\pi\). One cycle is \(2\pi\) radians, so radians per second = \(2\pi\) × cycles per second.</div>
+  <div class="q-hint">Fix the vertical scale first. With a 10× probe and the scope at 1×, the true scale is 10 × 200 mV/div = 2 V/div. The time base needs no correction.</div>
+  <div class="q-hint">Read the trace relative to the 0 V marker: crest at +3 div, trough at −1 div. \(V_{pp}\) = crest − trough. The DC level is the midpoint, and the AC peak is half of \(V_{pp}\).</div>
+  <div class="q-hint">Crest to the next crest is 5 div, which is 250 μs. Then \(f = 1/T\) and \(\omega = 2\pi f\). For the RMS of the AC part, use \(V_{pk}/\sqrt2\) with the 4 V peak (not the 6 V maximum).</div>
+  <div class="q-solution">
+    <p class="step"><strong>1. Correct the scale.</strong> The probe divides by 10 and the scope assumed 1×, so true voltages are 10 × the screen values. True vertical scale: \(10 \times 200\,\text{mV/div} = 2\,\text{V/div}\). Setting the channel menu to 10× would show this directly.</p>
+    <p class="step"><strong>2. Read the trace</strong> relative to the 0 V marker. Crest at +3 div, so \(v_{max} = 3 \times 2 = 6\,\text{V}\). Trough at −1 div, so \(v_{min} = -1 \times 2 = -2\,\text{V}\).</p>
+    <p class="step"><strong>3. Peak-to-peak.</strong> \(V_{pp} = v_{max} - v_{min} = 6 - (-2) = 8\,\text{V}\) (4 div × 2 V/div).</p>
+    <p class="step"><strong>4. DC level.</strong> For a sine riding on a DC offset, the average is the midpoint of the swing: \(V_{DC} = \dfrac{v_{max} + v_{min}}{2} = \dfrac{6 + (-2)}{2} = 2\,\text{V}\) (the middle of the swing, 1 div above the marker).</p>
+    <p class="step"><strong>5. Peak of the AC part.</strong> \(V_{pk} = \dfrac{V_{pp}}{2} = 4\,\text{V}\), which is also \(v_{max} - V_{DC} = 6 - 2\).</p>
+    <p class="step"><strong>6. RMS of the AC part</strong> (sine): \(V_{RMS(ac)} = \dfrac{V_{pk}}{\sqrt2} = \dfrac{4}{1.414} = 2.83\,\text{V}\).</p>
+    <p class="step"><strong>7. Period and frequency.</strong> Crests at 0, 5 and 10 div give 5 div per cycle: \(T = 5 \times 50\,\mu\text{s} = 250\,\mu\text{s}\), so \(f = 1/T = 1/(0.25\,\text{ms}) = 4\,\text{kHz}\). No probe correction: the probe changes voltage, not time.</p>
+    <p class="step"><strong>8. Angular frequency.</strong> \(\omega = 2\pi f = 2\pi(4000) = 25\,133\,\text{rad/s} \approx 2.51 \times 10^{4}\,\text{rad/s}\) (also \(2\pi/T\)).</p>
+    <figure class="scope" id="scope-q3-sol"><script type="application/json">{"type":"scope","ch":"CH1","vdiv":"2 V/div","tdiv":"50 µs/div","coupling":"DC","probe":"10×","cols":10,"rows":8,
+"traces":[{"fn":"1+2*cos(2*PI*x/5)","label":"CH1"}],
+"marks":[{"type":"text","x":0.05,"y":-0.12,"text":"1▸","anchor":"start"},
+{"type":"hline","y":3},{"type":"hline","y":1},{"type":"hline","y":-1},
+{"type":"text","x":2.5,"y":3.2,"text":"max +6 V (3 div)"},{"type":"text","x":2.5,"y":1.2,"text":"V_{DC} = +2 V"},{"type":"text","x":9.1,"y":-0.75,"text":"min −2 V"},
+{"type":"span","x1":7.5,"y1":-1,"x2":7.5,"y2":3},{"type":"text","x":7.5,"y":-1.6,"text":"4 div = 8 V p-p"},
+{"type":"span","x1":2.5,"y1":-1,"x2":7.5,"y2":-1,"label":"T = 5 div = 250 µs"}],
+"alt":"The question 3 screen redrawn with the probe set to 10x, so the scale reads 2 volts per division. Lines mark the maximum at plus 6 volts, the DC level at plus 2 volts and the minimum at minus 2 volts. The peak-to-peak span is 4 divisions, 8 volts, and one period from trough to trough is 5 divisions, 250 microseconds."}</script>
+      <figcaption>The same screen once the channel menu is set to 10×: the readout becomes 2 V/div and the drawing does not change.</figcaption></figure>
+    <p class="answer">\(V_{pp} = 8\,\text{V}\), \(V_{pk} = 4\,\text{V}\) (AC part), \(V_{DC} = 2\,\text{V}\), \(V_{RMS(ac)} = 2.83\,\text{V}\), \(f = 4\,\text{kHz}\), \(\omega = 2.51 \times 10^4\,\text{rad/s}\)</p>
+  </div>
+  <div class="q-check">
+    <p><strong>Consistency.</strong> \(V_{DC} + V_{pk} = 6\,\text{V}\) (the crest) and \(V_{DC} - V_{pk} = -2\,\text{V}\) (the trough). Both match the screen.</p>
+    <p><strong>Plausibility.</strong> 8 V p-p with a 2 V offset is a normal function-generator setting. The uncorrected 0.8 V p-p would also be possible, so look for a mismatch with the generator's own display, or check the probe switch against the channel menu every time you plug a probe in.</p>
+    <p><strong>AC coupling cross-check.</strong> Switching to AC coupling removes the 2 V offset: the trace drops by 1 div so it is centred on the marker, and (after setting the probe to 10×) it still measures 8 V p-p. A DC-coupled RMS measurement would read the total \(\sqrt{2^2 + 2.83^2} = 3.46\,\text{V}\). An AC-coupled one would read 2.83 V.</p>
+    <p><strong>Time is unaffected.</strong> \(\omega/f = 2\pi\), and 25 133/4000 = 6.283.</p>
+  </div>
+  <div class="q-links">Links back: <a class="xref" data-lesson="os2" data-sec="os2-probes">probe settings: DC coupling, 1 MΩ, 10X</a> <a class="ts" data-lesson="os2" data-t="1:21:42"></a> · <a class="xref" data-lesson="cl4" data-sec="cl4-scope">scope settings table in the RC lab (probe ×10)</a> <a class="ts" data-lesson="cl4" data-t="1:17:28"></a> · <a class="xref" data-lesson="os1" data-sec="os1-definitions">DC versus AC coupling</a> · <a class="xref" data-lesson="os3" data-sec="os3-freq">\(\omega = 2\pi f = 2\pi/T\)</a> <a class="ts" data-lesson="os3" data-t="14:10"></a> <a class="ts" data-lesson="os3" data-t="14:48"></a> · <a class="xref" data-lesson="os1" data-sec="os1-assumptions">Vpp = 2Vpk only without a DC offset</a></div>
+</article>
+
+<article class="q" id="scope-q4" data-level="4" data-kind="troubleshooting" data-title="Cramped screen, a doubtful frequency check and the RMS of a triangle wave">
+  <div class="q-prompt">
+    <p>A function generator is set to a <strong>triangle wave</strong> with no DC offset. Probe and scope are both at 1×, DC coupling, and the 0 V marker (1▸) is on the centre line. The scope was left at <strong>5 V/div</strong> and <strong>2 ms/div</strong> from an earlier lab, so the trace is small and crowded (Screen A). The tips of the triangle reach 0.6 div above and below the centre line (read it on the vertical centre axis, where the small ticks are 0.2 div apart). The automatic readout says <strong>F 500.0 Hz</strong>.</p>
+    <p>Your lab partner checks the readout with two time cursors: C1 on a crest, C2 on the next trough. The scope shows Δt = 1.00 ms, and the partner concludes "f = 1/1 ms = 1 kHz, so the scope's frequency readout is wrong."</p>
+    <p><strong>(1)</strong> From Screen A, what is the peak-to-peak voltage \(V_{pp}\)?<br><strong>(2)</strong> What is the actual frequency \(f\)?<br><strong>(3)</strong> Choose new settings from the standard 1–2–5 sequence (…, 0.2, 0.5, 1, 2, 5, … V/div and …, 0.2, 0.5, 1, 2, … ms/div). The whole waveform must fit in the 8 vertical divisions while using as much of the screen height as possible, and 2–3 full cycles must show.<br><strong>(4)</strong> The scope's automatic RMS measurement computes the square root of the mean of \(v^2\) from its samples. What should it read for this triangle wave?</p>
+  </div>
+  <figure class="scope" id="scope-q4-fig"><script type="application/json">{"type":"scope","ch":"CH1","vdiv":"5 V/div","tdiv":"2 ms/div","coupling":"DC","probe":"1×","info":"F 500.0 Hz","cols":10,"rows":8,
+"traces":[{"shape":"triangle","amp":0.6,"period":1,"x0":0.5,"label":"CH1"}],
+"marks":[{"type":"text","x":0.05,"y":-0.12,"text":"1▸","anchor":"start"},
+{"type":"vline","x":3,"label":"C1"},{"type":"vline","x":3.5,"label":"C2"},{"type":"text","x":3.65,"y":-2.5,"text":"← partner's cursors: Δt = 1.00 ms","anchor":"start"}],
+"alt":"Screen A: oscilloscope at 5 volts per division and 2 milliseconds per division showing ten cycles of a small triangle wave whose tips reach 0.6 divisions above and below the centre line, with crests at every whole division. Two vertical cursors are placed at a crest (3 divisions) and the next trough (3.5 divisions), labelled delta t = 1.00 ms. The frequency readout says 500.0 Hz."}</script>
+    <figcaption>Screen A for question 4 (5 V/div, 2 ms/div), with the partner's cursors C1 (on a crest) and C2 (on the next trough).</figcaption></figure>
+  <div class="q-answers">
+    <div class="ans" data-type="num" data-name="vpp" data-label="(1) \(V_{pp}\)" data-value="6" data-unit="V" data-tol="0.03"></div>
+    <div class="ans" data-type="num" data-name="f" data-label="(2) actual \(f\)" data-value="500" data-unit="Hz" data-tol="0.03"></div>
+    <div class="ans" data-type="mc" data-name="set" data-label="(3) Best new settings" data-correct="b">
+      <div class="opt" data-v="a">2 V/div and 1 ms/div<span class="opt-fb">Not the best. 6 V ÷ 2 V/div = 3 div, so it fits, but it uses less than half of the 8 divisions. The screen spans 10 ms, which is 5 cycles, more than 2–3. Both settings can go one step finer.</span></div>
+      <div class="opt" data-v="b">1 V/div and 0.5 ms/div<span class="opt-fb">Correct. 6 V ÷ 1 V/div = 6 div (tips at ±3 div), which is 75 % of the height with margin to spare. The screen spans 10 × 0.5 ms = 5 ms, which is 2.5 cycles of the 2 ms period. One period is 4 div wide, easy to read.</span></div>
+      <div class="opt" data-v="c">0.5 V/div and 0.5 ms/div<span class="opt-fb">Not right. 6 V ÷ 0.5 V/div = 12 div, more than the 8 available: the tips at ±6 div run off the top and bottom of the screen. This is the 500 mV/div problem from the diode lab. The time base is fine.</span></div>
+      <div class="opt" data-v="d">1 V/div and 0.2 ms/div<span class="opt-fb">Not right. The vertical setting is good, but the screen spans only 2 ms, exactly one cycle. You never see the waveform repeat, so you cannot confirm the period by eye, and with barely one cycle the scope's automatic frequency readout is unreliable. With less than a full cycle it gives up entirely (the "&lt;2 Hz" readout in the first scope demo).</span></div>
+      <div class="opt" data-v="e">0.75 V/div and 0.6 ms/div<span class="opt-fb">Not right. These are the calculated limits (\(V_{pp}/8\) and 3 cycles), but they are not 1–2–5 settings. 0.75 V/div would also put the tips exactly on the top and bottom edges, with no margin. Round the vertical scale <em>up</em> to the next standard step (1 V/div) and choose 0.5 ms/div.</span></div>
+    </div>
+    <div class="ans" data-type="num" data-name="vrms" data-label="(4) \(V_{RMS}\) of the triangle" data-value="1.732051" data-unit="V" data-tol="0.03"></div>
+  </div>
+  <div class="fb" data-for="vpp" data-match="3" data-tol="0.03">That is the <strong>peak</strong> (centre line to a tip). Peak-to-peak runs from the bottom tips to the top tips, twice as many divisions.</div>
+  <div class="fb" data-for="vpp" data-match="1.2" data-tol="0.03">1.2 is the number of divisions from bottom to top. Multiply by 5 V/div to get volts.</div>
+  <div class="fb" data-for="vpp" data-match="0.24" data-tol="0.03">You divided the divisions by the scale. Volts = divisions <em>×</em> V/div.</div>
+  <div class="fb" data-for="f" data-match="1000" data-tol="0.03">This is your partner's mistake: a crest and the next trough are only <strong>half a cycle</strong> apart. A period runs from a crest to the next <em>crest</em>, the point where the waveform repeats. That is twice as long.</div>
+  <div class="fb" data-for="f" data-match="50" data-tol="0.03">This is 1 divided by the whole screen width (10 div × 2 ms = 20 ms). The screen holds many cycles, so divide its width by the number of cycles, or measure one crest to the next.</div>
+  <div class="fb" data-for="vrms" data-match="2.121" data-tol="0.03">\(V_{pk}/\sqrt2\) is the <strong>sine-wave</strong> formula. A triangle spends less of its time near the peaks, so its RMS is smaller. Work out the RMS from its definition (square, mean, root) for the triangle shape.</div>
+  <div class="fb" data-for="vrms" data-match="4.243" data-tol="0.03">Two problems: the sine factor \(1/\sqrt2\) does not apply to a triangle, and any RMS factor multiplies the <em>peak</em>, not the peak-to-peak value.</div>
+  <div class="fb" data-for="vrms" data-match="3.464" data-tol="0.03">Right factor for a triangle, but you applied it to the <strong>peak-to-peak</strong> value. The factor multiplies the peak (half of \(V_{pp}\)).</div>
+  <div class="fb" data-for="vrms" data-match="1.5" data-tol="0.03">That is the average of \(|v|\) (half the peak for a triangle), not the RMS. RMS squares first, then averages, then takes the root. Squaring weights the large values more.</div>
+  <div class="q-hint">Read Screen A first. Count divisions from the bottom tips to the top tips for \(V_{pp}\). For the period, count how many crests fit across the 10 divisions, or measure from one crest to the next. A crest and the next trough are only half a cycle apart.</div>
+  <div class="q-hint">Vertical: \(\text{V/div} \ge V_{pp}/8\), and take the smallest 1–2–5 value that satisfies it. Horizontal: the screen spans \(10 \times\) (time/div), and for 2–3 cycles you need \(2T \le 10\,(\text{time/div}) \le 3T\).</div>
+  <div class="q-hint">\(V_{pp} = 6\,\text{V}\) and \(T = 2\,\text{ms}\). For the RMS: each ramp of a triangle passes through every voltage between \(-V_{pk}\) and \(+V_{pk}\) at a constant rate, so the mean of \(v^2\) is the average of \(u^2\) over a uniform spread from \(-V_{pk}\) to \(+V_{pk}\), which is \(V_{pk}^2/3\).</div>
+  <div class="q-solution">
+    <p class="step"><strong>1. Amplitude from Screen A.</strong> The tips are at ±0.6 div, so bottom to top is 1.2 div. \(V_{pp} = 1.2 \times 5\,\text{V/div} = 6\,\text{V}\), and \(V_{pk} = 3\,\text{V}\).</p>
+    <p class="step"><strong>2. Period, measured by hand.</strong> There is a crest at every whole division (10 cycles across 10 div), so \(T = 1\,\text{div} \times 2\,\text{ms/div} = 2\,\text{ms}\). Over the whole screen, 20 ms ÷ 10 cycles = 2 ms, which is more precise. \(f = 1/2\,\text{ms} = 0.5\,\text{kHz} = 500\,\text{Hz}\).</p>
+    <p class="step"><strong>3. Who is right?</strong> The automatic readout (500 Hz) agrees with the manual measurement. The partner's cursors span crest to trough: 0.5 div × 2 ms = 1 ms = \(T/2\), so their 1 kHz is twice the true frequency. This is the instructor's advice in action: do not simply trust the auto-measure, check it by hand, and when the two disagree, find out which one is wrong.</p>
+    <p class="step"><strong>4. Vertical setting.</strong> \(\text{V/div} \ge 6/8 = 0.75\,\text{V}\). The smallest 1–2–5 value at or above that is <strong>1 V/div</strong>, which gives 6 div (±3 div). 0.5 V/div would need 12 div.</p>
+    <p class="step"><strong>5. Time base.</strong> For 2–3 cycles: \(2(2\,\text{ms}) \le 10\,(\text{time/div}) \le 3(2\,\text{ms})\), so 0.4 ms ≤ time/div ≤ 0.6 ms. The only 1–2–5 value in that range is <strong>0.5 ms/div</strong>, which gives 2.5 cycles with 4 div per cycle. Answer <strong>(b)</strong>.</p>
+    <p class="step"><strong>6. RMS of a triangle, from the definition.</strong> On a rising ramp, \(v\) goes linearly from \(-V_{pk}\) to \(+V_{pk}\). With \(u = v/V_{pk}\) spread evenly from −1 to 1: \(\overline{v^2} = V_{pk}^2 \cdot \dfrac{1}{2}\displaystyle\int_{-1}^{1} u^2\,du = V_{pk}^2 \cdot \dfrac{1}{2}\cdot\dfrac{2}{3} = \dfrac{V_{pk}^2}{3}\). The falling ramp gives the same, so \(V_{RMS} = \dfrac{V_{pk}}{\sqrt3} = \dfrac{3\,\text{V}}{1.732} = 1.73\,\text{V}\).</p>
+    <figure class="scope" id="scope-q4-sol"><script type="application/json">{"type":"scope","ch":"CH1","vdiv":"1 V/div","tdiv":"500 µs/div","coupling":"DC","probe":"1×","info":"F 500.0 Hz","cols":10,"rows":8,
+"traces":[{"shape":"triangle","amp":3,"period":4,"x0":3,"label":"CH1"}],
+"marks":[{"type":"text","x":0.05,"y":-0.12,"text":"1▸","anchor":"start"},
+{"type":"hline","y":3,"label":"+3 V"},{"type":"hline","y":1.732},{"type":"text","x":7,"y":1.9,"text":"V_{RMS} = 1.73 V"},{"type":"hline","y":-3,"label":"−3 V"},
+{"type":"span","x1":1,"y1":3.55,"x2":5,"y2":3.55,"label":"T = 4 div = 2 ms"}],
+"alt":"Screen B after the fix: 1 volt per division and 500 microseconds per division, two and a half cycles of the triangle wave reaching plus and minus 3 divisions, one period of 4 divisions equal to 2 milliseconds, and a dashed level at 1.73 volts marking the RMS value."}</script>
+      <figcaption>Screen B with the corrected settings (1 V/div, 0.5 ms/div): 2.5 cycles, 6 div tall. The dashed level marks the 1.73 V RMS value for comparison.</figcaption></figure>
+    <p class="answer">(1) \(V_{pp} = 6\,\text{V}\). (2) \(f = 500\,\text{Hz}\): the auto readout is right and the partner timed half a cycle. (3) (b) 1 V/div and 0.5 ms/div. (4) \(V_{RMS} = V_{pk}/\sqrt3 = 1.73\,\text{V}\) (not 2.12 V).</p>
+  </div>
+  <div class="q-check">
+    <p><strong>Three ways, one answer.</strong> Crest to crest on Screen A (1 div × 2 ms), 10 cycles in 20 ms, and the auto readout all give 2 ms, which is 500 Hz. On Screen B the period is 4 div × 0.5 ms = 2 ms as well.</p>
+    <p><strong>RMS bounds.</strong> For the same 3 V peak, a square wave (always at ±3 V) has RMS 3 V, a sine 2.12 V, and a triangle 1.73 V. The triangle spends the least time near its peaks, so it must have the lowest value: \(1.73 \lt 2.12 \lt 3\). The 0.707 factor is for sines only.</p>
+    <p><strong>Whole screen versus whole cycles.</strong> Every half-cycle of a triangle is one complete ramp from tip to tip, so the RMS over the 2.5 cycles on Screen B is the same 1.73 V.</p>
+  </div>
+  <div class="q-links">Links back: <a class="xref" data-lesson="os2" data-sec="os2-period">auto readout vs cursors vs Hz units</a> · why the instructor does not fully trust the scope's frequency <a class="ts" data-lesson="os2" data-t="1:18:48"></a> · cursors one cycle apart <a class="ts" data-lesson="os2" data-t="1:19:12"></a> · "three different ways", same answer <a class="ts" data-lesson="os2" data-t="1:21:17"></a> · <a class="xref" data-lesson="os2" data-sec="os2-vdiv">choosing volts/div and time/div</a> <a class="ts" data-lesson="os2" data-t="1:17:06"></a> · <a class="xref" data-lesson="os1" data-sec="os1-scope-demo">a time base with less than a cycle: "&lt;2 Hz"</a> <a class="ts" data-lesson="os1" data-t="47:20"></a> · <a class="xref" data-lesson="os1" data-sec="os1-magnitude">RMS = square → mean → root (other shapes in the extra box)</a> <a class="ts" data-lesson="os1" data-t="18:08"></a></div>
+</article>

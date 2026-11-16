@@ -1,0 +1,401 @@
+<section class="g-sec" id="os2-overview" data-kind="overview">
+<h2>Overview</h2>
+<p>This lecture/lab (LectLab 26, 24 Nov 2020) is mostly about <strong>diodes driven by AC</strong> (the series diode clipper / half-wave rectifier). Along the way it contains a lot of practical <strong>measurement</strong> skill, which is what this guide covers in full: turning a frequency into a period (\(T = 1/f\)) to set an LTspice run of exactly five 60 Hz cycles; reading voltage <em>differences</em> with cursors (diode drop, ripple peak-to-peak); and a real <strong>oscilloscope demo</strong> — connecting the probes and ground clip, changing volts/division from 500 mV/div to 2 V/div so the signal fits on the 8-division screen, counting divisions to read a 5 V peak, measuring the period with cursors (16.7 ms → 59.9 Hz ≈ 60 Hz) and comparing with the scope's own frequency readout, and finally measuring the diode's forward voltage as the difference between the input and output peaks (~600 mV on the scope vs 650 mV in LTspice).</p>
+<p><strong>Parts of the video</strong></p>
+<ul>
+<li><a class="ts" data-t="0:00"></a> Series diode clipper with an ideal diode; pulsating DC; smoothing capacitor and ripple; transformer → rectifier → smoothing chain — outside this topic (outlined below).</li>
+<li><a class="ts" data-t="29:07"></a> Same clipper with a real 1N4001 (\(V_F\) = 0.7 V, second approximation) — outside this topic (outlined).</li>
+<li><a class="ts" data-t="45:08"></a> LTspice: sine source (5 V amplitude, 60 Hz), 1N4001 + 1 kΩ — outlined; <a class="ts" data-t="52:04"></a> simulation time for five cycles from \(T = 1/f\) — <a href="#os2-simtime">§1</a></li>
+<li><a class="ts" data-t="56:17"></a> LTspice cursors: difference of peaks (650 mV) and conduction start (~400 mV) — <a href="#os2-ltcursors">§2</a></li>
+<li><a class="ts" data-t="1:02:44"></a> Adding a smoothing capacitor; ripple peak-to-peak = 40 mV with cursors — <a href="#os2-ripple">§3</a></li>
+<li><a class="ts" data-t="1:08:22"></a> Lab: building the circuit, function generator, probe and ground-clip connections — <a href="#os2-probes">§4</a></li>
+<li><a class="ts" data-t="1:17:06"></a> Setting volts/div and time/div; counting divisions for the amplitude — <a href="#os2-vdiv">§5</a></li>
+<li><a class="ts" data-t="1:18:21"></a> Frequency: automatic readout, manual period with cursors, \(f = 1/T\), horizontal units in Hz — <a href="#os2-period">§6</a></li>
+<li><a class="ts" data-t="1:21:17"></a> Output channel, averaging, diode drop as a difference of peaks; trigger hiccup; conduction start ≈ 400 mV; comparison with LTspice — <a href="#os2-vf">§7</a></li>
+</ul>
+<aside class="note"><strong>Scope note.</strong> Diode/rectifier theory is only outlined here (see <a href="#os2-other">Other content in this video</a>), with just enough detail to know what waveform is on the screen. Peak / peak-to-peak / RMS and the first scope demo are in <a class="xref" data-lesson="os1">AC vs DC, Vp/Vpp/Vrms</a>; measuring an RC time constant on the scope is in <a class="xref" data-lesson="cl4">RC time constant</a>.</aside>
+</section>
+<section class="g-sec" id="os2-objectives" data-kind="objectives">
+<h2>Learning objectives</h2>
+<p>After this lesson you should be able to…</p>
+<ul>
+<li>convert a frequency to a period (\(T = 1/f\)) and compute the time needed to display or simulate \(N\) cycles (\(N\cdot T\));</li>
+<li>connect a scope probe and its ground clip correctly to a circuit driven by a function generator;</li>
+<li>choose a volts/division setting so the whole waveform fits within the screen's vertical divisions, and explain why 500 mV/div is too small for a 5 V-peak signal;</li>
+<li>read a peak voltage by counting divisions and multiplying by the V/div setting;</li>
+<li>measure a period with two time cursors (Δt) and compute \(f = 1/\Delta t\), using the unit trick (1/ms → kHz, 1/s → Hz, 1/μs → MHz);</li>
+<li>explain why the instructor double-checks the scope's automatic frequency reading;</li>
+<li>measure a voltage difference with two voltage (horizontal) cursors — e.g. a ripple peak-to-peak, or a diode's forward voltage as \(V_{in,pk} - V_{out,pk}\) — and compare it with simulation.</li>
+</ul>
+</section>
+<section class="g-sec" id="os2-prereqs" data-kind="prereqs">
+<h2>Prerequisites</h2>
+<dl>
+<dt>Peak, peak-to-peak, RMS</dt><dd>For a sine centred on 0 V, \(V_{pp} = 2V_p\) and \(V_{rms} = V_p/\sqrt{2}\). See <a class="xref" data-lesson="os1">AC vs DC, Vp/Vpp/Vrms</a>.</dd>
+<dt>Period and frequency</dt><dd>\(T\) is the time for one cycle; \(f = 1/T\) is cycles per second (Hz).</dd>
+<dt>Oscilloscope screen</dt><dd>A grid of divisions: horizontally time (s/div), vertically voltage (V/div). Reading = number of divisions × setting. First demo in <a class="xref" data-lesson="os1">os1</a>; RC measurement in <a class="xref" data-lesson="cl4">cl4</a>.</dd>
+<dt>Voltage is always relative to a reference</dt><dd>Every measured voltage is "across" two points; on a scope both channels are measured relative to the ground clip / common ground <a class="ts" data-t="2:02"></a>.</dd>
+<dt>Diode forward voltage \(V_F\)</dt><dd>A conducting silicon diode drops roughly 0.7 V, so the voltage after it is about 0.7 V lower than before it. (The theory is outside this topic; it is the thing being measured in §2 and §7.)</dd>
+</dl>
+</section>
+<section class="g-sec" id="os2-definitions" data-kind="definitions">
+<h2>Definitions &amp; symbols</h2>
+<table>
+<tr><th>Term / symbol</th><th>Meaning</th><th>Unit</th></tr>
+<tr><td>Period \(T\)</td><td>Time for one cycle; on a scope, the time between two corresponding points of successive cycles.</td><td>s, ms</td></tr>
+<tr><td>Frequency \(f\)</td><td>Cycles per second, \(f = 1/T\).</td><td>Hz, kHz, MHz</td></tr>
+<tr><td>Division (div)</td><td>One square of the scope graticule. The vertical axis here has 8 divisions (±4 from the centre line); the horizontal axis has 10.</td><td>—</td></tr>
+<tr><td>Volts/division (V/div)</td><td>Vertical scale: how many volts one vertical division represents (e.g. 500 mV/div, 1 V/div, 2 V/div). Set per channel.</td><td>V/div</td></tr>
+<tr><td>Time/division (s/div)</td><td>Horizontal scale (time base): how much time one horizontal division represents.</td><td>s/div, ms/div</td></tr>
+<tr><td>Cursors</td><td>Movable measurement lines. <em>Vertical</em> lines mark times (their difference Δt, or 1/Δt in Hz); <em>horizontal</em> lines mark voltages (difference ΔV).</td><td>—</td></tr>
+<tr><td>Δ (delta)</td><td>Difference between the two cursor readings (cursor 2 − cursor 1).</td><td>V or s</td></tr>
+<tr><td>Probe / ground clip</td><td>The probe tip connects to the point being measured; its ground (alligator) clip connects to the circuit's reference node.</td><td>—</td></tr>
+<tr><td>CH1 / CH2</td><td>Scope channels; here CH1 (yellow) = \(v_{in}\), CH2 (blue) = \(v_{out}\).</td><td>—</td></tr>
+<tr><td>Function generator</td><td>Bench instrument used as the AC source (set to 60 Hz, 5 V peak).</td><td>—</td></tr>
+<tr><td>Acquire mode: average</td><td>Scope averages several successive sweeps (32 here) to reduce random noise on a repetitive signal.</td><td>—</td></tr>
+<tr><td>Trigger level</td><td>Voltage level at which the scope starts each sweep; a bad level gives an unstable/odd display.</td><td>V</td></tr>
+<tr><td>\(V_F\) (\(v_{\text{sub }f}\))</td><td>Diode forward voltage (≈0.7 V nominal for silicon 1N4001).</td><td>V</td></tr>
+<tr><td>Ripple, \(V_{r(pp)}\)</td><td>Small peak-to-peak variation left on a smoothed DC output.</td><td>V, mV</td></tr>
+<tr><td>Pulsating DC</td><td>Half-wave rectified output: positive humps, zero in between.</td><td>—</td></tr>
+</table>
+</section>
+<section class="g-sec" id="os2-other" data-kind="lesson" data-ts="0-3124">
+<h2>Other content in this video (outside this topic)</h2>
+<p>Outline only — enough to know which waveforms are being measured later. The circuit throughout is a <strong>series diode clipper</strong>: an AC source, a diode in series, and a load resistor; \(v_{in}\) is the source voltage and \(v_{out}\) is the voltage across the resistor, both measured relative to the common ground.</p>
+<ul>
+<li><a class="ts" data-t="0:00"></a> Review of last class (LEDs, current-limiting resistor, forward voltage); today: diodes with AC, "the beginnings of a power supply".</li>
+<li><a class="ts" data-t="0:50"></a> Series diode clipper drawn with a 10 V-peak AC source; \(v_{in}\) and \(v_{out}\) both referenced to ground <a class="ts" data-t="2:25"></a>.</li>
+<li><a class="ts" data-t="3:06"></a> <strong>Ideal diode</strong> (\(V_F = 0\)): closed switch when forward biased, open when reverse biased. Positive alternation: \(v_{out} = v_{in}\) <a class="ts" data-t="8:49"></a>. Negative alternation: \(I = 0\) so \(v_{out} = 0\) <a class="ts" data-t="12:04"></a>. Result: the negative half is clipped ("negative clipping") <a class="ts" data-t="14:37"></a>; the resistor value does not change the voltage shape, only the current/power <a class="ts" data-t="13:28"></a>.</li>
+<li><a class="ts" data-t="14:58"></a> AC vs DC; the clipped output is <strong>pulsating DC</strong> — the first step of AC-to-DC conversion (rectification) <a class="ts" data-t="16:20"></a>.</li>
+<li><a class="ts" data-t="17:11"></a> Preview: a capacitor in parallel with the resistor charges on the peaks and fills in the gaps → <strong>ripple voltage</strong> <a class="ts" data-t="19:51"></a> (the "smoothing capacitor" <a class="ts" data-t="23:14"></a>); the discharge is drawn as a straight line although it is really part of an RC curve <a class="ts" data-t="23:40"></a>.</li>
+<li><a class="ts" data-t="25:47"></a> Big picture: wall outlet 120 V<sub>rms</sub> (170 V peak) → step-down transformer (e.g. 10:1 → 12 V<sub>rms</sub>) → rectifier → smoothing capacitor → load (e.g. a laptop); which household devices need DC <a class="ts" data-t="27:39"></a>.</li>
+<li><a class="ts" data-t="29:07"></a> <strong>Real diode, 1N4001</strong>, \(V_F\) = 0.7 V (silicon), "second approximation" <a class="ts" data-t="30:57"></a>; \(V_F\) actually varies (≈0.65–0.8 V) <a class="ts" data-t="31:43"></a>; beyond the second approximation use LTspice <a class="ts" data-t="32:09"></a>.</li>
+<li><a class="ts" data-t="35:16"></a> Table of \(v_{in}\) → \(v_{out}\): 0.1, 0.3, 0.5 V → 0 V (not yet conducting); 1 V → 0.3 V; 5 V → 4.3 V; 10 V → 9.3 V (\(v_{out} = v_{in} - 0.7\) once conducting) <a class="ts" data-t="38:41"></a>. Output stays flat at 0 until \(v_{in}\) exceeds 0.7 V — "do the flat line" on exams <a class="ts" data-t="40:25"></a>. Negative alternation unchanged: \(v_{out} = 0\) <a class="ts" data-t="42:42"></a>.</li>
+<li><a class="ts" data-t="45:08"></a> LTspice build: sine source with DC offset 0, amplitude 5 V, frequency 60 Hz <a class="ts" data-t="45:33"></a>; diode set to the 1N4001 model <a class="ts" data-t="47:11"></a>; datasheet: 1N4001 rated 50 V peak repetitive reverse voltage (1N4002: 100 V, …), \(V_F\) typ 0.93 V / max 1.1 V instantaneous, 0.8 V max full-cycle average <a class="ts" data-t="48:23"></a>; 1 kΩ load → peak current \((5-0.7)/1\,\text{k}\Omega = 4.3\) mA <a class="ts" data-t="50:52"></a>; net labels "vin" and "vout" <a class="ts" data-t="51:38"></a>. (The stop-time calculation that follows is in <a href="#os2-simtime">§1</a>.)</li>
+</ul>
+</section>
+<section class="g-sec" id="os2-simtime" data-kind="lesson" data-ts="2725-3314">
+<h2>1. From frequency to period: simulating exactly five 60 Hz cycles</h2>
+<p><strong>What is being simulated.</strong> The LTspice circuit is the series diode clipper from the first half of the lecture: a sine source <code>V1</code>, a 1N4001 diode <code>D1</code> and a 1 kΩ load <code>R1</code>, with net labels <em>vin</em> (source side) and <em>vout</em> (across the resistor). In the source's "advanced" settings the instructor chose a <strong>SINE</strong> function with <strong>DC offset 0</strong> (centred on 0 V), <strong>amplitude 5 V</strong> and <strong>frequency 60 Hz</strong> <a class="ts" data-t="45:33"></a> <a class="ts" data-t="46:24"></a>. In LTspice the "amplitude" of a sine is its <em>peak</em> value, so this is 5 V<sub>pk</sub> = 10 V<sub>pp</sub>; the schematic shows it as <code>SINE(0 5 60)</code>.</p>
+<figure class="circuit" id="os2-fig-lt">
+<script type="application/json">{"parts":[
+ {"t":"VAC","a":[0,4],"b":[0,0],"label":"V_1","value":"SINE(0 5 60)"},
+ {"t":"W","pts":[[0,0],[1,0]]},
+ {"t":"D","a":[1,0],"b":[4,0],"label":"D_1 1N4001"},
+ {"t":"W","pts":[[4,0],[6,0]]},
+ {"t":"R","a":[6,0],"b":[6,4],"label":"R_1","value":"1 kΩ"},
+ {"t":"W","pts":[[6,4],[0,4]]},
+ {"t":"G","at":[0,4]},
+ {"t":"N","at":[0,0],"label":"vin","pos":"n"},
+ {"t":"N","at":[6,0],"label":"vout","pos":"n"},
+ {"t":"T","at":[3,5.3],"text":".tran 0.0833","cls":"muted"}
+],"alt":"LTspice schematic: sine source V1 SINE(0 5 60) feeding diode D1 (1N4001, anode at vin) in series with R1 = 1 kilohm to ground; vout is the diode–resistor node."}</script>
+<figcaption>The LTspice schematic as shown at <a class="ts" data-t="54:55"></a>: 5 V-peak, 60 Hz sine, 1N4001, 1 kΩ, stop time 0.0833 s.</figcaption>
+</figure>
+<p><strong>The question</strong> <a class="ts" data-t="52:04"></a>: how long should the transient simulation run so that the plot shows <em>five cycles</em> <a class="ts" data-t="52:18"></a>? To answer it you need the length of one cycle — the <strong>period</strong>.</p>
+<div class="formula">\[ T = \frac{1}{f} \qquad\qquad t_{\text{sim}} = N\cdot T = \frac{N}{f} \]</div>
+<dl class="vardefs"><dt>\(T\)</dt><dd>period — time for one cycle (s)</dd><dt>\(f\)</dt><dd>frequency (Hz = cycles per second)</dd><dt>\(N\)</dt><dd>number of cycles wanted on screen (here 5)</dd><dt>\(t_{\text{sim}}\)</dt><dd>simulation stop time (s)</dd></dl>
+<p>\(T = 1/f\) holds for any periodic signal; multiplying by \(N\) gives the time occupied by \(N\) whole cycles — useful both for a simulator's stop time and for choosing a scope time base.</p>
+<div class="example" id="os2-ex1"><h3>Example 1 — Stop time for five cycles of 60 Hz <a class="ts" data-t="53:00"></a></h3>
+<p><strong>Given:</strong> \(f = 60\) Hz (source setting). <strong>Find:</strong> \(T\) and the stop time for \(N = 5\) cycles.</p>
+<p class="step">1. Period from frequency <a class="ts" data-t="53:00"></a>: \(T = \dfrac{1}{f} = \dfrac{1}{60\,\text{Hz}}\). The instructor typed this out as "T = 1/60Hz", "5 Cycles = 5 * 1/60Hz", "Sim Time = 5 Cycles" <a class="ts" data-t="53:25"></a>.</p>
+<p class="step">2. Units <a class="ts" data-t="53:44"></a>: "my base unit is hertz, my answer is going to be in seconds" — since \(1\,\text{Hz} = 1/\text{s}\), \(1/\text{Hz} = \text{s}\). On the calculator \(1/60 = 0.01666\ldots\,\text{s}\) (≈ 16.7 ms).</p>
+<p class="step">3. Five cycles <a class="ts" data-t="54:08"></a>: \(t_{\text{sim}} = 5 \times 0.016667\,\text{s} = 0.083333\ldots\,\text{s}\) (the calculator showed 0.0833333…).</p>
+<p class="step">4. Enter it <a class="ts" data-t="54:08"></a>: Stop time = <code>0.0833</code>, giving the directive <code>.tran 0.0833</code>; he remarks that the exact number of digits you type does not matter.</p>
+<p class="step">5. Check the result <a class="ts" data-t="54:33"></a>: count the cycles of V(vin) on the plot — one, two, three, four, five — centred on 0 V, going up to +5 V and down to −5 V <a class="ts" data-t="54:59"></a>.</p>
+<p class="answer">\(T = 1/60\,\text{s} \approx 0.0167\,\text{s} = 16.7\,\text{ms}\); five cycles take \(5T \approx 0.0833\,\text{s} = 83.3\,\text{ms}\).</p>
+</div>
+<figure class="scope" id="os2-fig-5cyc">
+<script type="application/json">{"type":"scope","ch":"V(vin)","vdiv":"2 V/div","tdiv":"8.33 ms/div","cols":10,"rows":8,
+"traces":[{"shape":"sine","amp":2.5,"period":2,"label":"V(vin)"}],
+"marks":[{"type":"span","x1":0,"y1":-3.0,"x2":2,"y2":-3.0,"label":"T = 16.7 ms"},{"type":"span","x1":0,"y1":-3.75,"x2":10,"y2":-3.75,"label":"5 cycles = 5T ≈ 83.3 ms"},{"type":"hline","y":2.5,"label":"+5 V"},{"type":"hline","y":-2.5,"label":"−5 V"}],
+"alt":"Five cycles of a 5 V peak sine filling a 10-division window; one period spans 2 divisions."}</script>
+<figcaption>(Added for clarity) The LTspice V(vin) plot of <a class="ts" data-t="54:55"></a> redrawn on a 10-division grid: with a stop time of 5T, each cycle takes exactly 2 of the 10 divisions. (LTspice's own axis ran 0–80 ms in 8 ms steps.)</figcaption>
+</figure>
+<aside class="extra"><p><strong>Why the rounding doesn't matter.</strong> 0.0833 s is 33 μs shorter than \(5T = 0.083333\) s, i.e. 0.04 % of the run — invisible on the plot. If you round <em>down</em> a lot (say 0.08 s), the last cycle is cut off (0.08 s = 4.8 cycles); if you round up, you see a little of a sixth cycle. Either way \(N = t_{\text{sim}}\cdot f\) tells you how many cycles you will get.</p>
+<p>The same arithmetic sets an oscilloscope's time base: a 10-division screen showing \(N\) cycles needs \(\text{s/div} \approx N T / 10\). For 3 cycles of 60 Hz: \(3 \times 16.7\,\text{ms}/10 = 5\) ms/div — exactly the setting used later in the lab (<a href="#os2-vdiv">§5</a>).</p></aside>
+</section>
+<section class="g-sec" id="os2-ltcursors" data-kind="lesson" data-ts="3314-3764">
+<h2>2. Measuring voltage differences with cursors in LTspice</h2>
+<p>With the simulation run, V(vout) is <strong>pulsating DC</strong>: during each positive alternation the resistor gets a hump of voltage, and during the negative alternation the output flat-lines at 0 V because the diode is not conducting <a class="ts" data-t="56:00"></a>. The question the instructor then asks is quantitative: how big is the diode's drop in the real (simulated) diode compared with the 0.7 V "second approximation"? He answers it with <strong>cursors</strong>.</p>
+<p><strong>How the LTspice cursors were used</strong> <a class="ts" data-t="56:17"></a>: zoom in on one cycle; left-click the trace name V(vin) to attach cursor 1 and drag it to the peak; click V(vin) again to get cursor 2, then click V(vout) to move cursor 2 onto the output trace <a class="ts" data-t="56:46"></a>. Place the two cursors at the same instant ("right on top of each other") and read the box labelled <em>Diff (Cursor2 − Cursor1)</em> <a class="ts" data-t="57:14"></a>.</p>
+<div class="example" id="os2-ex2"><h3>Example 2 — Diode drop as the difference of two peaks (LTspice) <a class="ts" data-t="58:27"></a></h3>
+<p><strong>Given (cursor window, <a class="ts" data-t="58:32"></a>):</strong></p>
+<table>
+<tr><th>Cursor</th><th>Trace</th><th>Horz (time)</th><th>Vert (voltage)</th></tr>
+<tr><td>1</td><td>V(vout)</td><td>37.519978 ms</td><td>4.3455332 V</td></tr>
+<tr><td>2</td><td>V(vin)</td><td>37.519978 ms</td><td>4.995573 V</td></tr>
+<tr><td>Diff (2 − 1)</td><td></td><td>0 s</td><td>650.03977 mV</td></tr>
+</table>
+<p class="step">1. Both cursors are at the same time (Horz diff = 0 s), at the top of a cycle, so the difference compares the two peaks at the same instant.</p>
+<p class="step">2. KVL around the loop: \(v_{in} = v_D + v_{out}\), so the diode voltage is \(v_D = v_{in} - v_{out}\).</p>
+<p class="step">3. Substitute: \(v_D = 4.995573\,\text{V} - 4.3455332\,\text{V} = 0.6500398\,\text{V} \approx 650\,\text{mV}\).</p>
+<p class="answer">\(V_F \approx 0.65\) V at the peak — "pretty close to 0.7 volts" <a class="ts" data-t="58:27"></a>.</p>
+</div>
+<aside class="extra"><p><strong>Checking the cursor time.</strong> 37.52 ms is where a peak should be: peaks of \(\sin(2\pi\cdot 60\,t)\) occur at \(t = (k + \tfrac14)T\). With \(k = 2\): \(2.25 \times 16.667\,\text{ms} = 37.5\,\text{ms}\). The input peak reads 4.9956 V rather than 5 V only because the cursor sits a few μs from the exact crest.</p></aside>
+<div class="example" id="os2-ex3"><h3>Example 3 — Where does conduction start? (LTspice) <a class="ts" data-t="58:56"></a></h3>
+<p><strong>Idea</strong> <a class="ts" data-t="58:56"></a>: put a cursor on V(vout) exactly where the blue output begins to rise above 0 V — that is the moment the diode starts conducting — and a second cursor on V(vin) at the same instant <a class="ts" data-t="59:36"></a>. The <em>absolute</em> value of \(v_{in}\) there is the input voltage needed to start conduction <a class="ts" data-t="1:00:50"></a>.</p>
+<table>
+<tr><th>Cursor</th><th>Trace</th><th>Horz</th><th>Vert</th></tr>
+<tr><td>1</td><td>V(vout)</td><td>33.543197 ms</td><td>24.926075 mV</td></tr>
+<tr><td>2</td><td>V(vin)</td><td>33.543197 ms</td><td>395.16659 mV</td></tr>
+<tr><td>Diff (2 − 1)</td><td></td><td>0 s</td><td>370.24051 mV</td></tr>
+</table>
+<p class="step">1. Read cursor 2 itself (not the Diff): \(v_{in} \approx 395\,\text{mV}\) when the output starts to move <a class="ts" data-t="1:01:10"></a>.</p>
+<p class="step">2. The instructor notes the cursor is "just a tad bit high" — V(vout) is already 25 mV rather than 0 V <a class="ts" data-t="1:00:25"></a> — so the true onset is slightly below 395 mV.</p>
+<p class="answer">The simulated diode begins conducting at about \(v_{in} \approx 0.4\) V — "a bit sooner than the forward voltage" <a class="ts" data-t="1:01:10"></a>; \(V_F\) is "not an absolute value" <a class="ts" data-t="1:01:36"></a>, but the output is flat until \(v_{in}\) gets into the ballpark of it.</p>
+</div>
+<aside class="extra"><p><strong>Consistency check.</strong> The rising zero crossing before 33.54 ms is at \(2T = 33.333\) ms. 0.2099 ms later the input is \(5\sin(2\pi\cdot 60 \times 0.2099\,\text{ms}) = 5\sin(0.0791\,\text{rad}) = 0.395\) V — exactly cursor 2's reading. Note also that the Diff value (370 mV) is <em>not</em> the answer here: this measurement needs an absolute reading of one trace, while Example 2 needed a difference of two traces.</p></aside>
+<aside class="instructor"><p>The point of the comparison: the second approximation (\(V_F = 0.7\) V constant) is "more than adequate", LTspice gets you closer, and the bench measurement in <a href="#os2-vf">§7</a> confirms it <a class="ts" data-t="1:02:27"></a> <a class="ts" data-t="1:25:45"></a>.</p></aside>
+</section>
+<section class="g-sec" id="os2-ripple" data-kind="lesson" data-ts="3764-4102">
+<h2>3. Ripple peak-to-peak with cursors (smoothing capacitor, LTspice)</h2>
+<p>As an "easter egg" the instructor adds a capacitor C1 in parallel with R1 <a class="ts" data-t="1:02:44"></a>. (Why a capacitor smooths the output is rectifier theory, outlined in <a href="#os2-other">Other content</a>; here we only need what the waveform looks like.) The output now charges up near each input peak and then sags slowly until the next peak — a sawtooth-like <strong>ripple</strong> riding on a DC level. The larger C, the smaller the ripple:</p>
+<table>
+<tr><th>C1</th><th>When</th><th>What the plot showed</th></tr>
+<tr><td>1 μF</td><td><a class="ts" data-t="1:03:04"></a></td><td>output "starting to keep that voltage up", still large dips</td></tr>
+<tr><td>10 μF</td><td><a class="ts" data-t="1:03:28"></a></td><td>decay neither purely exponential nor purely linear</td></tr>
+<tr><td>100 μF</td><td><a class="ts" data-t="1:04:10"></a></td><td>ripple "squishes down" and looks more linear; still noticeable</td></tr>
+<tr><td>2200 μF</td><td><a class="ts" data-t="1:06:39"></a></td><td>ripple barely visible at full scale; zooming in on V(vout) shows it going between about 4.15 V and 4.19 V <a class="ts" data-t="1:07:05"></a></td></tr>
+</table>
+<figure class="circuit" id="os2-fig-ripple-ckt">
+<script type="application/json">{"parts":[
+ {"t":"VAC","a":[0,4],"b":[0,0],"label":"V_1","value":"SINE(0 5 60)"},
+ {"t":"W","pts":[[0,0],[1,0]]},
+ {"t":"D","a":[1,0],"b":[4,0],"label":"D_1 1N4001"},
+ {"t":"W","pts":[[4,0],[8,0]]},
+ {"t":"C","a":[5.5,0],"b":[5.5,4],"label":"C_1","value":"2200 μF","polar":true},
+ {"t":"R","a":[8,0],"b":[8,4],"label":"R_1","value":"1 kΩ"},
+ {"t":"W","pts":[[8,4],[0,4]]},
+ {"t":"G","at":[0,4]},
+ {"t":"N","at":[5.5,0],"label":"vout","pos":"n"},
+ {"t":"N","at":[0,0],"label":"vin","pos":"n"},
+ {"t":"N","at":[5.5,4]}
+],"alt":"Same clipper with a 2200 microfarad capacitor C1 across the 1 kilohm load R1."}</script>
+<figcaption>Clipper with the smoothing capacitor, as in the LTspice schematic at <a class="ts" data-t="1:07:10"></a> (values 1 μ, 10 μ, 100 μ, then 2200 μF were tried). The polarity mark is added for clarity — LTspice drew a plain capacitor.</figcaption>
+</figure>
+<div class="example" id="os2-ex4"><h3>Example 4 — Ripple peak-to-peak with C1 = 2200 μF <a class="ts" data-t="1:07:31"></a></h3>
+<p><strong>Method:</strong> zoom in on V(vout) only; put cursor 1 at a ripple maximum and cursor 2 at the minimum just before it, then read the vertical difference.</p>
+<table>
+<tr><th>Cursor</th><th>Trace</th><th>Horz</th><th>Vert</th></tr>
+<tr><td>1</td><td>V(vout)</td><td>38.161114 ms</td><td>4.1882051 V</td></tr>
+<tr><td>2</td><td>V(vout)</td><td>36.768433 ms</td><td>4.1484136 V</td></tr>
+<tr><td>Diff (2 − 1)</td><td></td><td>−1.3926816 ms</td><td>−39.791444 mV</td></tr>
+</table>
+<p class="step">1. Peak-to-peak ripple = maximum − minimum: \(V_{r(pp)} = 4.1882051 - 4.1484136 = 0.0397915\,\text{V}\).</p>
+<p class="step">2. The Diff box shows −39.79 mV only because cursor 2 was placed on the lower point; the size of the ripple is the magnitude.</p>
+<p class="answer">\(V_{r(pp)} \approx 40\) mV. The instructor calls this well within his accepted tolerance for almost any power supply he would build <a class="ts" data-t="1:07:55"></a>: for a load drawing about 4 mA, 2200 μF is more than adequate. Two 1000 μF capacitors in parallel would do essentially the same job <a class="ts" data-t="1:08:22"></a>.</p>
+</div>
+<figure class="scope" id="os2-fig-ripple">
+<script type="application/json">{"type":"scope","ch":"V(vout)","vdiv":"10 mV/div (centre ≈ 4.168 V)","tdiv":"3 ms/div","cols":10,"rows":8,
+"traces":[{"fn":"(function(q){return q<0.0836? -2+4*q/0.0836 : 2-4*(q-0.0836)/0.9164;})((((x-1.256)/5.5556)%1+1)%1)","label":"V(vout), C1 = 2200 μF (shape approximate)","color":2}],
+"marks":[{"type":"hline","y":1.99,"label":"cursor 1: 4.1882 V"},{"type":"hline","y":-1.99,"label":"cursor 2: 4.1484 V"},{"type":"span","x1":9.4,"y1":1.99,"x2":9.4,"y2":-1.99,"label":"≈ 40 mV p-p","dx":-84}],
+"alt":"Sawtooth-like ripple: quick rise of about 1.4 ms then slow linear sag; two horizontal cursors 40 mV apart."}</script>
+<figcaption>(Added for clarity) Shape of the 2200 μF ripple measured at <a class="ts" data-t="1:07:42"></a>, redrawn on a 10 mV/div grid centred on 4.168 V; the cursors are the instructor's.</figcaption>
+</figure>
+<aside class="extra"><p><strong>Two more things you can read off this plot.</strong> (1) The ripple repeats once per input cycle — the peaks are about 16.7 ms apart — because a half-wave rectifier recharges the capacitor once per 60 Hz cycle, so the ripple frequency is 60 Hz. (2) LTspice's cursor box also printed "Freq: 718.03922 Hz". That is just \(1/|\Delta t| = 1/1.3926816\,\text{ms}\); it would be a frequency only if the two cursors were one period apart. Here they bracket the short charging interval, so 718 Hz means nothing physical — the same caution the instructor applies to automatic readouts in <a href="#os2-period">§6</a>.</p></aside>
+</section>
+<section class="g-sec" id="os2-probes" data-kind="lesson" data-ts="4148-4626">
+<h2>4. Lab: building the circuit and connecting the probes</h2>
+<p>The bench version is the same circuit as the simulation: a 1N4001 diode in series with a 1 kΩ resistor, driven by a function generator set to <strong>60 Hz, 5 V peak</strong>, with the scope watching the input on one channel and the output on the other <a class="ts" data-t="1:09:08"></a>.</p>
+<ol>
+<li><strong>Diode</strong> <a class="ts" data-t="1:10:18"></a>: a 1N4001, leads bent and pushed into the breadboard (the instructor points out where its cathode band is before inserting it).</li>
+<li><strong>Resistor</strong> <a class="ts" data-t="1:12:25"></a>: a 1 kΩ (brown–black–red: 1, 0, ×10² = 1000 Ω). It shares a row of five connected holes with one diode lead, so the two are <strong>in series</strong> <a class="ts" data-t="1:12:51"></a>.</li>
+<li><strong>AC source</strong> <a class="ts" data-t="1:13:16"></a>: the function generator's leads go across the series pair — red to the free diode lead, black to the bottom of the resistor <a class="ts" data-t="1:13:43"></a>.</li>
+<li><strong>Channel 1 probe</strong> <a class="ts" data-t="1:14:16"></a>: clipped onto the input (so it doesn't move), and the oscilloscope <strong>ground clip goes to the bottom of the resistor</strong> — the same node as the generator's black lead, i.e. the circuit's 0 V reference.</li>
+<li><strong>Channel 2 probe</strong> <a class="ts" data-t="1:14:36"></a>: on \(v_{out}\), the diode–resistor junction (its ground clip on the same bottom node).</li>
+<li><strong>Summary</strong> <a class="ts" data-t="1:15:07"></a>: AC applied from the red and black leads; input on the <span style="color:#c9a400">yellow</span> channel (CH1), output on the <span style="color:#1a9fb0">blue</span> channel (CH2). Generator set to 60 Hz and 5 V peak <a class="ts" data-t="1:15:44"></a>; the scope's screen is shown through its PC software (GW Instek / OpenWave) <a class="ts" data-t="1:16:23"></a>.</li>
+</ol>
+<figure class="circuit" id="os2-fig-bench">
+<script type="application/json">{"parts":[
+ {"t":"VAC","a":[0,4],"b":[0,0],"label":"function\ngenerator","value":"60 Hz, 5 V pk"},
+ {"t":"W","pts":[[0,0],[2,0]]},
+ {"t":"D","a":[2,0],"b":[5,0],"label":"1N4001"},
+ {"t":"W","pts":[[5,0],[7,0]]},
+ {"t":"R","a":[7,0],"b":[7,4],"label":"R","value":"1 kΩ"},
+ {"t":"W","pts":[[7,4],[0,4]]},
+ {"t":"N","at":[2,0],"label":"v_{in}","pos":"s"},
+ {"t":"N","at":[5,0],"label":"v_{out}","pos":"s"},
+ {"t":"N","at":[3.5,4]},
+ {"t":"ARROW","a":[2,-1.6],"b":[2,-0.15]},
+ {"t":"T","at":[2,-1.9],"text":"CH1 probe tip (yellow)","cls":"accent"},
+ {"t":"ARROW","a":[6.4,-1.6],"b":[5.1,-0.15]},
+ {"t":"T","at":[6.6,-1.9],"text":"CH2 probe tip (blue)","cls":"accent"},
+ {"t":"ARROW","a":[3.5,5.4],"b":[3.5,4.15]},
+ {"t":"T","at":[3.5,6],"text":"both scope ground clips + generator black lead","cls":"accent"},
+ {"t":"T","at":[-0.4,-0.4],"text":"red lead","anchor":"end","cls":"muted"},
+ {"t":"T","at":[-0.4,4.6],"text":"black lead","anchor":"end","cls":"muted"}
+],"alt":"Bench circuit: function generator across a 1N4001 diode in series with a 1 kilohm resistor. CH1 probe at the generator/diode node (v in), CH2 probe at the diode/resistor node (v out), and both ground clips plus the generator black lead at the bottom node."}</script>
+<figcaption>Probe connections described at <a class="ts" data-t="1:14:16"></a>–<a class="ts" data-t="1:15:07"></a> (schematic added for clarity; the video shows the breadboard at <a class="ts" data-t="1:15:12"></a>).</figcaption>
+</figure>
+<p>Settings visible later in the CH2 menu <a class="ts" data-t="1:21:42"></a>: coupling <strong>DC</strong>, input impedance <strong>1 MΩ</strong>, invert off, bandwidth full, probe attenuation <strong>10X</strong>. The trigger was on CH1, rising edge, level −200 mV, DC <a class="ts" data-t="1:17:20"></a>.</p>
+<aside class="extra"><p><strong>Why the ground clip placement matters.</strong> A scope probe measures the voltage of its tip <em>relative to its ground clip</em>, and on a bench scope every ground clip is tied to the scope chassis and mains earth. Most function generators' black output is earthed too. So all the ground clips must go to the same node as the generator's black lead (here the bottom of the resistor). Clipping a ground lead onto any other node would connect that node to earth and short out part of the circuit. With one common ground, CH1 shows \(v_{in}\) and CH2 shows \(v_{out}\), exactly as the voltages were defined on paper (both relative to the bottom node) <a class="ts" data-t="2:25"></a>.</p>
+<p><strong>DC coupling</strong> shows the true 0 V level of each trace, which matters here because the output is all-positive pulsating DC. <strong>10X</strong> means the probe divides the signal by 10 and the scope multiplies its readings back by 10, so the probe setting on the scope must match the switch on the probe.</p></aside>
+</section>
+<section class="g-sec" id="os2-vdiv" data-kind="lesson" data-ts="4626-4741">
+<h2>5. Choosing volts/division and time/division; counting divisions</h2>
+<p>When the scope software comes up, CH1 is at <strong>500 mV/div</strong> and the time base is <strong>5 μs/div</strong>, and the trace looks like a nearly flat line with a slight upward slope <a class="ts" data-t="1:17:06"></a>. Two settings have to change.</p>
+<h3>Horizontal (time/div)</h3>
+<p>At 5 μs/div the whole 10-division screen spans only 50 μs, about 0.3 % of one 16.7 ms period, so you only see a tiny, almost straight piece of the sine. The instructor changes the time base to <strong>2 ms/div</strong> <a class="ts" data-t="1:17:31"></a>, so the screen spans 20 ms ≈ 1.2 cycles ("I have one cycle showing"). Then he goes to <strong>5 ms/div</strong>, about three cycles (50 ms) <a class="ts" data-t="1:17:57"></a>.</p>
+<aside class="uncertain"><p><strong>Wording check.</strong> At <a class="ts" data-t="1:17:06"></a> the instructor says "we're zoomed out too much on the horizontal time base". The frame shows 5 μs/div, which is much too <em>fast</em>: the view is zoomed <em>in</em> on a 50 μs slice, and the fix is to <em>increase</em> the time per division, which is what he then does (to 2 ms/div). The action is right; read "zoomed out" as "set to the wrong scale".</p></aside>
+<h3>Vertical (volts/div): the signal must fit in the screen's divisions</h3>
+<p>At 500 mV/div, "if we were going up 5 volts that means we're going up 10 divisions and I don't have 10 divisions of space" <a class="ts" data-t="1:17:31"></a>. This screen has 8 vertical divisions, 4 above and 4 below the centre line. A sine centred on the centre line can therefore have a peak of at most 4 divisions.</p>
+<div class="formula">\[ n_{div} = \frac{V_p}{\text{V/div}} \le 4 \quad\Longleftrightarrow\quad \text{V/div} \ge \frac{V_p}{4} = \frac{V_{pp}}{8} \]</div>
+<dl class="vardefs"><dt>\(n_{div}\)</dt><dd>number of divisions from the centre line to the peak</dd><dt>\(V_p\)</dt><dd>peak voltage (V)</dd><dt>V/div</dt><dd>vertical scale of the channel</dd></dl>
+<table>
+<tr><th>CH1 setting</th><th>Divisions for a 5 V peak</th><th>Fits in ±4 div?</th><th>In the video</th></tr>
+<tr><td>500 mV/div</td><td>5 / 0.5 = 10</td><td>No, runs off the top and bottom</td><td>start <a class="ts" data-t="1:17:52"></a></td></tr>
+<tr><td>1 V/div</td><td>5 / 1 = 5</td><td>No, still 1 div too tall</td><td>passed through <a class="ts" data-t="1:17:57"></a></td></tr>
+<tr><td>2 V/div</td><td>5 / 2 = 2.5</td><td>Yes, with room to spare ("perfect")</td><td>chosen <a class="ts" data-t="1:17:59"></a></td></tr>
+</table>
+<figure class="scope" id="os2-fig-500mv">
+<script type="application/json">{"type":"scope","vdiv":"500 mV/div","tdiv":"2 ms/div","coupling":"DC","info":"F ≈ 60.02 Hz",
+"traces":[{"fn":"max(-4.02,min(4.02,10*sin(2*PI*(x-5)/8.333)))","label":"CH1 v_{in} (5 V pk = 10 div: off screen)"}],
+"alt":"At 500 mV per division the 5 V peak sine needs 10 divisions and runs off the top and bottom of the 8-division screen."}</script>
+<figcaption>(Recreated) The input at 500 mV/div and 2 ms/div, as on the screen at <a class="ts" data-t="1:17:52"></a>: only the steep middle of each swing is visible; the trace leaves the 8-division screen at ±4 div (±2 V) and the ±5 V peaks are far off screen.</figcaption>
+</figure>
+<figure class="scope" id="os2-fig-2v">
+<script type="application/json">{"type":"scope","vdiv":"2 V/div","tdiv":"5 ms/div","coupling":"DC","info":"F 60.0122 Hz",
+"traces":[{"fn":"2.5*sin(2*PI*(x-5)/3.333)","label":"CH1 v_{in}"}],
+"marks":[{"type":"hline","y":2.5,"label":"+2.5 div × 2 V/div = +5 V"},{"type":"hline","y":-2.5,"label":"−2.5 div = −5 V"},{"type":"span","x1":5,"y1":-3.5,"x2":8.333,"y2":-3.5,"label":"1 cycle ≈ 3.33 div"}],
+"alt":"At 2 V per division and 5 ms per division three cycles of the 5 V peak sine fit on screen; the peak is 2.5 divisions above centre."}</script>
+<figcaption>(Recreated) After the changes, 2 V/div and 5 ms/div, as at <a class="ts" data-t="1:18:22"></a>: about three cycles, and each peak sits 2.5 divisions from the centre line.</figcaption>
+</figure>
+<div class="example" id="os2-ex5"><h3>Example 5 — Amplitude by counting divisions <a class="ts" data-t="1:18:21"></a></h3>
+<p><strong>Given:</strong> CH1 at 2 V/div; the trace rises about 2½ divisions above the centre line and falls 2½ below it.</p>
+<p class="step">1. "If each division is 2 volts: two, four, and a half makes five volts" <a class="ts" data-t="1:18:21"></a>: \(V_p = 2.5\,\text{div} \times 2\,\tfrac{\text{V}}{\text{div}} = 5\,\text{V}\).</p>
+<p class="step">2. It goes down by the same amount, so the waveform is centred on 0 V: \(-5\) V at the trough.</p>
+<p class="step">3. (Follows from the reading:) \(V_{pp} = 5\,\text{div} \times 2\,\tfrac{\text{V}}{\text{div}} = 10\,\text{V}\).</p>
+<p class="answer">\(v_{in}\) is 5 V peak (10 V peak-to-peak), matching the function-generator setting.</p>
+</div>
+<aside class="extra"><p><strong>Choosing the best V/div.</strong> Bigger on screen means more precise readings: if you can judge the trace to about ±0.1 div, then at 2 V/div that is ±0.2 V, at 5 V/div it would be ±0.5 V. So pick the <em>smallest</em> V/div that still keeps the whole waveform on screen. For 5 V peak on a ±4-division screen that is 1.25 V/div. Scopes usually step 1–2–5, so 2 V/div is the right choice.</p>
+<p><strong>Leftover cursor readouts.</strong> The cursor box at the top of the screen still showed numbers from an earlier session (680 mV and −1.02 V at 500 mV/div became 2.72 V and −4.08 V at 2 V/div <a class="ts" data-t="1:17:59"></a>). Horizontal cursors stay at fixed screen positions, so their voltage values scale with V/div (×4 here). They are not measurements of this signal until you move them onto it.</p></aside>
+</section>
+<section class="g-sec" id="os2-period" data-kind="lesson" data-ts="4701-4877">
+<h2>6. Measuring period and frequency: auto readout vs cursors vs Hz units</h2>
+<h3>Method A: the scope's automatic frequency readout</h3>
+<p>The "F" box in the corner of the screen showed the frequency computed by the scope (e.g. 60.0122 Hz at <a class="ts" data-t="1:18:22"></a>; it changes slightly from one update to the next: 59.98–60.03 Hz in the frames). The instructor accepts it: "the frequency absolutely is 60 hertz as being calculated by my oscilloscope" <a class="ts" data-t="1:18:21"></a>, and then explains why he checks it by hand anyway.</p>
+<aside class="instructor"><p>He tends <strong>not to fully trust the frequency the oscilloscope calculates</strong>, because "how do we know we're talking about the same frequency" <a class="ts" data-t="1:18:48"></a>. For a pure sine wave it is easy, but for more complicated waveforms that are a function of multiple frequencies he relies on that number less and less, and makes a manual measurement instead.</p></aside>
+<h3>Method B: two time cursors and \(f = 1/T\)</h3>
+<p>He turns on the <strong>horizontal-position (time) cursors</strong>, which appear as vertical lines. One goes at a point where the cycle repeats and the other at the same point one cycle later <a class="ts" data-t="1:19:12"></a>. The scope prints each cursor's time and the difference Δ.</p>
+<figure class="scope" id="os2-fig-cursors">
+<script type="application/json">{"type":"scope","vdiv":"2 V/div","tdiv":"5 ms/div","coupling":"DC","info":"F 59.9890 Hz",
+"traces":[{"fn":"2.5*sin(2*PI*(x-5)/3.333)","label":"CH1 v_{in}"}],
+"marks":[{"type":"vline","x":5.04,"label":"C1 200 μs"},{"type":"vline","x":8.38,"label":"C2 16.9 ms"},{"type":"span","x1":5.04,"y1":3.3,"x2":8.38,"y2":3.3,"label":"Δt = 16.7 ms"}],
+"alt":"Two vertical time cursors on consecutive rising zero crossings of the sine, 3.34 divisions apart at 5 ms per division: delta t = 16.7 ms."}</script>
+<figcaption>(Recreated) Time cursors on two successive rising zero crossings, readings as on screen at <a class="ts" data-t="1:19:52"></a>. Cursor times are measured from the trigger point at the centre of the screen.</figcaption>
+</figure>
+<div class="example" id="os2-ex6"><h3>Example 6 — Frequency from the cursor period <a class="ts" data-t="1:19:44"></a></h3>
+<p><strong>Given (readout at <a class="ts" data-t="1:19:52"></a>):</strong> cursor 1 at 200 μs, cursor 2 at 16.9 ms, Δ = 16.7 ms (both cursors at 80.0 mV on the trace, so ΔV = 0.00 V: they really are at equivalent points).</p>
+<p class="step">1. The time between two equivalent points one cycle apart is the period: \(T = 16.9\,\text{ms} - 0.2\,\text{ms} = 16.7\,\text{ms}\).</p>
+<p class="step">2. Frequency is the reciprocal <a class="ts" data-t="1:20:03"></a>: "one over the frequency equals the period, one over the period equals the frequency", so \(f = \dfrac{1}{T} = \dfrac{1}{16.7\,\text{ms}}\).</p>
+<p class="step">3. The instructor's unit trick <a class="ts" data-t="1:20:03"></a>: if you divide by milliseconds the answer is in kilohertz; by seconds, hertz; by microseconds, megahertz. So \(1 \div 16.7 = 0.05988\), and this is in kHz: \(f = 0.0599\,\text{kHz}\) ("call that .06 kilohertz") <a class="ts" data-t="1:20:28"></a>.</p>
+<p class="step">4. Shift the decimal point three places to convert kHz to Hz: \(0.0599\,\text{kHz} = 59.9\,\text{Hz} \approx 60\,\text{Hz}\) <a class="ts" data-t="1:20:52"></a>.</p>
+<p class="answer">\(T = 16.7\) ms, so \(f = 1/T \approx 59.9\) Hz, essentially 60 Hz.</p>
+</div>
+<div class="formula">\[ f = \frac{1}{T}: \quad \frac{1}{\text{s}} = \text{Hz}, \qquad \frac{1}{\text{ms}} = \text{kHz}, \qquad \frac{1}{\mu\text{s}} = \text{MHz} \]</div>
+<dl class="vardefs"><dt>\(T\)</dt><dd>period measured between two equivalent points one cycle apart</dd><dt>\(f\)</dt><dd>frequency; the unit follows from the unit of \(T\) because \(1/10^{-3} = 10^{3}\) and \(1/10^{-6} = 10^{6}\)</dd></dl>
+<h3>Method C: let the cursors display in hertz</h3>
+<p>Finally he changes the cursors' <strong>horizontal unit</strong> (the "H Unit" choices are s, Hz, % and °) from seconds to <strong>Hz</strong> <a class="ts" data-t="1:20:52"></a>. The scope then does \(1/\Delta t\) itself: Δ = <strong>59.88 Hz</strong> <a class="ts" data-t="1:21:12"></a>, which "might as well be 60 hertz".</p>
+<table>
+<tr><th>Method</th><th>Result</th><th>When</th></tr>
+<tr><td>Scope's automatic frequency (F box)</td><td>≈ 60.01 Hz</td><td><a class="ts" data-t="1:18:21"></a></td></tr>
+<tr><td>Time cursors, Δt = 16.7 ms, \(f = 1/\Delta t\) by hand</td><td>0.0599 kHz = 59.9 Hz</td><td><a class="ts" data-t="1:20:28"></a></td></tr>
+<tr><td>Cursor H-unit set to Hz</td><td>Δ 59.88 Hz</td><td><a class="ts" data-t="1:21:12"></a></td></tr>
+</table>
+<p>"Three different ways of all coming up with the same answer": it must be 60 Hz <a class="ts" data-t="1:21:17"></a>.</p>
+<aside class="extra"><p><strong>Reading the Hz-mode cursor box correctly.</strong> In Hz mode the box showed cursor 1 = 5.000 kHz, cursor 2 = 59.17 Hz and Δ = 59.88 Hz <a class="ts" data-t="1:21:12"></a>. The individual values are just \(1/t\) of each cursor's time from the trigger point (1/200 μs = 5 kHz, 1/16.9 ms = 59.17 Hz) and mean nothing on their own. Only the Δ line, \(1/(t_2 - t_1)\), is the signal's frequency. It is <em>not</em> 5000 − 59.17.</p>
+<p><strong>Why 59.88 and not 60.00?</strong> The cursors move in small steps and the period was read as 16.7 ms instead of 16.667 ms: a 0.2 % reading error gives a 0.2 % frequency error. Measuring across several cycles (e.g. 3 periods = 50.0 ms) spreads the same placement error over a longer time and improves the result.</p></aside>
+</section>
+<section class="g-sec" id="os2-vf" data-kind="lesson" data-ts="4877-5170">
+<h2>7. Measuring the diode drop as a difference of peaks, and comparing with LTspice</h2>
+<p><strong>Turning on the output channel.</strong> With CH2 turned on, the blue trace is the half-wave "pulsating DC" output, "exactly what LTspice told us" <a class="ts" data-t="1:21:34"></a>. Both channels are at 2 V/div and the time base is 5 ms/div <a class="ts" data-t="1:21:42"></a>.</p>
+<p><strong>Cleaning up the trace with averaging</strong> <a class="ts" data-t="1:21:49"></a>: in the Acquire menu, mode <strong>Average</strong>, <strong>32</strong> waveforms (choices 2 to 256) <a class="ts" data-t="1:22:08"></a>. The noise ("fuzz") on the traces shrinks because random noise averages out over 32 sweeps while the repeating signal does not.</p>
+<p><strong>Voltage cursors.</strong> After zooming in (time base 2 ms/div), he decides that the cursors that measure voltage, drawn as horizontal lines, are more useful here than time cursors <a class="ts" data-t="1:22:12"></a>. He puts one on the input peak and one on the output peak: "the difference between the peak to peak should be my forward voltage" <a class="ts" data-t="1:22:35"></a>.</p>
+<figure class="scope" id="os2-fig-vf">
+<script type="application/json">{"type":"scope","ch":"CH1 (yellow) & CH2 (blue)","vdiv":"2 V/div","tdiv":"2 ms/div","coupling":"DC","info":"average 32",
+"traces":[{"fn":"2.5*sin(2*PI*(x-5)/8.333)","label":"CH1 v_{in}"},{"fn":"(function(v){return v<0.4?0:(v-0.4-0.2*(1-exp(-(v-0.4)/0.5)))/2;})(5*sin(2*PI*(x-5)/8.333))","label":"CH2 v_{out} (shape approximate)"}],
+"marks":[{"type":"hline","y":2.5,"label":""},{"type":"hline","y":2.2,"label":""},{"type":"text","x":0.2,"y":2.72,"text":"cursor 1: 5.00 V (CH1 peak)","anchor":"start"},{"type":"text","x":0.2,"y":1.8,"text":"cursor 2: 4.40 V (CH2 peak)","anchor":"start"},{"type":"text","x":0.9,"y":1.3,"text":"Δ = 600 mV","anchor":"start"}],
+"alt":"Input sine and half-wave output at 2 V per division; horizontal cursors on the input peak at 5.00 V and on the output peak at 4.40 V, difference 600 mV."}</script>
+<figcaption>(Recreated) Horizontal (voltage) cursors on the two peaks, readings as on screen at <a class="ts" data-t="1:23:04"></a>. The output trace shape is sketched with a simple diode model; the cursor values are the instructor's.</figcaption>
+</figure>
+<div class="example" id="os2-ex7"><h3>Example 7 — Diode forward voltage on the bench <a class="ts" data-t="1:22:35"></a></h3>
+<p><strong>Given (cursor readout):</strong> cursor 1 = 5.00 V (input peak), cursor 2 = 4.44 V at first <a class="ts" data-t="1:22:58"></a>, adjusted to 4.40 V <a class="ts" data-t="1:23:04"></a>.</p>
+<p class="step">1. KVL at the peak instant: \(V_F = v_{in,pk} - v_{out,pk}\).</p>
+<p class="step">2. \(V_F = 5.00\,\text{V} - 4.40\,\text{V} = 0.60\,\text{V}\). The scope prints Δ600 mV. (With the first placement it read 5.00 − 4.44 = 0.56 V, which shows how much the reading depends on where you put the cursor.)</p>
+<p class="step">3. Compare: LTspice gave 0.65 V <a class="ts" data-t="1:23:01"></a>; the second approximation assumes 0.7 V.</p>
+<p class="answer">\(V_F \approx 600\) mV on the scope, versus 650 mV in LTspice: the simulation and the scope are "for the most part agreeing with each other" <a class="ts" data-t="1:23:15"></a>.</p>
+</div>
+<aside class="extra"><p>Note that the input peak itself reads exactly 5.00 V. That confirms the generator's 5 V-peak setting independently of the division count in <a href="#os2-vdiv">§5</a>. At 2 V/div the cursor moves in steps of about 40 mV (4.44 → 4.40 V), so the bench value is only good to a few tens of mV. A smaller V/div on a zoomed view, or the scope's own "max" measurements, would give a finer reading.</p></aside>
+<h3>Zooming in on the start of conduction (and a trigger hiccup)</h3>
+<p>He then zooms in on the start of the cycle, where the output begins to rise <a class="ts" data-t="1:23:15"></a> (time base 200 μs/div; CH2 briefly at 200 mV/div, then both channels at 500 mV/div). The display suddenly looks wrong ("oh what just happened… is my trigger…") <a class="ts" data-t="1:23:43"></a>, so he adjusts the <strong>trigger level</strong> <a class="ts" data-t="1:24:10"></a>. On screen it passes through values such as 720 mV and ends at <strong>0 V</strong>, with the horizontal position shifted to about 242–246 μs so that the conduction point sits at the centre <a class="ts" data-t="1:24:32"></a>. He says he will have to investigate what that was about <a class="ts" data-t="1:24:47"></a>.</p>
+<figure class="scope" id="os2-fig-onset">
+<script type="application/json">{"type":"scope","ch":"CH1 & CH2","vdiv":"500 mV/div","tdiv":"200 μs/div","coupling":"DC","info":"trigger 0 V",
+"traces":[{"fn":"10*sin(2*PI*60*(0.0002125+(x-5)*0.0002))","label":"CH1 v_{in}"},{"fn":"(function(v){return v<0.4?0:(v-0.4-0.2*(1-exp(-(v-0.4)/0.5)))/0.5;})(5*sin(2*PI*60*(0.0002125+(x-5)*0.0002)))","label":"CH2 v_{out} (shape approximate)"}],
+"marks":[{"type":"vline","x":5,"label":"cursor at conduction start"},{"type":"hline","y":0.8,"label":"v_{in} ≈ 380–420 mV"}],
+"alt":"Zoomed view of the input ramp and the output, which stays at 0 V until the input reaches about 0.4 V; a vertical cursor marks that instant."}</script>
+<figcaption>(Recreated) Start of conduction at 500 mV/div, 200 μs/div. On screen at <a class="ts" data-t="1:25:25"></a> the cursor's CH1 reading flickered between 380 mV and 420 mV (<a class="ts" data-t="1:25:38"></a>).</figcaption>
+</figure>
+<div class="example" id="os2-ex8"><h3>Example 8 — Input voltage at which the diode starts to conduct (bench) <a class="ts" data-t="1:24:47"></a></h3>
+<p class="step">1. Put a time cursor (a vertical line) where the CH2 output just begins to rise <a class="ts" data-t="1:24:47"></a>.</p>
+<p class="step">2. Switch the cursor readout's source to channel 1 to read \(v_{in}\) at that instant <a class="ts" data-t="1:25:20"></a>. The readout showed 380 mV, and 420 mV a moment later (noise and averaging).</p>
+<p class="answer">\(v_{in} \approx 400\) mV at the onset of conduction, "almost exactly like what our simulation said" (LTspice ≈ 395 mV, <a href="#os2-ltcursors">§2</a>) <a class="ts" data-t="1:25:20"></a>.</p>
+</div>
+<h3>Comparison: approximation vs simulation vs bench</h3>
+<table>
+<tr><th>Quantity</th><th>Second approximation (\(V_F\) = 0.7 V)</th><th>LTspice (1N4001 model)</th><th>Oscilloscope</th></tr>
+<tr><td>Output peak for 5 V input peak</td><td>5 − 0.7 = 4.3 V</td><td>4.346 V</td><td>4.40 V</td></tr>
+<tr><td>Drop at the peak \(v_{in,pk} - v_{out,pk}\)</td><td>0.7 V</td><td>0.650 V</td><td>0.60 V</td></tr>
+<tr><td>\(v_{in}\) when conduction starts</td><td>0.7 V</td><td>≈ 0.395 V</td><td>≈ 0.38–0.42 V</td></tr>
+<tr><td>Peak current \((V_p - V_F)/R\) (computed here from the row above)</td><td>4.3 mA</td><td>≈ 4.35 mA</td><td>≈ 4.4 mA (inferred from 4.40 V across 1 kΩ)</td></tr>
+</table>
+<aside class="instructor"><p>The workflow he recommends <a class="ts" data-t="1:25:45"></a>: approximation techniques get you most of the way there, LTspice gets you all the way to the end, and then you <strong>test</strong> it and make sure you are within the ballpark of what you expected <a class="ts" data-t="1:26:10"></a>.</p></aside>
+</section>
+<section class="g-sec" id="os2-assumptions" data-kind="assumptions">
+<h2>Assumptions &amp; limitations</h2>
+<ul>
+<li><strong>\(T = 1/f\)</strong> is exact for any periodic signal; the hard part on a real scope is placing the cursors at two <em>corresponding</em> points one cycle apart (same level, same slope direction).</li>
+<li><strong>Cursor readings are only as good as the cursor placement.</strong> The instructor notes his LTspice cursor was placed "a tad bit high" <a class="ts" data-t="1:00:25"></a>; the ~400 mV conduction-start value is therefore approximate.</li>
+<li><strong>The scope's automatic frequency</strong> is reliable for a clean single-frequency waveform such as this pure sine; for waveforms made of several frequencies (or noisy/poorly triggered signals) it may report something other than what you mean — hence the manual cursor check <a class="ts" data-t="1:18:48"></a>.</li>
+<li><strong>Counting divisions</strong> is limited by the grid resolution (about ±0.1–0.2 div by eye). Choose volts/div so the waveform is as large as possible <em>while still fitting</em> on the screen; then the same reading error is a smaller fraction of the signal.</li>
+<li><strong>Difference-of-peaks forward voltage</strong> (\(V_F \approx V_{in,pk} - V_{out,pk}\)) assumes both channels share the same ground and are measured at the same instant (the peak). It gives \(V_F\) at the peak current only — \(V_F\) varies with current (≈0.4 V when conduction starts, ≈0.6–0.65 V at the 4.3 mA peak).</li>
+<li><strong>Averaging (acquire mode average, 32)</strong> cleans random noise only on a stable, well-triggered repetitive signal; it distorts signals that change from one sweep to the next.</li>
+<li>The scope ground clip is tied to earth ground through the scope; it must go to the circuit's reference node (here the bottom of the resistor / function-generator black lead), never to a point at a different potential.</li>
+</ul>
+</section>
+<section class="g-sec" id="os2-mistakes" data-kind="mistakes">
+<h2>Common mistakes</h2>
+<ul>
+<li><strong>Waveform runs off the screen.</strong> At 500 mV/div a 5 V peak needs 10 divisions above centre but the screen only has 4 above centre (8 total) <a class="ts" data-t="1:17:31"></a>. Fix: increase V/div until the whole peak-to-peak fits (2 V/div here).</li>
+<li><strong>Forgetting to multiply divisions by the scale.</strong> 2.5 divisions is not 2.5 V; at 2 V/div it is 5 V.</li>
+<li><strong>Unit slips in \(f = 1/T\).</strong> 1/16.7 ms is 0.0599 <em>kHz</em> = 59.9 Hz, not 0.0599 Hz. Use the instructor's trick: 1/ms → kHz, 1/s → Hz, 1/μs → MHz <a class="ts" data-t="1:20:03"></a>.</li>
+<li><strong>Measuring "one period" between points that are not equivalent</strong> (e.g. a rising zero crossing to a falling zero crossing gives \(T/2\)). Put both cursors on the same feature (e.g. the point where the cycle repeats) one cycle apart.</li>
+<li><strong>Blindly trusting the auto-measure.</strong> Cross-check with cursors and with what the source is set to; the instructor got the same 60 Hz three ways <a class="ts" data-t="1:21:17"></a>.</li>
+<li><strong>Too few or too many cycles in the window.</strong> A time base so slow that the trace looks like a flat line (as at <a class="ts" data-t="1:17:06"></a>) hides the waveform; aim for a few (≈2–3) cycles.</li>
+<li><strong>Simulation time for N cycles</strong> must be \(N\cdot T\) in seconds: \(5 \times (1/60) = 0.0833\) s, not \(5/60\) ms or \(5 \times 60\).</li>
+</ul>
+</section>
+<section class="g-sec" id="os2-recap" data-kind="recap">
+<h2>Recap &amp; formula sheet</h2>
+<ul>
+<li>A 60 Hz signal has \(T = 1/60\) s ≈ 16.7 ms; five cycles take ≈ 0.0833 s (used as the LTspice stop time).</li>
+<li>Pick V/div so the full waveform fits on the 8 vertical divisions: 5 V peak needs ≥ 1.25 V/div → the instructor used 2 V/div (2.5 div per peak).</li>
+<li>Amplitude = divisions × V/div: 2.5 div × 2 V/div = 5 V peak.</li>
+<li>Period by cursors: Δt = 16.7 ms → \(f = 1/16.7\,\text{ms} = 0.0599\,\text{kHz} \approx 60\) Hz; the scope's own readout said 60 Hz and the Hz-unit cursor said 59.88 Hz — three methods, same answer.</li>
+<li>Voltage differences by cursors: diode drop at the peak ≈ 650 mV (LTspice) vs ≈ 600 mV (scope); conduction starts at \(v_{in}\) ≈ 400 mV in both; ripple with 2200 μF ≈ 40 mV peak-to-peak (LTspice).</li>
+</ul>
+<div class="formula-sheet">
+<table>
+<tr><th>Formula</th><th>Variables &amp; units</th><th>Use</th></tr>
+<tr><td>\(T = \dfrac{1}{f}\), \(f = \dfrac{1}{T}\)</td><td>\(T\) period (s), \(f\) frequency (Hz)</td><td>period ↔ frequency</td></tr>
+<tr><td>\(t_{sim} = N\cdot T = \dfrac{N}{f}\)</td><td>\(N\) number of cycles</td><td>simulation stop time / screen width for \(N\) cycles</td></tr>
+<tr><td>\(V = n_{div}\times (\text{V/div})\)</td><td>\(n_{div}\) number of vertical divisions</td><td>reading a voltage off the grid</td></tr>
+<tr><td>\(\Delta t = n_{div}\times (\text{s/div})\)</td><td>\(n_{div}\) horizontal divisions</td><td>reading a time off the grid</td></tr>
+<tr><td>\(\text{V/div} \ge \dfrac{V_{pp}}{8}\) (or \(\dfrac{V_p}{4}\) centred)</td><td>8 vertical divisions on this scope</td><td>choosing a vertical scale that fits</td></tr>
+<tr><td>\(f = \dfrac{1}{\Delta t}\): 1/ms → kHz, 1/s → Hz, 1/μs → MHz</td><td>\(\Delta t\) cursor time difference</td><td>quick unit handling</td></tr>
+<tr><td>\(V_F \approx V_{in,pk} - V_{out,pk}\)</td><td>peaks of CH1 and CH2 (V)</td><td>diode forward voltage at peak current</td></tr>
+<tr><td>\(V_{r(pp)} = V_{max} - V_{min}\)</td><td>ripple extremes (V)</td><td>ripple peak-to-peak (4.19 − 4.15 = 0.04 V)</td></tr>
+<tr><td>\(I_{pk} = \dfrac{V_p - V_F}{R}\)</td><td>\(R\) load (Ω)</td><td>peak current (4.3 mA here)</td></tr>
+</table>
+</div>
+</section>

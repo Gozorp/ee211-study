@@ -1,0 +1,569 @@
+<section class="g-sec" id="cl4-overview" data-kind="overview">
+<h2>Overview</h2>
+<p>This lecture/lab explains how a capacitor charges through a resistor. At the instant voltage is applied, an uncharged capacitor acts like a short (maximum current \(V_S/R\)). As it charges, KVL forces the resistor voltage and the current to decay. After five time constants (\(\tau = RC\)) it holds the full supply voltage and acts like an open circuit. The same universal time constant chart used for inductors gives the percentages, and the formulas \(v_C = V_S(1-\mathrm{e}^{-t/\tau})\) and \(v_R = V_S\mathrm{e}^{-t/\tau}\) give exact values. A worked example (50 V, 100 kΩ, 0.1 μF) is followed by the lab: an LTspice simulation of a 10 V pulse into 470 Ω and 10 μF, and the same circuit on a breadboard measured live with an oscilloscope (cursor measurement of τ, capacitor tolerance, LCR meter).</p>
+<p><strong>Parts of the video</strong></p>
+<ul>
+<li><a class="ts" data-t="0:00"></a> Recap; the simplest RC circuit; the capacitor is a short at \(t = 0\) (section 1)</li>
+<li><a class="ts" data-t="3:41"></a> Why plugging in a charger can spark (section 1)</li>
+<li><a class="ts" data-t="6:05"></a> KVL during charging; the current decays; \(\tau = RC\); fully charged after 5τ = open circuit (section 1)</li>
+<li><a class="ts" data-t="13:07"></a> Universal time constant chart percentages (section 2)</li>
+<li><a class="ts" data-t="15:14"></a> Charging formulas for \(v_C\) and \(v_R\) (section 3)</li>
+<li><a class="ts" data-t="17:26"></a> Worked example: 50 V, 100 kΩ, 0.1 μF at 10 ms (section 4)</li>
+<li><a class="ts" data-t="33:40"></a> A printed chart from the web: curves A and B (section 2)</li>
+<li><a class="ts" data-t="35:12"></a> Analog reality: tolerances and parasitics (section 5)</li>
+<li><a class="ts" data-t="38:23"></a> LTspice lab: schematic, pulse source, τ = 4.7 ms, cursors at 1τ and 5τ, current (section 6)</li>
+<li><a class="ts" data-t="1:07:02"></a> Lab handout walkthrough and corrections (section 7)</li>
+<li><a class="ts" data-t="1:13:25"></a> Oscilloscope demo: breadboard, 63.2 % point, tolerance, 5τ, LCR meter (section 8)</li>
+<li><a class="ts" data-t="1:28:11"></a> Industry aside and other chatter (section 9)</li>
+<li><a class="ts" data-t="1:35:18"></a> Last lab-document fix and wrap-up (section 7)</li>
+</ul>
+</section>
+
+<section class="g-sec" id="cl4-objectives" data-kind="objectives">
+<h2>Learning objectives</h2>
+<p>After this lesson you should be able to…</p>
+<ul>
+<li>describe what an uncharged capacitor does at the instant a voltage is applied (acts like a short) and after it is fully charged (acts like an open), and compute the maximum current \(V_S/R\);</li>
+<li>explain with KVL and Ohm's law why the current and the resistor voltage decay while the capacitor voltage builds up;</li>
+<li>compute \(\tau = RC\) with correct unit prefixes and explain why Ω·F = s;</li>
+<li>read the universal time constant chart: 63.2 %, 86.5 %, 95 %, 98 %, 99.3 % (build-up) and 36.8 %, 13.5 %, 5 %, 2 %, 0.7 % (decay), and apply the "5τ = fully charged" rule;</li>
+<li>evaluate \(v_C(t) = V_S(1-\mathrm{e}^{-t/\tau})\), \(v_R(t) = V_S\mathrm{e}^{-t/\tau}\) and \(i(t) = v_R/R\) at any time, and check the results against each other with KVL;</li>
+<li>set up an LTspice PULSE source and transient simulation for an RC circuit and read the 1τ and 5τ values with a cursor, remembering to add the pulse delay;</li>
+<li>measure τ on an oscilloscope with cursors (Δt = τ, read ΔV ≈ 63.2 % of the step) and explain why measured values differ from calculated ones (capacitor tolerance, source loading, noise).</li>
+</ul>
+</section>
+
+<section class="g-sec" id="cl4-prereqs" data-kind="prereqs">
+<h2>Prerequisites</h2>
+<ul>
+<li><strong>Capacitor basics</strong> (<a class="xref" data-lesson="cl3">Capacitors: Introduction</a>): a capacitor is two conducting plates separated by an insulator. It stores charge \(Q\), and the stored charge produces a voltage \(v_C = Q/C\). Capacitance is measured in farads (F); practical values are μF, nF and pF. Capacitors "oppose a change in voltage".</li>
+<li><strong>Ohm's law</strong>: \(I = V/R\). Used here to turn the resistor voltage into the circuit current at any instant.</li>
+<li><strong>Kirchhoff's voltage law (KVL)</strong>: the voltages around a closed loop add to zero. In a series source–R–C loop this means \(V_S = v_R + v_C\) at every instant.</li>
+<li><strong>Series circuits</strong>: the same current flows through every element of a series loop, so \(i_R = i_C\).</li>
+<li><strong>Universal time constant chart and \(\tau = L/R\)</strong> (<a class="xref" data-lesson="cl1">Introduction to Inductors</a>, <a class="xref" data-lesson="cl2">L/R time constant</a>): the same exponential "build-up" and "decay" curves were used for inductor current. This lecture reuses the chart for capacitors.</li>
+<li><strong>Scientific notation and metric prefixes</strong>: k = 10<sup>3</sup>, m = 10<sup>−3</sup>, μ = 10<sup>−6</sup>, n = 10<sup>−9</sup>. LTspice uses <code>m</code> for milli, <code>u</code> for micro and <code>n</code> for nano.</li>
+<li><strong>LTspice transient simulation with a PULSE source</strong>: set up the same way as in the inductor lab (<a class="xref" data-lesson="cl3">previous lecture</a>).</li>
+<li><strong>Oscilloscope basics</strong> (volts/div, time/div, probes, cursors) are developed further in <a class="xref" data-lesson="os1">the first oscilloscope lesson</a> and <a class="xref" data-lesson="os2">measuring period and volts/division</a>.</li>
+</ul>
+</section>
+
+<section class="g-sec" id="cl4-definitions" data-kind="definitions">
+<h2>Definitions &amp; symbols</h2>
+<table>
+<tr><th>Term / symbol</th><th>Meaning</th><th>Unit</th></tr>
+<tr><td>RC circuit</td><td>A resistor in series with a capacitor, driven by a source that changes (a switch closing, or a pulse/square wave).</td><td>—</td></tr>
+<tr><td>\(V_S\)</td><td>Supply (applied) voltage. In the charging formulas it is also the final, fully charged capacitor voltage.</td><td>V</td></tr>
+<tr><td>\(v_C(t)\), \(V_C\)</td><td>Voltage across the capacitor at time \(t\).</td><td>V</td></tr>
+<tr><td>\(v_R(t)\), \(V_R\)</td><td>Voltage across the resistor at time \(t\).</td><td>V</td></tr>
+<tr><td>\(i(t)\), \(I_R\), \(I_C\)</td><td>Current in the series loop (the same through R and C).</td><td>A (mA)</td></tr>
+<tr><td>\(I_{max}\)</td><td>Largest current, at the instant the switch closes: \(V_S/R\).</td><td>A</td></tr>
+<tr><td>\(\tau\) (tau)</td><td>Time constant of an RC circuit, \(\tau = RC\). After one τ the capacitor has 63.2 % of its final voltage. The instructor writes it as a "T" with a hook on the page.</td><td>s (Ω·F = s)</td></tr>
+<tr><td>\(5\tau\)</td><td>Five time constants: the time after which the capacitor is treated as fully charged (or fully discharged).</td><td>s</td></tr>
+<tr><td>\(\mathrm{e}\)</td><td>Euler's number, 2.71828…, the base of the natural logarithm (the \(e^x\) key). The instructor calls it "epsilon" and writes ε.</td><td>—</td></tr>
+<tr><td>Universal time constant chart</td><td>Graph of percent of the final value versus number of time constants: a rising "build-up" curve and a falling "decay" curve.</td><td>% vs τ</td></tr>
+<tr><td>Build-up / decay</td><td>The rising curve \(1-\mathrm{e}^{-t/\tau}\) (capacitor voltage while charging) and the falling curve \(\mathrm{e}^{-t/\tau}\) (current and resistor voltage while charging; capacitor voltage while discharging).</td><td>—</td></tr>
+<tr><td>Short circuit (at \(t = 0\))</td><td>An uncharged capacitor has 0 V across it, so at the instant voltage is applied it behaves like a plain wire.</td><td>—</td></tr>
+<tr><td>Open circuit (fully charged)</td><td>After about 5τ, \(v_C = V_S\), the resistor has 0 V and no current flows: the capacitor behaves like a break in the wire (DC steady state).</td><td>—</td></tr>
+<tr><td>Inrush current</td><td>The large current drawn when uncharged capacitors are first connected to a source (the "spark" when plugging something in).</td><td>A</td></tr>
+<tr><td>Tolerance</td><td>Allowed deviation of a part's real value from its marked value, e.g. ±20 % for most aluminum electrolytic capacitors.</td><td>%</td></tr>
+<tr><td>Electrolytic capacitor</td><td>Polarized capacitor type that gives large capacitance in a small package but has a wide tolerance.</td><td>—</td></tr>
+<tr><td>Parasitic resistance / inductance</td><td>Unwanted R or L that every real part has (a capacitor has some R and L; a wire has some R, L and C).</td><td>Ω, H</td></tr>
+<tr><td>LCR meter</td><td>Bench instrument that measures inductance (L), capacitance (C) and resistance (R), more accurately than a general multimeter.</td><td>—</td></tr>
+<tr><td>PULSE source (LTspice)</td><td><code>PULSE(Vinitial Von Tdelay Trise Tfall Ton Tperiod Ncycles)</code>: a voltage that sits at Vinitial, rises to Von after Tdelay, stays there for Ton, then falls back.</td><td>V, s</td></tr>
+<tr><td><code>.tran</code></td><td>LTspice transient-analysis command; <code>.tran 150m</code> simulates 0 to 150 ms.</td><td>s</td></tr>
+<tr><td>Volts/div, time/div</td><td>Oscilloscope scale: how many volts one vertical grid division represents and how much time one horizontal division represents.</td><td>V/div, s/div</td></tr>
+<tr><td>Cursors, Δt, ΔV</td><td>Movable on-screen markers; the scope reports the time difference (Δt) and the voltage difference (ΔV) between two cursors.</td><td>s, V</td></tr>
+<tr><td>Averaging (acquire mode)</td><td>Scope mode that averages several captured waveforms (here 32) to reduce noise.</td><td>—</td></tr>
+<tr><td>Probe ×10</td><td>A 10:1 probe divides the signal by 10; the scope channel must also be set to ×10 so the displayed voltage is correct.</td><td>—</td></tr>
+<tr><td>Loading</td><td>When a circuit draws so much current from a source that the source's output voltage drops (here: the function generator at each rising edge).</td><td>—</td></tr>
+</table>
+</section>
+
+<section class="g-sec" id="cl4-charging" data-kind="lesson" data-ts="0-787">
+<h2>1. Charging a capacitor through a resistor: the "storybook"</h2>
+<p>The lecture opens with a recap <a class="ts" data-t="0:01"></a>: a capacitor stores charge; storing charge develops a voltage across it; pulling charge off (to power something else) lowers that voltage over time. The <em>rate</em> of charging follows the same universal time constant chart used for the inductor (<a class="xref" data-lesson="cl2">L/R time constant</a>) <a class="ts" data-t="0:25"></a>.</p>
+
+<h3>The simplest capacitor circuit <a class="ts" data-t="0:51"></a></h3>
+<p>A DC source \(V_S\), a switch, a resistor \(R\) and a capacitor \(C\) in one series loop. The switch closes at \(t = 0\). Before that, the capacitor has no charge, so it has 0 V across it and no current flows <a class="ts" data-t="1:21"></a>.</p>
+<figure class="circuit" id="cl4-fig-rc">
+<script type="application/json">{"parts":[
+ {"t":"BAT","a":[0,5],"b":[0,1],"label":"V_S","plus":"b"},
+ {"t":"W","pts":[[0,1],[0,0],[2,0]]},
+ {"t":"SW","a":[2,0],"b":[4,0],"label":"t = 0","state":"open","arrow":true},
+ {"t":"W","pts":[[4,0],[6,0]]},
+ {"t":"R","a":[6,0],"b":[6,3],"label":"R","side":-1},
+ {"t":"C","a":[6,3],"b":[6,6],"label":"C","side":-1},
+ {"t":"W","pts":[[6,6],[0,6],[0,5]]},
+ {"t":"IARR","a":[4.6,0],"b":[5.6,0],"label":"i"},
+ {"t":"VM","a":[7,0.5],"b":[7,2.5],"label":"v_R","lat":[7.7,1.5]},
+ {"t":"VM","a":[7,3.5],"b":[7,5.5],"label":"v_C","lat":[7.7,4.5]}
+],"alt":"Series RC circuit: battery V_S on the left, a switch that closes at t = 0 in the top wire, resistor R and capacitor C stacked on the right side, current i flowing clockwise."}</script>
+<figcaption>The simplest RC charging circuit, as drawn on the page at <a class="ts" data-t="1:21"></a> (battery, switch on top, R and C on the right). Polarity marks and the current arrow added for clarity.</figcaption>
+</figure>
+
+<h3>Stage 1 — at \(t = 0\) the uncharged capacitor acts like a short <a class="ts" data-t="1:46"></a></h3>
+<p>With zero charge on its plates, the capacitor has 0 V across it, so for that brief moment it behaves like a plain wire. The only thing limiting the current is the resistor, so the current is the <strong>maximum</strong> it will ever be <a class="ts" data-t="2:11"></a>:</p>
+<div class="formula">\[ I_{max} = \frac{V_S}{R} \qquad (\text{at } t = 0) \]</div>
+<dl class="vardefs"><dt>\(V_S\)</dt><dd>applied (supply) voltage, V</dd><dt>\(R\)</dt><dd>series resistance, Ω</dd><dt>\(I_{max}\)</dt><dd>current at the instant the switch closes, A</dd></dl>
+<p>Applies to an <em>uncharged</em> capacitor in series with R at the instant the voltage is applied.</p>
+<div class="example" id="cl4-ex0"><h3>Quick example — 100 V and 100 Ω <a class="ts" data-t="2:36"></a></h3>
+<p><strong>Given</strong>: \(V_S = 100\,\text{V}\), \(R = 100\,\Omega\), capacitor uncharged. <strong>Find</strong>: the current when the switch closes.</p>
+<p class="step">1. At \(t = 0\) the capacitor is a short, so the whole 100 V is across R.</p>
+<p class="step">2. Ohm's law: \(I = 100\,\text{V} / 100\,\Omega\).</p>
+<p class="answer">\(I_{max} = 1\,\text{A}\) — 100 % on the current (blue) curve of the chart at \(t = 0\) <a class="ts" data-t="3:03"></a>.</p>
+</div>
+<aside class="instructor"><p>The instructor stresses: <strong>at time zero the capacitor behaves like a short</strong> <a class="ts" data-t="3:03"></a>, and he writes "@T=0 cap acts like a short" under the second circuit sketch.</p></aside>
+
+<h3>Why you sometimes see a spark when you plug in a charger <a class="ts" data-t="3:41"></a></h3>
+<p>Every power supply (linear or switching — the difference doesn't matter here) has a few capacitors connected almost directly across the wires that go to the wall outlet <a class="ts" data-t="4:07"></a>. When the device has been unplugged, those capacitors have no charge <a class="ts" data-t="4:46"></a>. At the instant you plug it in they act like a short circuit and draw a very large current for a brief moment — that is the little spark <a class="ts" data-t="5:07"></a>. They then charge up very quickly to the wall voltage (120 V RMS, 170 V peak; RMS is covered in a later lecture) <a class="ts" data-t="5:24"></a>.</p>
+<figure class="circuit" id="cl4-fig-psu">
+<script type="application/json">{"parts":[
+ {"t":"N","at":[0,0],"open":true},
+ {"t":"N","at":[0,3],"open":true},
+ {"t":"T","at":[-0.4,1.6],"text":"Outlet","anchor":"end"},
+ {"t":"W","pts":[[0,0],[8,0]]},
+ {"t":"W","pts":[[0,3],[8,3]]},
+ {"t":"C","a":[4,0],"b":[4,3],"label":"C_1"},
+ {"t":"C","a":[6,0],"b":[6,3],"label":"C_2"},
+ {"t":"C","a":[8,0],"b":[8,3],"label":"C_3"},
+ {"t":"N","at":[4,0]},{"t":"N","at":[6,0]},{"t":"N","at":[4,3]},{"t":"N","at":[6,3]},
+ {"t":"BOX","a":[2,-1.2],"b":[9.4,4.2],"label":"PSU"}
+],"alt":"Two wires from a wall outlet enter a power supply box; inside, three capacitors are connected in parallel directly across the two wires."}</script>
+<figcaption>Input capacitors of a power supply (PSU) connected directly across the outlet wires, as sketched at <a class="ts" data-t="4:46"></a>. Uncharged, they look like a short at the moment of plugging in.</figcaption>
+</figure>
+
+<h3>Stage 2 — while charging, KVL makes the current decay <a class="ts" data-t="6:05"></a></h3>
+<p>As charge collects, a voltage builds on the capacitor. By KVL the source voltage is shared: \(V_S = v_R + v_C\). For example, with 10 V applied and 1 V already on the capacitor, the resistor has 9 V <a class="ts" data-t="6:30"></a>. So:</p>
+<ul>
+<li>\(v_C\) goes <strong>up</strong> (the red "build-up" curve) <a class="ts" data-t="8:49"></a>;</li>
+<li>\(v_R = V_S - v_C\) goes <strong>down</strong>, and therefore the current \(i = v_R/R\) goes <strong>down</strong> (the blue "decay" curve) <a class="ts" data-t="6:56"></a>.</li>
+</ul>
+<aside class="instructor"><p>"I drops/decays as C charges; V<sub>C</sub> increasing" — written under the third circuit sketch <a class="ts" data-t="8:08"></a>. He labels the falling curve "Decay" and the rising one "Buildup" <a class="ts" data-t="7:22"></a>.</p></aside>
+
+<h3>The time constant <a class="ts" data-t="9:11"></a></h3>
+<div class="formula">\[ \tau = R\,C \]</div>
+<dl class="vardefs"><dt>\(\tau\)</dt><dd>time constant, s</dd><dt>\(R\)</dt><dd>resistance in series with the capacitor, Ω</dd><dt>\(C\)</dt><dd>capacitance, F</dd></dl>
+<p>Multiplying the resistance (in ohms) by the capacitance (in farads) gives the time of the <strong>first</strong> time constant on the chart <a class="ts" data-t="9:36"></a>. It takes <strong>five</strong> time constants for the capacitor to be (practically) fully charged.</p>
+<aside class="extra"><p><strong>Why Ω·F is seconds:</strong> \(1\,\Omega = 1\,\text{V/A}\) and \(1\,\text{F} = 1\,\text{C/V}\) (coulomb per volt), so \(\Omega\cdot\text{F} = \frac{\text{V}}{\text{A}}\cdot\frac{\text{C}}{\text{V}} = \frac{\text{C}}{\text{A}} = \frac{\text{A}\cdot\text{s}}{\text{A}} = \text{s}\).</p>
+<p><strong>Which R?</strong> Here there is only one resistor. In a larger network, the R in \(\tau = RC\) is the <em>Thévenin resistance seen by the capacitor</em> (remove C, turn off the independent sources, and find the resistance between the capacitor's terminals). If the capacitor charges through one path and discharges through a different path, each path has its own R and therefore its own τ.</p></aside>
+
+<h3>Stage 3 — after 5τ the capacitor is fully charged and acts like an open circuit <a class="ts" data-t="10:02"></a></h3>
+<p>Eventually \(v_C = V_S\): the capacitor holds as much charge as the applied voltage can push onto it <a class="ts" data-t="10:28"></a>. With, say, 10 V on the source and 10 V on the capacitor, the resistor has 0 V, so <strong>no current flows</strong> and the capacitor behaves like an <strong>open circuit</strong> <a class="ts" data-t="10:51"></a>. On the page: "after 5T, V<sub>S</sub> = V<sub>C</sub>, I = 0" <a class="ts" data-t="11:10"></a>.</p>
+<div class="formula">\[ t \ge 5\tau:\quad v_C \approx V_S,\qquad v_R \approx 0,\qquad i \approx 0 \]</div>
+<p>This is the DC steady state of a capacitor: once charged, it blocks DC current.</p>
+
+<h3>The whole "storybook" in one table <a class="ts" data-t="11:34"></a></h3>
+<p>The instructor tells the charging process as a story <a class="ts" data-t="11:34"></a>, drawn as four circuit sketches under the chart:</p>
+<table>
+<tr><th>Moment</th><th>\(v_C\)</th><th>\(v_R\)</th><th>\(i\)</th><th>Capacitor behaves like…</th></tr>
+<tr><td>Before the switch closes</td><td>0</td><td>0</td><td>0</td><td>— (no charge, nothing happening)</td></tr>
+<tr><td>\(t = 0\) (switch just closed)</td><td>0</td><td>\(V_S\)</td><td>\(V_S/R\) (max, 100 %)</td><td>short circuit</td></tr>
+<tr><td>\(0 &lt; t &lt; 5\tau\)</td><td>rising (build-up)</td><td>falling</td><td>falling (decay)</td><td>charging</td></tr>
+<tr><td>\(t \ge 5\tau\)</td><td>\(V_S\) (≈100 %)</td><td>0</td><td>0</td><td>open circuit</td></tr>
+</table>
+<p>The current tells the "inverse story" of the voltage: it starts as large as Ohm's law allows and ends at zero amps once the capacitor is fully charged <a class="ts" data-t="12:26"></a>.</p>
+</section>
+
+<section class="g-sec" id="cl4-utc" data-kind="lesson" data-ts="787-914">
+<h2>2. The universal time constant chart for RC circuits</h2>
+<p>The chart is a good way to visualize charging <a class="ts" data-t="13:07"></a>. Its percentages are fixed — the same for every RC (and RL) circuit — so the horizontal axis is counted in time constants (1τ … 5τ) and the vertical axis in percent of the final value. The instructor drew it by hand under the title "RC Time Constant", with the red curve labelled "Cap Voltage" and the blue curve "Resistor Voltage &amp; Current".</p>
+<figure class="scope" id="cl4-fig-utc">
+<script type="application/json">{"type":"scope","cols":10,"rows":10,"ch":"chart","vdiv":"10 % / div","tdiv":"0.5 τ / div",
+"traces":[{"shape":"charge","v0":-5,"vf":5,"tau":2,"x0":0,"label":"v_C (build-up)"},{"fn":"-5+10*exp(-x/2)","label":"i, v_R (decay)"}],
+"marks":[{"type":"hline","y":1.32,"label":"63.2 %"},{"type":"hline","y":-1.32,"label":"36.8 %"},{"type":"hline","y":3.65,"label":"86.5 %"},{"type":"hline","y":-3.65,"label":"13.5 %"},
+{"type":"vline","x":2,"label":"1τ"},{"type":"vline","x":4,"label":"2τ"},{"type":"vline","x":6,"label":"3τ"},{"type":"vline","x":8,"label":"4τ"},{"type":"text","x":9.6,"y":-4.6,"text":"5τ"}],
+"alt":"Universal time constant chart: rising curve from 0 to 100 percent and falling curve from 100 to 0 percent over five time constants; they cross between 0 and 1 tau; 63.2 and 36.8 percent at 1 tau, 86.5 and 13.5 percent at 2 tau."}</script>
+<figcaption>Universal time constant chart, redrawn (added for clarity; bottom line = 0 %, top line = 100 %, each horizontal grid line = 10 %). The instructor's hand-drawn version is on screen from <a class="ts" data-t="0:51"></a> and labelled at <a class="ts" data-t="7:22"></a>.</figcaption>
+</figure>
+<table>
+<tr><th>Time</th><th>Build-up: \(v_C\) while charging (% of \(V_S\)) — exact</th><th>Decay: \(i\), \(v_R\) while charging (% of max) — exact</th><th>Labels on the instructor's chart</th></tr>
+<tr><td>0</td><td>0 %</td><td>100 %</td><td>0 / 100</td></tr>
+<tr><td>1τ</td><td>63.2 %</td><td>36.8 %</td><td>63.2 % / 36.8 %</td></tr>
+<tr><td>2τ</td><td>86.5 %</td><td>13.5 %</td><td>86.5 % / 13.5 %</td></tr>
+<tr><td>3τ</td><td>95.0 %</td><td>5.0 %</td><td>95 / 5</td></tr>
+<tr><td>4τ</td><td>98.2 %</td><td>1.8 %</td><td>98 / 2</td></tr>
+<tr><td>5τ</td><td>99.3 %</td><td>0.7 %</td><td>100 / 0</td></tr>
+</table>
+<p>The instructor reads 63.2 % at 1τ, 86.5 % at 2τ and 95 % at 3τ <a class="ts" data-t="13:07"></a>, and calls the 5τ value "100 %", noting that the curve keeps getting closer to 100 % without ever actually reaching it <a class="ts" data-t="13:34"></a>.</p>
+<aside class="uncertain"><p><strong>Possible board error — the 5τ percentage.</strong> The instructor says the 5τ value is "more like 99.8 percent" <a class="ts" data-t="13:34"></a> (and repeats 99.8 % at <a class="ts" data-t="1:00:49"></a> and <a class="ts" data-t="1:31:12"></a>). The correct value is \(1-\mathrm{e}^{-5} = 0.9933\), i.e. <strong>99.3 %</strong>. His own LTspice cursor confirms it: 9.9336 V out of 10 V at 5τ (<a class="ts" data-t="1:00:49"></a>) is 99.3 %. The printed chart he shows from the web lists 99.0 at 5 time constants (rounded).</p></aside>
+<p>The same falling (blue) curve describes both the loop current <em>and</em> the resistor voltage, because \(v_R = iR\): as the current decreases, the resistor voltage decreases too <a class="ts" data-t="13:59"></a>.</p>
+<aside class="note"><p>At <a class="ts" data-t="14:24"></a> the instructor says the blue curve represents the current and "the voltage across only the capacitor over there". From the chart labels ("Resistor Voltage &amp; Current") and the sentence just before, he means the voltage across the <strong>resistor</strong> — a verbal slip. (The capacitor voltage follows the blue curve only while <em>discharging</em>.)</p></aside>
+<aside class="instructor"><p>Should you memorize the percentages? They are good to know when starting out; in his own work he remembers <strong>63.2 %</strong> and <strong>13.5 %</strong> and otherwise uses the formulas <a class="ts" data-t="14:49"></a>.</p></aside>
+
+<h3>A printed chart: what curves A and B mean <a class="ts" data-t="34:24"></a></h3>
+<p>Later the instructor shows a printed universal time constant chart found with a web search <a class="ts" data-t="33:40"></a> (he had wanted a clean image but ended up drawing his own). Its legend explains which quantities follow each curve <a class="ts" data-t="34:24"></a>:</p>
+<table>
+<tr><th>Curve</th><th>RC circuit</th><th>LR circuit</th></tr>
+<tr><td>A (rising)</td><td>capacitor voltage on charge</td><td>inductor current or resistor voltage on build-up</td></tr>
+<tr><td>B (falling)</td><td>capacitor voltage on <strong>discharge</strong>; resistor voltage or capacitor current on charge or discharge</td><td>inductor current or resistor voltage on decay; inductor voltage on build-up or decay</td></tr>
+</table>
+<p>RC circuits and RL circuits all follow this one chart <a class="ts" data-t="34:50"></a>; only the time-constant formula changes (\(\tau = RC\) here, \(\tau = L/R\) for inductors — see <a class="xref" data-lesson="cl2">the L/R time constant lesson</a>).</p>
+</section>
+
+<section class="g-sec" id="cl4-formulas" data-kind="lesson" data-ts="914-1046">
+<h2>3. The charging equations</h2>
+<p>The chart curves are described by two formulas <a class="ts" data-t="15:14"></a>. With them you can find "everything you want to know over time" as a capacitor charges <a class="ts" data-t="16:59"></a>.</p>
+<div class="formula">\[ v_C(t) = V_S\left(1 - \mathrm{e}^{-t/\tau}\right), \qquad \tau = RC \]</div>
+<dl class="vardefs"><dt>\(v_C(t)\)</dt><dd>capacitor voltage at time \(t\), V</dd><dt>\(V_S\)</dt><dd>supply voltage (final capacitor voltage), V</dd><dt>\(t\)</dt><dd>time since the switch closed (since the step), s</dd><dt>\(\tau\)</dt><dd>time constant \(RC\), s</dd><dt>\(\mathrm{e}\)</dt><dd>2.71828… <a class="ts" data-t="16:33"></a></dd></dl>
+<p>Written at <a class="ts" data-t="15:39"></a>. Applies to an initially uncharged capacitor charging from a constant voltage \(V_S\) through \(R\).</p>
+<div class="formula">\[ v_R(t) = V_S\,\mathrm{e}^{-t/\tau} \]</div>
+<dl class="vardefs"><dt>\(v_R(t)\)</dt><dd>resistor voltage at time \(t\) during charging, V</dd></dl>
+<p>Written at <a class="ts" data-t="16:08"></a>. Note that \(v_R + v_C = V_S\) at every instant (KVL).</p>
+<div class="formula">\[ i(t) = \frac{v_R(t)}{R} = \frac{V_S}{R}\,\mathrm{e}^{-t/\tau} \]</div>
+<dl class="vardefs"><dt>\(i(t)\)</dt><dd>loop current (through R and C), A</dd></dl>
+<p>To get the current, "solve for your voltage across the resistor and apply Ohm's law" <a class="ts" data-t="16:59"></a>.</p>
+<aside class="note"><p>The instructor calls the constant 2.71828 "epsilon" and writes ε <a class="ts" data-t="16:33"></a>. Its usual name is <strong>e</strong> (Euler's number). On a calculator use the \(e^x\) key, usually near the π key <a class="ts" data-t="21:43"></a>.</p></aside>
+
+<aside class="extra">
+<p><strong>Discharging, the general form, and solving for time.</strong> The lecture writes only the charging formulas (discharging is shown on the LTspice plot in section 6). These standard results extend them:</p>
+<ul>
+<li><em>Discharging</em> a capacitor that starts at \(V_0\) through a resistance \(R\): \(v_C(t) = V_0\,\mathrm{e}^{-t/\tau}\). The current has the same shape but flows the opposite way, which is why the LTspice current goes negative after 100 ms.</li>
+<li><em>General form</em> for any starting voltage \(V_0\) and final voltage \(V_f\): \(v_C(t) = V_f + (V_0 - V_f)\,\mathrm{e}^{-t/\tau}\). With \(V_0 = 0,\ V_f = V_S\) it is the charging formula; with \(V_f = 0\) it is discharging. On the scope (section 8) the capacitor swings from about −5 V to +5 V, so \(V_0 = -5\,\text{V}\), \(V_f = +5\,\text{V}\) — the 63.2 % rule still applies to the 10 V <em>change</em>.</li>
+<li><em>Continuity</em>: the voltage across a capacitor cannot jump instantly (that would need infinite current), so \(v_C\) just after switching equals \(v_C\) just before. This is the "capacitor opposes a change in voltage" idea used at <a class="ts" data-t="50:34"></a>.</li>
+<li><em>Solving for time</em>: from \(v_C = V_S(1-\mathrm{e}^{-t/\tau})\), \(t = -\tau\ln\!\left(1 - \frac{v_C}{V_S}\right)\). Example with the lab values (\(\tau = 4.7\,\text{ms}\), 10 V): the time to reach 5 V is \(t = -4.7\,\text{ms}\times\ln(0.5) = 3.26\,\text{ms}\).</li>
+</ul>
+</aside>
+</section>
+
+<section class="g-sec" id="cl4-example" data-kind="lesson" data-ts="1046-2020">
+<h2>4. Worked example: 50 V, 100 kΩ, 0.1 μF at t = 10 ms</h2>
+<div class="example" id="cl4-ex1"><h3>Example 1 — find \(v_C\), \(v_R\) and \(i\) after 10 ms <a class="ts" data-t="17:26"></a></h3>
+<p><strong>Given</strong> <a class="ts" data-t="18:01"></a>: \(V_S = 50\,\text{V}\), a switch that closes at \(t = 0\), \(R = 100\,\text{k}\Omega\), \(C = 0.1\,\mu\text{F}\) <a class="ts" data-t="18:30"></a>, capacitor initially uncharged.</p>
+<figure class="circuit" id="cl4-fig-ex1">
+<script type="application/json">{"parts":[
+ {"t":"BAT","a":[0,5],"b":[0,1],"label":"V_S","value":"50 V","plus":"b","side":-1},
+ {"t":"W","pts":[[0,1],[0,0],[2,0]]},
+ {"t":"SW","a":[2,0],"b":[4,0],"label":"t = 0","state":"open"},
+ {"t":"W","pts":[[4,0],[6,0]]},
+ {"t":"R","a":[6,0],"b":[6,3],"label":"R","value":"100 kΩ"},
+ {"t":"C","a":[6,3],"b":[6,6],"label":"C","value":"0.1 μF"},
+ {"t":"W","pts":[[6,6],[0,6],[0,5]]},
+ {"t":"IARR","a":[4.6,0],"b":[5.6,0],"label":"i"}
+],"alt":"Example circuit: 50 volt battery, switch, 100 kilohm resistor and 0.1 microfarad capacitor in series."}</script>
+<figcaption>Example circuit as drawn at <a class="ts" data-t="18:57"></a>: "R = 100K, V<sub>R</sub> = ?", "C = 0.1 μF, V<sub>C</sub> = ?". Question on the page: "What is V<sub>R</sub> &amp; V<sub>C</sub> after 10 ms?"</figcaption>
+</figure>
+<p><strong>Goal</strong> <a class="ts" data-t="19:23"></a>: \(v_R\) and \(v_C\) after \(t = 10\,\text{ms}\). (He picked 10 ms "somewhere along this graph" without telling the class where — it turns out to be exactly 1τ.)</p>
+<p class="step">1. Write the capacitor formula <a class="ts" data-t="19:47"></a>: \(v_C = V_S\left(1 - \mathrm{e}^{-t/RC}\right)\).</p>
+<p class="step">2. Substitute <a class="ts" data-t="20:30"></a>, writing 0.1 μF in scientific notation as \(0.1\times10^{-6}\,\text{F}\) <a class="ts" data-t="21:00"></a>:
+\[ v_C = 50\left(1 - 2.718^{-\frac{10\times10^{-3}}{(100\times10^{3})(0.1\times10^{-6})}}\right) \]</p>
+<p class="step">3. Evaluate the exponent <a class="ts" data-t="22:09"></a>: \(RC = 100\,000 \times 0.1\times10^{-6} = 0.01\,\text{s}\), so \(t/RC = 0.01/0.01 = 1\) and \(\mathrm{e}^{-1} = 0.3679\).</p>
+<p class="step">4. \(v_C = 50\,(1 - 0.3679) = 50 \times 0.6321\).</p>
+<p class="answer">\(v_C(10\,\text{ms}) = 31.61\,\text{V}\) <a class="ts" data-t="22:36"></a></p>
+<p class="step">5. Where are we on the chart? Divide by the maximum, 50 V <a class="ts" data-t="23:23"></a>: \(31.61/50 = 0.632 = 63.2\,\%\) <a class="ts" data-t="24:02"></a>. That is the first time constant, so 10 ms must equal τ.</p>
+<p class="step">6. Check τ <a class="ts" data-t="24:41"></a>: \(\tau = RC = 100\,\text{k}\Omega\times(0.1\times10^{-6}\,\text{F}) = 0.01\,\text{s} = 10\,\text{ms}\) ✓ <a class="ts" data-t="25:29"></a>. So the chart's time axis for this circuit reads 10, 20, 30, 40 ms, and the capacitor is "fully charged" at 5τ = 50 ms <a class="ts" data-t="25:54"></a> (written in pencil under the chart).</p>
+<p class="step">7. Resistor voltage by KVL <a class="ts" data-t="26:19"></a> — "our basic rules do not go away": \(v_R = 50 - 31.61 = 18.39\,\text{V}\) <a class="ts" data-t="26:47"></a>.</p>
+<p class="step">8. Current by Ohm's law <a class="ts" data-t="27:13"></a> (the same through R and C because it is a series circuit <a class="ts" data-t="27:42"></a>): \(I_R = 18.39\,\text{V} / 100\,\text{k}\Omega = 0.184\,\text{mA}\) <a class="ts" data-t="28:10"></a>.</p>
+<p class="answer">\(v_R(10\,\text{ms}) = 18.39\,\text{V}\), \(i(10\,\text{ms}) = 0.184\,\text{mA}\)</p>
+<p class="step">9. Compare with the starting current <a class="ts" data-t="28:54"></a>. At \(t = 0\) the capacitor is a short: \(I_{max} = 50\,\text{V}/100\,\text{k}\Omega = 0.5\,\text{mA}\) <a class="ts" data-t="29:24"></a>. Ratio: \(0.184/0.5 = 0.368 = 36.8\,\%\) — exactly the decay-curve value at 1τ.</p>
+<p class="step">10. Check \(v_R\) with its own formula <a class="ts" data-t="29:55"></a>: \(v_R = V_S\mathrm{e}^{-t/\tau} = 50 \times 2.718^{-\frac{10\,\text{ms}}{(100\,\text{k})(0.1\times10^{-6})}}\) <a class="ts" data-t="30:37"></a> \(= 50\times \mathrm{e}^{-1} \approx 18.39\,\text{V}\) ("18.395" on the page), the same as the KVL result <a class="ts" data-t="31:30"></a>.</p>
+<p>The instructor marks these results on the chart in pencil: 0.5 mA at the top of the current curve, 31.61 V at the 63.2 % point, 0.184 mA at the 36.8 % point, and 50 V at 5τ <a class="ts" data-t="29:48"></a>.</p>
+<table>
+<tr><th>Time</th><th>\(t\)</th><th>\(v_C\) (V)</th><th>\(v_R\) (V)</th><th>\(i\) (mA)</th></tr>
+<tr><td>0</td><td>0 ms</td><td>0</td><td>50</td><td>0.5</td></tr>
+<tr><td>1τ</td><td>10 ms</td><td>31.61</td><td>18.39</td><td>0.184</td></tr>
+<tr><td>2τ</td><td>20 ms</td><td>43.23</td><td>6.77</td><td>0.068</td></tr>
+<tr><td>3τ</td><td>30 ms</td><td>47.51</td><td>2.49</td><td>0.025</td></tr>
+<tr><td>4τ</td><td>40 ms</td><td>49.08</td><td>0.92</td><td>0.009</td></tr>
+<tr><td>5τ</td><td>50 ms</td><td>49.66</td><td>0.34</td><td>0.003</td></tr>
+</table>
+<p>(The 1τ row is the instructor's; the other rows were computed with the same formulas for practice.)</p>
+</div>
+<aside class="note"><p>Using 2.718 instead of the exact e changes only the third decimal: 2.718 gives \(v_C = 31.604\,\text{V}\) and \(v_R = 18.396\,\text{V}\) (the page's "18.395"); the exact e gives 31.606 V and 18.394 V. Both round to the instructor's 31.61 V and 18.39 V.</p></aside>
+</section>
+
+<section class="g-sec" id="cl4-analog" data-kind="lesson" data-ts="2112-2480">
+<h2>5. Real parts are analog: tolerances and parasitics</h2>
+<p>Before the lab, the instructor explains why lab measurements never come out "perfect" <a class="ts" data-t="35:12"></a>:</p>
+<ul>
+<li>Digital circuits feel exact (ones and zeros), but the analog world has <strong>component tolerances</strong>: resistors are not exactly their marked value, and wires are not exactly 0 Ω <a class="ts" data-t="35:38"></a>.</li>
+<li>Every real part has <strong>all three properties — resistance, inductance and capacitance</strong>. A capacitor is called a capacitor because it has much more capacitance than R or L, but it still has some of each <a class="ts" data-t="36:03"></a>. A good wire is mostly a resistance very close to 0 Ω, with a little inductance and capacitance <a class="ts" data-t="36:54"></a>.</li>
+<li>The unwanted R and L are called <strong>parasitic resistance</strong> and <strong>parasitic inductance</strong> <a class="ts" data-t="37:43"></a>.</li>
+<li>"Digital circuits are made from analog parts" — to get digital you must have analog <a class="ts" data-t="38:08"></a>. Courses that interface with the outside world (embedded systems) run into far more analog issues than gate-level logic courses <a class="ts" data-t="40:30"></a>.</li>
+</ul>
+<aside class="instructor"><p>"If you want to be a decent engineer you kind of have to pay attention to everything" <a class="ts" data-t="40:30"></a> — the analog behaviour is always there, even when it can be abstracted away.</p></aside>
+</section>
+
+<section class="g-sec" id="cl4-ltspice" data-kind="lesson" data-ts="2324-4138">
+<h2>6. Lab: simulating the RC circuit in LTspice</h2>
+<p>The lab ("LTSpice Intro RC Time Constant") simulates the only capacitor circuit studied so far, a resistor in series with a capacitor <a class="ts" data-t="38:44"></a>: a 10 V source, a <strong>470 Ω</strong> resistor and a <strong>10 μF</strong> capacitor <a class="ts" data-t="39:10"></a>. These values are more realistic than the 1 H inductor of the previous (L/R) lab <a class="ts" data-t="39:32"></a>, and they match the breadboard circuit of the oscilloscope demo, so calculation, simulation and measurement can be compared <a class="ts" data-t="45:21"></a>.</p>
+
+<h3>6.1 Building the schematic <a class="ts" data-t="41:45"></a></h3>
+<ol>
+<li><em>File → New Schematic</em>.</li>
+<li><kbd>F2</kbd> → choose <code>voltage</code> → place it; <kbd>Esc</kbd> to stop placing.</li>
+<li><kbd>R</kbd> places a resistor (<kbd>Ctrl</kbd>+<kbd>R</kbd> rotates it); <kbd>C</kbd> places a capacitor <a class="ts" data-t="42:09"></a>.</li>
+<li><kbd>G</kbd> places a ground along the bottom of the schematic.</li>
+<li><kbd>F3</kbd> (wire tool): source → resistor → capacitor → back to the source, and the bottom node to ground.</li>
+</ol>
+<figure class="circuit" id="cl4-fig-lts">
+<script type="application/json">{"parts":[
+ {"t":"V","a":[0,4],"b":[0,1],"label":"V1","value":"PULSE","plus":"b","side":-1},
+ {"t":"W","pts":[[0,1],[0,0],[1,0]]},
+ {"t":"R","a":[1,0],"b":[5,0],"label":"R1","value":"470 Ω","side":-1},
+ {"t":"W","pts":[[5,0],[6,0]]},
+ {"t":"C","a":[6,0],"b":[6,4],"label":"C1","value":"10 μF"},
+ {"t":"W","pts":[[6,4],[0,4]]},
+ {"t":"G","at":[0,4]},
+ {"t":"N","at":[0,0],"label":"n001","pos":"nw"},
+ {"t":"N","at":[6,0],"label":"n002","pos":"ne"},
+ {"t":"T","at":[3,5.6],"text":"PULSE(0 10 50m 1n 1n 50m)   .tran 150m"}
+],"padX":2.2,"alt":"LTspice schematic: pulse voltage source V1 on the left with its negative side grounded, resistor R1 470 ohms on top, capacitor C1 10 microfarads on the right to ground. Node n001 is the source top, node n002 the capacitor top."}</script>
+<figcaption>The LTspice schematic as shown at <a class="ts" data-t="48:45"></a>. V(n001) is the applied pulse; V(n002) is the capacitor voltage (its lower end is grounded).</figcaption>
+</figure>
+
+<h3>6.2 Pulse source settings <a class="ts" data-t="42:36"></a></h3>
+<p>Right-click the voltage source → <em>Advanced</em> → <em>PULSE</em>. As in the inductor lab, the pulse is "off" for as long as it is "on" <a class="ts" data-t="43:02"></a>. The settings, shown in a screenshot at <a class="ts" data-t="43:55"></a>:</p>
+<table>
+<tr><th>Field</th><th>Value</th><th>Meaning</th></tr>
+<tr><td>Vinitial[V]</td><td><code>0</code></td><td>voltage before the pulse</td></tr>
+<tr><td>Von[V]</td><td><code>10</code></td><td>voltage while the pulse is on</td></tr>
+<tr><td>Tdelay[s]</td><td><code>50m</code></td><td>stay at 0 V for 50 ms first</td></tr>
+<tr><td>Trise[s]</td><td><code>1n</code></td><td>rise in 1 ns ("pretty fast")</td></tr>
+<tr><td>Tfall[s]</td><td><code>1n</code></td><td>fall in 1 ns</td></tr>
+<tr><td>Ton[s]</td><td><code>50m</code></td><td>stay at 10 V for 50 ms</td></tr>
+<tr><td>Tperiod[s], Ncycles</td><td>(blank)</td><td>a single pulse</td></tr>
+</table>
+<p>Then right-click R and enter <code>470</code> (Ω is the default unit), and right-click C and enter <code>10u</code> (u = micro) <a class="ts" data-t="46:15"></a>.</p>
+
+<h3>6.3 Simulation time <a class="ts" data-t="46:58"></a></h3>
+<p>Simulate 50 ms off + 50 ms on + 50 ms off = <strong>150 ms</strong>: <em>Simulate → Edit Simulation Command</em>, stop time <code>150m</code>, place the <code>.tran 150m</code> directive on the schematic <a class="ts" data-t="47:27"></a>, then <em>Simulate → Run</em> <a class="ts" data-t="47:51"></a>.</p>
+
+<h3>6.4 The applied pulse <a class="ts" data-t="48:15"></a></h3>
+<p>Clicking the top of the source plots the applied voltage: 0 V until 50 ms, then 10 V (within 1 ns) until 100 ms, then back to 0 V <a class="ts" data-t="48:41"></a>. (A student whose pulse did not come back down at 100 ms had the "on" time set wrong <a class="ts" data-t="49:36"></a>.)</p>
+
+<h3>6.5 How long until the capacitor reaches 10 V? <a class="ts" data-t="50:09"></a></h3>
+<p>Before 50 ms nothing is applied, so the capacitor does not charge. At 50 ms the source jumps to 10 V within 1 ns, but the capacitor "is going to oppose a change in voltage" and needs time to follow <a class="ts" data-t="50:34"></a>. Full charge (100 % on the chart) takes five time constants <a class="ts" data-t="50:59"></a>.</p>
+<div class="example" id="cl4-ex2"><h3>Example 2 — time constant of the lab circuit <a class="ts" data-t="51:55"></a></h3>
+<p><strong>Given</strong>: \(R = 470\,\Omega\), \(C = 10\,\mu\text{F} = 10\times10^{-6}\,\text{F}\), \(V_S = 10\,\text{V}\) (pulse height).</p>
+<p class="step">1. One time constant <a class="ts" data-t="52:56"></a>: \(\tau = RC = 470 \times 10\times10^{-6} = 0.0047\,\text{s}\) <a class="ts" data-t="53:23"></a> \(= 4.7\,\text{ms}\) <a class="ts" data-t="53:49"></a>.</p>
+<p class="step">2. Five time constants: \(5\tau = 5RC = 5(470)(10\text{E}{-6}) = 23.5\,\text{ms}\) <a class="ts" data-t="53:49"></a>.</p>
+<p class="step">3. Voltage at 1τ: \(63.2\,\% \times 10\,\text{V} = 6.32\,\text{V}\) <a class="ts" data-t="56:00"></a>.</p>
+<p class="step">4. The pulse starts at 50 ms, so on the LTspice time axis 1τ is at \(50 + 4.7 = 54.7\,\text{ms}\) <a class="ts" data-t="56:30"></a> and 5τ is at \(50 + 23.5 = 73.5\,\text{ms}\) <a class="ts" data-t="1:00:04"></a>.</p>
+<p class="step">5. Maximum current (capacitor = short at the step) <a class="ts" data-t="1:03:34"></a>: \(I_{max} = 10\,\text{V}/470\,\Omega = 0.02128\,\text{A} \approx 21.3\,\text{mA}\) <a class="ts" data-t="1:03:59"></a>.</p>
+<p class="answer">\(\tau = 4.7\,\text{ms}\); \(v_C(1\tau) = 6.32\,\text{V}\) at 54.7 ms; about 10 V after \(5\tau = 23.5\,\text{ms}\) (73.5 ms on the plot); \(I_{max} = 21.3\,\text{mA}\).</p>
+</div>
+<aside class="mistake"><p>The page writes 10 μF as <code>10E-6</code>. The instructor warns that this "e" is just scientific notation (× 10<sup>−6</sup>), "not to be confused with epsilon" (Euler's e) <a class="ts" data-t="52:56"></a>.</p></aside>
+
+<h3>6.6 Reading the capacitor voltage with a cursor <a class="ts" data-t="54:30"></a></h3>
+<p>Clicking the top of the capacitor plots V(n002). Because the capacitor's other side is grounded, this node voltage <em>is</em> the voltage across the capacitor <a class="ts" data-t="54:44"></a>. The blue curve rises from 50 ms (charging) and falls after 100 ms (discharging) <a class="ts" data-t="55:03"></a>.</p>
+<figure class="scope" id="cl4-fig-ltsplot">
+<script type="application/json">{"type":"scope","cols":10,"rows":8,"ch":"LTspice","vdiv":"2 V/div (0 V = 3 div below centre)","tdiv":"15 ms/div",
+"traces":[{"fn":"(x<10/3||x>20/3) ? -3 : 2","label":"V(n001) applied pulse","color":3},
+{"fn":"x<10/3 ? -3 : (x<20/3 ? -3+5*(1-exp(-(x-10/3)/0.31333)) : -3+5*(1-exp(-(10/3)/0.31333))*exp(-(x-20/3)/0.31333))","label":"V(n002) capacitor","color":2}],
+"marks":[{"type":"hline","y":0.16,"label":"6.32 V"},{"type":"vline","x":3.647},{"type":"vline","x":4.9},
+{"type":"text","x":2.2,"y":0.6,"text":"54.7 ms"},{"type":"text","x":5.7,"y":2.5,"text":"73.5 ms"},{"type":"text","x":1.6,"y":-2.6,"text":"0 V"}],
+"alt":"Simulated waveforms: the pulse is 0 V until 50 ms, 10 V until 100 ms, then 0 V. The capacitor voltage rises exponentially from 50 ms, passing 6.32 V at 54.7 ms and nearly 10 V at 73.5 ms, then decays exponentially after 100 ms."}</script>
+<figcaption>Redrawn LTspice result (added for clarity; compare the screen at <a class="ts" data-t="56:50"></a>). Vertical lines: 1τ at 54.7 ms and 5τ at 73.5 ms.</figcaption>
+</figure>
+<p><strong>Cursor at 1τ.</strong> The instructor attaches a cursor to the capacitor trace and drags it as close to 54.7 ms as he can <a class="ts" data-t="56:56"></a>. The cursor window (pasted into Paint and zoomed) reads <strong>Horz 54.715447 ms, Vert 6.3405482 V</strong> <a class="ts" data-t="58:20"></a>: 6.34 V versus the calculated 6.32 V. The small difference is because the cursor is a little past 54.7 ms <a class="ts" data-t="58:44"></a>.</p>
+<aside class="instructor"><p>Remember for the scope demo: at the first time constant the capacitor is at 63.2 % of the maximum, about 6.3 V <a class="ts" data-t="59:25"></a>.</p></aside>
+<p><strong>Cursor at 5τ.</strong> 5τ = 23.5 ms after the 50 ms edge, i.e. 73.5 ms <a class="ts" data-t="1:00:04"></a>. The closest cursor position is <strong>73.577236 ms, 9.9336219 V</strong> <a class="ts" data-t="1:00:49"></a>: the capacitor is practically done charging and will not gain much more voltage.</p>
+<aside class="extra"><p>Checking the simulation against the formula: at 73.577 ms (\(t = 23.577\,\text{ms}\) after the step) the formula gives \(10(1-\mathrm{e}^{-23.577/4.7}) = 9.934\,\text{V}\), identical to LTspice. At 54.715 ms it gives 6.333 V; LTspice shows 6.341 V. So about 0.013 V of the 6.34 − 6.32 difference comes from the cursor being 0.015 ms late, and the last few millivolts from LTspice's simulation time steps (the plot joins computed points with straight lines).</p></aside>
+<p><strong>Q&amp;A</strong> <a class="ts" data-t="1:01:45"></a>: once charged, the capacitor sits at 10 V. It cannot charge higher than the applied 10 V (not 11 V or 12 V), and it won't stay lower (8 V) because the source keeps pushing charge onto the plates. When it is fully charged, the resistor voltage is zero <a class="ts" data-t="1:02:10"></a>.</p>
+
+<h3>6.7 The current <a class="ts" data-t="1:02:25"></a></h3>
+<ul>
+<li>The current plot looks different from the chart only because of its scale <a class="ts" data-t="1:02:44"></a>.</li>
+<li>Maximum current happens at the 50 ms edge, when the capacitor has 0 V on it: \(10\,\text{V}/470\,\Omega = 21.3\,\text{mA}\) <a class="ts" data-t="1:03:34"></a>. The plot peaks between 20 and 24 mA <a class="ts" data-t="1:04:14"></a>.</li>
+<li>Right-click the current axis to set its limits: top 21.3 mA (then bottom −21.8 mA, and finally bottom 0) so the current curve lines up with the voltage curve like the chart <a class="ts" data-t="1:04:29"></a>.</li>
+<li>The current goes <strong>negative</strong> during discharge because it now flows the other way <a class="ts" data-t="1:05:18"></a>.</li>
+<li>Physical picture: the current falls as the capacitor's voltage builds, "two voltage sources fighting each other" — the source and the charging capacitor <a class="ts" data-t="1:05:35"></a>. When the pulse goes back to 0 V, the capacitor discharges through the resistor <a class="ts" data-t="1:06:16"></a>.</li>
+</ul>
+<aside class="extra"><p>In this circuit the discharge path is the same as the charge path (the source at 0 V acts like a wire), so the discharge also has \(\tau = 4.7\,\text{ms}\) and the falling curve after 100 ms is the mirror image of the rise.</p></aside>
+<p><strong>Current through C vs through R</strong> <a class="ts" data-t="1:07:52"></a>: hover over the capacitor and click to plot I(C1). I(R1) appeared as the negative of I(C1) because LTspice's current arrow for the resistor pointed the other way (to the left) <a class="ts" data-t="1:08:12"></a>. After rotating the resistor (<kbd>Ctrl</kbd>+<kbd>R</kbd> twice) and re-running, the two currents are identical <a class="ts" data-t="1:08:39"></a>: "the current is the same through all elements of a series circuit" <a class="ts" data-t="1:08:58"></a>.</p>
+<aside class="note"><p>Tip from a student question: to make the waveform background white, use <em>Tools → Color Preferences</em>, select the waveform "Background" item and set all sliders to 255 <a class="ts" data-t="1:06:36"></a>.</p></aside>
+</section>
+
+<section class="g-sec" id="cl4-labdoc" data-kind="lesson" data-ts="4022-4329">
+<h2>7. What the lab handout asks for</h2>
+<p>The instructor walks through the lab document (shown at <a class="ts" data-t="1:09:20"></a>) <a class="ts" data-t="1:07:02"></a>. After his live corrections it asks you to:</p>
+<ol>
+<li>Simulate the circuit: 10 V DC source pulsed with PULSE (50 ms low, 50 ms high), 470 Ω in series with 10 μF, simulation stopping after 150 ms.</li>
+<li>On the waveform, show the voltage applied to the circuit (the pulse), the voltage across the capacitor, and the current through the capacitor <a class="ts" data-t="1:07:26"></a>.</li>
+<li>Calculate: the max voltage across the capacitor after it is fully charged; the RC time constant; how many time constants until the max \(V_C\) is reached; the time from when the pulse goes high until the max \(V_C\) is reached.</li>
+<li>Fill in a table for RC time constants 1–5: % of max V, voltage at each RC (calculated), and measured voltage at each RC (from the simulation) <a class="ts" data-t="1:08:58"></a>.</li>
+</ol>
+<p>Corrections made during the class: the table heading "Measured Voltage at each L/R" became "…at each RC" <a class="ts" data-t="1:09:26"></a>; "Max Current through the inductor after fully storing energy in the magnetic field" became "Max Voltage across the capacitor after fully charged" <a class="ts" data-t="1:10:58"></a>; and at the end of class "Current at each RC" became "Voltage at each RC" <a class="ts" data-t="1:35:44"></a>. The instructor confirms that "voltage at each RC" is the capacitor voltage: the chart percentage multiplied by the max voltage, calculated first and then measured in the simulation <a class="ts" data-t="1:37:39"></a>.</p>
+<table>
+<tr><th>RC time constant</th><th>Time after the edge</th><th>Time on the LTspice axis</th><th>% of max V</th><th>Voltage at each RC (calc.)</th><th>Current at each RC (calc.)</th></tr>
+<tr><td>1</td><td>4.7 ms</td><td>54.7 ms</td><td>63.2 %</td><td>6.32 V</td><td>7.83 mA</td></tr>
+<tr><td>2</td><td>9.4 ms</td><td>59.4 ms</td><td>86.5 %</td><td>8.65 V</td><td>2.88 mA</td></tr>
+<tr><td>3</td><td>14.1 ms</td><td>64.1 ms</td><td>95.0 %</td><td>9.50 V</td><td>1.06 mA</td></tr>
+<tr><td>4</td><td>18.8 ms</td><td>68.8 ms</td><td>98.2 %</td><td>9.82 V</td><td>0.39 mA</td></tr>
+<tr><td>5</td><td>23.5 ms</td><td>73.5 ms</td><td>99.3 %</td><td>9.93 V</td><td>0.14 mA</td></tr>
+</table>
+<p>(Calculated values added for checking your own work; the instructor only worked the 1τ and 5τ rows in class. The "measured" column must come from your own simulation — the video's cursors gave 6.34 V at 54.715 ms and 9.93 V at 73.577 ms.)</p>
+<aside class="uncertain"><p>The handout on the course page may have been edited again after this class. Check the current version before submitting.</p></aside>
+</section>
+
+<section class="g-sec" id="cl4-scope" data-kind="lesson" data-ts="4405-5638">
+<h2>8. Live demo: measuring the time constant on the oscilloscope</h2>
+<p>The instructor recaps the numbers to look for <a class="ts" data-t="1:13:25"></a>: \(\tau = 4.7\,\text{ms}\); at 4.7 ms the capacitor should be at 63.2 % of the maximum, 6.32 V; the maximum, 10 V, takes five time constants, 23.5 ms <a class="ts" data-t="1:13:50"></a>. He then starts the oscilloscope's PC software (a GW Instek scope) and switches it to continuous capture <a class="ts" data-t="1:14:23"></a>. "That sure looks like a cap charging and discharging" <a class="ts" data-t="1:14:57"></a>.</p>
+
+<h3>8.1 The breadboard circuit <a class="ts" data-t="1:15:18"></a></h3>
+<ul>
+<li>A <strong>470 Ω</strong> resistor in series with a <strong>10 μF electrolytic</strong> capacitor on a breadboard <a class="ts" data-t="1:15:43"></a>.</li>
+<li>A <strong>function generator</strong> (red and black alligator clips) applies a <strong>square wave</strong> to the RC series pair — it plays the role of the LTspice pulse, switching repeatedly between low and high.</li>
+<li>The scope probe measures the voltage across the capacitor <a class="ts" data-t="1:16:08"></a>; a second channel is then connected to the applied (generator) voltage so both can be seen together <a class="ts" data-t="1:16:35"></a>.</li>
+</ul>
+<figure class="circuit" id="cl4-fig-bb">
+<script type="application/json">{"parts":[
+ {"t":"VAC","a":[0,4],"b":[0,0],"label":"function gen.","value":"square wave","plus":"b","side":-1},
+ {"t":"W","pts":[[0,0],[2,0]]},
+ {"t":"R","a":[2,0],"b":[5,0],"label":"R","value":"470 Ω","side":-1},
+ {"t":"W","pts":[[5,0],[7,0]]},
+ {"t":"C","a":[7,0],"b":[7,4],"label":"C","value":"10 μF\nelectrolytic"},
+ {"t":"W","pts":[[7,4],[0,4]]},
+ {"t":"G","at":[3.5,4]},
+ {"t":"N","at":[0,0],"label":"CH1 (applied)","pos":"n"},
+ {"t":"N","at":[7,0],"label":"CH2 (capacitor)","pos":"n"}
+],"padX":3,"pad":1.4,"alt":"Function generator driving a 470 ohm resistor in series with a 10 microfarad electrolytic capacitor; scope channel 1 probes the generator output, channel 2 probes the top of the capacitor; the bottom is the common ground."}</script>
+<figcaption>Schematic of the breadboard demo (added for clarity; the breadboard is shown at <a class="ts" data-t="1:15:50"></a>). Probe grounds connect to the common bottom node.</figcaption>
+</figure>
+
+<h3>8.2 Scope settings used</h3>
+<table>
+<tr><th>Setting</th><th>Value (read from the screen)</th><th>Why it matters</th></tr>
+<tr><td>Vertical scale, CH1 and CH2</td><td>2 V/div ("set the scale to be the same") <a class="ts" data-t="1:17:28"></a></td><td>a 10 V step spans 5 divisions</td></tr>
+<tr><td>Probe attenuation</td><td>×10 (channel menu set to 10X) <a class="ts" data-t="1:17:28"></a></td><td>must match the ×10 probe, or every voltage reads 10× too small</td></tr>
+<tr><td>Coupling</td><td>DC</td><td>shows the true voltage levels</td></tr>
+<tr><td>Time base</td><td>10 ms/div (10 divisions = 100 ms on screen)</td><td>τ = 4.7 ms is about half a division; 5τ ≈ 2.35 div</td></tr>
+<tr><td>Signal frequency (readout)</td><td>≈ 12.0 Hz → period ≈ 83 ms</td><td>each half-period (≈ 42 ms) is longer than 5τ = 23.5 ms, so the capacitor fully charges and discharges every cycle</td></tr>
+<tr><td>Trigger</td><td>rising edge; on CH2 at 0 V once only the capacitor trace is shown <a class="ts" data-t="1:19:25"></a></td><td>keeps the rising edge still on the screen</td></tr>
+<tr><td>Acquisition</td><td>100 kSa/s, 10k points; later Average of 32 <a class="ts" data-t="1:22:56"></a></td><td>averaging reduces noise on the readings</td></tr>
+</table>
+<aside class="uncertain"><p>The table combines values read from the on-screen readouts (2 V/div, 10 ms/div, 10X, DC, ≈12 Hz, trigger 0 V) with what the instructor says. The function generator's own settings (amplitude, frequency) are not stated in the audio; the scope shows the capacitor swinging from about −5 V to about +5 V, "10 volts from the bottom to the top" <a class="ts" data-t="1:21:31"></a>.</p></aside>
+
+<h3>8.3 Why the "square wave" sags at each rising edge <a class="ts" data-t="1:17:56"></a></h3>
+<p>The yellow trace (the generator output) is not a clean square wave: right after each rising edge it starts lower and then rounds up toward the top. With the capacitor unplugged, the generator output is a clean square wave again <a class="ts" data-t="1:18:22"></a>. Reason: at each edge the uncharged capacitor acts like a short, so the generator must suddenly supply a large current — it is acting like a power supply and "having a little bit of a hard time keeping up with that current demand" <a class="ts" data-t="1:18:46"></a>. The capacitor is <strong>loading</strong> the generator. For practical purposes the measurement still gives the answers we want <a class="ts" data-t="1:19:07"></a>.</p>
+<aside class="extra"><p>Why the generator sags: a function generator has an internal output resistance (commonly 50 Ω). At the edge, the current \(V/(R_{out}+R)\) flows through that internal resistance, so the voltage at its terminals drops by \(i R_{out}\) and recovers as the current decays. That internal resistance is effectively in series with the 470 Ω, so in principle it lengthens the time constant a little, and the sag means the step applied to the RC pair is slightly smaller than the generator's unloaded amplitude.</p></aside>
+
+<h3>8.4 Measuring τ with cursors — the 63.2 % point <a class="ts" data-t="1:19:45"></a></h3>
+<ol>
+<li>Show only the capacitor trace (CH2) and trigger on it <a class="ts" data-t="1:19:25"></a>.</li>
+<li>Place the first vertical (time) cursor exactly where the voltage starts to rise <a class="ts" data-t="1:20:10"></a>.</li>
+<li>Move the second cursor until the readout Δt = 4.7 ms, one time constant <a class="ts" data-t="1:20:37"></a>. (The Δt readout is the time between the two cursors <a class="ts" data-t="1:21:04"></a>.)</li>
+<li>Read ΔV, the voltage change between the two cursor points, and compare it with 63.2 % of the 10 V step (6.32 V) <a class="ts" data-t="1:21:31"></a>.</li>
+</ol>
+<figure class="scope" id="cl4-fig-scope1">
+<script type="application/json">{"type":"scope","cols":10,"rows":8,"ch":"CH2 (capacitor)","vdiv":"2 V/div","tdiv":"10 ms/div","coupling":"DC","probe":"×10",
+"traces":[{"fn":"x<3 ? -2.5+5*exp(-(x+1.17)/0.47) : (x<7.17 ? 2.5-5*exp(-(x-3)/0.47) : -2.5+5*exp(-(x-7.17)/0.47))","label":"v_C","color":2}],
+"marks":[{"type":"vline","x":3},{"type":"vline","x":3.47},{"type":"hline","y":0.66,"label":"63.2 %"},
+{"type":"text","x":2.5,"y":3.4,"text":"cursor 1"},{"type":"text","x":4.3,"y":3.4,"text":"cursor 2"},
+{"type":"text","x":6.4,"y":-1.2,"text":"Δt = 4.70 ms"},{"type":"text","x":6.4,"y":-1.9,"text":"ΔV ≈ 5.8–6.2 V"}],
+"alt":"Capacitor voltage on the scope at 2 volts per division and 10 milliseconds per division, swinging from about minus 5 to plus 5 volts. Cursor 1 at the start of the rise, cursor 2 4.7 ms later where the trace has risen about 63 percent of the step."}</script>
+<figcaption>How τ is read with cursors (idealized redrawing, added for clarity; the real screen is at <a class="ts" data-t="1:21:55"></a>). Δt = 4.70 ms is just under half a division at 10 ms/div.</figcaption>
+</figure>
+<p><strong>What the screen showed.</strong> With Δt = 4.70 ms the readout gave ΔV = 5.84 V and 5.92 V ("5.926… we're bouncing around a little bit") <a class="ts" data-t="1:21:47"></a>. Nudging the cursors ("monkey around with the values") gave readings of 6.00 V, 6.08 V and 6.16 V — with Δt between 4.70 and 4.90 ms on the screen — and he calls it "close enough for government work" <a class="ts" data-t="1:22:13"></a>. He summarizes: about 6.1–6.2 V, with an occasional bounce up to 6.3 V <a class="ts" data-t="1:22:37"></a>. Switching the acquire mode to <strong>Average 32</strong> makes the trace cleaner <a class="ts" data-t="1:22:56"></a> (the readout then showed ΔV = 6.00 V at Δt = 4.90 ms <a class="ts" data-t="1:23:18"></a>).</p>
+<aside class="instructor"><p>Is averaging cheating? "Only when you don't know what you're doing with it" <a class="ts" data-t="1:23:21"></a>.</p></aside>
+<aside class="extra"><p><strong>Reading τ without cursors (divisions × time/div).</strong> Find the level that is 63.2 % of the way from the bottom to the top of the step (here about 3.2 divisions above the bottom at 2 V/div), see how many horizontal divisions after the start of the rise the trace crosses it, and multiply by the time/div. For τ = 4.7 ms at 10 ms/div that is about 0.47 division — so for a more precise reading use a faster time base (e.g. 2 ms/div, where τ is about 2.35 div) or the cursors, as the instructor did.</p>
+<p>Unmentioned in the video: at <a class="ts" data-t="1:15:10"></a> the scope's automatic "RiseTime" readout for the capacitor trace showed 10.32 ms. For an exponential, the 10 %→90 % rise time is \(\tau\ln 9 \approx 2.2\tau\), so \(\tau \approx 10.32/2.197 = 4.70\,\text{ms}\) — another way to measure τ.</p></aside>
+
+<h3>8.5 Why it is not perfect: capacitor tolerance <a class="ts" data-t="1:23:21"></a></h3>
+<p>"Why is it not perfect, and why am I okay with it not being perfect?" The missing information is the capacitor's <strong>tolerance</strong> <a class="ts" data-t="1:23:21"></a>:</p>
+<ul>
+<li>Aluminum electrolytic capacitors are typically <strong>±20 %</strong>; some are +20 %/−40 % <a class="ts" data-t="1:23:51"></a>.</li>
+<li>For a 10 μF part, 20 % is 2 μF, so the capacitor could be anywhere from <strong>8 μF to 12 μF</strong> and still be "in spec" <a class="ts" data-t="1:24:22"></a>.</li>
+<li>On Digi-Key (aluminum electrolytics, about 2,250 results for his search), filtering to ±10 % leaves only 17 parts, about 40 cents each — the best tolerance available for general-purpose electrolytics <a class="ts" data-t="1:26:13"></a>. The ±20 % filter covers about 2,000 parts, from about 3 cents each <a class="ts" data-t="1:26:54"></a>.</li>
+<li>With perhaps 20 capacitors in a consumer design, paying 40 cents each for a still-poor ±10 % is not affordable, so ±20 % parts are normal <a class="ts" data-t="1:27:21"></a>. The scope measurement "is really at the mercy of the tolerance of my cap" <a class="ts" data-t="1:27:46"></a>.</li>
+</ul>
+<aside class="extra"><p>How much tolerance moves the numbers (with R = 470 Ω): \(C = 8\,\mu\text{F} \Rightarrow \tau = 3.76\,\text{ms},\ 5\tau = 18.8\,\text{ms}\); \(C = 12\,\mu\text{F} \Rightarrow \tau = 5.64\,\text{ms},\ 5\tau = 28.2\,\text{ms}\). So a ±20 % capacitor alone can shift τ by ±20 %.</p></aside>
+
+<h3>8.6 Checking 5τ on the scope <a class="ts" data-t="1:30:29"></a></h3>
+<p>Moving the second cursor to Δt = 23.5 ms (5τ) shows the capacitor "just about done charging", about its 99 % charge state <a class="ts" data-t="1:30:46"></a>. The readout gave ΔV = 9.76 V (it fluctuated between 9.67 V and 9.76 V on screen), again "a bit at the mercy of our cap" <a class="ts" data-t="1:31:12"></a>.</p>
+<figure class="scope" id="cl4-fig-scope5">
+<script type="application/json">{"type":"scope","cols":10,"rows":8,"ch":"CH2 (capacitor)","vdiv":"2 V/div","tdiv":"10 ms/div","coupling":"DC","probe":"×10",
+"traces":[{"fn":"x<3 ? -2.5+5*exp(-(x+1.17)/0.47) : (x<7.17 ? 2.5-5*exp(-(x-3)/0.47) : -2.5+5*exp(-(x-7.17)/0.47))","label":"v_C","color":2}],
+"marks":[{"type":"vline","x":3},{"type":"vline","x":5.35},{"type":"hline","y":2.47,"label":"99.3 % at 5τ"},
+{"type":"span","x1":3,"y1":-3.3,"x2":5.35,"y2":-3.3,"label":"Δt = 23.5 ms"},
+{"type":"text","x":1.6,"y":-0.6,"text":"ΔV = 9.67–9.76 V"}],
+"alt":"Same capacitor waveform with cursor 2 moved 23.5 ms (2.35 divisions) after the start of the rise, where the trace is essentially at its top value."}</script>
+<figcaption>5τ measurement (idealized redrawing, added for clarity; real screen at <a class="ts" data-t="1:31:15"></a>). At 10 ms/div, 23.5 ms is 2.35 divisions.</figcaption>
+</figure>
+
+<h3>8.7 Measuring the real capacitance with an LCR meter <a class="ts" data-t="1:31:30"></a></h3>
+<p>To find the true capacitance, use an <strong>LCR meter</strong> rather than a multimeter: many multimeters can measure capacitance, but an LCR meter is better <a class="ts" data-t="1:31:30"></a>. He switches a Proster BM4070 LCR tester to capacitance (20 μF range), checks the zero <a class="ts" data-t="1:32:20"></a>, inserts the capacitor and reads <strong>9.70 μF</strong> — not 10 μF <a class="ts" data-t="1:32:47"></a>.</p>
+<p>His conclusion: the time-constant measurements on the scope will be a little off; with 9.7 μF the capacitor should charge a little more quickly <a class="ts" data-t="1:33:10"></a>. Electrolytic capacitors at ±20 % are "still considered acceptable margins", so "don't expect accuracy where you aren't going to get accuracy" — something learned by experience <a class="ts" data-t="1:33:34"></a>.</p>
+<aside class="uncertain"><p><strong>Possible inconsistency in the explanation.</strong> A 9.7 μF capacitor gives \(\tau = 470\times9.7\,\mu\text{F} = 4.56\,\text{ms}\), so it should charge <em>faster</em> and read <em>more</em> than expected: 6.43 V at 4.7 ms and 9.94 V at 23.5 ms. The scope readings were <em>lower</em> (≈5.8–6.2 V at 1τ and 9.67–9.76 V at 5τ), which points to <em>slower</em> charging, so the low capacitance does not explain them. The instructor says he saw "9.3, 9.6 volts somewhere around there" at 5τ <a class="ts" data-t="1:33:10"></a>; the frames show 9.67–9.76 V. More likely contributors (our analysis, not discussed in the video): the generator output sags under load, so the real step is a little under 10 V — the trace started at about −4.96 V and was at about +4.8 V at 5τ, a step of roughly 9.8 V, and 63.2 % of 9.8 V is 6.2 V, very close to the readings; noise on the trace (readings jumped by ±0.1 V); and exactly where cursor 1 sits on the start of the rise. The scope's automatic rise-time readout (10.32 ms, see the extra note in 8.4) corresponds to τ ≈ 4.70 ms, which suggests the time constant itself was close to the calculated value. The generator's internal resistance and the resistor's own tolerance could also shift τ slightly.</p></aside>
+
+<h3>8.8 Calculated vs simulated vs measured</h3>
+<table>
+<tr><th>Quantity</th><th>Calculated</th><th>LTspice</th><th>Breadboard + scope</th></tr>
+<tr><td>τ</td><td>4.7 ms (470 Ω × 10 μF)</td><td>—</td><td>cursors set to Δt = 4.70 ms; capacitor measured 9.70 μF (→ 4.56 ms with 470 Ω)</td></tr>
+<tr><td>\(v_C\) at 1τ (63.2 %)</td><td>6.32 V</td><td>6.34 V at 54.715 ms</td><td>≈ 5.8–6.2 V (occasionally 6.3 V)</td></tr>
+<tr><td>\(v_C\) at 5τ (99.3 %)</td><td>9.93 V</td><td>9.93 V at 73.577 ms</td><td>9.67–9.76 V</td></tr>
+<tr><td>\(I_{max}\)</td><td>21.3 mA</td><td>peak between 20 and 24 mA on the plot</td><td>not measured (the scope shows voltage only)</td></tr>
+</table>
+<p>The point of the demo: calculation, simulation and measurement agree to within a few percent, and the remaining differences are explained by real-part behaviour (tolerance, source loading, noise), "the weirdo analog world" of section 5.</p>
+</section>
+
+<section class="g-sec" id="cl4-other" data-kind="lesson" data-ts="5291-5429">
+<h2>9. Other content in this video (outside this topic)</h2>
+<ul>
+<li><a class="ts" data-t="1:12:09"></a> A student-made meme of the instructor before the next day's exam (chatter).</li>
+<li><a class="ts" data-t="1:28:11"></a> Industry aside: Digi-Key and Mouser as distributors; distributors like Arrow, and field application engineers from manufacturers (Linear Technology, Analog Devices, Maxim), who help cut component cost on high-volume designs (≈10,000+ units), often by showing LTspice simulations <a class="ts" data-t="1:28:28"></a>.</li>
+<li><a class="ts" data-t="1:29:19"></a> Rough rule from the instructor's experience: a product's retail price is about three times its component cost, including engineering time <a class="ts" data-t="1:29:43"></a>; anecdote about his products sold at Fry's Electronics <a class="ts" data-t="1:30:02"></a>.</li>
+<li><a class="ts" data-t="1:34:24"></a> A student asks to see the current on the scope: oscilloscopes show voltage versus time; showing current needs other techniques (from free to expensive), an advanced topic he may cover in a separate video <a class="ts" data-t="1:34:49"></a>.</li>
+</ul>
+</section>
+
+<section class="g-sec" id="cl4-assumptions" data-kind="assumptions">
+<h2>Assumptions &amp; limitations</h2>
+<ul>
+<li><strong>One resistor in series with one capacitor.</strong> The lecture treats only a single series R and C. For a capacitor inside a bigger network, the R in \(\tau = RC\) is the Thévenin resistance seen from the capacitor's terminals, and different charge/discharge paths can give different time constants.</li>
+<li><strong>The capacitor starts uncharged</strong> (0 V) when the switch closes or the pulse rises. \(v_C = V_S(1-\mathrm{e}^{-t/\tau})\) and \(v_R = V_S\mathrm{e}^{-t/\tau}\) assume this. If the capacitor already holds a voltage, use the general form \(v_C = V_f + (V_0 - V_f)\mathrm{e}^{-t/\tau}\) (extra note in section 3).</li>
+<li><strong>The source is an ideal step.</strong> A real function generator has internal resistance and cannot supply unlimited current, which is why its square wave sagged at <a class="ts" data-t="1:17:56"></a>.</li>
+<li><strong>\(t\) is measured from the moment the voltage changes.</strong> In LTspice the pulse rises at 50 ms, so 1τ is at 54.7 ms on the plot, not 4.7 ms.</li>
+<li><strong>"Fully charged after 5τ" is a rule of thumb.</strong> The exponential never mathematically reaches 100 %; at 5τ it is 99.3 %. Engineers treat that as done.</li>
+<li><strong>Ideal parts.</strong> Calculations use marked values. Real electrolytic capacitors are often ±20 % (sometimes +20/−40 %), resistors have their own tolerance, and every part has parasitic R, L and C. Measured τ will differ from the calculated value by several percent.</li>
+<li><strong>At \(t = 0\) the ideal model allows a very large current</strong> (unlimited if R = 0). In real circuits wiring and source resistance limit it; that inrush is the spark when plugging in a charger.</li>
+<li><strong>The percentages apply to the size of the step.</strong> If the source swings from −5 V to +5 V (as on the scope), 63.2 % means 63.2 % of the 10 V change measured from the starting level, not 6.32 V above 0 V.</li>
+</ul>
+</section>
+
+<section class="g-sec" id="cl4-mistakes" data-kind="mistakes">
+<h2>Common mistakes</h2>
+<ul>
+<li><strong>Forgetting unit prefixes.</strong> \(100\,\text{k}\Omega \times 0.1\,\mu\text{F}\) must be entered as \(100\,000 \times 0.1\times10^{-6}\). Entering 100 × 0.1 gives "10", which is not 10 ms. Since Ω·F = s, convert the answer to ms only at the end.</li>
+<li><strong>Confusing e with the "E" (exponent) notation.</strong> <code>10E-6</code> means 10 × 10<sup>−6</sup>; it has nothing to do with Euler's e <a class="ts" data-t="52:56"></a>. Use the \(e^x\) key for \(\mathrm{e}^{-t/\tau}\).</li>
+<li><strong>Measuring time from 0 instead of from the step.</strong> In the simulation the pulse starts at 50 ms: 1τ is at 54.7 ms and 5τ at 73.5 ms on the time axis.</li>
+<li><strong>Treating the capacitor as an open circuit at \(t = 0\).</strong> An uncharged capacitor is a <em>short</em> at the instant of switching (max current \(V_S/R\)). It is an <em>open</em> only after it is fully charged (≈5τ).</li>
+<li><strong>Thinking the capacitor can charge above the source.</strong> It approaches \(V_S\) (10 V in the lab) and stops there <a class="ts" data-t="1:01:45"></a>.</li>
+<li><strong>Using the wrong curve.</strong> While charging, \(v_C\) follows the rising (build-up) curve; the current and \(v_R\) follow the falling (decay) curve. While discharging, \(v_C\) follows the decay curve.</li>
+<li><strong>Quoting 99.8 % for 5τ.</strong> The correct value is \(1-\mathrm{e}^{-5} = 99.3\,\%\) (4τ is 98.2 %).</li>
+<li><strong>Being confused by a negative current in LTspice.</strong> LTspice measures current in the direction set by the part's orientation. If the resistor was placed "backwards", its current plots negative. Rotate it (<kbd>Ctrl</kbd>+<kbd>R</kbd> twice) or flip the sign mentally <a class="ts" data-t="1:08:12"></a>.</li>
+<li><strong>Starting the scope measurement from the wrong point.</strong> Put the first time cursor exactly where the capacitor voltage starts to rise, then put the second one Δt = τ later. Measure ΔV from the bottom of the waveform (the starting level), not from the screen centre or 0 V.</li>
+<li><strong>Forgetting the ×10 probe setting.</strong> If the probe is ×10 but the channel is set to ×1, all voltages read 10 times too small. Match the channel setting to the probe <a class="ts" data-t="1:17:28"></a>.</li>
+<li><strong>Expecting the measurement to match the calculation exactly.</strong> A ±20 % capacitor marked 10 μF can be anywhere from 8 μF to 12 μF. Differences of a few percent between calculated, simulated and measured values are normal.</li>
+</ul>
+</section>
+
+<section class="g-sec" id="cl4-recap" data-kind="recap">
+<h2>Recap &amp; formula sheet</h2>
+<ul>
+<li>An uncharged capacitor at the instant of switching = <strong>short</strong>: the current is maximum, \(V_S/R\).</li>
+<li>While charging: \(v_C\) builds up; \(v_R\) and \(i\) decay (KVL: \(v_R = V_S - v_C\)).</li>
+<li>\(\tau = RC\). After 1τ: 63.2 % charged; after 5τ: considered fully charged, \(v_C = V_S\), \(i = 0\), capacitor = <strong>open</strong>.</li>
+<li>One universal time constant chart serves both RC and RL circuits.</li>
+<li>Example: 50 V, 100 kΩ, 0.1 μF → τ = 10 ms; at 10 ms \(v_C = 31.61\) V, \(v_R = 18.39\) V, \(i = 0.184\) mA (36.8 % of 0.5 mA).</li>
+<li>Lab: 10 V, 470 Ω, 10 μF → τ = 4.7 ms, 5τ = 23.5 ms, \(v_C(1\tau) = 6.32\) V, \(I_{max} = 21.3\) mA. LTspice: 6.34 V at 54.715 ms and 9.93 V at 73.577 ms. Scope (2 V/div, 10 ms/div, ×10 probe): ≈5.8–6.2 V at Δt = 4.7 ms and 9.67–9.76 V at Δt = 23.5 ms. The real capacitor measured 9.70 μF.</li>
+</ul>
+<div class="formula-sheet">
+<table>
+<tr><th>Formula</th><th>Variables &amp; units</th><th>Use</th></tr>
+<tr><td>\(\tau = RC\)</td><td>τ in s, R in Ω, C in F (Ω·F = s)</td><td>time constant of a series RC circuit</td></tr>
+<tr><td>\(I_{max} = \dfrac{V_S}{R}\)</td><td>A; V; Ω</td><td>current at \(t = 0\) (uncharged C = short)</td></tr>
+<tr><td>\(v_C(t) = V_S\left(1-\mathrm{e}^{-t/\tau}\right)\)</td><td>V; \(t\) in s measured from the step</td><td>capacitor voltage while charging from 0</td></tr>
+<tr><td>\(v_R(t) = V_S\,\mathrm{e}^{-t/\tau}\)</td><td>V</td><td>resistor voltage while charging</td></tr>
+<tr><td>\(i(t) = \dfrac{v_R(t)}{R} = \dfrac{V_S}{R}\mathrm{e}^{-t/\tau}\)</td><td>A</td><td>loop current while charging (same in R and C)</td></tr>
+<tr><td>\(V_S = v_R + v_C\)</td><td>V</td><td>KVL check at any instant</td></tr>
+<tr><td>\(t \approx 5\tau\)</td><td>s</td><td>time to (practically) full charge or discharge</td></tr>
+<tr><td>Build-up: 63.2, 86.5, 95.0, 98.2, 99.3 %<br>Decay: 36.8, 13.5, 5.0, 1.8, 0.7 %</td><td>% of final value at 1τ … 5τ</td><td>universal time constant chart</td></tr>
+<tr><td>\(\mathrm{e} = 2.71828\ldots\)</td><td>—</td><td>base of the exponential (\(e^x\) key)</td></tr>
+<tr><td>\(v_C(t) = V_0\,\mathrm{e}^{-t/\tau}\)</td><td>\(V_0\) = starting voltage</td><td>discharging (added; not written in the video)</td></tr>
+<tr><td>\(v_C(t) = V_f + (V_0 - V_f)\mathrm{e}^{-t/\tau}\)</td><td>\(V_0\) initial, \(V_f\) final voltage</td><td>general form (added; not written in the video)</td></tr>
+<tr><td>\(t = -\tau\ln\!\left(1 - \dfrac{v_C}{V_S}\right)\)</td><td>s</td><td>time to reach a given \(v_C\) while charging (added; not in the video)</td></tr>
+<tr><td>Scope: \(\tau \approx (\text{divisions}) \times (\text{time/div})\)</td><td>div × s/div</td><td>reading τ at the 63.2 % level from the screen grid</td></tr>
+</table>
+</div>
+</section>

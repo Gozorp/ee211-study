@@ -1,0 +1,273 @@
+<article class="q" id="millman-q1" data-level="1" data-kind="conceptual" data-title="What the Millman voltage means, and what a source-free branch does">
+  <div class="q-prompt">
+    <p>Two source–resistor branches are connected between the top rail a and the bottom rail b: \(V_1 = 10\ \text{V}\) in series with \(R_1 = 1\ \text{k}\Omega\), and \(V_2 = 4\ \text{V}\) in series with \(R_2 = 4\ \text{k}\Omega\). Both sources have their + terminal toward rail a. Closing switch S connects a third branch between the same two rails: a plain resistor \(R_3 = 4\ \text{k}\Omega\) with <b>no source</b>. Nothing else is connected to a and b, so no current leaves the terminals.</p>
+    <p><b>(a)</b> With S open, Millman's formula gives \(V_{out} = V_{ab} = 8.8\ \text{V}\). Which statement about this number is correct?</p>
+    <p><b>(b)</b> Now S is closed. Which statement is correct?</p>
+  </div>
+  <figure class="circuit"><script type="application/json">{"parts":[
+   {"t":"W","pts":[[0,0],[10.5,0]]},
+   {"t":"W","pts":[[0,6],[10.5,6]]},
+   {"t":"R","a":[0,0],"b":[0,3],"label":"R_1","value":"1 kΩ"},
+   {"t":"BAT","a":[0,6],"b":[0,3],"label":"V_1","value":"10 V","side":-1},
+   {"t":"R","a":[4,0],"b":[4,3],"label":"R_2","value":"4 kΩ"},
+   {"t":"BAT","a":[4,6],"b":[4,3],"label":"V_2","value":"4 V","side":-1},
+   {"t":"SW","a":[8,0],"b":[8,2.4],"label":"S","state":"open"},
+   {"t":"R","a":[8,2.4],"b":[8,5.4],"label":"R_3","value":"4 kΩ"},
+   {"t":"W","pts":[[8,5.4],[8,6]]},
+   {"t":"N","at":[10.5,0],"open":true,"label":"a","pos":"e"},
+   {"t":"N","at":[10.5,6],"open":true,"label":"b","pos":"e"}
+  ],"alt":"Rails a (top) and b (bottom). Branch 1: R1 = 1 kilohm above a 10 V battery with + toward a. Branch 2: R2 = 4 kilohm above a 4 V battery with + toward a. Branch 3: open switch S in series with R3 = 4 kilohm and no source. Open terminals a and b at the right."}</script>
+    <figcaption>Two source branches plus a source-free branch that is connected when S closes. Every battery has its long plate (+) toward rail a.</figcaption>
+  </figure>
+  <div class="q-answers">
+    <div class="ans" data-type="mc" data-name="meaning" data-label="(a) With S open, the 8.8 V result…" data-correct="c">
+      <div class="opt" data-v="a">…must be wrong. The two sources are in parallel, so their voltages add, and \(V_{out}\) should be \(10 + 4 = 14\ \text{V}\).<span class="opt-fb">Wrong. Voltages add for sources in <em>series</em>. Parallel branches all share one voltage, \(V_{ab}\). In a Millman circuit the branch <em>currents</em> \(V_k/R_k\) add up (they pile up into \(I_N\) in the derivation), and that sum is then divided by the total conductance \(\sum 1/R_k\).</span></div>
+      <div class="opt" data-v="b">…must be wrong. \(V_{out}\) is the average of the source voltages, \((10 + 4)/2 = 7\ \text{V}\).<span class="opt-fb">Wrong. The plain average is correct only when all the branch resistances are equal (then \(V_{out} = (V_1 + \cdots + V_n)/n\)). Here \(R_1 \ne R_2\), so the two voltages do not count equally.</span></div>
+      <div class="opt" data-v="c">…is a <b>weighted average</b> of the source voltages. Each \(V_k\) is weighted by its branch conductance \(1/R_k\). Branch 1 (1 mS) counts four times as much as branch 2 (0.25 mS), so \(V_{out} = 0.8(10\ \text{V}) + 0.2(4\ \text{V}) = 8.8\ \text{V}\), close to 10 V. Seen from a–b, the network acts like a Thévenin source: 8.8 V in series with \(R_N = 1/(1/R_1 + 1/R_2) = 800\ \Omega\).<span class="opt-fb">Correct. The numerator \(\sum V_k/R_k = 11\ \text{mA}\) is the short-circuit (Norton) current \(I_N\). The denominator \(\sum 1/R_k = 1.25\ \text{mS}\) is the total conductance, so \(V_{out} = I_N R_N\) is the open-circuit voltage. All the weights are positive, so \(V_{out}\) always lies between the smallest and the largest source voltage.</span></div>
+      <div class="opt" data-v="d">…is the voltage between a and b whatever load you connect, because Millman's formula already accounts for every branch.<span class="opt-fb">Wrong. 8.8 V is the <em>open-circuit</em> voltage. A load draws current, and that current drops a voltage across \(R_N = 800\ \Omega\). With an 800 Ω load, for example, \(V_{ab} = 8.8 \cdot 800/(800 + 800) = 4.4\ \text{V}\). This is the case where \(R_N\) matters (<a class="ts" data-lesson="mt1" data-t="28:52"></a>).</span></div>
+    </div>
+    <div class="ans" data-type="mc" data-name="nosource" data-label="(b) After S is closed…" data-correct="d">
+      <div class="opt" data-v="a">…nothing changes. Branch 3 has no source, so it adds 0 to the numerator, and \(V_{out}\) stays 8.8 V.<span class="opt-fb">Wrong. It does add 0 to the numerator, but its conductance \(1/R_3 = 0.25\ \text{mS}\) still goes in the denominator. A source-free branch acts like a 0 V source, and it pulls the weighted average toward 0 V.</span></div>
+      <div class="opt" data-v="b">…\(V_{out}\) becomes the average of the three branch voltages, \((10 + 4 + 0)/3 \approx 4.67\ \text{V}\).<span class="opt-fb">Wrong. Using \(V_3 = 0\) is right, but the average must be weighted by the conductances (1 mS, 0.25 mS and 0.25 mS), not taken plainly.</span></div>
+      <div class="opt" data-v="c">…Millman's formula can no longer be used, because branch 3 has no source. You would have to switch to nodal analysis.<span class="opt-fb">Wrong. Millman's formula needs <b>every branch to be connected between the same two nodes</b> (here a and b), each branch being a voltage source in series with a resistor. A plain resistor qualifies, with \(V_3 = 0\). The formula would stop applying only if some branch went to a third node. Then you would reduce the circuit first or use nodal analysis.</span></div>
+      <div class="opt" data-v="d">…\(V_{out}\) drops to \(11\ \text{mA} / 1.5\ \text{mS} \approx 7.33\ \text{V}\), and \(R_N\) drops to \(1/1.5\ \text{mS} \approx 667\ \Omega\). Branch 3 adds nothing to the numerator, but its \(1/R_3\) adds to the denominator.<span class="opt-fb">Correct. The source-free branch is a 0 V "source" with weight 0.25 mS, so the weighted average moves toward 0 V. One more resistor in parallel also lowers \(R_N\).</span></div>
+    </div>
+  </div>
+  <div class="q-hint">Read the formula as \(V_{out} = \dfrac{\sum G_k V_k}{\sum G_k}\), where \(G_k = 1/R_k\) is the branch conductance. What kind of average is that?</div>
+  <div class="q-hint">A branch without a source is a branch with \(V_k = 0\). Which of the two sums (numerator or denominator) does it change?</div>
+  <div class="q-hint">With S open: \(G_1 = 1\ \text{mS}\), \(G_2 = 0.25\ \text{mS}\), and the numerator is 11 mA. With S closed, the numerator is still 11 mA.</div>
+  <div class="q-solution">
+    <p class="step">1. <b>Circuit form.</b> Each branch is a voltage source in series with a resistor (branch 3: a resistor with \(V_3 = 0\)), and all of them sit between the same two nodes a and b. That is exactly the circuit Millman's theorem is for, with or without branch 3.</p>
+    <p class="step">2. <b>What the formula is.</b> With \(G_k = 1/R_k\):</p>
+    <div class="formula">\[ V_{out} = \frac{\sum V_k/R_k}{\sum 1/R_k} = \frac{G_1V_1 + G_2V_2 + \cdots}{G_1 + G_2 + \cdots} \]</div>
+    <p>The weights \(G_k/\sum G\) are positive and add up to 1, so this is a <b>conductance-weighted average</b> of the source voltages. The numerator is the Norton current \(I_N\), and \(1/\sum G_k\) is \(R_N\). So \(V_{out} = I_N R_N\) is the open-circuit (Thévenin) voltage, and the whole network looks like \(V_{out}\) in series with \(R_N\) from the terminals.</p>
+    <p class="step">3. <b>(a) S open.</b> \(I_N = \dfrac{10\ \text{V}}{1\ \text{k}\Omega} + \dfrac{4\ \text{V}}{4\ \text{k}\Omega} = 10 + 1 = 11\ \text{mA}\), and \(\sum G = 1 + 0.25 = 1.25\ \text{mS}\). So \(V_{out} = 11/1.25 = 8.8\ \text{V}\) and \(R_N = 1/1.25\ \text{mS} = 800\ \Omega\). The weights are \(1/1.25 = 0.8\) and \(0.25/1.25 = 0.2\), so \(0.8 \cdot 10 + 0.2 \cdot 4 = 8.8\ \text{V}\). Adding the voltages (14 V), averaging them plainly (7 V), or treating 8.8 V as the voltage under any load all misread the formula.</p>
+    <p class="step">4. <b>(b) S closed.</b> \(V_3 = 0\), so the numerator stays \(11\ \text{mA}\). The denominator grows to \(1 + 0.25 + 0.25 = 1.5\ \text{mS}\).</p>
+    <div class="formula">\[ V_{out} = \frac{11\ \text{mA}}{1.5\ \text{mS}} = 7.33\ \text{V}, \qquad R_N = \frac{1}{1.5\ \text{mS}} = 667\ \Omega \]</div>
+    <p class="answer">(a) Option c: a conductance-weighted average of the source voltages, i.e. the Thévenin voltage of the network (8.8 V in series with 800 Ω). (b) Option d: \(V_{out}\) falls to 7.33 V and \(R_N\) to 667 Ω. A source-free branch adds 0 to the numerator but its \(1/R_k\) stays in the denominator.</p>
+  </div>
+  <div class="q-check">\(V_{out}\) must lie between the lowest and the highest branch voltage: 4 V ≤ 8.8 V ≤ 10 V with S open, and 0 V ≤ 7.33 V ≤ 10 V with S closed. \(R_N\) must be smaller than the smallest branch resistance (800 Ω and 667 Ω are both below 1 kΩ), and adding a parallel branch can only lower it. Limits: \(R_3 \to \infty\) is the same as S open (back to 8.8 V), and \(R_3 \to 0\) shorts the rails, so \(V_{out} \to 0\).</div>
+  <div class="q-links">Links back: <a class="xref" data-lesson="mt1" data-sec="mt1-statement">Millman's formula and its circuit</a> · <a class="ts" data-lesson="mt1" data-t="0:28"></a> (the circuit) · <a class="ts" data-lesson="mt1" data-t="1:41"></a> (the formula) · <a class="xref" data-lesson="mt1" data-sec="mt1-goal">the result is a Thévenin-form source</a> <a class="ts" data-lesson="mt1" data-t="5:15"></a> · <a class="xref" data-lesson="mt1" data-sec="mt1-qa">when \(R_N\) matters (load)</a> <a class="ts" data-lesson="mt1" data-t="28:52"></a> · <a class="xref" data-lesson="mt1" data-sec="mt1-apply">source-free branches (additional)</a></div>
+</article>
+
+<article class="q" id="millman-q2" data-level="2" data-kind="calculation" data-title="Three source–resistor branches: Millman voltage and resistance">
+  <div class="q-prompt">
+    <p>Three branches are connected in parallel between the top rail a and the bottom rail b. Each branch is a voltage source in series with a resistor, and every source has its + terminal toward rail a:</p>
+    <ul>
+      <li>\(V_1 = 18\ \text{V}\), \(R_1 = 6\ \text{k}\Omega\)</li>
+      <li>\(V_2 = 12\ \text{V}\), \(R_2 = 12\ \text{k}\Omega\)</li>
+      <li>\(V_3 = 4\ \text{V}\), \(R_3 = 4\ \text{k}\Omega\)</li>
+    </ul>
+    <p>Nothing is connected to the terminals a and b.</p>
+    <p>Find <b>(a)</b> the Millman (open-circuit) voltage \(V_{out} = V_{ab}\) in volts (positive if a is at the higher potential), and <b>(b)</b> the equivalent resistance \(R_N\) seen between a and b, i.e. the resistor in series with \(V_{out}\) in the equivalent circuit.</p>
+  </div>
+  <figure class="circuit"><script type="application/json">{"parts":[
+   {"t":"W","pts":[[0,0],[11,0]]},
+   {"t":"W","pts":[[0,6],[11,6]]},
+   {"t":"R","a":[0,0],"b":[0,3],"label":"R_1","value":"6 kΩ"},
+   {"t":"BAT","a":[0,6],"b":[0,3],"label":"V_1","value":"18 V","side":-1},
+   {"t":"R","a":[4,0],"b":[4,3],"label":"R_2","value":"12 kΩ"},
+   {"t":"BAT","a":[4,6],"b":[4,3],"label":"V_2","value":"12 V","side":-1},
+   {"t":"R","a":[8,0],"b":[8,3],"label":"R_3","value":"4 kΩ"},
+   {"t":"BAT","a":[8,6],"b":[8,3],"label":"V_3","value":"4 V","side":-1},
+   {"t":"N","at":[11,0],"open":true,"label":"a (V_{out})","pos":"e"},
+   {"t":"N","at":[11,6],"open":true,"label":"b","pos":"e"}
+  ],"alt":"Three parallel branches between rail a (top) and rail b (bottom): 6 kilohm with an 18 V battery, 12 kilohm with a 12 V battery, 4 kilohm with a 4 V battery. Every battery has + toward rail a. Open terminals a and b at the right."}</script>
+    <figcaption>Three source–resistor branches between the same two rails. Every + plate faces rail a.</figcaption>
+  </figure>
+  <div class="q-answers">
+    <div class="ans" data-type="num" data-name="vout" data-label="\(V_{out}\)" data-value="10" data-unit="V"></div>
+    <div class="ans" data-type="num" data-name="rn" data-label="\(R_N\)" data-value="2000" data-unit="Ω"></div>
+  </div>
+  <div class="fb" data-for="vout" data-match="34">You added the source voltages (18 + 12 + 4). Parallel branches do not add their voltages, they share one voltage. In Millman's formula the <em>currents</em> \(V_k/R_k\) add, and that sum is then divided by \(\sum 1/R_k\).</div>
+  <div class="fb" data-for="vout" data-match="11.3333">That is the plain average \((18 + 12 + 4)/3\). It would only be right if all three resistors were equal. Weight each voltage by its conductance \(1/R_k\).</div>
+  <div class="fb" data-for="vout" data-match="12.1818">You weighted each voltage by \(R_k\) instead of \(1/R_k\). A <em>smaller</em> resistor gives its source <em>more</em> influence: the numerator uses \(V_k/R_k\) and the denominator \(1/R_k\).</div>
+  <div class="fb" data-for="vout" data-match="5">That is only the numerator, \(\sum V_k/R_k = 5\ \text{mA}\) (the Norton current \(I_N\)). Divide it by \(\sum 1/R_k\) to get a voltage.</div>
+  <div class="fb" data-for="rn" data-match="22000">22 kΩ is \(R_1 + R_2 + R_3\), the <em>series</em> combination. The branches are in parallel: add the inverses, then invert the total.</div>
+  <div class="fb" data-for="rn" data-match="7333.33">That is the average of the three resistances. \(R_N\) is their parallel combination \(1/\sum(1/R_k)\), which is smaller than the smallest branch resistance.</div>
+  <div class="fb" data-for="rn" data-match="0.5">0.5 is \(\sum 1/R_k\) in mS, a conductance, not a resistance. Invert it.</div>
+  <div class="q-hint">All three branches are a source in series with a resistor between the same two rails, and every + terminal faces rail a, so every \(V_k\) is positive. Use Millman's formula directly. Working in kΩ and mA keeps the numbers small.</div>
+  <div class="q-hint">\(V_{out} = \dfrac{V_1/R_1 + V_2/R_2 + V_3/R_3}{1/R_1 + 1/R_2 + 1/R_3}\) and \(R_N = \dfrac{1}{1/R_1 + 1/R_2 + 1/R_3}\).</div>
+  <div class="q-hint">Numerator: \(18/6 + 12/12 + 4/4 = 5\ \text{mA}\) (this is \(I_N\)). Put the denominator over the common denominator 12 kΩ.</div>
+  <div class="q-solution">
+    <p class="step">1. <b>Signs.</b> Every + terminal faces rail a, so \(V_1 = +18\ \text{V}\), \(V_2 = +12\ \text{V}\), \(V_3 = +4\ \text{V}\).</p>
+    <p class="step">2. <b>Numerator</b> (branch currents after source transformation; their sum is \(I_N\)):</p>
+    <div class="formula">\[ \frac{18\ \text{V}}{6\ \text{k}\Omega} + \frac{12\ \text{V}}{12\ \text{k}\Omega} + \frac{4\ \text{V}}{4\ \text{k}\Omega} = 3 + 1 + 1 = 5\ \text{mA} \]</div>
+    <p class="step">3. <b>Denominator</b> (total conductance):</p>
+    <div class="formula">\[ \frac{1}{6\ \text{k}\Omega} + \frac{1}{12\ \text{k}\Omega} + \frac{1}{4\ \text{k}\Omega} = \frac{2 + 1 + 3}{12\ \text{k}\Omega} = \frac{1}{2\ \text{k}\Omega} = 0.5\ \text{mS} \]</div>
+    <p class="step">4. <b>Millman voltage:</b> \(V_{out} = \dfrac{5\ \text{mA}}{0.5\ \text{mS}} = 10\ \text{V}\).</p>
+    <p class="step">5. <b>Equivalent resistance:</b> \(R_N = \dfrac{1}{0.5\ \text{mS}} = 2\ \text{k}\Omega\).</p>
+    <figure class="circuit"><script type="application/json">{"parts":[
+     {"t":"BAT","a":[0,4],"b":[0,1],"label":"V_{out}","value":"10 V","side":-1},
+     {"t":"W","pts":[[0,1],[1,1]]},
+     {"t":"R","a":[1,1],"b":[4,1],"label":"R_N = 2 kΩ"},
+     {"t":"W","pts":[[4,1],[5,1]]},
+     {"t":"N","at":[5,1],"open":true,"label":"a","pos":"e"},
+     {"t":"W","pts":[[0,4],[5,4]]},
+     {"t":"N","at":[5,4],"open":true,"label":"b","pos":"e"}
+    ],"alt":"Equivalent circuit: 10 V battery, + on top, in series with 2 kilohm, between terminals a and b."}</script>
+      <figcaption>The equivalent seen from a–b: 10 V in series with 2 kΩ (the Thévenin form the derivation aims for).</figcaption>
+    </figure>
+    <p class="answer">\(V_{out} = 10\ \text{V}\) and \(R_N = 2\ \text{k}\Omega\).</p>
+  </div>
+  <div class="q-check">10 V is a weighted average, so it must lie between 4 V and 18 V. \(R_N = 2\ \text{k}\Omega\) is below the smallest branch resistance (4 kΩ). <b>Nodal check</b> with \(v_a = 10\ \text{V}\): the currents leaving node a down the branches are \((10-18)/6\text{k} + (10-12)/12\text{k} + (10-4)/4\text{k} = -1.333 - 0.167 + 1.5 = 0\ \text{mA}\), so KCL holds with nothing connected. Units: mA ÷ mS = V.</div>
+  <div class="q-links">Links back: <a class="xref" data-lesson="mt1" data-sec="mt1-statement">Millman's formula</a> <a class="ts" data-lesson="mt1" data-t="1:41"></a> · <a class="xref" data-lesson="mt1" data-sec="mt1-in">numerator = Norton current</a> <a class="ts" data-lesson="mt1" data-t="14:15"></a> · <a class="xref" data-lesson="mt1" data-sec="mt1-rn">\(R_N\) = resistors in parallel</a> <a class="ts" data-lesson="mt1" data-t="19:14"></a> · <a class="xref" data-lesson="mt1" data-sec="mt1-qa">\(R_N\) is not the sum of the resistances</a> <a class="ts" data-lesson="mt1" data-t="27:38"></a></div>
+</article>
+
+<article class="q" id="millman-q3" data-level="3" data-kind="multistep" data-title="Reversed source and a load: load voltage and current">
+  <div class="q-prompt">
+    <p>Three source branches and a load resistor are all connected between the top rail a and the bottom rail b (reference, 0 V):</p>
+    <ul>
+      <li>Branch 1: \(V_1 = 18\ \text{V}\) with + toward a, in series with \(R_1 = 3\ \text{k}\Omega\)</li>
+      <li>Branch 2: \(V_2 = 12\ \text{V}\) with its + terminal toward <b>b</b> (reversed), in series with \(R_2 = 6\ \text{k}\Omega\)</li>
+      <li>Branch 3: \(V_3 = 6\ \text{V}\) with + toward a, in series with \(R_3 = 6\ \text{k}\Omega\)</li>
+      <li>Load: \(R_L = 4.5\ \text{k}\Omega\) (no source)</li>
+    </ul>
+    <p><b>(a)</b> With the load disconnected, find the Millman voltage \(V_{out} = V_{ab}\) of the three source branches.</p>
+    <p>With the load connected, find <b>(b)</b> the load voltage \(V_L = V_{ab}\) and <b>(c)</b> the load current \(I_L\), positive when it flows down through \(R_L\) from a to b. Report voltages in volts, positive if a is at the higher potential.</p>
+  </div>
+  <figure class="circuit"><script type="application/json">{"parts":[
+   {"t":"W","pts":[[0,0],[12,0]]},
+   {"t":"W","pts":[[0,6],[12,6]]},
+   {"t":"R","a":[0,0],"b":[0,3],"label":"R_1","value":"3 kΩ"},
+   {"t":"BAT","a":[0,6],"b":[0,3],"label":"V_1","value":"18 V","side":-1},
+   {"t":"R","a":[4,0],"b":[4,3],"label":"R_2","value":"6 kΩ"},
+   {"t":"BAT","a":[4,6],"b":[4,3],"label":"V_2","value":"12 V","plus":"a","side":-1},
+   {"t":"R","a":[8,0],"b":[8,3],"label":"R_3","value":"6 kΩ"},
+   {"t":"BAT","a":[8,6],"b":[8,3],"label":"V_3","value":"6 V","side":-1},
+   {"t":"W","pts":[[12,0],[12,1.5]]},
+   {"t":"R","a":[12,1.5],"b":[12,4.5],"label":"R_L","value":"4.5 kΩ"},
+   {"t":"W","pts":[[12,4.5],[12,6]]},
+   {"t":"IARR","a":[12,0.2],"b":[12,1.3],"label":"I_L"},
+   {"t":"N","at":[0,0],"label":"a","pos":"w"},
+   {"t":"N","at":[0,6],"label":"b","pos":"w"},
+   {"t":"G","at":[6,6]}
+  ],"alt":"Rails a (top) and b (bottom, grounded). Branch 1: 3 kilohm with an 18 V battery, + toward a. Branch 2: 6 kilohm with a 12 V battery whose + faces rail b (reversed). Branch 3: 6 kilohm with a 6 V battery, + toward a. Load R_L = 4.5 kilohm at the right, with current I_L drawn downward through it."}</script>
+    <figcaption>The middle source is reversed: its long plate (+) faces rail b. The load \(R_L\) is a branch with no source. \(I_L\) is positive downward.</figcaption>
+  </figure>
+  <div class="q-answers">
+    <div class="ans" data-type="num" data-name="vout" data-label="(a) \(V_{out}\) (no load)" data-value="7.5" data-unit="V"></div>
+    <div class="ans" data-type="num" data-name="vl" data-label="(b) \(V_L\)" data-value="5.625" data-unit="V"></div>
+    <div class="ans" data-type="num" data-name="il" data-label="(c) \(I_L\)" data-value="0.00125" data-unit="A"></div>
+  </div>
+  <div class="fb" data-for="vout" data-match="13.5">This is what you get if \(V_2\) is entered as +12 V. Its + terminal faces rail b, so it enters with a minus sign: \(V_2/R_2 = -2\ \text{mA}\). After a source transformation its current arrow points down, away from rail a.</div>
+  <div class="fb" data-for="vout" data-match="15">You made the reversed branch's <em>conductance</em> negative too. Only the source term changes sign (\(-12/6\text{k}\)). The denominator term \(1/R_2\) is a resistor's conductance and is always positive.</div>
+  <div class="fb" data-for="vout" data-match="4">That is the unweighted average \((18 - 12 + 6)/3\). The signs are right, but each voltage must be weighted by its branch conductance \(1/R_k\).</div>
+  <div class="fb" data-for="vout" data-match="12">You added the signed source voltages (18 − 12 + 6). Parallel branches share one voltage. Add the branch <em>currents</em> \(V_k/R_k\), then divide by \(\sum 1/R_k\).</div>
+  <div class="fb" data-for="vl" data-match="7.5">That is the open-circuit voltage. Either the load's \(1/R_L\) is missing from the denominator, or the drop across \(R_N\) is missing. A source-free branch adds 0 to the numerator but still adds \(1/R_L\) to the denominator. Equivalently, use the divider \(V_L = V_{out}R_L/(R_N + R_L)\).</div>
+  <div class="fb" data-for="vl" data-match="10.125">You treated the reversed source as +12 V. With its + toward rail b it must enter as \(-12\ \text{V}\). Redo the numerator with \(-12/6\text{k}\).</div>
+  <div class="fb" data-for="vl" data-match="3">That is the plain average of the four branch voltages \((18 - 12 + 6 + 0)/4\). Including the load as a 0 V branch is right, but the voltages must be weighted by \(1/R_k\).</div>
+  <div class="fb" data-for="il" data-match="0.00166667">That is \(V_{out}/R_L\), which ignores the equivalent resistance \(R_N\) in series with the load. The current is \(I_L = V_{out}/(R_N + R_L)\), or \(V_L/R_L\) with the loaded \(V_L\).</div>
+  <div class="fb" data-for="il" data-match="0.00225">This comes from entering the reversed source as +12 V. Fix the sign of \(V_2\) first, then recompute \(V_{out}\) and \(I_L\).</div>
+  <div class="fb" data-for="il" data-match="0.005">5 mA is \(I_N\), the current the network would push through a <em>short</em> (\(R_L = 0\)). With a 4.5 kΩ load, the current has to flow through \(R_N + R_L\).</div>
+  <div class="q-hint">Give every source its sign first: + toward a is positive, + toward b is negative. Then find the Millman equivalent (\(V_{out}\) and \(R_N\)) of the three source branches with the load removed.</div>
+  <div class="q-hint">Connect the load to the equivalent: \(I_L = \dfrac{V_{out}}{R_N + R_L}\) and \(V_L = I_L R_L\). Or treat \(R_L\) as a fourth branch with \(V = 0\). Its \(1/R_L\) still goes in the denominator.</div>
+  <div class="q-hint">Check values: \(I_N = 6 - 2 + 1 = 5\ \text{mA}\) and \(R_N = 1.5\ \text{k}\Omega\).</div>
+  <div class="q-solution">
+    <p class="step">1. <b>Signs.</b> \(V_1 = +18\ \text{V}\), \(V_2 = -12\ \text{V}\) (its + faces rail b), \(V_3 = +6\ \text{V}\). The reason: a source transformation turns the reversed branch into a 2 mA current source whose arrow points <em>down</em>, toward its + side. It therefore subtracts from the current collected at rail a.</p>
+    <p class="step">2. <b>Numerator</b> (\(I_N\)): \(\dfrac{18}{3\,\text{k}} + \dfrac{-12}{6\,\text{k}} + \dfrac{6}{6\,\text{k}} = 6 - 2 + 1 = 5\ \text{mA}\).</p>
+    <p class="step">3. <b>Denominator:</b> \(\dfrac{1}{3\,\text{k}} + \dfrac{1}{6\,\text{k}} + \dfrac{1}{6\,\text{k}} = \dfrac{2 + 1 + 1}{6\,\text{k}\Omega} = 0.6667\ \text{mS}\), so \(R_N = 1.5\ \text{k}\Omega\). All three conductances are positive, including the reversed branch's.</p>
+    <p class="step">4. <b>(a) Open-circuit Millman voltage:</b> \(V_{out} = 5\ \text{mA} \times 1.5\ \text{k}\Omega = 7.5\ \text{V}\).</p>
+    <figure class="circuit"><script type="application/json">{"parts":[
+     {"t":"BAT","a":[0,4],"b":[0,1],"label":"V_{out}","value":"7.5 V","side":-1},
+     {"t":"W","pts":[[0,1],[1,1]]},
+     {"t":"R","a":[1,1],"b":[4,1],"label":"R_N = 1.5 kΩ"},
+     {"t":"W","pts":[[4,1],[6,1]]},
+     {"t":"R","a":[6,1],"b":[6,4],"label":"R_L","value":"4.5 kΩ"},
+     {"t":"W","pts":[[0,4],[6,4]]},
+     {"t":"IARR","a":[4.3,1],"b":[5.7,1],"label":"I_L"},
+     {"t":"N","at":[6,1],"label":"a","pos":"ne"},
+     {"t":"N","at":[6,4],"label":"b","pos":"se"}
+    ],"alt":"Millman equivalent: 7.5 V battery, + on top, in series with R_N = 1.5 kilohm, driving the 4.5 kilohm load from a to b."}</script>
+      <figcaption>The three source branches replaced by their Millman equivalent, with the load attached.</figcaption>
+    </figure>
+    <p class="step">5. <b>(b), (c) Load connected</b> (series circuit): \(I_L = \dfrac{7.5\ \text{V}}{1.5\ \text{k}\Omega + 4.5\ \text{k}\Omega} = 1.25\ \text{mA}\), and \(V_L = 1.25\ \text{mA} \times 4.5\ \text{k}\Omega = 5.625\ \text{V}\).</p>
+    <p class="step">6. <b>Same result with the load as a fourth (source-free) branch:</b> \(V_L = \dfrac{5\ \text{mA}}{0.6667\ \text{mS} + 1/4.5\ \text{k}\Omega} = \dfrac{5}{0.6667 + 0.2222} = 5.625\ \text{V}\).</p>
+    <p class="step">7. <b>Verification by nodal analysis.</b> Let \(v\) be the voltage of rail a. KCL at a, with every current taken as leaving a downward through its branch. In branch 2 the node between \(R_2\) and the source is at −12 V, because the source's + terminal sits on rail b at 0 V.</p>
+    <div class="formula">\[ \frac{v - 18}{3\,\text{k}} + \frac{v + 12}{6\,\text{k}} + \frac{v - 6}{6\,\text{k}} + \frac{v}{4.5\,\text{k}} = 0 \]</div>
+    <p>Multiply by 18 kΩ: \(6(v-18) + 3(v+12) + 3(v-6) + 4v = 0 \Rightarrow 16v - 90 = 0 \Rightarrow v = 5.625\ \text{V}\) ✔. The branch currents (downward) are \(-4.125\ \text{mA}\), \(+2.9375\ \text{mA}\), \(-0.0625\ \text{mA}\) and \(+1.25\ \text{mA}\), which add to 0 ✔.</p>
+    <p class="answer">(a) \(V_{out} = 7.5\ \text{V}\) (with \(R_N = 1.5\ \text{k}\Omega\)). (b) \(V_L = 5.625\ \text{V}\). (c) \(I_L = 1.25\ \text{mA}\), flowing down through \(R_L\).</p>
+  </div>
+  <div class="q-check">The loaded voltage must be lower than the open-circuit voltage. The load current drops \(1.25\ \text{mA} \times 1.5\ \text{k}\Omega = 1.875\ \text{V}\) across \(R_N\), and \(7.5 - 1.875 = 5.625\ \text{V}\). Limits: \(R_L \to \infty\) gives back 7.5 V; \(R_L \to 0\) gives \(I_L \to I_N = 5\ \text{mA}\). The value 7.5 V lies between the extreme source voltages −12 V and +18 V, as a weighted average must. Ignoring the reversal would give 13.5 V, which is far too high.</div>
+  <div class="q-links">Links back: <a class="xref" data-lesson="mt1" data-sec="mt1-apply">polarity, source-free branches and loads (additional)</a> · <a class="xref" data-lesson="mt1" data-sec="mt1-ex5">a similar worked example</a> · <a class="xref" data-lesson="mt1" data-sec="mt1-qa">\(R_N\) matters once a load draws current</a> <a class="ts" data-lesson="mt1" data-t="28:52"></a> <a class="ts" data-lesson="mt1" data-t="30:33"></a> · <a class="xref" data-lesson="mt1" data-sec="mt1-step1">source-transform each branch</a> <a class="ts" data-lesson="mt1" data-t="6:52"></a> · <a class="xref" data-lesson="st1" data-sec="st1-idea">current arrow points toward the + side</a> <a class="ts" data-lesson="st1" data-t="2:43"></a></div>
+</article>
+
+<article class="q" id="millman-q4" data-level="4" data-kind="special" data-title="Binary-weighted resistor DAC as a Millman circuit">
+  <div class="q-prompt">
+    <p>This is a complete, self-consistent version of the binary-weighted resistor DAC from the lecture notes. The bit order and the resistor values are defined here, so you do not have to rely on the notes. A 4-bit input \(D_3D_2D_1D_0\) (\(D_3\) = MSB, \(D_0\) = LSB) drives one output node through binary-weighted resistors:</p>
+    <ul>
+      <li>\(D_3\) (MSB) through \(R\), \(D_2\) through \(2R\), \(D_1\) through \(4R\), \(D_0\) (LSB) through \(8R\), with \(R = 10\ \text{k}\Omega\).</li>
+      <li>Each input is an ideal source of <b>0 V</b> (logic 0) or <b>5 V</b> (logic 1) relative to ground. In the Millman layout, every branch is a source in series with its resistor between the output rail and the ground rail, with + toward the output.</li>
+      <li>Nothing is connected to \(V_{out}\) (no load current).</li>
+    </ul>
+    <p>Find <b>(a)</b> \(V_{out}\) for the input code \(D_3D_2D_1D_0 = 1101\); <b>(b)</b> the step size, i.e. the change in \(V_{out}\) when only the LSB changes from 0 to 1; <b>(c)</b> the DAC's output resistance \(R_N\), the resistance seen between the output and ground.</p>
+  </div>
+  <figure class="circuit"><script type="application/json">{"parts":[
+   {"t":"W","pts":[[0,0],[15,0]]},
+   {"t":"W","pts":[[0,6],[15,6]]},
+   {"t":"R","a":[0,0],"b":[0,3],"label":"R","value":"10 kΩ"},
+   {"t":"BAT","a":[0,6],"b":[0,3],"label":"D_3","value":"0 / 5 V","side":-1},
+   {"t":"R","a":[4,0],"b":[4,3],"label":"2R","value":"20 kΩ"},
+   {"t":"BAT","a":[4,6],"b":[4,3],"label":"D_2","value":"0 / 5 V","side":-1},
+   {"t":"R","a":[8,0],"b":[8,3],"label":"4R","value":"40 kΩ"},
+   {"t":"BAT","a":[8,6],"b":[8,3],"label":"D_1","value":"0 / 5 V","side":-1},
+   {"t":"R","a":[12,0],"b":[12,3],"label":"8R","value":"80 kΩ"},
+   {"t":"BAT","a":[12,6],"b":[12,3],"label":"D_0","value":"0 / 5 V","side":-1},
+   {"t":"T","at":[-1.3,4.5],"text":""},
+   {"t":"T","at":[0,-0.55],"text":"MSB","anchor":"middle","cls":"muted"},
+   {"t":"T","at":[12,-0.55],"text":"LSB","anchor":"middle","cls":"muted"},
+   {"t":"N","at":[15,0],"open":true,"label":"V_{out}","pos":"e"},
+   {"t":"G","at":[15,6]}
+  ],"alt":"Four-bit binary-weighted DAC in Millman layout: output rail on top, ground rail at the bottom. Branches: input D3 (MSB) with R = 10 kilohm, D2 with 2R = 20 kilohm, D1 with 4R = 40 kilohm, D0 (LSB) with 8R = 80 kilohm. Each input source is 0 V or 5 V with + toward the output rail."}</script>
+    <figcaption>Our 4-bit DAC drawn in Millman layout. Each input is a 0 V or 5 V logic level. The smallest resistor carries the MSB.</figcaption>
+  </figure>
+  <div class="q-answers">
+    <div class="ans" data-type="num" data-name="vout" data-label="(a) \(V_{out}\) for 1101" data-value="4.333333" data-unit="V"></div>
+    <div class="ans" data-type="num" data-name="step" data-label="(b) step size" data-value="0.333333" data-unit="V"></div>
+    <div class="ans" data-type="num" data-name="rn" data-label="(c) \(R_N\)" data-value="5333.333" data-unit="Ω"></div>
+  </div>
+  <div class="fb" data-for="vout" data-match="5">You left the logic-0 branch (\(D_1\), 40 kΩ) out of the denominator. A 0 V input is still a branch: it is a resistor to ground with \(V = 0\). It adds nothing to the numerator, but its \(1/4R\) stays in the denominator. With all four branches the denominator is always \(15/8R\).</div>
+  <div class="fb" data-for="vout" data-match="3.66667" data-tol="0.01">That is the code read backwards (\(1011 = 11\)). Either the weights were reversed (MSB put on \(8R\)), or each voltage was weighted by \(R_k\) instead of \(1/R_k\), which does the same thing. The <em>smallest</em> resistor has the <em>largest</em> conductance, so it carries the MSB.</div>
+  <div class="fb" data-for="vout" data-match="3.75" data-tol="0.01">That is the plain average of the four inputs \((5 + 5 + 0 + 5)/4\). The inputs are not weighted equally: each counts in proportion to \(1/R_k\) (8 : 4 : 2 : 1).</div>
+  <div class="fb" data-for="vout" data-match="4.0625">You used the step size \(V_{ref}/16 = 0.3125\ \text{V}\) from the notes' 4-bit table ("different DAC designs"). For <em>this</em> passive network, Millman's formula gives a step of \(5\ \text{V}/15\). Compute it from the circuit.</div>
+  <div class="fb" data-for="step" data-match="0.3125">0.3125 V is \(V_{ref}/2^4\), the step in the notes' table. This network's denominator is \(15/8R\), and the LSB contributes \((5\ \text{V})/8R\) to the numerator, so the step is \(5\ \text{V}/15\).</div>
+  <div class="fb" data-for="step" data-match="2.66667">That is the change produced by the <em>MSB</em> (\(8 \times 5/15\)). The LSB is \(D_0\), on the largest resistor \(8R\), so it has the smallest weight.</div>
+  <div class="fb" data-for="step" data-match="1.25">That is 5 V / 4, which treats all four inputs as equally weighted. The LSB's weight is \((1/8R)/(15/8R) = 1/15\) of the 5 V.</div>
+  <div class="fb" data-for="rn" data-match="150000">150 kΩ is \(R + 2R + 4R + 8R\), the series sum. The four branches are in parallel at the output: \(R_N = 1/\sum(1/R_k)\).</div>
+  <div class="fb" data-for="rn" data-match="2500">\(R/4\) is the equal-resistor shortcut, which only works when all branch resistances are the same. Here they are \(R, 2R, 4R, 8R\). Use the general parallel formula.</div>
+  <div class="fb" data-for="rn" data-match="6153.85">You left out the logic-0 branch. To find \(R_N\), every input source is disabled (shorted), so all four resistors are in parallel, and \(R_N\) does not depend on the code.</div>
+  <div class="q-hint">This is a Millman circuit: four branches between \(V_{out}\) and ground, each an input source in series with its resistor. A logic-0 input is a 0 V source, so that branch is just a resistor to ground, and it still counts in the denominator.</div>
+  <div class="q-hint">Write the denominator once: \(\dfrac{1}{R} + \dfrac{1}{2R} + \dfrac{1}{4R} + \dfrac{1}{8R} = \dfrac{15}{8R}\). It does not depend on the input code.</div>
+  <div class="q-hint">For 1101 the numerator is \(5\ \text{V}\left(\dfrac{1}{R} + \dfrac{1}{2R} + \dfrac{1}{8R}\right) = 5\ \text{V} \cdot \dfrac{13}{8R}\).</div>
+  <div class="q-solution">
+    <p class="step">1. <b>Redraw for the code 1101:</b> \(D_3 = 5\ \text{V}\), \(D_2 = 5\ \text{V}\), \(D_1 = 0\ \text{V}\), \(D_0 = 5\ \text{V}\). The 0 V source is just a wire, so the \(4R\) branch goes straight to ground.</p>
+    <figure class="circuit"><script type="application/json">{"parts":[
+     {"t":"W","pts":[[0,0],[15,0]]},
+     {"t":"W","pts":[[0,6],[15,6]]},
+     {"t":"T","at":[-1.3,4.5],"text":""},
+     {"t":"R","a":[0,0],"b":[0,3],"label":"10 kΩ"},
+     {"t":"BAT","a":[0,6],"b":[0,3],"label":"D_3 = 1","value":"5 V","side":-1},
+     {"t":"R","a":[4,0],"b":[4,3],"label":"20 kΩ"},
+     {"t":"BAT","a":[4,6],"b":[4,3],"label":"D_2 = 1","value":"5 V","side":-1},
+     {"t":"R","a":[8,0],"b":[8,3],"label":"40 kΩ"},
+     {"t":"W","pts":[[8,3],[8,6]]},
+     {"t":"T","at":[7.6,4.6],"text":"D_1 = 0\n(0 V)","anchor":"end","cls":"muted"},
+     {"t":"R","a":[12,0],"b":[12,3],"label":"80 kΩ"},
+     {"t":"BAT","a":[12,6],"b":[12,3],"label":"D_0 = 1","value":"5 V","side":-1},
+     {"t":"N","at":[15,0],"open":true,"label":"V_{out}","pos":"e"},
+     {"t":"G","at":[15,6]}
+    ],"alt":"Code 1101 applied: 5 V through 10 kilohm, 5 V through 20 kilohm, 40 kilohm straight to ground (logic 0), 5 V through 80 kilohm, all joined at Vout."}</script>
+      <figcaption>Code 1101 applied. The logic-0 input leaves its 40 kΩ resistor connected from \(V_{out}\) to ground.</figcaption>
+    </figure>
+    <p class="step">2. <b>Denominator</b> (the same for every code): \(\dfrac{1}{R} + \dfrac{1}{2R} + \dfrac{1}{4R} + \dfrac{1}{8R} = \dfrac{8 + 4 + 2 + 1}{8R} = \dfrac{15}{8R} = \dfrac{15}{80\ \text{k}\Omega} = 0.1875\ \text{mS}\).</p>
+    <p class="step">3. <b>Numerator in general</b>, with bits \(b_k \in \{0, 1\}\): \(\dfrac{5b_3}{R} + \dfrac{5b_2}{2R} + \dfrac{5b_1}{4R} + \dfrac{5b_0}{8R} = \dfrac{5\ \text{V}}{8R}(8b_3 + 4b_2 + 2b_1 + b_0) = \dfrac{5\ \text{V}}{8R}\cdot\text{code}\). So</p>
+    <div class="formula">\[ V_{out} = \frac{(5\ \text{V}/8R)\cdot\text{code}}{15/8R} = \frac{5\ \text{V}}{15}\cdot\text{code} \]</div>
+    <p class="step">4. <b>(a)</b> \(1101_2 = 13\): \(V_{out} = 13 \times \tfrac{5}{15}\ \text{V} = 4.333\ \text{V}\). Directly: numerator \(5\left(\tfrac{1}{10\text{k}} + \tfrac{1}{20\text{k}} + \tfrac{1}{80\text{k}}\right) = 5 \cdot \tfrac{8 + 4 + 1}{80\ \text{k}\Omega} = 0.8125\ \text{mA}\), and \(0.8125\ \text{mA} / 0.1875\ \text{mS} = 4.333\ \text{V}\).</p>
+    <p class="step">5. <b>(b)</b> Changing only the LSB changes the code by 1: \(\Delta V_{out} = 5\ \text{V}/15 = 0.333\ \text{V}\). That is the LSB's weight \((1/8R)/(15/8R) = 1/15\) times 5 V.</p>
+    <p class="step">6. <b>(c)</b> Disable all the inputs (short the sources). The four resistors are then in parallel: \(R_N = \dfrac{8R}{15} = \dfrac{80\ \text{k}\Omega}{15} = 5.333\ \text{k}\Omega\), for every code.</p>
+    <p class="answer">(a) \(V_{out} = 13/3\ \text{V} \approx 4.333\ \text{V}\). (b) Step \(= 1/3\ \text{V} \approx 0.333\ \text{V}\). (c) \(R_N = 5.333\ \text{k}\Omega\).</p>
+    <aside class="note"><p><b>How this version relates to the notes.</b> The notes draw the inputs as \(V_{B0}\ldots V_{B3}\) on R, 2R, 4R, 8R, and the study guide flags that the bit order there is unclear. A 3-bit sketch also shows "3R" where the binary pattern needs 4R. This problem avoids both issues by defining MSB → R and LSB → 8R, which is the only order that gives binary weights, and by using 4R. The notes' 4-bit table uses a step of \(V_{ref}/16 = 0.3125\ \text{V}\) and remarks on "different DAC designs". This passive Millman network has a step of \(V_{ref}/15\), so 1111 gives exactly 5 V.</p></aside>
+  </div>
+  <div class="q-check">\(V_{out}\) must lie between 0 V and 5 V, since it is a weighted average of 0 V and 5 V inputs. 0000 gives 0 V and 1111 gives \(15 \times 5/15 = 5\ \text{V}\). The output is proportional to the code (0, 0.333, 0.667, … V), which is what a DAC should do. \(R_N = 5.33\ \text{k}\Omega\) is below the smallest resistor (10 kΩ). <b>Nodal check</b> for 1101 with \(v = 4.333\ \text{V}\): \((v-5)/10\text{k} + (v-5)/20\text{k} + v/40\text{k} + (v-5)/80\text{k} = -66.7 - 33.3 + 108.3 - 8.3 = 0\ \mu\text{A}\) ✔. Because \(R_N\) is several kΩ, a load would pull the output down. A 10 kΩ load would give \(4.333 \times 10/(10 + 5.333) = 2.83\ \text{V}\), which is why a practical DAC buffers its output.</div>
+  <div class="q-links">Links back: <a class="xref" data-lesson="mt1" data-sec="mt1-dac">the binary-weighted resistor DAC</a> <a class="ts" data-lesson="mt1" data-t="36:35"></a> · R, 2R, 4R, 8R and 0/5 V inputs <a class="ts" data-lesson="mt1" data-t="37:26"></a> · why it is a Millman circuit <a class="ts" data-lesson="mt1" data-t="38:17"></a> · <a class="xref" data-lesson="mt1" data-sec="mt1-ex3">the 4-bit table and step size</a> <a class="ts" data-lesson="mt1" data-t="40:44"></a> · <a class="xref" data-lesson="mt1" data-sec="mt1-apply">source-free (0 V) branches</a></div>
+</article>

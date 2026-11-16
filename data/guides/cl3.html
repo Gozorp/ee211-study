@@ -1,0 +1,616 @@
+<section class="g-sec" id="cl3-overview" data-kind="overview">
+<h2>Overview</h2>
+<p>This lecture/lab introduces the <strong>capacitor</strong>, the second energy-storing circuit element after the inductor. It covers how a capacitor is built (two conductive plates separated by a dielectric), why it stores charge when a voltage is applied, its two schematic symbols (non-polarized ceramic and polarized electrolytic), the unit <strong>farad</strong> and the practical μF/nF/pF sizes, the relationship \(C = Q/V\), how capacitors combine in parallel and in series, how voltage divides across series capacitors, and a first look at RC charging with the universal time constant chart (\(\tau = RC\)). The second half is a lab: simulating an RL circuit (10 V pulse, 10 Ω, 1 H) in LTspice to watch the inductor current rise with the \(L/R\) time constant.</p>
+<p>Parts of the video:</p>
+<ul>
+<li><a class="ts" data-t="0:01"></a> Where we are: inductors so far, capacitors today, AC later.</li>
+<li><a class="ts" data-t="1:12"></a> What a capacitor is: plates, dielectric, stored charge; "capacitors oppose a change in voltage".</li>
+<li><a class="ts" data-t="6:58"></a> Schematic symbols: ceramic (non-polarized) vs electrolytic (polarized); real parts shown.</li>
+<li><a class="ts" data-t="15:19"></a> Charging a capacitor from a 10 V source through a switch; the capacitor as a temporary battery.</li>
+<li><a class="ts" data-t="20:41"></a> The farad, its definition, and real capacitor values; metric prefixes μ, n, p.</li>
+<li><a class="ts" data-t="27:05"></a> \(C = Q/V\) and the 10 F / 12 V example.</li>
+<li><a class="ts" data-t="29:52"></a> Capacitors in parallel and in series (with examples).</li>
+<li><a class="ts" data-t="34:10"></a> Voltage distribution: parallel capacitors vs series capacitors; 90 V example.</li>
+<li><a class="ts" data-t="43:24"></a> RC charging, the universal time constant chart and \(\tau = RC\) (100 Ω, 1 F example).</li>
+<li><a class="ts" data-t="52:03"></a> After the break: a variable (tuning) parallel-plate capacitor.</li>
+<li><a class="ts" data-t="54:25"></a> Lab 7 — Introduction to LTspice and inductors: building the RL circuit, pulse source, simulation, and the worksheet calculations.</li>
+</ul>
+<p>The whole video is in scope for this topic. The RC time constant is only introduced here; it is developed in detail in <a class="xref" data-lesson="cl4">the RC time constant lesson</a>.</p>
+</section>
+
+<section class="g-sec" id="cl3-objectives" data-kind="objectives">
+<h2>Learning objectives</h2>
+<p>After this lesson you should be able to:</p>
+<ul>
+<li>Describe the construction of a capacitor (two conductors separated by a dielectric) and explain how it stores charge and energy when a voltage is applied.</li>
+<li>State the "opposition" rules: resistors oppose current, inductors oppose a <em>change</em> in current, capacitors oppose a <em>change</em> in voltage.</li>
+<li>Recognise the non-polarized (ceramic) and polarized (electrolytic) capacitor symbols, and connect a polarized capacitor the right way round.</li>
+<li>Explain what happens to the capacitor voltage when a switch to a DC source is closed and later opened.</li>
+<li>Define the farad, convert between F, mF, μF, nF and pF, and read a small ceramic-capacitor marking given in picofarads.</li>
+<li>Use \(C = Q/V\) to find charge, capacitance or voltage.</li>
+<li>Combine capacitors in parallel (\(C_T = C_1 + C_2 + \dots\)) and in series (\(1/C_T = 1/C_1 + 1/C_2 + \dots\)).</li>
+<li>Find the voltage across each capacitor in a series string with \(V_{Cx} = V_s\,C_T/C_x\), and check the result with KVL.</li>
+<li>Compute \(\tau = RC\), and use the universal time constant chart to say how far a capacitor has charged after 1–5 time constants.</li>
+<li>Build an RL circuit with a pulse source in LTspice, probe the source voltage and inductor current, and compute \(I_{max}\), \(\tau = L/R\), \(5\tau\), the stored energy and the expected current at each time constant.</li>
+</ul>
+</section>
+
+<section class="g-sec" id="cl3-prereqs" data-kind="prereqs">
+<h2>Prerequisites</h2>
+<dl>
+<dt>Charge, voltage and current</dt>
+<dd>Charge \(Q\) is measured in coulombs (1 C is about \(6.24\times10^{18}\) electrons). Current is the rate at which charge moves (1 A = 1 C/s). Voltage is the energy per unit charge between two points.</dd>
+<dt>Ohm's law and KVL</dt>
+<dd>\(V = IR\). Kirchhoff's voltage law: the voltages around any closed loop add to zero, so in a series loop the element voltages add up to the source voltage. Elements in parallel share the same voltage.</dd>
+<dt>Series/parallel resistor formulas</dt>
+<dd>Series: \(R_T = R_1 + R_2 + \dots\). Parallel: \(1/R_T = 1/R_1 + 1/R_2 + \dots\), or for two, \(R_1R_2/(R_1+R_2)\). Capacitors use the same two formulas but swapped.</dd>
+<dt>Inductors and the L/R time constant</dt>
+<dd>An inductor stores energy in a magnetic field and opposes a change in current; after a DC step its current rises exponentially with \(\tau = L/R\) and reaches (practically) its final value after \(5\tau\). See <a class="xref" data-lesson="cl1">Intro to inductors</a> and <a class="xref" data-lesson="cl2">the L/R time constant</a>.</dd>
+<dt>Universal time constant chart</dt>
+<dd>The chart (introduced for inductors) gives the percentage of the final value reached after each time constant: about 63.2 % after \(1\tau\), 86.5 % after \(2\tau\), 95 % after \(3\tau\), 98 % after \(4\tau\) and 99 % (treated as 100 %) after \(5\tau\).</dd>
+<dt>Metric prefixes</dt>
+<dd>m = \(10^{-3}\), μ = \(10^{-6}\), n = \(10^{-9}\), p = \(10^{-12}\).</dd>
+</dl>
+</section>
+
+<section class="g-sec" id="cl3-definitions" data-kind="definitions">
+<h2>Definitions &amp; symbols</h2>
+<table>
+<tr><th>Term / symbol</th><th>Meaning</th><th>Unit</th></tr>
+<tr><td>Capacitor ("cap")</td><td>Two-terminal device made of two conductors (plates) separated by an insulator; stores charge (and energy) when a voltage is applied.</td><td>—</td></tr>
+<tr><td>Dielectric</td><td>The insulator between the plates (e.g. ceramic, paper-like film in an electrolytic, air in a tuning capacitor).</td><td>—</td></tr>
+<tr><td>Capacitance \(C\)</td><td>How much charge a capacitor stores per volt applied: \(C = Q/V\).</td><td>farad (F)</td></tr>
+<tr><td>Farad (F)</td><td>Named after Michael Faraday. 1 F is the capacitance for which a charge of 1 coulomb produces a potential difference of 1 volt.</td><td>F = C/V</td></tr>
+<tr><td>μF, nF, pF</td><td>Practical sizes: \(1\,\mu\text{F} = 10^{-6}\,\text{F}\), \(1\,\text{nF} = 10^{-9}\,\text{F}\), \(1\,\text{pF} = 10^{-12}\,\text{F}\).</td><td>F</td></tr>
+<tr><td>\(Q\)</td><td>Charge stored (on each plate: \(+Q\) on one, \(-Q\) on the other).</td><td>coulomb (C)</td></tr>
+<tr><td>\(V_C\), \(v_C\)</td><td>Voltage across the capacitor.</td><td>V</td></tr>
+<tr><td>Ceramic capacitor</td><td>Small, usually disc-shaped, non-polarized, low values (pF–nF range). Symbol: two flat plates.</td><td>—</td></tr>
+<tr><td>Electrolytic capacitor</td><td>Two foil strips separated by a dielectric, rolled into a can; large values (μF and up); <strong>polarized</strong>. Symbol: one flat plate (+, higher voltage) and one curved plate (−, lower voltage).</td><td>—</td></tr>
+<tr><td>Voltage rating</td><td>Maximum voltage a capacitor can safely have across it (e.g. 25 V or 350 V on two 100 μF parts shown in the video).</td><td>V</td></tr>
+<tr><td>\(C_T\)</td><td>Total (equivalent) capacitance of a combination.</td><td>F</td></tr>
+<tr><td>\(\tau\) (tau)</td><td>Time constant. RC circuit: \(\tau = RC\); RL circuit: \(\tau = L/R\).</td><td>s</td></tr>
+<tr><td>Universal time constant chart</td><td>Graph of percent of final value vs number of time constants (63.2 %, 86.5 %, … , ≈100 % at \(5\tau\)).</td><td>—</td></tr>
+<tr><td>LTspice</td><td>Free SPICE circuit simulator used for the lab.</td><td>—</td></tr>
+<tr><td>PULSE source</td><td>LTspice voltage-source function PULSE(V1 V2 Tdelay Trise Tfall Ton …) that steps between two voltages.</td><td>—</td></tr>
+<tr><td>Series resistance \(R_{ser}\)</td><td>LTspice inductor parameter modelling the wire resistance of the coil (default shown as 1 mΩ); set to 0 for an ideal inductor.</td><td>Ω</td></tr>
+</table>
+</section>
+
+<section class="g-sec" id="cl3-intro" data-kind="lesson" data-ts="0-420">
+<h2>1. What a capacitor is and what it does</h2>
+<h3>Context <a class="ts" data-t="0:01"></a></h3>
+<p>The previous two lectures treated inductors with a DC source and a switch (so the current changed only when the switch moved). This lecture looks at capacitors from the same DC point of view. Later in the course both inductors and capacitors are revisited with AC (sine-wave) sources.</p>
+<h3>Construction <a class="ts" data-t="1:12"></a></h3>
+<p>A capacitor is formed by <strong>two conductors separated by an insulator</strong>, called the <strong>dielectric</strong>. Each terminal (wire) connects to one conductive plate, so the capacitor is a two-terminal device <a class="ts" data-t="2:08"></a>. The plates are <em>not</em> electrically connected to each other.</p>
+<figure class="circuit" id="cl3-fig-construction">
+<script type="application/json">{"parts": [
+ {"t": "BAT", "a": [0, 3], "b": [0, 1], "label": "battery", "plus": "b", "side": -1}, 
+ {"t": "W", "pts": [[0, 1], [0, 0], [3, 0], [3, 1]]}, 
+ {"t": "C", "a": [3, 1], "b": [3, 3]}, 
+ {"t": "W", "pts": [[3, 3], [3, 4], [0, 4], [0, 3]]}, 
+ {"t": "IARR", "a": [1, 0], "b": [2, 0], "label": "I"}, 
+ {"t": "T", "at": [3.55, 1.72], "text": "+ + +", "anchor": "start", "cls": "accent"}, 
+ {"t": "T", "at": [3.55, 2.62], "text": "− − −", "anchor": "start", "cls": "accent"}, 
+ {"t": "T", "at": [4.9, 1.72], "text": "conductor (plate): + charge, lack of electrons", "anchor": "start"}, 
+ {"t": "T", "at": [4.9, 2.17], "text": "insulator = dielectric", "anchor": "start", "cls": "muted"}, 
+ {"t": "T", "at": [4.9, 2.62], "text": "conductor (plate): − charge, excess electrons", "anchor": "start"}, 
+ {"t": "T", "at": [10.6, 2], "text": ""}, 
+ {"t": "T", "at": [-0.4, 2], "text": ""}], "alt": "A battery connected to a capacitor; current I flows from the battery's positive terminal to the top plate, which collects positive charge, while the bottom plate collects negative charge; the plates are separated by an insulator called the dielectric."}</script>
+<figcaption>Basic capacitor: conductor – insulator (dielectric) – conductor, charged by a battery. On the page (<a class="ts" data-t="5:32"></a>) the layers are drawn as three stacked boxes labelled Conductor / Insulator / Conductor, with "+++" on the top plate, "− − −" on the bottom plate and a current arrow \(I\) from the battery.</figcaption>
+</figure>
+<h3>Capacitors store charge <a class="ts" data-t="2:57"></a></h3>
+<p>First statement on the page: <strong>capacitors store electrical charge when a voltage is applied.</strong> When a voltage (a battery in the sketch) is applied, current \(I\) flows <a class="ts" data-t="3:57"></a>: positive charge builds up on the plate connected to the battery's + terminal and negative charge on the other plate. One plate ends up with an excess of electrons (negative) and the other with a lack of electrons (positive) <a class="ts" data-t="4:47"></a>.</p>
+<ul>
+<li>An inductor stores energy in a <strong>magnetic field</strong>; a capacitor stores energy as <strong>charge built up on its plates</strong> <a class="ts" data-t="4:23"></a>.</li>
+<li>Once charged, the capacitor acts like a battery: it holds energy and that charge can be used to do work <a class="ts" data-t="5:03"></a>.</li>
+</ul>
+<aside class="extra"><p>Physically, the separated charge creates an <em>electric field</em> in the dielectric, and that is where the energy lives — just as the inductor's energy lives in its magnetic field. The energy stored is \(W = \tfrac12 C V^2\) (compare \(W = \tfrac12 L I^2\) for an inductor). This formula is not derived in this video.</p></aside>
+<h3>Capacitors oppose a change in voltage <a class="ts" data-t="5:35"></a></h3>
+<p>Second statement on the page: <strong>capacitors oppose a change in voltage</strong> <a class="ts" data-t="6:02"></a>.</p>
+<table>
+<tr><th>Element</th><th>Opposes…</th></tr>
+<tr><td>Resistor</td><td>the flow of current</td></tr>
+<tr><td>Inductor</td><td>a <em>change</em> in current</td></tr>
+<tr><td>Capacitor</td><td>a <em>change</em> in voltage</td></tr>
+</table>
+<p>The reason <a class="ts" data-t="6:02"></a>: when a voltage is applied, it takes time for charge to build up on the plates, so the capacitor's voltage cannot jump instantly; it builds up over time.</p>
+<aside class="instructor"><p>The instructor repeats this trio several times (again in the lab at <a class="ts" data-t="55:15"></a>): resistance opposes current, inductance opposes a change in current, capacitance opposes a change in voltage.</p></aside>
+</section>
+
+<section class="g-sec" id="cl3-symbols" data-kind="lesson" data-ts="418-919">
+<h2>2. Schematic symbols: ceramic vs electrolytic</h2>
+<p>There are two schematic symbols for a capacitor because there are two fundamentally different ways capacitors are constructed <a class="ts" data-t="6:58"></a>. Electrically, both are "a capacitor".</p>
+<figure class="circuit" id="cl3-fig-symbols">
+<script type="application/json">{"parts": [
+ {"t": "N", "at": [0, 0], "open": true}, 
+ {"t": "N", "at": [0, 3], "open": true}, 
+ {"t": "C", "a": [0, 0], "b": [0, 3], "label": "C", "value": "ceramic"}, 
+ {"t": "T", "at": [0, 4.2], "text": "non-polarized", "cls": "muted"}, 
+ {"t": "N", "at": [6, 0], "open": true}, 
+ {"t": "N", "at": [6, 3], "open": true}, 
+ {"t": "C", "a": [6, 0], "b": [6, 3], "label": "C", "value": "electrolytic", "polar": true}, 
+ {"t": "T", "at": [6, 4.2], "text": "polarized", "cls": "muted"}, 
+ {"t": "T", "at": [6.4, -0.5], "text": "flat side: higher voltage", "anchor": "start", "cls": "accent"}, 
+ {"t": "T", "at": [6.4, 3.6], "text": "curved side: lower voltage", "anchor": "start", "cls": "accent"}, 
+ {"t": "T", "at": [9.2, 2], "text": ""}], "alt": "Left: non-polarized capacitor symbol with two straight plates (ceramic). Right: polarized capacitor symbol with a flat plus plate on top and a curved plate on the bottom (electrolytic)."}</script>
+<figcaption>The two capacitor symbols, as introduced at <a class="ts" data-t="7:44"></a> (non-polarized) and <a class="ts" data-t="8:10"></a> (polarized).</figcaption>
+</figure>
+<h3>Non-polarized symbol (ceramic) <a class="ts" data-t="7:44"></a></h3>
+<p>Two straight, parallel plates with a gap: this is the "pure"/ideal capacitor symbol. The gap reminds you that the plates are separated by the insulator and not electrically connected. Generally this symbol means a <strong>ceramic capacitor</strong> <a class="ts" data-t="9:50"></a>. Ceramic capacitors are small, usually flat discs (sometimes coloured) <a class="ts" data-t="10:12"></a>, have <strong>low</strong> capacitance values, and have <strong>no polarity</strong>: you can plug them in either way round <a class="ts" data-t="14:33"></a>.</p>
+<h3>Polarized symbol (electrolytic) <a class="ts" data-t="8:10"></a></h3>
+<p>One plate is drawn curved and the symbol carries a polarity. This is an <strong>electrolytic capacitor</strong>. The polarity is "an artifact of construction" <a class="ts" data-t="8:36"></a>:</p>
+<ul>
+<li>The <strong>flat side (+) must be at the higher voltage</strong> and the <strong>curved side (−) at the lower voltage</strong> <a class="ts" data-t="9:24"></a>.</li>
+<li>If it is connected backwards it still works for a while, but it eventually breaks down — "probably go up in a puff of smoke" <a class="ts" data-t="14:57"></a>.</li>
+<li>Capacitors in general don't need polarity; this one does because of the physical limitations of how it is made <a class="ts" data-t="9:00"></a>.</li>
+</ul>
+<p>Construction <a class="ts" data-t="10:32"></a>: two foil strips are separated by a dielectric (think of a piece of paper), rolled up, and put into a can. Electrolytics store much more charge than ceramics; a physically larger can has larger plates, so it can hold more charge/energy <a class="ts" data-t="10:58"></a>.</p>
+<h3>Capacitance and size <a class="ts" data-t="11:21"></a></h3>
+<p><strong>Capacitance is how much charge a capacitor can store</strong> (written on the page). Ceramics are low in value; electrolytics can be much larger. The instructor lays real parts on the page — two small ceramic discs, a small blue electrolytic and a larger black electrolytic <a class="ts" data-t="11:08"></a> — and shows a fist-sized can capacitor used for filtering large voltage changes in industrial power applications (motors etc.) <a class="ts" data-t="12:01"></a>; typical electronic circuits don't use parts that big.</p>
+<h3>When does polarity matter? <a class="ts" data-t="12:52"></a></h3>
+<p>On paper and in circuit-simulation tools the two symbols are treated the same: an ideal capacitor <a class="ts" data-t="13:24"></a>. On the page, arrows from both symbols point to a single plain capacitor symbol to show this (visible at <a class="ts" data-t="15:05"></a>, next to the note "Capacitance — how much charge it can store"). Polarity only matters when you physically build a circuit and choose an electrolytic part for the value you need; then you must connect it with the correct orientation <a class="ts" data-t="13:49"></a>. There are other trade-offs between the two types, but they are not needed at this point.</p>
+<aside class="extra"><p>On a real electrolytic capacitor the <strong>negative</strong> lead is normally marked with a stripe of "−" signs on the can, and the negative lead is the shorter one when the part is new. Match that stripe to the curved plate in the schematic.</p></aside>
+</section>
+
+<section class="g-sec" id="cl3-charging" data-kind="lesson" data-ts="919-1241">
+<h2>3. Charging a capacitor through a switch — a temporary battery</h2>
+<p>The instructor draws a simple circuit: a 10 V source, a switch and a capacitor <a class="ts" data-t="15:19"></a>.</p>
+<figure class="circuit" id="cl3-fig-charge">
+<script type="application/json">{"parts": [
+ {"t": "T", "at": [2, -1], "text": "1. Switch open", "bold": true}, 
+ {"t": "BAT", "a": [0, 3], "b": [0, 1], "label": "10 V", "plus": "b", "side": -1}, 
+ {"t": "W", "pts": [[0, 1], [0, 0], [1, 0]]}, 
+ {"t": "SW", "a": [1, 0], "b": [3, 0], "state": "open"}, 
+ {"t": "W", "pts": [[3, 0], [4, 0], [4, 1]]}, 
+ {"t": "C", "a": [4, 1], "b": [4, 3], "label": "v_C = 0", "value": "no charge"}, 
+ {"t": "W", "pts": [[4, 3], [4, 4], [0, 4], [0, 3]]}, 
+ {"t": "T", "at": [11, -1], "text": "2. Switch closed: charging", "bold": true}, 
+ {"t": "BAT", "a": [9, 3], "b": [9, 1], "label": "10 V", "plus": "b", "side": -1}, 
+ {"t": "W", "pts": [[9, 1], [9, 0], [10, 0]]}, 
+ {"t": "SW", "a": [10, 0], "b": [12, 0], "state": "closed"}, 
+ {"t": "W", "pts": [[12, 0], [13, 0], [13, 1]]}, 
+ {"t": "C", "a": [13, 1], "b": [13, 3], "label": "v_C < 10 V", "value": "charging"}, 
+ {"t": "W", "pts": [[13, 3], [13, 4], [9, 4], [9, 3]]}, 
+ {"t": "T", "at": [12.45, 1.72], "text": "+ +", "anchor": "end", "cls": "accent"}, 
+ {"t": "T", "at": [12.45, 2.62], "text": "− −", "anchor": "end", "cls": "accent"}, 
+ {"t": "T", "at": [2, 6], "text": "3. Closed, after some time", "bold": true}, 
+ {"t": "BAT", "a": [0, 10], "b": [0, 8], "label": "10 V", "plus": "b", "side": -1}, 
+ {"t": "W", "pts": [[0, 8], [0, 7], [1, 7]]}, 
+ {"t": "SW", "a": [1, 7], "b": [3, 7], "state": "closed"}, 
+ {"t": "W", "pts": [[3, 7], [4, 7], [4, 8]]}, 
+ {"t": "C", "a": [4, 8], "b": [4, 10], "label": "v_C = 10 V", "value": "fully charged"}, 
+ {"t": "W", "pts": [[4, 10], [4, 11], [0, 11], [0, 10]]}, 
+ {"t": "T", "at": [3.45, 8.72], "text": "+ + +", "anchor": "end", "cls": "accent"}, 
+ {"t": "T", "at": [3.45, 9.62], "text": "− − −", "anchor": "end", "cls": "accent"}, 
+ {"t": "T", "at": [11, 6], "text": "4. Switch reopened", "bold": true}, 
+ {"t": "BAT", "a": [9, 10], "b": [9, 8], "label": "10 V", "plus": "b", "side": -1}, 
+ {"t": "W", "pts": [[9, 8], [9, 7], [10, 7]]}, 
+ {"t": "SW", "a": [10, 7], "b": [12, 7], "state": "open"}, 
+ {"t": "W", "pts": [[12, 7], [13, 7], [13, 8]]}, 
+ {"t": "C", "a": [13, 8], "b": [13, 10], "label": "v_C = 10 V", "value": "charge stays"}, 
+ {"t": "W", "pts": [[13, 10], [13, 11], [9, 11], [9, 10]]}, 
+ {"t": "T", "at": [12.45, 8.72], "text": "+ + +", "anchor": "end", "cls": "accent"}, 
+ {"t": "T", "at": [12.45, 9.62], "text": "− − −", "anchor": "end", "cls": "accent"}, 
+ {"t": "T", "at": [14.3, 2], "text": ""}], "alt": "Four stages of a 10 volt battery, switch and capacitor: switch open with no charge; switch closed with the capacitor charging and less than 10 volts; after some time the capacitor at 10 volts; switch reopened and the capacitor still at 10 volts."}</script>
+<figcaption>The four stages drawn on the page (<a class="ts" data-t="15:33"></a>–<a class="ts" data-t="19:10"></a>; all four visible at <a class="ts" data-t="20:38"></a>, with the note "We can think of this like a battery that can charge and discharge quickly").</figcaption>
+</figure>
+<ol>
+<li><strong>Switch open</strong> <a class="ts" data-t="15:33"></a>: no charge has built up on the plates, so \(v_C = 0\).</li>
+<li><strong>Switch closed</strong> <a class="ts" data-t="16:02"></a>: current flows and charge starts to develop on the plates. At first \(v_C\) is less than 10 V.</li>
+<li><strong>After some time</strong> <a class="ts" data-t="16:59"></a>: the capacitor reaches 10 V. At that point it holds as much charge as it can for this voltage — the plates are only so large, and the electrons can't be "squished" any further <a class="ts" data-t="17:26"></a>. The capacitor is fully charged with \(v_C = 10\,\text{V}\). (How long this takes depends on component values — that is the time constant, section 8.)</li>
+<li><strong>Switch opened again</strong> <a class="ts" data-t="17:51"></a>: the charge stays on the plates because it has nowhere to go, so \(v_C\) is <em>still</em> 10 V <a class="ts" data-t="18:23"></a>. In reality it slowly dissipates over time, but we normally ignore that and treat the capacitor like a small battery that can give us 10 V <a class="ts" data-t="18:49"></a>.</li>
+</ol>
+<p>So a capacitor is a <strong>temporary storage of charge</strong> <a class="ts" data-t="19:16"></a> — like a battery that can charge and discharge quickly <a class="ts" data-t="20:15"></a>. This makes it useful (a) when you want things to take some amount of time, because the charge does not build up instantly, and (b) as an energy-storage device that acts as a temporary battery.</p>
+<aside class="extra"><p>Two facts used constantly in later lessons follow from this:</p>
+<ul>
+<li><strong>The capacitor voltage cannot change instantly</strong> (it takes time for charge to build up), so the voltage just after a switch moves equals the voltage just before it.</li>
+<li><strong>At DC steady state a capacitor acts as an open circuit</strong>: once \(v_C\) equals the source voltage, no more charge flows, so the current is zero. Compare the inductor, which acts as a short (a plain wire) at DC steady state — exactly what the lab in this video shows at <a class="ts" data-t="1:17:35"></a>.</li>
+</ul></aside>
+</section>
+
+<section class="g-sec" id="cl3-farad" data-kind="lesson" data-ts="1241-1625">
+<h2>4. The farad and practical capacitor values</h2>
+<p>To quantify how much charge a capacitor stores — quite literally, how many electrons pile up on a plate <a class="ts" data-t="20:41"></a> — we use the unit of capacitance, the <strong>farad (F)</strong>, named after Michael Faraday <a class="ts" data-t="21:31"></a>.</p>
+<div class="formula">\[ 1\,\text{F} = \frac{1\,\text{C}}{1\,\text{V}} \]</div>
+<dl class="vardefs"><dt>F</dt><dd>farad, unit of capacitance</dd><dt>C</dt><dd>coulomb, unit of charge</dd><dt>V</dt><dd>volt, unit of potential difference</dd></dl>
+<p>Written on the page <a class="ts" data-t="22:38"></a>: <strong>1 F is the amount of capacitance where a charge of 1 coulomb develops a potential difference of 1 V across the cap.</strong> ("Cap" is simply short for capacitor <a class="ts" data-t="23:34"></a>.)</p>
+<div class="example" id="cl3-ex1"><h3>Example 1 — The definition as a circuit <a class="ts" data-t="23:59"></a></h3>
+<figure class="circuit" id="cl3-fig-farad">
+<script type="application/json">{"parts": [
+ {"t": "BAT", "a": [0, 3], "b": [0, 1], "label": "1 V", "plus": "b", "side": -1}, 
+ {"t": "W", "pts": [[0, 1], [0, 0], [3, 0], [3, 1]]}, 
+ {"t": "C", "a": [3, 1], "b": [3, 3], "label": "Q_C = 1 coulomb", "value": "C = 1 F"}, 
+ {"t": "W", "pts": [[3, 3], [3, 4], [0, 4], [0, 3]]}, 
+ {"t": "T", "at": [2.45, 1.72], "text": "+ + +", "anchor": "end", "cls": "accent"}, 
+ {"t": "T", "at": [2.45, 2.62], "text": "− − −", "anchor": "end", "cls": "accent"}, 
+ {"t": "T", "at": [4.9, 2], "text": ""}], "alt": "A 1 volt battery across a capacitor holding 1 coulomb of charge, so C equals 1 farad."}</script>
+<figcaption>The farad definition as drawn at <a class="ts" data-t="24:30"></a>: 1 V across the capacitor and \(Q_C = 1\) coulomb gives \(C = 1\,\text{F}\) (result written at <a class="ts" data-t="27:00"></a>).</figcaption>
+</figure>
+<p class="step">1. A 1 V source is connected across a capacitor; the capacitor charges to 1 V.</p>
+<p class="step">2. Suppose the charge that builds up is \(Q_C = 1\) coulomb (remember, a coulomb is a certain number of electrons) <a class="ts" data-t="24:33"></a>.</p>
+<p class="step">3. Then, by the definition, \(C = \dfrac{1\,\text{C}}{1\,\text{V}} = 1\,\text{F}\).</p>
+<p class="answer">\(C = 1\,\text{F}\)</p>
+</div>
+<h3>A farad is a lot <a class="ts" data-t="24:33"></a></h3>
+<p>Real capacitors shown on camera:</p>
+<table>
+<tr><th>Part shown</th><th>Value / rating</th><th>Time</th></tr>
+<tr><td>Fist-sized can electrolytic ("giant cap")</td><td>Captions: "5 500 millifarads"; the can's label (readable on the bench at <a class="ts" data-t="52:40"></a>) appears to say <strong>5500 MFD</strong>, i.e. 5,500 μF = 5.5 mF — see the note below</td><td><a class="ts" data-t="24:57"></a></td></tr>
+<tr><td>Black radial electrolytic</td><td>100 μF, rated <strong>350 V</strong> (label "350V 100μF")</td><td><a class="ts" data-t="25:15"></a></td></tr>
+<tr><td>Small blue electrolytic</td><td>100 μF, rated <strong>25 V</strong></td><td><a class="ts" data-t="25:23"></a></td></tr>
+<tr><td>Small ceramic disc</td><td>10 pF (marked just "10")</td><td><a class="ts" data-t="25:23"></a></td></tr>
+</table>
+<aside class="uncertain"><p><strong>Value of the giant capacitor.</strong> The auto-captions at <a class="ts" data-t="24:57"></a> read "5 500 millifarads". The label on the can, legible later at <a class="ts" data-t="52:40"></a>, appears to read "5500MFD" (MFD is an old marking for microfarads) with a voltage rating of about 200 VDC (max surge 250 VDC) — partly legible. So the capacitor is most likely <strong>5,500 μF (= 5.5 mF)</strong>; "5,500 millifarads" (= 5.5 F) is probably a caption error or slip of the tongue. Either way, the point stands: this is a very large capacitor, and it is still only a few thousandths of a farad.</p></aside>
+<h3>Prefixes used for capacitance <a class="ts" data-t="26:20"></a></h3>
+<table>
+<tr><th>Prefix</th><th>Symbol</th><th>Factor</th><th>Typical parts</th></tr>
+<tr><td>micro</td><td>μF</td><td>\(10^{-6}\)</td><td>electrolytics (e.g. 100 μF)</td></tr>
+<tr><td>nano</td><td>nF</td><td>\(10^{-9}\)</td><td>ceramics / film</td></tr>
+<tr><td>pico</td><td>pF</td><td>\(10^{-12}\)</td><td>small ceramics (e.g. 10 pF)</td></tr>
+</table>
+<p>A picofarad is a very small capacitance — but look how physically small the 10 pF ceramic is compared with a big electrolytic <a class="ts" data-t="26:20"></a>. The farad is the base unit, but you rarely meet a whole farad of capacitance in ordinary circuits <a class="ts" data-t="26:47"></a>. (The prefixes are spoken, not written on the page.)</p>
+<aside class="note"><p>At <a class="ts" data-t="25:23"></a> the instructor first says "pico is 10 to the minus 9", then immediately corrects himself: pico is \(10^{-12}\); \(10^{-9}\) is nano.</p></aside>
+<h3>Voltage rating <a class="ts" data-t="25:23"></a></h3>
+<p>Two capacitors can have the same capacitance but different voltage ratings: the two electrolytics shown are both 100 μF, but the black one can safely handle 350 V while the small blue one can only handle 25 V. The higher-voltage part is physically larger.</p>
+<aside class="extra"><p>Exceeding the voltage rating can break down the dielectric (the insulator conducts), which permanently damages the capacitor — electrolytics can vent or burst. A common design rule is to choose a rating comfortably above the highest voltage the capacitor will see. (The video only states the ratings; this paragraph is general background.)</p></aside>
+</section>
+
+<section class="g-sec" id="cl3-qcv" data-kind="lesson" data-ts="1625-1792">
+<h2>5. Capacitance, charge and voltage: \(C = Q/V\)</h2>
+<p>The relationship between capacitance, charge and voltage <a class="ts" data-t="27:05"></a>:</p>
+<div class="formula">\[ C = \frac{Q}{V} \qquad\Longleftrightarrow\qquad Q = CV \qquad\Longleftrightarrow\qquad V = \frac{Q}{C} \]</div>
+<dl class="vardefs"><dt>\(C\)</dt><dd>capacitance, farads (F)</dd><dt>\(Q\)</dt><dd>charge stored, coulombs (C)</dd><dt>\(V\)</dt><dd>voltage across the capacitor, volts (V)</dd></dl>
+<p>This holds for an ideal capacitor at any instant; in particular, once a capacitor is fully charged to the source voltage, \(V\) is that source voltage.</p>
+<div class="example" id="cl3-ex2"><h3>Example 2 — Charge on a 10 F capacitor at 12 V <a class="ts" data-t="27:58"></a></h3>
+<figure class="circuit" id="cl3-fig-qcv">
+<script type="application/json">{"parts": [
+ {"t": "BAT", "a": [0, 3], "b": [0, 1], "label": "12 V", "plus": "b", "side": -1}, 
+ {"t": "W", "pts": [[0, 1], [0, 0], [3, 0], [3, 1]]}, 
+ {"t": "C", "a": [3, 1], "b": [3, 3], "label": "C = 10 F", "value": "Q = ?"}, 
+ {"t": "W", "pts": [[3, 3], [3, 4], [0, 4], [0, 3]]}, 
+ {"t": "T", "at": [3.7, 2], "text": ""}], "alt": "A 12 volt battery across a 10 farad capacitor."}</script>
+<figcaption>"How much charge is stored in the cap?" — 12 V across a 10 F capacitor, as drawn at <a class="ts" data-t="29:40"></a>.</figcaption>
+</figure>
+<p><strong>Given:</strong> \(V = 12\,\text{V}\) applied to a (rather large) \(C = 10\,\text{F}\) capacitor. <strong>Find:</strong> the stored charge \(Q\).</p>
+<p class="step">1. Start from \(C = Q/V\) <a class="ts" data-t="28:23"></a>.</p>
+<p class="step">2. Substitute: \(10\,\text{F} = \dfrac{Q}{12\,\text{V}}\) <a class="ts" data-t="28:56"></a>.</p>
+<p class="step">3. Solve: \(Q = (10\,\text{F})(12\,\text{V}) = 120\,\text{C}\) (F·V = (C/V)·V = C).</p>
+<p class="answer">\(Q = 120\,\text{C}\) — "which is a lot of charge" <a class="ts" data-t="28:56"></a>.</p>
+</div>
+</section>
+
+<section class="g-sec" id="cl3-combine" data-kind="lesson" data-ts="1792-2050">
+<h2>6. Capacitors in parallel and in series</h2>
+<p>The capacitor combination rules are the <em>opposite</em> of the resistor rules <a class="ts" data-t="30:45"></a>.</p>
+<h3>Parallel: capacitances add <a class="ts" data-t="31:26"></a></h3>
+<div class="formula">\[ C_T = C_1 + C_2 + \dots + C_n \qquad \text{(parallel)} \]</div>
+<dl class="vardefs"><dt>\(C_T\)</dt><dd>total (equivalent) capacitance, F</dd><dt>\(C_1 \ldots C_n\)</dt><dd>individual capacitances in parallel, F</dd></dl>
+<p>Why: parallel capacitors all have the same voltage across them, so together they behave like one capacitor with physically larger plates <a class="ts" data-t="31:10"></a> — more plate area, more charge for the same voltage.</p>
+<div class="example" id="cl3-ex3"><h3>Example 3 — 5 μF in parallel with 10 μF <a class="ts" data-t="30:19"></a></h3>
+<figure class="circuit" id="cl3-fig-parallel">
+<script type="application/json">{"parts": [
+ {"t": "BAT", "a": [0, 3], "b": [0, 1], "label": "10 V", "plus": "b", "side": -1}, 
+ {"t": "W", "pts": [[0, 1], [0, 0], [5, 0]]}, 
+ {"t": "W", "pts": [[2, 0], [2, 1]]}, 
+ {"t": "C", "a": [2, 1], "b": [2, 3], "label": "C_1 = 5 μF", "value": "10 V"}, 
+ {"t": "W", "pts": [[2, 3], [2, 4]]}, 
+ {"t": "W", "pts": [[5, 0], [5, 1]]}, 
+ {"t": "C", "a": [5, 1], "b": [5, 3], "label": "C_2 = 10 μF", "value": "10 V"}, 
+ {"t": "W", "pts": [[5, 3], [5, 4], [0, 4], [0, 3]]}, 
+ {"t": "N", "at": [2, 0]}, 
+ {"t": "N", "at": [2, 4]}, 
+ {"t": "ARROW", "a": [7.6, 2], "b": [9, 2]}, 
+ {"t": "BAT", "a": [10.5, 3], "b": [10.5, 1], "label": "10 V", "plus": "b", "side": -1}, 
+ {"t": "W", "pts": [[10.5, 1], [10.5, 0], [13, 0], [13, 1]]}, 
+ {"t": "C", "a": [13, 1], "b": [13, 3], "label": "C_T = 5 μF + 10 μF", "value": "= 15 μF"}, 
+ {"t": "W", "pts": [[13, 3], [13, 4], [10.5, 4], [10.5, 3]]}, 
+ {"t": "T", "at": [15.1, 2], "text": ""}], "alt": "A 10 volt battery with a 5 microfarad and a 10 microfarad capacitor in parallel, each with 10 volts across it, reduces to a single 15 microfarad capacitor."}</script>
+<figcaption>Capacitors in parallel (<a class="ts" data-t="32:05"></a>): \(C_T = 5\,\mu\text{F} + 10\,\mu\text{F} = 15\,\mu\text{F}\). The red "10 V" labels across the source and each capacitor were added at <a class="ts" data-t="34:45"></a>.</figcaption>
+</figure>
+<p class="step">1. Capacitors in parallel add: \(C_T = C_1 + C_2\).</p>
+<p class="step">2. \(C_T = 5\,\mu\text{F} + 10\,\mu\text{F}\) <a class="ts" data-t="31:53"></a>.</p>
+<p class="answer">\(C_T = 15\,\mu\text{F}\)</p>
+</div>
+<h3>Series: like resistors in parallel <a class="ts" data-t="32:23"></a></h3>
+<div class="formula">\[ \frac{1}{C_T} = \frac{1}{C_1} + \frac{1}{C_2} + \dots + \frac{1}{C_n} \quad\Longrightarrow\quad C_T = \frac{1}{\frac{1}{C_1} + \frac{1}{C_2} + \dots + \frac{1}{C_n}} \qquad \text{(series)} \]</div>
+<p>For exactly two capacitors in series <a class="ts" data-t="32:48"></a>:</p>
+<div class="formula">\[ C_T = \frac{C_1 C_2}{C_1 + C_2} \]</div>
+<p>Two capacitors in series give <em>less</em> capacitance than either one alone.</p>
+<aside class="extra"><p>Why series capacitance drops: in series, the same charge \(Q\) sits on every capacitor (the inner plates are only connected to each other, so whatever charge leaves one arrives on the next). The voltages add: \(V = Q/C_1 + Q/C_2\), so \(V/Q = 1/C_1 + 1/C_2 = 1/C_T\). Physically it is like one capacitor with a <em>thicker</em> dielectric (plates further apart).</p></aside>
+<div class="example" id="cl3-ex4"><h3>Example 4 — Two 2 μF capacitors in series <a class="ts" data-t="33:15"></a></h3>
+<figure class="circuit" id="cl3-fig-series">
+<script type="application/json">{"parts":[
+ {"t":"N","at":[0,0],"open":true},
+ {"t":"C","a":[0,0],"b":[0,2],"label":"C_1","value":"2 μF"},
+ {"t":"C","a":[0,2],"b":[0,4],"label":"C_2","value":"2 μF"},
+ {"t":"N","at":[0,4],"open":true},
+ {"t":"ARROW","a":[2.2,2],"b":[3.8,2]},
+ {"t":"N","at":[5,1],"open":true},
+ {"t":"C","a":[5,1],"b":[5,3],"label":"C_T","value":"1 μF"},
+ {"t":"N","at":[5,3],"open":true}
+],"alt":"Two 2 microfarad capacitors in series reduce to a single 1 microfarad capacitor."}</script>
+<figcaption>Two 2 μF capacitors in series reduce to 1 μF (page at <a class="ts" data-t="34:05"></a>).</figcaption>
+</figure>
+<p class="step">1. Two in series: \(C_T = \dfrac{C_1C_2}{C_1+C_2}\).</p>
+<p class="step">2. \(C_T = \dfrac{(2\,\mu\text{F})(2\,\mu\text{F})}{2\,\mu\text{F} + 2\,\mu\text{F}} = \dfrac{4\,\mu\text{F}^2}{4\,\mu\text{F}}\) <a class="ts" data-t="33:40"></a>.</p>
+<p class="answer">\(C_T = 1\,\mu\text{F}\)</p>
+<p>Shortcut: \(n\) equal capacitors \(C\) in series give \(C/n\) — here \(2\,\mu\text{F}/2 = 1\,\mu\text{F}\).</p>
+</div>
+</section>
+
+<section class="g-sec" id="cl3-vdist" data-kind="lesson" data-ts="2050-2540">
+<h2>7. Voltage distribution across capacitors</h2>
+<h3>Parallel capacitors share the same voltage <a class="ts" data-t="34:10"></a></h3>
+<p>The rules from earlier in the semester still hold: things in parallel have the same voltage across them. With a 10 V source across the parallel pair, each capacitor has 10 V across it once fully charged <a class="ts" data-t="34:28"></a>, because both capacitors are in parallel with the source.</p>
+<h3>Series capacitors: voltage is inversely proportional to capacitance <a class="ts" data-t="35:00"></a></h3>
+<p>In series, the voltage across any one capacitor is <strong>inversely proportional to its capacitance</strong> <a class="ts" data-t="35:36"></a> — the smaller capacitor gets the larger share of the voltage. For capacitor \(x\) (any of \(C_1, C_2, C_3, \dots\)) <a class="ts" data-t="36:28"></a>:</p>
+<div class="formula">\[ V_{Cx} = V_s\,\frac{C_T}{C_x} \]</div>
+<dl class="vardefs"><dt>\(V_{Cx}\)</dt><dd>voltage across capacitor \(x\), V</dd><dt>\(V_s\)</dt><dd>total voltage applied to the series string, V</dd><dt>\(C_T\)</dt><dd>total series capacitance, F</dd><dt>\(C_x\)</dt><dd>capacitance of the capacitor of interest, F</dd></dl>
+<p>Applies to capacitors in <strong>series</strong> (starting uncharged) once they have charged from the applied voltage \(V_s\).</p>
+<aside class="extra"><p>Where it comes from: all series capacitors carry the same charge \(Q = C_T V_s\). Then \(V_{Cx} = Q/C_x = V_s C_T / C_x\). This also explains the inverse proportionality — same \(Q\), so a smaller \(C\) needs a bigger \(V\). Compare the resistor voltage divider \(V_{Rx} = V_s R_x/R_T\), where the voltage is <em>directly</em> proportional to resistance.</p></aside>
+<div class="example" id="cl3-ex5"><h3>Example 5 — 90 V across 3 μF and 6 μF in series <a class="ts" data-t="36:55"></a></h3>
+<figure class="circuit" id="cl3-fig-ex4">
+<script type="application/json">{"parts": [
+ {"t": "BAT", "a": [0, 3.5], "b": [0, 1.5], "label": "V_s = 90 V", "plus": "b", "side": -1}, 
+ {"t": "W", "pts": [[0, 1.5], [0, 0], [4, 0], [4, 0.5]]}, 
+ {"t": "C", "a": [4, 0.5], "b": [4, 2.5], "label": "C_1 = 3 μF", "value": "V_{C1} = 60 V"}, 
+ {"t": "C", "a": [4, 2.5], "b": [4, 4.5], "label": "C_2 = 6 μF", "value": "V_{C2} = 30 V"}, 
+ {"t": "W", "pts": [[4, 4.5], [4, 5], [0, 5], [0, 3.5]]}, 
+ {"t": "T", "at": [-0.8, 2], "text": ""}, 
+ {"t": "T", "at": [5.0, 2], "text": ""}], "alt": "90 volt battery with a 3 microfarad capacitor and a 6 microfarad capacitor in series; 60 volts across the 3 microfarad and 30 volts across the 6 microfarad."}</script>
+<figcaption>Series capacitor voltage distribution, Example 5, as drawn at <a class="ts" data-t="37:14"></a> (completed page at <a class="ts" data-t="40:45"></a>).</figcaption>
+</figure>
+<p><strong>Given:</strong> \(V_s = 90\,\text{V}\), \(C_1 = 3\,\mu\text{F}\), \(C_2 = 6\,\mu\text{F}\) in series <a class="ts" data-t="37:14"></a>. <strong>Find:</strong> \(V_{C1}\) and \(V_{C2}\).</p>
+<p class="step">1. Total capacitance first <a class="ts" data-t="38:06"></a>: \(C_T = \dfrac{(3\,\mu\text{F})(6\,\mu\text{F})}{3\,\mu\text{F}+6\,\mu\text{F}} = \dfrac{18}{9}\,\mu\text{F} = 2\,\mu\text{F}\) <a class="ts" data-t="38:30"></a>.</p>
+<p class="step">2. Voltage across \(C_1\) <a class="ts" data-t="38:55"></a>: \(V_{C1} = 90\,\text{V}\cdot\dfrac{2\,\mu\text{F}}{3\,\mu\text{F}} = 60\,\text{V}\) <a class="ts" data-t="39:48"></a>.</p>
+<p class="step">3. KVL predicts the rest: \(90\,\text{V} - 60\,\text{V} = 30\,\text{V}\) <a class="ts" data-t="40:05"></a>.</p>
+<p class="step">4. Check with the formula: \(V_{C2} = 90\,\text{V}\cdot\dfrac{2\,\mu\text{F}}{6\,\mu\text{F}} = 30\,\text{V}\) <a class="ts" data-t="40:32"></a> — it agrees.</p>
+<p class="answer">\(V_{C1} = 60\,\text{V}\) (across the smaller 3 μF), \(V_{C2} = 30\,\text{V}\) (across the larger 6 μF); \(60 + 30 = 90\,\text{V}\).</p>
+<aside class="extra"><p>Charge check: \(Q = C_T V_s = (2\,\mu\text{F})(90\,\text{V}) = 180\,\mu\text{C}\) on each capacitor; \(180\,\mu\text{C}/3\,\mu\text{F} = 60\,\text{V}\) and \(180\,\mu\text{C}/6\,\mu\text{F} = 30\,\text{V}\).</p></aside>
+</div>
+<h3>Where do the \(C_x\) values come from? Reading markings <a class="ts" data-t="40:50"></a></h3>
+<p>In the example they were simply given. On real parts, the capacitance is printed on the capacitor: an electrolytic prints its value in μF; a small ceramic is printed with a number that is in <strong>picofarads by default</strong>, because there is no room to print units <a class="ts" data-t="41:14"></a>. The ceramic shown is marked "10", meaning <strong>10 pF</strong>.</p>
+<aside class="extra"><p>Larger ceramic values use a three-digit code: two significant digits followed by a multiplier (number of zeros), still in pF. For example "104" = \(10\times10^4\,\text{pF} = 100\,000\,\text{pF} = 100\,\text{nF} = 0.1\,\mu\text{F}\), and "103" = 10 nF. This code is not covered in the video.</p></aside>
+<p><strong>Summary</strong> <a class="ts" data-t="41:34"></a>: series capacitors need the extra step of finding \(C_T\) and then multiplying the applied voltage by the ratio \(C_T/C_x\); parallel capacitors are easy — they all have the same voltage.</p>
+</section>
+
+<section class="g-sec" id="cl3-rc" data-kind="lesson" data-ts="2540-3123">
+<h2>8. Charging through a resistor: \(\tau = RC\) and the universal time constant chart</h2>
+<p>(<a class="ts" data-t="42:20"></a> The instructor briefly checks the clock before deciding to start this topic.)</p>
+<p>Putting a resistor in series with the capacitor <strong>limits the current</strong> that can flow to it <a class="ts" data-t="44:00"></a>, so the charge — and therefore the capacitor voltage — does not develop instantaneously; it takes time. The same <strong>universal time constant chart</strong> used for inductors describes how long it takes for the capacitor voltage to reach the applied voltage <a class="ts" data-t="44:24"></a>.</p>
+<figure class="circuit" id="cl3-fig-rc">
+<script type="application/json">{"parts": [
+ {"t": "BAT", "a": [0, 3.5], "b": [0, 1.5], "label": "10 V", "plus": "b", "side": -1}, 
+ {"t": "W", "pts": [[0, 1.5], [0, 0], [1, 0]]}, 
+ {"t": "SW", "a": [1, 0], "b": [3.5, 0], "label": "switch", "state": "open"}, 
+ {"t": "W", "pts": [[3.5, 0], [5, 0]]}, 
+ {"t": "R", "a": [5, 0], "b": [5, 2.5], "label": "R", "value": "100 Ω"}, 
+ {"t": "C", "a": [5, 2.5], "b": [5, 4.5], "label": "C", "value": "1 F"}, 
+ {"t": "W", "pts": [[5, 4.5], [5, 5], [0, 5], [0, 3.5]]}, 
+ {"t": "VM", "a": [4.3, 3.05], "b": [4.3, 3.95], "label": "v_C", "lat": [3.6, 3.5]}, 
+ {"t": "T", "at": [2, -0.35], "text": ""}], "alt": "Series RC circuit: 10 volt battery, switch, 100 ohm resistor and 1 farad capacitor."}</script>
+<figcaption>Series RC charging circuit (drawn at <a class="ts" data-t="46:40"></a> with \(\tau = RC\); values for Example 6 added at <a class="ts" data-t="49:17"></a>).</figcaption>
+</figure>
+<h3>The chart <a class="ts" data-t="44:49"></a></h3>
+<figure class="scope" id="cl3-fig-chart">
+<script type="application/json">{"type": "scope", "cols": 12, "rows": 10, "ch": "v_C", "vdiv": "10 % of max/div", "tdiv": "0.5 τ/div (1τ = 2 div)", "traces": [{"shape": "charge", "v0": -5, "vf": 5, "tau": 2, "x0": 0}], "marks": [{"type": "hline", "y": 1.32, "label": "63.2 % at 1τ"}, {"type": "hline", "y": 3.65, "label": "86.5 % at 2τ"}, {"type": "hline", "y": 5}, {"type": "vline", "x": 2, "label": "1τ"}, {"type": "vline", "x": 4, "label": "2τ"}, {"type": "vline", "x": 6, "label": "3τ"}, {"type": "vline", "x": 8, "label": "4τ"}, {"type": "vline", "x": 10, "label": "5τ"}, {"type": "text", "x": 0.9, "y": -4.6, "text": "0 %"}, {"type": "text", "x": 1.2, "y": 4.45, "text": "100 %"}], "alt": "Universal time constant chart: percent of maximum capacitor voltage versus number of time constants; 63.2 percent at one time constant, 86.5 percent at two, essentially 100 percent at five.", "divPx": 36}</script>
+<figcaption>Universal time constant chart for a charging capacitor, redrawn (bottom line = 0 %, top line = 100 %; each horizontal grid line is 10 %). The instructor sketches it at <a class="ts" data-t="44:49"></a> and labels 63.2 % at 1τ and 86.5 % at 2τ.</figcaption>
+</figure>
+<ul>
+<li>It takes <strong>five time constants</strong> to reach the maximum (100 %) value <a class="ts" data-t="45:15"></a>, just like the inductor.</li>
+<li>After <strong>one time constant</strong> the capacitor voltage is at <strong>63.2 %</strong> of its maximum <a class="ts" data-t="45:37"></a>; after two, <strong>86.5 %</strong> <a class="ts" data-t="47:22"></a>; then 3, 4 and 5 time constants follow the exponential curve.</li>
+<li>Here the "max value" is the <strong>voltage across the capacitor</strong>, which ends at the source voltage <a class="ts" data-t="47:48"></a>.</li>
+</ul>
+<div class="formula">\[ \tau = RC \]</div>
+<dl class="vardefs"><dt>\(\tau\)</dt><dd>time constant, seconds (Ω·F = s)</dd><dt>\(R\)</dt><dd>series resistance, Ω</dd><dt>\(C\)</dt><dd>capacitance, F</dd></dl>
+<p>Applies to a capacitor charging (or discharging) through a resistance \(R\) from a DC source <a class="ts" data-t="46:02"></a>. The larger the capacitance — the more charge it can store — the longer it takes to reach the maximum, but it always takes \(5\tau = 5RC\) <a class="ts" data-t="46:28"></a>.</p>
+<aside class="note"><p>The instructor says "62 percent" once at <a class="ts" data-t="46:54"></a>; the value written on the chart and stated a moment earlier is 63.2 %.</p></aside>
+<div class="example" id="cl3-ex6"><h3>Example 6 — 10 V, 100 Ω, 1 F <a class="ts" data-t="48:33"></a></h3>
+<p><strong>Given:</strong> \(V_s = 10\,\text{V}\), \(R = 100\,\Omega\), \(C = 1\,\text{F}\) <a class="ts" data-t="49:17"></a>; capacitor uncharged before the switch closes. <strong>Find:</strong> the time constant and how long the capacitor takes to reach 10 V.</p>
+<p class="step">1. Before the switch is thrown there is no charge, so \(v_C = 0\,\text{V}\) (0 % of max) <a class="ts" data-t="48:12"></a>. After closing, \(v_C\) rises toward the 10 V maximum.</p>
+<p class="step">2. \(\tau = RC = (100\,\Omega)(1\,\text{F}) = 100\,\text{s}\) <a class="ts" data-t="49:31"></a> — the answer is always in seconds.</p>
+<p class="step">3. Time constants fall at 100 s, 200 s, 300 s, 400 s and 500 s <a class="ts" data-t="49:59"></a>.</p>
+<p class="step">4. Full charge after \(5\tau = 500\,\text{s}\) <a class="ts" data-t="50:22"></a>.</p>
+<p class="answer">\(\tau = 100\,\text{s}\); the capacitor goes from 0 V at \(t = 0\) to 10 V after 500 s.</p>
+<table>
+<tr><th>Time constants</th><th>\(t\)</th><th>% of max (chart)</th><th>\(v_C\) (10 V × %)</th></tr>
+<tr><td>0</td><td>0 s</td><td>0 %</td><td>0 V</td></tr>
+<tr><td>1</td><td>100 s</td><td>63.2 %</td><td>6.32 V</td></tr>
+<tr><td>2</td><td>200 s</td><td>86.5 %</td><td>8.65 V</td></tr>
+<tr><td>3</td><td>300 s</td><td>95.0 %</td><td>9.50 V</td></tr>
+<tr><td>4</td><td>400 s</td><td>98.2 %</td><td>9.82 V</td></tr>
+<tr><td>5</td><td>500 s</td><td>≈100 % (99.3 %)</td><td>≈10 V (9.93 V)</td></tr>
+</table>
+<p>(The voltage column applies the chart to this example; the instructor stated only the times and the 0 V → 10 V end points.)</p>
+</div>
+<p>The time-constant chart and RC charging are treated in more detail (with a live oscilloscope demonstration) next class <a class="ts" data-t="50:36"></a>: see <a class="xref" data-lesson="cl4">RC time constant</a>.</p>
+<aside class="extra"><p>The chart's curve is \(v_C(t) = V_s\left(1 - \mathrm{e}^{-t/\tau}\right)\) for an initially uncharged capacitor. At \(t = n\tau\) this gives \(1 - \mathrm{e}^{-n}\): 63.2 %, 86.5 %, 95.0 %, 98.2 %, 99.3 %. The curve never mathematically reaches 100 %; "\(5\tau\)" is the engineering convention for "fully charged".</p></aside>
+</section>
+
+<section class="g-sec" id="cl3-varcap" data-kind="lesson" data-ts="3123-3227">
+<h2>9. After the break: plan for the lab, and a variable tuning capacitor</h2>
+<p>Before the break <a class="ts" data-t="51:02"></a> the instructor previews: the inductor lab is quick and will be walked through in LTspice; next class there will be a live capacitor-charging demo on the oscilloscope (see <a class="xref" data-lesson="cl4">RC time constant</a>) and a simple simulated capacitor lab. The recording resumes after a 10-minute break.</p>
+<p>At <a class="ts" data-t="52:03"></a> he shows an old-school <strong>variable parallel-plate capacitor</strong>: literally the basic construction of parallel plates, but with many plates, and adjustable <a class="ts" data-t="52:32"></a>. It was used to tune the frequency of radios: turning the shaft changes how the plates sit relative to each other and therefore changes the capacitance <a class="ts" data-t="52:53"></a>. Radios of the 1960s–70s worked this way; later, diodes were used to tune the frequency electronically instead of mechanically changing the capacitance <a class="ts" data-t="53:18"></a>.</p>
+<aside class="extra"><p>This illustrates the factors that set capacitance: \(C = \varepsilon A/d\) for parallel plates — more overlapping plate <strong>area</strong> \(A\) or a smaller <strong>gap</strong> \(d\) gives more capacitance, and the dielectric material sets \(\varepsilon\). In a tuning capacitor, rotating the shaft changes the overlapping area. The diodes he mentions are varactor ("varicap") diodes, whose capacitance changes with the reverse voltage applied. Neither formula nor term is given in the video.</p></aside>
+</section>
+
+<section class="g-sec" id="cl3-lab-build" data-kind="lesson" data-ts="3227-3681">
+<h2>10. Lab 7 — Introduction to LTspice and inductors: building the circuit</h2>
+<p>The lab <a class="ts" data-t="54:25"></a> ("Introduction to LTspice and inductors", the Lab 7 PDF) is due next class <a class="ts" data-t="53:47"></a>. Its goal: see in simulation that an inductor prevents an instantaneous change in current. The lab sheet shown at <a class="ts" data-t="55:00"></a> asks you to:</p>
+<ul>
+<li>Simulate in LTspice: a 10 V DC voltage source ("we will pulse it on and off to see the effect on current"), a 10 Ω resistor in series with the inductor, and a 1 H inductor.</li>
+<li>Change the source function to PULSE: 1 s before the voltage goes high (10 V), then 1 s before it goes back low (0 V).</li>
+<li>Right-click the inductor and set its Series Resistance to 0 (an ideal inductor with no unwanted resistance).</li>
+<li>Set the simulation command to stop after exactly 3 s.</li>
+<li>On the waveform, show the voltage applied to the circuit and the current through the inductor; on a printout, draw in an approximation of the induced voltage (back-EMF).</li>
+<li>Calculate the quantities in section 12 and fill in the time-constant table.</li>
+</ul>
+<h3>The circuit <a class="ts" data-t="54:49"></a></h3>
+<figure class="circuit" id="cl3-fig-lab">
+<script type="application/json">{"parts": [
+ {"t": "V", "a": [0, 4], "b": [0, 0], "label": "V_1", "value": "PULSE(0 10 1 1n 1n 1)"}, 
+ {"t": "W", "pts": [[0, 0], [0, -1], [5, -1], [5, -0.5]]}, 
+ {"t": "R", "a": [5, -0.5], "b": [5, 1.8], "label": "R_1", "value": "10 Ω"}, 
+ {"t": "L", "a": [5, 1.8], "b": [5, 4.5], "label": "L_1", "value": "1 H, R_{ser} = 0"}, 
+ {"t": "W", "pts": [[5, 4.5], [5, 5], [0, 5], [0, 4]]}, 
+ {"t": "N", "at": [0, 5]}, 
+ {"t": "G", "at": [0, 5]}, 
+ {"t": "IARR", "a": [2, -1], "b": [3, -1], "label": "I"}, 
+ {"t": "T", "at": [2.5, 6.6], "text": ".tran 3", "cls": "muted"}, 
+ {"t": "T", "at": [6.1, 2], "text": ""}], "alt": "LTspice lab circuit: pulse voltage source V1 on the left, 10 ohm resistor R1 and 1 henry inductor L1 in series down the right side, ground at the bottom left, transient simulation 3 seconds."}</script>
+<figcaption>Lab 7 circuit as laid out in the instructor's LTspice schematic (redrawn from <a class="ts" data-t="1:14:00"></a>; values set at <a class="ts" data-t="58:39"></a>, series resistance at <a class="ts" data-t="1:00:45"></a>).</figcaption>
+</figure>
+<ul>
+<li>A 10 V source that is <strong>pulsed</strong>: it starts at 0 V and then steps up to 10 V.</li>
+<li>A <strong>10 Ω</strong> resistor in series with a <strong>1 H</strong> inductor.</li>
+</ul>
+<p>Expected behaviour <a class="ts" data-t="55:15"></a>: the inductor prevents the instantaneous change in current. As the current increases, the magnetic field increases and, through self-inductance, the inductor acts like a temporary backwards battery that opposes the change <a class="ts" data-t="55:39"></a>. (Recall: resistors oppose current, inductors oppose a change in current, capacitors oppose a change in voltage.)</p>
+<h3>Building it in LTspice <a class="ts" data-t="56:20"></a></h3>
+<table>
+<tr><th>Step</th><th>LTspice action</th><th>Time</th></tr>
+<tr><td>New schematic</td><td>File → New Schematic</td><td><a class="ts" data-t="56:20"></a></td></tr>
+<tr><td>Voltage source</td><td><kbd>F2</kbd> (component list) → scroll to the end → <em>voltage</em> → OK, click to place, <kbd>Esc</kbd> to stop placing</td><td><a class="ts" data-t="56:20"></a></td></tr>
+<tr><td>Resistor</td><td><kbd>R</kbd>, click to place, <kbd>Esc</kbd></td><td><a class="ts" data-t="57:32"></a></td></tr>
+<tr><td>Inductor</td><td><kbd>L</kbd>, click to place, <kbd>Esc</kbd></td><td><a class="ts" data-t="57:56"></a></td></tr>
+<tr><td>Wiring</td><td><kbd>F3</kbd> (wire tool): source → resistor → inductor → back to the source's − side</td><td><a class="ts" data-t="57:56"></a></td></tr>
+<tr><td>Ground (0 V reference)</td><td><kbd>G</kbd>, place at the bottom of the circuit and wire it in — required for the simulation to work</td><td><a class="ts" data-t="58:22"></a></td></tr>
+<tr><td>Resistor value</td><td>Right-click the resistor → 10 (Ω)</td><td><a class="ts" data-t="58:39"></a></td></tr>
+<tr><td>Inductor value</td><td>Right-click the inductor → Inductance = 1 (default unit H)</td><td><a class="ts" data-t="58:39"></a></td></tr>
+<tr><td>Inductor series resistance</td><td>Right-click the inductor → Series Resistance = 0 (the default shown is 1 mΩ)</td><td><a class="ts" data-t="1:00:29"></a></td></tr>
+</table>
+<h3>Why set the series resistance to 0? <a class="ts" data-t="58:59"></a></h3>
+<p>A real inductor is just a coil of wire <a class="ts" data-t="59:37"></a>: the instructor shows a plain coil, a <strong>toroid</strong> (the doughnut shape constrains the magnetic flux lines), and a spool-like inductor <a class="ts" data-t="1:00:03"></a>. On the board we treat wire as 0 Ω, but unless the wire is cryogenically cooled it has resistance, so LTspice includes a small series resistance by default. Setting it to 0 makes the simulated inductor behave like an ideal inductor <a class="ts" data-t="1:00:54"></a>.</p>
+</section>
+
+<section class="g-sec" id="cl3-lab-pulse" data-kind="lesson" data-ts="3681-4401">
+<h2>11. Lab 7: setting up the pulse source and simulation</h2>
+<h3>Why a pulse? <a class="ts" data-t="1:01:21"></a></h3>
+<p>If the source is just a constant 10 V, the inductor behaves like a wire: with a 1 s stop time the simulation shows a steady 1 A through it "all day long" <a class="ts" data-t="1:01:48"></a> (\(10\,\text{V}/10\,\Omega\)), because nothing is changing. To see the inductor oppose a change in current, the current must change — so the source is made to act like a switch: 0 V at first, then 10 V after one second <a class="ts" data-t="1:02:13"></a>.</p>
+<h3>PULSE settings (Advanced tab of the voltage source) <a class="ts" data-t="1:03:15"></a></h3>
+<table>
+<tr><th>LTspice field</th><th>Value</th><th>Meaning</th><th>Time</th></tr>
+<tr><td>Vinitial [V]</td><td>0</td><td>source voltage at \(t = 0\)</td><td><a class="ts" data-t="1:03:15"></a></td></tr>
+<tr><td>Von [V]</td><td>10</td><td>voltage while the pulse is on</td><td><a class="ts" data-t="1:03:40"></a></td></tr>
+<tr><td>Tdelay [s]</td><td>1</td><td>wait before the pulse goes up</td><td><a class="ts" data-t="1:03:40"></a></td></tr>
+<tr><td>Trise [s]</td><td>1n</td><td>0 → 10 V transition time (1 ns)</td><td><a class="ts" data-t="1:04:37"></a></td></tr>
+<tr><td>Tfall [s]</td><td>1n</td><td>10 → 0 V transition time (1 ns)</td><td><a class="ts" data-t="1:04:37"></a></td></tr>
+<tr><td>Ton [s]</td><td>1</td><td>time the pulse stays at 10 V</td><td><a class="ts" data-t="1:07:36"></a></td></tr>
+</table>
+<p>The instructor zooms in on the completed dialog at <a class="ts" data-t="1:08:20"></a> and repeats the settings. In netlist form this is <code>PULSE(0 10 1 1n 1n 1)</code>.</p>
+<p>The intended waveform <a class="ts" data-t="1:02:51"></a>: 0 V for one second, 10 V for one second, then back to 0 V for one second — a single step-like square pulse.</p>
+<figure class="scope" id="cl3-fig-pulse">
+<script type="application/json">{"type": "scope", "cols": 12, "rows": 8, "ch": "V1", "vdiv": "2.5 V/div", "tdiv": "0.25 s/div", "traces": [{"fn": "(x>=4 && x<8) ? 2 : -2", "label": "PULSE(0 10 1 1n 1n 1)"}], "marks": [{"type": "hline", "y": 2, "label": "Von = 10 V"}, {"type": "hline", "y": -2, "label": "Vinitial = 0 V"}, {"type": "span", "x1": 0, "y1": -2.8, "x2": 4, "y2": -2.8, "label": "Tdelay = 1 s", "dy": 20}, {"type": "span", "x1": 4, "y1": 2.8, "x2": 8, "y2": 2.8, "label": "Ton = 1 s"}, {"type": "span", "x1": 8, "y1": -2.8, "x2": 12, "y2": -2.8, "label": "1 s more (to 3 s)", "dy": 20}, {"type": "text", "x": 4, "y": -3.6, "text": "Trise = 1 ns"}, {"type": "text", "x": 8, "y": -3.6, "text": "Tfall = 1 ns"}], "alt": "Pulse waveform: 0 volts for 1 second, rising in 1 nanosecond to 10 volts, staying at 10 volts for 1 second, falling in 1 nanosecond to 0 volts, then 1 more second at 0 volts.", "divPx": 36}</script>
+<figcaption>The intended source waveform, redrawn from the instructor's sketch at <a class="ts" data-t="1:11:08"></a> (0 V for 1 s, trise 1 ns, 10 V for 1 s, tfall 1 ns, then 1 s at 0 V).</figcaption>
+</figure>
+<p>The source dialog also has Tperiod and Ncycles fields; they are left blank, so the source produces a single pulse (confirmed by the zoomed dialog at <a class="ts" data-t="1:08:35"></a>).</p>
+<h3>About the rise and fall times <a class="ts" data-t="1:04:22"></a></h3>
+<p>The transition can't be instantaneous (the source can't be at 0 V and 10 V at the same time), so it must take some time — much less than a second. 1 ns is used to make the step as close to instantaneous as practical <a class="ts" data-t="1:06:29"></a>. The instructor types a comparison into WordPad <a class="ts" data-t="1:05:06"></a>:</p>
+<table>
+<tr><th>Value in seconds</th><th>Meaning</th></tr>
+<tr><td>1</td><td>1 s</td></tr>
+<tr><td>0.001</td><td>1 ms</td></tr>
+<tr><td>0.000001</td><td>1 μs</td></tr>
+<tr><td>0.000000001</td><td>1 ns</td></tr>
+</table>
+<p>For perspective, the digital logic circuits students have used have rise times around 10–15 ns, and his special test equipment can make a pulse that rises within 30 ps <a class="ts" data-t="1:06:02"></a>. LTspice accepts "1n" or "1ns"; the default unit (shown in brackets beside each field) is seconds <a class="ts" data-t="1:06:57"></a>.</p>
+<h3>Simulation command <a class="ts" data-t="1:10:55"></a></h3>
+<p>The pulse parameters cover 0–2 s, but we also want to see what happens after the pulse ends, so the simulation runs one more second: <strong>stop time = 3 s</strong> (Simulate → Edit Simulation Command, transient, stop time 3) <a class="ts" data-t="1:11:16"></a>.</p>
+<p>(<a class="ts" data-t="1:12:00"></a>–<a class="ts" data-t="1:13:06"></a> the instructor's screen-sharing display briefly breaks while zooming; no content.)</p>
+</section>
+
+<section class="g-sec" id="cl3-lab-results" data-kind="lesson" data-ts="4401-4838">
+<h2>12. Lab 7: results and worksheet calculations</h2>
+<h3>Checking the source voltage <a class="ts" data-t="1:13:21"></a></h3>
+<p>Run the simulation (Simulate → Run) and click the wire just above the voltage source to plot its voltage. The trace is 0 V until 1 s, rises to 10 V in 1 ns, stays at 10 V for one second, falls in 1 ns at 2 s and stays at 0 V for the last second <a class="ts" data-t="1:13:47"></a>. If you see only a flat line, the source was not set up as a PULSE <a class="ts" data-t="1:17:08"></a>.</p>
+<h3>Inductor current <a class="ts" data-t="1:15:02"></a></h3>
+<p>For a plain resistor the current would jump with the voltage. With the inductor, self-inductance opposes the change: as the current increases, the magnetic field increases and induces a voltage (back emf) that opposes the current <a class="ts" data-t="1:15:28"></a>. Clicking on the inductor (probe \(I(L1)\)) shows the current <strong>not</strong> changing instantly; it follows the universal time constant chart and takes five \(L/R\) time constants to reach its maximum <a class="ts" data-t="1:15:52"></a>. Hover the cursor over the trace to read values as the current increases <a class="ts" data-t="1:16:19"></a>.</p>
+<figure class="scope" id="cl3-fig-wave">
+<script type="application/json">{"type": "scope", "cols": 12, "rows": 8, "ch": "LTspice", "vdiv": "2 V/div, 0.2 A/div", "tdiv": "0.25 s/div", "traces": [{"fn": "(x>=4 && x<8) ? 2 : -3", "label": "V(source): 0 → 10 V pulse"}, {"fn": "x<4 ? -3 : (x<8 ? -3+5*(1-exp(-(x-4)/0.4)) : -3+5*(1-exp(-10))*exp(-(x-8)/0.4))", "label": "I(L1): 0 → 1 A"}], "marks": [{"type": "hline", "y": -3, "label": "0 V / 0 A"}, {"type": "hline", "y": 2, "label": "10 V / 1 A"}, {"type": "vline", "x": 4, "label": "1 s"}, {"type": "vline", "x": 6, "label": "5τ"}, {"type": "vline", "x": 8, "label": "2 s"}], "alt": "Source voltage pulse from 0 to 10 volts between 1 and 2 seconds, and inductor current rising exponentially from 0 to 1 amp with a 0.1 second time constant, then decaying after 2 seconds.", "divPx": 36}</script>
+<figcaption>Source voltage and inductor current, redrawn from the instructor's LTspice plot (voltage trace V(n001) at <a class="ts" data-t="1:14:00"></a>; current trace I(L1), right-hand axis 0–1.0 A, at <a class="ts" data-t="1:16:25"></a>) using the computed curve for 10 V, 10 Ω, 1 H: the source steps 0 → 10 V at 1 s and back at 2 s; \(I(L1)\) rises exponentially with \(\tau = 0.1\,\text{s}\), reaching ≈1 A by 1.5 s, and decays to ≈0 by 2.5 s.</figcaption>
+</figure>
+<h3>Induced voltage (back-EMF) <a class="ts" data-t="1:16:43"></a></h3>
+<p>As current begins to flow, it creates the magnetic field, which induces the voltage — the back-EMF — that opposes the current. The lab sheet asks you to sketch this induced voltage on a printout of the waveform.</p>
+<figure class="scope" id="cl3-fig-vl">
+<script type="application/json">{"type": "scope", "cols": 12, "rows": 10, "ch": "v_L", "vdiv": "2.5 V/div", "tdiv": "0.25 s/div", "traces": [{"fn": "x<4 ? 0 : (x<8 ? 4*exp(-(x-4)/0.4) : -4*exp(-(x-8)/0.4))", "label": "v_L = back-EMF"}], "marks": [{"type": "hline", "y": 4, "label": "+10 V"}, {"type": "hline", "y": -4, "label": "−10 V"}, {"type": "vline", "x": 4, "label": "1 s"}, {"type": "vline", "x": 8, "label": "2 s"}], "alt": "Inductor voltage: zero until 1 second, jumps to plus 10 volts and decays to zero with a 0.1 second time constant, then at 2 seconds jumps to minus 10 volts and decays back to zero.", "divPx": 36}</script>
+<figcaption>Approximate induced voltage across \(L_1\) for the lab circuit (added for clarity; not plotted in the video): \(+10\,\text{V}\) at the 1 s step decaying with \(\tau = 0.1\,\text{s}\), and \(-10\,\text{V}\) at the 2 s step decaying back to 0. Polarity is the passive sign convention (+ at the top of \(L_1\)).</figcaption>
+</figure>
+<aside class="extra"><p>Why it looks like this: KVL around the loop gives \(v_L = V_{source} - iR\). At the instant the source jumps to 10 V the current is still 0 (it cannot change instantly), so all 10 V appears across the inductor; as \(i \to 1\,\text{A}\), \(iR \to 10\,\text{V}\) and \(v_L \to 0\). At 2 s the source drops to 0 V while the current is still 1 A, so \(v_L = 0 - (1\,\text{A})(10\,\Omega) = -10\,\text{V}\), which then decays as the current dies out.</p></aside>
+<h3>Worksheet calculations <a class="ts" data-t="1:17:35"></a></h3>
+<p>The "Calculate the following" part of the lab sheet (shown at <a class="ts" data-t="1:17:55"></a> and <a class="ts" data-t="1:19:20"></a>):</p>
+<div class="example" id="cl3-ex7"><h3>Example 7 — Lab 7 calculations: 10 V, 10 Ω, 1 H <a class="ts" data-t="1:17:35"></a></h3>
+<p><strong>Given:</strong> \(V = 10\,\text{V}\) step at \(t = 1\,\text{s}\), \(R = 10\,\Omega\), \(L = 1\,\text{H}\) (ideal, 0 Ω series resistance).</p>
+<p class="step">1. <strong>Max current through the inductor after fully storing energy in the magnetic field.</strong> Once the flux stops changing the inductor behaves just like a wire, so only the resistor limits the current (Ohm's law) <a class="ts" data-t="1:18:00"></a>: \(I_{max} = \dfrac{V}{R} = \dfrac{10\,\text{V}}{10\,\Omega} = 1\,\text{A}\).</p>
+<p class="step">2. <strong>L/R time constant.</strong> Inductance divided by resistance, in seconds <a class="ts" data-t="1:18:26"></a>: \(\tau = \dfrac{L}{R} = \dfrac{1\,\text{H}}{10\,\Omega} = 0.1\,\text{s} = 100\,\text{ms}\).</p>
+<p class="step">3. <strong>How many time constants until the max I is reached:</strong> 5 <a class="ts" data-t="1:18:26"></a>.</p>
+<p class="step">4. <strong>Time from when the pulse goes high until the max I is reached:</strong> \(5\tau = 5(0.1\,\text{s}) = 0.5\,\text{s}\) (so at \(t = 1.5\,\text{s}\) on the simulation's time axis). The instructor notes the five-time-constant answer is already visible in the chart/table <a class="ts" data-t="1:19:06"></a>.</p>
+<p class="step">5. <strong>Energy stored in the inductor at max I</strong> (equation from the <a class="xref" data-lesson="cl1">introduction to inductors</a> lecture) <a class="ts" data-t="1:18:52"></a>: \(W = \tfrac12 L I_{max}^2 = \tfrac12 (1\,\text{H})(1\,\text{A})^2 = 0.5\,\text{J}\).</p>
+<p class="step">6. <strong>Table.</strong> "% of Max I" comes from the universal time constant chart; "Current at each L/R" = that percentage × \(I_{max}\) <a class="ts" data-t="1:19:34"></a>; "Measured Current at each L/R" is read from the LTspice waveform by hovering the cursor. Because the pulse goes high at 1 s, start at 1 s: the first reading is at \(1\,\text{s} + \tau\), the second at \(1\,\text{s} + 2\tau\), and so on <a class="ts" data-t="1:20:06"></a>.</p>
+<table>
+<tr><th>L/R time constant</th><th>Simulation time \(1\,\text{s} + n\tau\)</th><th>% of Max I</th><th>Current at each L/R (% × 1 A)</th><th>Measured current at each L/R</th></tr>
+<tr><td>1</td><td>1.1 s</td><td>63.2 %</td><td>0.632 A</td><td>read from LTspice</td></tr>
+<tr><td>2</td><td>1.2 s</td><td>86.5 %</td><td>0.865 A</td><td>read from LTspice</td></tr>
+<tr><td>3</td><td>1.3 s</td><td>95.0 %</td><td>0.950 A</td><td>read from LTspice</td></tr>
+<tr><td>4</td><td>1.4 s</td><td>98.2 %</td><td>0.982 A</td><td>read from LTspice</td></tr>
+<tr><td>5</td><td>1.5 s</td><td>≈100 % (99.3 %)</td><td>≈1 A (0.993 A)</td><td>read from LTspice</td></tr>
+</table>
+<p>The instructor does not read out measured values in the video. For the ideal 1 H / 10 Ω circuit, the measured column should agree with the calculated column to within cursor-reading accuracy. (When he lists the chart percentages aloud he rounds loosely — "sixty percent, eighty percent, etc." <a class="ts" data-t="1:19:06"></a>; use 63.2 %, 86.5 %, … from the chart.)</p>
+<p class="answer">\(I_{max} = 1\,\text{A}\); \(\tau = L/R = 0.1\,\text{s}\); 5 time constants; 0.5 s from the pulse going high (reached at \(t \approx 1.5\,\text{s}\)); \(W = 0.5\,\text{J}\).</p>
+</div>
+<aside class="extra"><p>What happens after the pulse ends at \(t = 2\,\text{s}\) (visible on the instructor's plot at <a class="ts" data-t="1:16:25"></a> but not discussed): the source returns to 0 V, which acts like a short, so the inductor current decays through the 10 Ω resistor with the same \(\tau = 0.1\,\text{s}\): \(i = (1\,\text{A})\,\mathrm{e}^{-(t-2\,\text{s})/0.1\,\text{s}}\), i.e. 0.368 A at 2.1 s, 0.135 A at 2.2 s, and essentially 0 by 2.5 s.</p></aside>
+<p>The recording ends at <a class="ts" data-t="1:20:32"></a> with the instructor offering individual help with the waveforms.</p>
+</section>
+
+<section class="g-sec" id="cl3-assumptions" data-kind="assumptions">
+<h2>Assumptions &amp; limitations</h2>
+<ul>
+<li><strong>Ideal capacitor.</strong> The plates are perfectly insulated from each other, so a charged, disconnected capacitor holds its voltage. Real capacitors slowly leak (self-discharge) — the instructor notes the charge "will slowly dissipate over time" but we ignore it <a class="ts" data-t="18:49"></a>.</li>
+<li><strong>Polarity</strong> is ignored in analysis and simulation; it only matters for real electrolytic parts <a class="ts" data-t="13:24"></a>.</li>
+<li>\(C = Q/V\) assumes a linear capacitor (capacitance doesn't depend on voltage) — true for the ideal element used in this course.</li>
+<li><strong>Combination rules</strong> apply only to capacitors that are truly in series (one path, nothing branching off between them) or truly in parallel (same two nodes).</li>
+<li>\(V_{Cx} = V_s C_T/C_x\) assumes the series capacitors started <strong>uncharged</strong> and have finished charging (all carry the same charge). It does not apply if a capacitor had an initial charge.</li>
+<li><strong>"Fully charged after \(5\tau\)"</strong> is an engineering approximation (99.3 %). The time-constant chart applies to a single capacitor (or a single equivalent \(C\)) charging through a single equivalent resistance from a DC step.</li>
+<li><strong>Lab:</strong> the inductor's series resistance is set to 0 to make it ideal; with a real coil's resistance \(R_{coil}\), the current would settle at \(V/(R + R_{coil})\) and \(\tau = L/(R + R_{coil})\). The 1 ns edge is treated as an instantaneous step.</li>
+<li>All of this is DC/switching behaviour; AC (sine-wave) behaviour of capacitors and inductors comes later in the course.</li>
+</ul>
+</section>
+
+<section class="g-sec" id="cl3-mistakes" data-kind="mistakes">
+<h2>Common mistakes</h2>
+<ul>
+<li><strong>Using the resistor rules for capacitors.</strong> Capacitors in <em>parallel add</em>; in <em>series</em> use the reciprocal (product-over-sum) rule. Sanity check: series \(C_T\) must be smaller than the smallest capacitor; parallel \(C_T\) larger than the largest.</li>
+<li><strong>Giving the bigger capacitor the bigger voltage.</strong> In series, voltage is <em>inversely</em> proportional to capacitance: in Example 5 the 3 μF gets 60 V and the 6 μF gets 30 V. Always check that the voltages add to the source voltage (KVL).</li>
+<li><strong>Forgetting to find \(C_T\) first</strong> in the series voltage formula.</li>
+<li><strong>Prefix slips:</strong> μ = \(10^{-6}\), n = \(10^{-9}\), p = \(10^{-12}\) (even the instructor briefly said pico = \(10^{-9}\) before correcting it). Convert to farads before computing \(\tau = RC\) or \(Q = CV\).</li>
+<li><strong>Reading a ceramic marking as μF.</strong> A bare number on a small ceramic ("10") is in pF.</li>
+<li><strong>Reversing an electrolytic.</strong> The flat (+) side goes to the higher voltage, the curved (−) side to the lower voltage; reversed, it fails (possibly violently).</li>
+<li><strong>Ignoring the voltage rating.</strong> Same μF value does not mean interchangeable: a 25 V part cannot replace a 350 V part.</li>
+<li><strong>Thinking a disconnected capacitor is "empty".</strong> After the switch opens, a charged capacitor keeps its voltage (10 V in the video) — it can still deliver energy, and in real high-voltage equipment, a shock.</li>
+<li><strong>Mixing up the two time constants:</strong> RC circuit \(\tau = RC\); RL circuit \(\tau = L/R\) (not \(LR\)).</li>
+<li><strong>Lab: measuring time constants from \(t = 0\).</strong> The pulse starts at 1 s, so the time constants fall at 1.1 s, 1.2 s, … 1.5 s.</li>
+<li><strong>Lab: a flat-line source trace</strong> means the source was not changed to PULSE (Advanced tab). Also remember the ground symbol, and stop time = 3 s.</li>
+<li><strong>Lab: leaving the default series resistance</strong> — tiny here (1 mΩ vs 10 Ω), but set it to 0 as instructed.</li>
+</ul>
+</section>
+
+<section class="g-sec" id="cl3-recap" data-kind="recap">
+<h2>Recap &amp; formula sheet</h2>
+<p>A capacitor is two plates separated by a dielectric. Applying a voltage moves charge onto the plates (+ on one, − on the other); the capacitor then holds that charge like a temporary battery, and it opposes changes in its voltage. Capacitance (farads; practically μF, nF, pF) measures charge stored per volt. Ceramic capacitors are small and non-polarized; electrolytics are larger and polarized. Parallel capacitances add; series capacitances combine like parallel resistors, and the voltage across each series capacitor is inversely proportional to its capacitance. Through a resistor, a capacitor charges with \(\tau = RC\), taking about \(5\tau\) to fully charge. The lab showed the same exponential behaviour for current in an RL circuit with \(\tau = L/R\).</p>
+<div class="formula-sheet">
+<table>
+<tr><th>Formula</th><th>Variables &amp; units</th><th>Use</th></tr>
+<tr><td>\(C = \dfrac{Q}{V}\), \(Q = CV\)</td><td>\(C\) F, \(Q\) C, \(V\) V</td><td>charge stored at a given voltage</td></tr>
+<tr><td>\(1\,\text{F} = 1\,\text{C}/1\,\text{V}\)</td><td>—</td><td>definition of the farad</td></tr>
+<tr><td>\(1\,\mu\text{F} = 10^{-6}\,\text{F}\), \(1\,\text{nF} = 10^{-9}\,\text{F}\), \(1\,\text{pF} = 10^{-12}\,\text{F}\)</td><td>—</td><td>prefixes</td></tr>
+<tr><td>\(C_T = C_1 + C_2 + \dots + C_n\)</td><td>F</td><td>capacitors in parallel</td></tr>
+<tr><td>\(\dfrac{1}{C_T} = \dfrac{1}{C_1} + \dfrac{1}{C_2} + \dots + \dfrac{1}{C_n}\)</td><td>F</td><td>capacitors in series</td></tr>
+<tr><td>\(C_T = \dfrac{C_1 C_2}{C_1 + C_2}\)</td><td>F</td><td>two capacitors in series</td></tr>
+<tr><td>\(V_{Cx} = V_s\,\dfrac{C_T}{C_x}\)</td><td>\(V_s\) applied V, \(C_T\) series total, \(C_x\) the capacitor</td><td>voltage across one series capacitor</td></tr>
+<tr><td>\(\tau = RC\)</td><td>\(\tau\) s, \(R\) Ω, \(C\) F</td><td>RC time constant</td></tr>
+<tr><td>\(\tau = \dfrac{L}{R}\)</td><td>\(\tau\) s, \(L\) H, \(R\) Ω</td><td>RL time constant (lab)</td></tr>
+<tr><td>\(1\tau{:}\ 63.2\%\), \(2\tau{:}\ 86.5\%\), \(3\tau{:}\ 95.0\%\), \(4\tau{:}\ 98.2\%\), \(5\tau{:}\ \approx 100\%\)</td><td>% of final value</td><td>universal time constant chart</td></tr>
+<tr><td>\(I_{max} = \dfrac{V}{R}\)</td><td>A</td><td>RL final current (inductor = wire at DC)</td></tr>
+<tr><td>\(W = \tfrac12 L I^2\)</td><td>\(W\) J, \(L\) H, \(I\) A</td><td>energy stored in an inductor (lab)</td></tr>
+<tr><td>\(W = \tfrac12 C V^2\) <em>(additional, not from the video)</em></td><td>\(W\) J, \(C\) F, \(V\) V</td><td>energy stored in a capacitor</td></tr>
+</table>
+</div>
+</section>

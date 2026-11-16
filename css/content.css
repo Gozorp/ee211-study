@@ -1,0 +1,120 @@
+/* Shared styles for study-guide and practice content (used by the app and tools/preview.html) */
+:root {
+  --bg: #f7f7f4;
+  --surface: #ffffff;
+  --surface-2: #f0efe9;
+  --text: #1d1f23;
+  --muted: #5b6069;
+  --border: #d9d8d0;
+  --accent: #1f5fbf;
+  --accent-soft: #e5eefb;
+  --good: #1d7a3e;
+  --good-soft: #e3f4e8;
+  --bad: #b3261e;
+  --bad-soft: #fbe7e5;
+  --warn: #8a5a00;
+  --warn-soft: #fdf2d8;
+  --extra: #6a3fb5;
+  --extra-soft: #efe8fb;
+  --ck-stroke: #23262b;
+  --ck-text: #1d1f23;
+  --ck-accent: #c0392b;
+  --sc-bg: #0d1a14;
+  --sc-grid: #2f4a3c;
+  --sc-axis: #5f8a74;
+  --sc-t1: #f2d32c;
+  --sc-t2: #3fc6f0;
+  --sc-t3: #f06bd6;
+  --sc-cursor: #ff8a3d;
+  --mono: ui-monospace, "Cascadia Code", Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #15171a; --surface: #1d2024; --surface-2: #25292e; --text: #e8e9ea; --muted: #a3a8b0; --border: #363b42;
+    --accent: #7fb0ff; --accent-soft: #1d2b42; --good: #6fd08f; --good-soft: #17301f; --bad: #ff8b80; --bad-soft: #3a1c1a;
+    --warn: #f0c060; --warn-soft: #382c12; --extra: #c3a6ff; --extra-soft: #2a2140;
+    --ck-stroke: #e3e5e8; --ck-text: #e8e9ea; --ck-accent: #ff8b80;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #15171a; --surface: #1d2024; --surface-2: #25292e; --text: #e8e9ea; --muted: #a3a8b0; --border: #363b42;
+  --accent: #7fb0ff; --accent-soft: #1d2b42; --good: #6fd08f; --good-soft: #17301f; --bad: #ff8b80; --bad-soft: #3a1c1a;
+  --warn: #f0c060; --warn-soft: #382c12; --extra: #c3a6ff; --extra-soft: #2a2140;
+  --ck-stroke: #e3e5e8; --ck-text: #e8e9ea; --ck-accent: #ff8b80;
+}
+
+/* ---------- circuit diagrams ---------- */
+.diagram-holder { overflow-x: auto; text-align: center; padding: 6px 0; }
+svg.ckt, svg.scope { max-width: 100%; height: auto; }
+svg.ckt .ck-w { stroke: var(--ck-stroke); stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+svg.ckt .ck-thick { stroke-width: 3; }
+svg.ckt .ck-src { fill: var(--surface); }
+svg.ckt .ck-open { fill: var(--surface); }
+svg.ckt .ck-dash { stroke-dasharray: 6 4; }
+svg.ckt .ck-fill { fill: var(--ck-stroke); stroke: none; }
+svg.ckt .ck-fill-soft { fill: var(--surface-2); }
+svg.ckt .ck-text { fill: var(--ck-text); font: 14px/1.2 "Segoe UI", system-ui, sans-serif; }
+svg.ckt .ck-node { fill: var(--accent); font: 600 14px "Segoe UI", system-ui, sans-serif; }
+svg.ckt .ck-pm { fill: var(--ck-text); font: 700 15px "Segoe UI", system-ui, sans-serif; }
+svg.ckt .ck-accent { fill: var(--ck-accent); stroke: none; }
+svg.ckt .ck-arrow { stroke: var(--ck-accent); stroke-width: 2; }
+svg.ckt .ck-accent-t { fill: var(--ck-accent); }
+svg.ckt .ck-muted { fill: var(--muted); font-style: italic; }
+svg.ckt .ck-box { fill: none; stroke: var(--muted); stroke-width: 1.5; stroke-dasharray: 6 5; }
+
+svg.scope .sc-bg { fill: var(--sc-bg); }
+svg.scope .sc-grid { stroke: var(--sc-grid); stroke-width: 1; }
+svg.scope .sc-axis { stroke: var(--sc-axis); stroke-width: 1.2; }
+svg.scope .sc-trace { fill: none; stroke-width: 2.4; stroke-linejoin: round; }
+svg.scope .sc-t1 { stroke: var(--sc-t1); } svg.scope .sc-t2 { stroke: var(--sc-t2); } svg.scope .sc-t3 { stroke: var(--sc-t3); }
+svg.scope .sc-l1 { fill: var(--sc-t1); } svg.scope .sc-l2 { fill: var(--sc-t2); } svg.scope .sc-l3 { fill: var(--sc-t3); }
+svg.scope .sc-lbl { font: 600 13px var(--mono); }
+svg.scope .sc-cursor { stroke: var(--sc-cursor); stroke-width: 1.4; stroke-dasharray: 5 4; }
+svg.scope .sc-curlbl { fill: var(--sc-cursor); font: 600 12px var(--mono); }
+svg.scope .sc-dim { stroke: var(--sc-cursor); stroke-width: 1.6; }
+svg.scope .sc-dimdot { fill: var(--sc-cursor); }
+svg.scope .sc-readout { fill: var(--text); font: 600 13px var(--mono); }
+.diagram-error { color: var(--bad); background: var(--bad-soft); border: 1px solid var(--bad); padding: 6px 10px; border-radius: 6px; font-size: 13px; text-align: left; }
+
+figure.circuit, figure.scope, figure.diagram { margin: 14px 0; padding: 8px 10px 10px; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; }
+figure figcaption { font-size: 0.88rem; color: var(--muted); margin-top: 4px; }
+
+/* ---------- guide content ---------- */
+.guide { line-height: 1.62; font-size: 1rem; color: var(--text); }
+.guide h2 { font-size: 1.22rem; margin: 0; }
+.guide h3 { font-size: 1.05rem; margin: 1.2em 0 0.4em; }
+.guide h4 { font-size: 0.98rem; margin: 1em 0 0.3em; }
+.guide p { margin: 0.55em 0; }
+.guide ul, .guide ol { padding-left: 1.4em; margin: 0.5em 0; }
+.guide li { margin: 0.25em 0; }
+.guide table { border-collapse: collapse; margin: 10px 0; width: 100%; font-size: 0.95rem; display: block; overflow-x: auto; }
+.guide th, .guide td { border: 1px solid var(--border); padding: 6px 9px; text-align: left; vertical-align: top; }
+.guide th { background: var(--surface-2); }
+.guide code { font-family: var(--mono); font-size: 0.92em; background: var(--surface-2); padding: 1px 4px; border-radius: 4px; }
+.guide .formula { background: var(--accent-soft); border-left: 4px solid var(--accent); padding: 4px 12px; margin: 10px 0; border-radius: 0 8px 8px 0; overflow-x: auto; }
+.guide .vardefs { font-size: 0.93rem; margin: 4px 0 12px; }
+.guide .vardefs dt { font-weight: 600; float: left; clear: left; min-width: 4.5em; margin-right: 8px; }
+.guide .vardefs dd { margin: 0 0 3px 5.2em; }
+.guide .example { border: 1px solid var(--border); border-left: 4px solid var(--good); background: var(--surface); padding: 6px 14px 10px; margin: 14px 0; border-radius: 0 10px 10px 0; }
+.guide .example > h3:first-child, .guide .example > h4:first-child { margin-top: 0.5em; }
+.guide .step { margin: 6px 0; }
+.guide .answer { font-weight: 600; background: var(--good-soft); padding: 4px 10px; border-radius: 6px; display: inline-block; margin: 6px 0; }
+.guide aside { padding: 8px 14px; margin: 12px 0; border-radius: 8px; font-size: 0.96rem; }
+.guide aside > :first-child { margin-top: 0.2em; }
+.guide aside.extra { background: var(--extra-soft); border-left: 4px solid var(--extra); }
+.guide aside.extra::before { content: "Additional teaching (not from the video)"; display: block; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.03em; text-transform: uppercase; color: var(--extra); margin-bottom: 2px; }
+.guide aside.mistake { background: var(--bad-soft); border-left: 4px solid var(--bad); }
+.guide aside.mistake::before { content: "Common mistake"; display: block; font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em; color: var(--bad); margin-bottom: 2px; }
+.guide aside.uncertain { background: var(--warn-soft); border-left: 4px solid var(--warn); }
+.guide aside.uncertain::before { content: "Source uncertainty"; display: block; font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em; color: var(--warn); margin-bottom: 2px; }
+.guide aside.note { background: var(--surface-2); border-left: 4px solid var(--muted); }
+.guide aside.instructor { background: var(--accent-soft); border-left: 4px solid var(--accent); }
+.guide aside.instructor::before { content: "Instructor emphasis"; display: block; font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em; color: var(--accent); margin-bottom: 2px; }
+.guide a.ts { font-family: var(--mono); font-size: 0.86em; background: var(--accent-soft); color: var(--accent); border-radius: 5px; padding: 1px 6px; text-decoration: none; white-space: nowrap; cursor: pointer; border: 1px solid transparent; }
+.guide a.ts:hover, .guide a.ts:focus-visible { border-color: var(--accent); }
+.guide a.ts::before { content: "\25B6\00a0"; font-size: 0.8em; }
+.guide .ts-range { font-weight: 400; font-size: 0.85rem; }
+.guide .katex-display { overflow-x: auto; overflow-y: hidden; padding: 2px 0; }
+.guide .katex-error { color: var(--bad) !important; outline: 1px dashed var(--bad); }
+.guide .formula-sheet { border: 2px solid var(--accent); border-radius: 10px; padding: 6px 14px; background: var(--surface); }
+.guide .src-quote { font-style: italic; }

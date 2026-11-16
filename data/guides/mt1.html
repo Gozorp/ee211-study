@@ -1,0 +1,458 @@
+<section class="g-sec" id="mt1-overview" data-kind="overview">
+<h2>Overview</h2>
+<p>This lecture covers <b>Millman's theorem</b>: a shortcut for finding the voltage across a set of parallel branches, where each branch is a voltage source in series with a resistor. The instructor first states the formula. He then derives it with tools the class already knows: a <a class="xref" data-lesson="st1">source transformation</a> of every branch, a <a class="xref" data-lesson="tn1">Norton equivalent</a> (short-circuit current and resistance with the sources disabled), and a final source transformation back to a Thévenin-style source. A long Q&amp;A covers why the resistance part is "one over a sum of inverses", when that resistance matters (only when a load draws current), and why the fraction is not simplified further. The lecture ends with a practical use, the binary-weighted resistor digital-to-analog converter (DAC).</p>
+<h3>Parts of the video</h3>
+<ul>
+<li><a class="ts" data-t="0:01"></a> What Millman's theorem is for; the circuit</li>
+<li><a class="ts" data-t="1:41"></a> The formula: \(\sum V_k/R_k\) over \(\sum 1/R_k\)</li>
+<li><a class="ts" data-t="2:51"></a> Derivation goal: reduce the network to one source with one series resistor (Thévenin form)</li>
+<li><a class="ts" data-t="6:31"></a> Step 1: source-transform every branch</li>
+<li><a class="ts" data-t="9:32"></a> Step 2: Norton current with the terminals shorted</li>
+<li><a class="ts" data-t="15:50"></a> Step 3: Norton resistance (how to disable a current source: open it)</li>
+<li><a class="ts" data-t="20:07"></a> Step 4: Norton equivalent → transform back → Millman's formula</li>
+<li><a class="ts" data-t="26:58"></a> Q&amp;A: is \(R_N\) the sum of resistances? voltage vs. resistance and the load; simplifying the formula</li>
+<li><a class="ts" data-t="36:35"></a> Application: binary-weighted resistor DAC, block diagrams and a 4-bit table</li>
+<li><a class="ts" data-t="41:24"></a> "Why learn this?" and the end of the lecture</li>
+</ul>
+</section>
+
+<section class="g-sec" id="mt1-objectives" data-kind="objectives">
+<h2>Learning objectives</h2>
+<p>After this lesson you should be able to…</p>
+<ul>
+<li>Recognise a "Millman circuit": several branches, each a voltage source in series with a resistor, all connected in parallel between two nodes.</li>
+<li>Write Millman's formula from memory and compute the output voltage for any number of branches.</li>
+<li>Derive the formula step by step: source transformation → short-circuit (Norton) current by KCL → Norton resistance with sources disabled → transform back.</li>
+<li>Explain why the shorted terminals carry zero current through every branch resistor, and why \(I_N = \sum V_k/R_k\).</li>
+<li>Disable sources correctly: voltage sources → short circuit, current sources → open circuit.</li>
+<li>Find the equivalent series resistance \(R_N = 1/\sum(1/R_k)\) and say when it matters (when a load draws current).</li>
+<li>Explain how a binary-weighted resistor DAC is a Millman circuit, and read a 4-bit DAC table (step size 0.3125 V for 5 V and 16 levels).</li>
+</ul>
+</section>
+
+<section class="g-sec" id="mt1-prereqs" data-kind="prereqs">
+<h2>Prerequisites</h2>
+<dl>
+<dt>Source transformation (<a class="xref" data-lesson="st1">st1</a>)</dt>
+<dd>A voltage source \(V\) in series with \(R\) is equivalent at its terminals to a current source \(I = V/R\) in parallel with the same \(R\), and back with \(V = IR\). The arrow points toward the + side.</dd>
+<dt>Norton and Thévenin equivalents (<a class="xref" data-lesson="tn1">tn1</a>, <a class="xref" data-lesson="tn2">tn2</a>, <a class="xref" data-lesson="tn3">tn3</a>)</dt>
+<dd>\(I_N\) is the current through a short placed across the two terminals. \(R_N = R_{TH}\) is the resistance seen between the terminals with all independent sources disabled. \(V_{TH} = I_N R_N\).</dd>
+<dt>Kirchhoff's current law (KCL)</dt>
+<dd>The currents entering a node add up to the currents leaving it. This is how the branch currents pile up along the top wire.</dd>
+<dt>Resistors in parallel</dt>
+<dd>\(R_{eq} = \dfrac{1}{1/R_1 + 1/R_2 + \cdots + 1/R_n}\). For exactly two resistors this equals \(\dfrac{R_1R_2}{R_1+R_2}\).</dd>
+<dt>A short across a resistor</dt>
+<dd>A wire in parallel with a resistor forces 0 V across it, so by Ohm's law no current flows through that resistor.</dd>
+</dl>
+</section>
+
+<section class="g-sec" id="mt1-definitions" data-kind="definitions">
+<h2>Definitions &amp; symbols</h2>
+<table>
+<tr><th>Symbol / term</th><th>Meaning</th><th>Unit</th></tr>
+<tr><td>Millman's theorem</td><td>Formula for the voltage across \(n\) parallel branches, each a voltage source \(V_k\) in series with \(R_k\)</td><td>—</td></tr>
+<tr><td>\(V_k\), \(R_k\) (\(k = 1 \ldots n\))</td><td>Source voltage and series resistance of branch \(k\) (little \(n\) = number of branches)</td><td>V, Ω</td></tr>
+<tr><td>\(V_{out}\) (also written \(V\) or \(V_{TH}\))</td><td>Voltage of the top node relative to the bottom node, i.e. between the two output terminals</td><td>V</td></tr>
+<tr><td>\(I_N\)</td><td>Norton current: the current through a short placed across the output terminals</td><td>A</td></tr>
+<tr><td>\(R_N\) (capital N)</td><td>Norton resistance = Thévenin resistance of the network, \(1/\sum(1/R_k)\). Written with capital N to distinguish it from \(R_n\), the last branch resistor.</td><td>Ω</td></tr>
+<tr><td>Disabling (deactivating) a source</td><td>Voltage source → replace by a short; current source → remove it (open circuit)</td><td>—</td></tr>
+<tr><td>DAC</td><td>Digital-to-analog converter: turns a binary number into a proportional voltage</td><td>—</td></tr>
+<tr><td>Binary-weighted resistors</td><td>Resistors \(R, 2R, 4R, 8R, \ldots\) (powers of two), one per bit</td><td>Ω</td></tr>
+<tr><td>Logic levels</td><td>In the DAC example each input is either 0 V (logic 0/low) or 5 V (logic 1/high)</td><td>V</td></tr>
+<tr><td>MSB / LSB</td><td>Most / least significant bit of the binary input</td><td>—</td></tr>
+<tr><td>Step size</td><td>Smallest output change a DAC can make: the voltage change produced by the LSB</td><td>V</td></tr>
+<tr><td>\(V_{ref}\)</td><td>Reference (full-scale) voltage of the DAC, 5 V in the notes</td><td>V</td></tr>
+</table>
+</section>
+
+<section class="g-sec" id="mt1-statement" data-kind="lesson" data-ts="0-171">
+<h2>1. Millman's theorem: the circuit and the formula</h2>
+<p>Millman's theorem is "one of our network analysis techniques" <a class="ts" data-t="0:01"></a>. It answers one question: what is the voltage between the two rails when several branches, each a <b>voltage source in series with a resistor</b>, are all connected <b>in parallel</b> <a class="ts" data-t="0:28"></a>? There can be any number of such branches.</p>
+<figure class="circuit" id="mt1-fig-network">
+<script type="application/json">{"parts":[
+ {"t":"W","pts":[[0,0],[10.5,0]]},
+ {"t":"W","pts":[[0,6],[10.5,6]]},
+ {"t":"R","a":[0,0],"b":[0,3],"label":"R_1"},
+ {"t":"BAT","a":[0,6],"b":[0,3],"label":"V_1","side":-1},
+ {"t":"R","a":[3.5,0],"b":[3.5,3],"label":"R_2"},
+ {"t":"BAT","a":[3.5,6],"b":[3.5,3],"label":"V_2","side":-1},
+ {"t":"T","at":[6,3.1],"text":"· · · ·","anchor":"middle"},
+ {"t":"R","a":[8.5,0],"b":[8.5,3],"label":"R_n"},
+ {"t":"BAT","a":[8.5,6],"b":[8.5,3],"label":"V_n","side":-1},
+ {"t":"N","at":[10.5,0],"open":true,"label":"V_{out}","pos":"e"},
+ {"t":"N","at":[10.5,6],"open":true,"pos":"e"}
+],"alt":"Millman circuit: n parallel branches between a top rail (Vout terminal) and a bottom rail. Each branch has resistor R_k on top and battery V_k below it with the positive plate facing up toward R_k and the top rail."}</script>
+<figcaption>The Millman circuit as drawn on the first page (<a class="ts" data-t="0:51"></a>; full page at <a class="ts" data-t="2:55"></a>). Every battery has its long plate (+) facing up, toward the output rail. The instructor drew \(n\) branches with "…" (he mentions he did not draw \(R_3, V_3\) explicitly <a class="ts" data-t="0:51"></a>).</figcaption>
+</figure>
+<p>The result, which "you could quite literally just remember" <a class="ts" data-t="1:17"></a>:</p>
+<div class="formula">\[ V_{out} = \frac{\dfrac{V_1}{R_1} + \dfrac{V_2}{R_2} + \dfrac{V_3}{R_3} + \cdots + \dfrac{V_n}{R_n}}{\dfrac{1}{R_1} + \dfrac{1}{R_2} + \dfrac{1}{R_3} + \cdots + \dfrac{1}{R_n}} = \frac{\displaystyle\sum_{k=1}^{n} \frac{V_k}{R_k}}{\displaystyle\sum_{k=1}^{n} \frac{1}{R_k}} \]</div>
+<dl class="vardefs">
+<dt>\(V_{out}\)</dt><dd>voltage of the top rail relative to the bottom rail, V</dd>
+<dt>\(V_k\)</dt><dd>source voltage in branch \(k\) (+ toward the top rail), V</dd>
+<dt>\(R_k\)</dt><dd>series resistance in branch \(k\), Ω</dd>
+<dt>\(n\)</dt><dd>number of parallel branches</dd>
+</dl>
+<p>How to remember it <a class="ts" data-t="1:41"></a>–<a class="ts" data-t="2:25"></a>: the <b>numerator</b> is each branch's voltage divided by its resistance, "however many we have, they all get added up". The <b>denominator</b> is one over each resistance, added up. "It does seem like it's a lengthy equation to remember, but it's really not that bad" <a class="ts" data-t="2:25"></a>. Use it whenever you have parallel branches of (voltage source + series resistor) and want the voltage across them.</p>
+<aside class="instructor"><p>The instructor calls this "an incredibly useful technique". He expects to use it in the 311 course in three, possibly four, situations <a class="ts" data-t="0:51"></a>. Rather than only memorise it, he derives it because the derivation "uses all the techniques we've kind of learned about thus far" <a class="ts" data-t="2:51"></a>.</p></aside>
+</section>
+
+<section class="g-sec" id="mt1-goal" data-kind="lesson" data-ts="171-340">
+<h2>2. Derivation plan: aim for a single source with a series resistor</h2>
+<p>Under the heading "Derivation…" and the question "How do we arrive at this?" <a class="ts" data-t="3:10"></a>, the instructor starts a new page. He redraws the network with \(V_1, R_1\), \(V_2, R_2\), …, \(V_n, R_n\) <a class="ts" data-t="3:49"></a>.</p>
+<p>Whatever the network is, seen from its two terminals it must reduce to a voltage source in series with a resistance <a class="ts" data-t="4:47"></a>. "This looks very familiar": it is the form a <b>Thévenin equivalent circuit</b> gives <a class="ts" data-t="5:15"></a>. He labels the resistor \(R\) "\(R_{TH}\)" and the source \(V\) "\(V_{TH}\)" <a class="ts" data-t="5:40"></a>. The goal of the derivation is to find that \(V\) (Millman's voltage) and, along the way, that \(R\).</p>
+<figure class="circuit" id="mt1-fig-goal">
+<script type="application/json">{"parts":[
+ {"t":"BAT","a":[0,4],"b":[0,1],"label":"V","value":"(V_{TH})","side":-1},
+ {"t":"W","pts":[[0,1],[1,1]]},
+ {"t":"R","a":[1,1],"b":[4,1],"label":"R  (R_{TH})"},
+ {"t":"W","pts":[[4,1],[5,1]]},
+ {"t":"N","at":[5,1],"open":true},
+ {"t":"W","pts":[[0,4],[5,4]]},
+ {"t":"N","at":[5,4],"open":true}
+],"alt":"Target form: battery V (labelled V_TH), positive on top, in series with resistor R (labelled R_TH) to the output terminals."}</script>
+<figcaption>The target form drawn to the right of the network, "=" sign between them (<a class="ts" data-t="6:00"></a>). The blue labels \(R_{TH}\) and \(V_{TH}\) were added at <a class="ts" data-t="5:40"></a>.</figcaption>
+</figure>
+<p>The route he takes (each step below) is: transform every branch → find the Norton equivalent (\(I_N\), \(R_N\)) → transform the Norton equivalent back into this Thévenin form.</p>
+</section>
+
+<section class="g-sec" id="mt1-step1" data-kind="lesson" data-ts="340-572">
+<h2>3. Step 1 — Source-transform every branch</h2>
+<p>"The first thing we can go ahead and do … is to actually do a source transformation on each one of our voltages" <a class="ts" data-t="5:40"></a>. The page heading is "1) Source Transformation" <a class="ts" data-t="6:31"></a>. As learned last class (<a class="xref" data-lesson="st1">source transformation</a>), a voltage source in series with a resistor becomes a current source in parallel with the <b>same</b> resistor. The current comes from Ohm's law <a class="ts" data-t="6:52"></a>:</p>
+<div class="formula">\[ V_k \text{ in series with } R_k \;\Longrightarrow\; I_k = \frac{V_k}{R_k} \text{ in parallel with } R_k \]</div>
+<dl class="vardefs">
+<dt>\(I_k\)</dt><dd>current of the new source in branch \(k\), A (arrow up, toward the top rail, because each \(V_k\) has its + on top)</dd>
+</dl>
+<ul>
+<li>Branch 1: \(V_1/R_1\) in parallel with \(R_1\) <a class="ts" data-t="7:44"></a></li>
+<li>Branch 2: \(V_2/R_2\) in parallel with \(R_2\) — "again just source transformation" <a class="ts" data-t="8:12"></a></li>
+<li>…and so on to branch \(n\): \(V_n/R_n\) in parallel with \(R_n\) <a class="ts" data-t="8:38"></a></li>
+</ul>
+<figure class="circuit" id="mt1-fig-step1">
+<script type="application/json">{"parts":[
+ {"t":"W","pts":[[0,1],[15,1]]},
+ {"t":"W","pts":[[0,5],[15,5]]},
+ {"t":"I","a":[0,5],"b":[0,1],"label":"V_1/R_1","side":-1},
+ {"t":"R","a":[1.6,1],"b":[1.6,5],"label":"R_1"},
+ {"t":"I","a":[5,5],"b":[5,1],"label":"V_2/R_2","side":-1},
+ {"t":"R","a":[6.6,1],"b":[6.6,5],"label":"R_2"},
+ {"t":"T","at":[9.1,3.1],"text":"· · ·","anchor":"middle"},
+ {"t":"I","a":[11.5,5],"b":[11.5,1],"label":"V_n/R_n","side":-1},
+ {"t":"R","a":[13.1,1],"b":[13.1,5],"label":"R_n"},
+ {"t":"N","at":[15,1],"open":true},
+ {"t":"N","at":[15,5],"open":true}
+],"alt":"After step 1: n current sources V_k/R_k, all arrows pointing up, each in parallel with its resistor R_k, all connected between the top and bottom rails."}</script>
+<figcaption>After step 1 (<a class="ts" data-t="9:20"></a>): every branch is now a current source \(V_k/R_k\), arrow up, in parallel with \(R_k\). All of them sit between the same two rails.</figcaption>
+</figure>
+<p>"Now we've done our source transformation and we've turned our top circuit into this" <a class="ts" data-t="9:32"></a>. The next job is the Norton equivalent of this circuit. The heading is extended to "1) Source Transformation &amp; find Norton Equivalent: \(R_N\) &amp; \(I_N\)" <a class="ts" data-t="10:55"></a>.</p>
+</section>
+
+<section class="g-sec" id="mt1-in" data-kind="lesson" data-ts="572-950">
+<h2>4. Step 2 — Norton current: short the output terminals</h2>
+<p>To find a Norton equivalent we need \(I_N\) and \(R_N\) <a class="ts" data-t="9:58"></a>. The instructor writes them with a capital N, "so that we're not confusing it with the little \(R_n\)" of the last branch <a class="ts" data-t="10:30"></a>. He starts with the current <a class="ts" data-t="10:45"></a>.</p>
+<p><b>Method:</b> short the two terminals ("we're finding it from the perspective of these two terminals") and find the current through that short, drawn in red <a class="ts" data-t="11:01"></a>.</p>
+<figure class="circuit" id="mt1-fig-isc">
+<script type="application/json">{"parts":[
+ {"t":"W","pts":[[0,1],[15,1]]},
+ {"t":"W","pts":[[0,5],[15,5]]},
+ {"t":"I","a":[0,5],"b":[0,1],"label":"V_1/R_1","side":-1},
+ {"t":"R","a":[1.6,1],"b":[1.6,5],"label":"R_1","value":"0 A"},
+ {"t":"I","a":[5,5],"b":[5,1],"label":"V_2/R_2","side":-1},
+ {"t":"R","a":[6.6,1],"b":[6.6,5],"label":"R_2","value":"0 A"},
+ {"t":"T","at":[9.1,3.1],"text":"· · ·","anchor":"middle"},
+ {"t":"I","a":[11.5,5],"b":[11.5,1],"label":"V_n/R_n","side":-1},
+ {"t":"R","a":[13.1,1],"b":[13.1,5],"label":"R_n","value":"0 A"},
+ {"t":"W","pts":[[15,1],[15,5]]},
+ {"t":"N","at":[15,1]},
+ {"t":"N","at":[15,5]},
+ {"t":"IARR","a":[15,2],"b":[15,4],"label":"I_N"},
+ {"t":"IARR","a":[2.4,1],"b":[4.4,1],"label":"V_1/R_1"},
+ {"t":"IARR","a":[7.2,1],"b":[9.6,1],"label":"V_1/R_1 + V_2/R_2"},
+ {"t":"T","at":[15.6,3.9],"text":"short","anchor":"start","cls":"accent"}
+],"alt":"Terminals shorted on the right. Zero current through every R_k. Current V_1/R_1 flows right along the top rail after branch 1, V_1/R_1 + V_2/R_2 after branch 2, and the total I_N flows down through the short."}</script>
+<figcaption>Finding \(I_N\), with the red short and arrows as drawn at <a class="ts" data-t="12:15"></a>–<a class="ts" data-t="14:58"></a>: 0 A in every resistor, and the source currents add up along the top rail.</figcaption>
+</figure>
+<div class="example" id="mt1-ex1">
+<h3>Derivation of \(I_N\) <a class="ts" data-t="11:50"></a></h3>
+<p class="step">1. <b>Is the short in parallel with each resistor?</b> The instructor asks the class this <a class="ts" data-t="12:16"></a>. Yes: every \(R_k\) connects the top rail to the bottom rail, and so does the short.</p>
+<p class="step">2. <b>Current in each resistor (Ohm's law).</b> The short forces 0 V across every \(R_k\), so \(i_{R_k} = 0/R_k = 0\). "I have zero current going through \(R_1\). This is why applying Norton equivalent circuit to this is so easy, because this short ends up canceling out all of our resistances" <a class="ts" data-t="12:43"></a>.</p>
+<p class="step">3. <b>Where does the source current go? (KCL at the top of branch 1.)</b> With 0 A going down through \(R_1\), all of \(V_1/R_1\) must flow along the top wire <a class="ts" data-t="12:58"></a>.</p>
+<p class="step">4. <b>KCL at the top of branch 2.</b> \(V_1/R_1\) arrives from the left and \(V_2/R_2\) arrives from branch 2 (again 0 A in \(R_2\)), so the wire to the right carries \(V_1/R_1 + V_2/R_2\) <a class="ts" data-t="13:43"></a>.</p>
+<p class="step">5. <b>Continue to the last branch.</b> Every branch adds its current. Everything ends up in the short:</p>
+<div class="formula">\[ I_N = \frac{V_1}{R_1} + \frac{V_2}{R_2} + \cdots + \frac{V_n}{R_n} = \sum_{k=1}^{n}\frac{V_k}{R_k} \]</div>
+<dl class="vardefs"><dt>\(I_N\)</dt><dd>short-circuit (Norton) current, A</dd></dl>
+<p class="answer">\(I_N = \sum V_k/R_k\) <a class="ts" data-t="14:15"></a>. This is already the <b>numerator</b> of Millman's formula. "We actually have the first piece of the puzzle" <a class="ts" data-t="15:25"></a>.</p>
+</div>
+<aside class="note"><p>At <a class="ts" data-t="15:00"></a> the instructor summarises this as "the voltage divided by all the resistances summed up". The precise statement is: each voltage divided by <em>its own</em> resistance, then those quotients summed, as written on the page.</p></aside>
+</section>
+
+<section class="g-sec" id="mt1-rn" data-kind="lesson" data-ts="950-1180">
+<h2>5. Step 3 — Norton resistance: disable the sources</h2>
+<p>For \(R_N\) we go back to the transformed circuit, with no short this time, and <b>disable the sources</b> <a class="ts" data-t="16:15"></a>. The page heading is "2) Now find \(R_N\) (Norton: Short Voltages / Open Currents)" <a class="ts" data-t="17:30"></a>.</p>
+<div class="formula">\[ \text{Disable a voltage source} \to \text{short circuit}; \qquad \text{disable a current source} \to \text{open circuit} \]</div>
+<p>The class already knew that a voltage source is disabled by shorting it <a class="ts" data-t="16:36"></a>. The new piece in this lecture is that a <b>current source is disabled by opening it</b>: "you just leave it open … you remove the current source, it's no longer a part of your circuit" <a class="ts" data-t="17:01"></a>–<a class="ts" data-t="17:39"></a>.</p>
+<aside class="extra"><p><b>Why open?</b> A disabled source must deliver zero of whatever it controls. A voltage source set to 0 V keeps 0 V across itself, which is a wire. A current source set to 0 A lets no current through, which is a break in the circuit.</p></aside>
+<p>Plucking out every current source leaves "a bunch of resistances in parallel with each other" <a class="ts" data-t="18:01"></a>:</p>
+<figure class="circuit" id="mt1-fig-rn">
+<script type="application/json">{"parts":[
+ {"t":"W","pts":[[0,1],[9.5,1]]},
+ {"t":"W","pts":[[0,5],[9.5,5]]},
+ {"t":"R","a":[0,1],"b":[0,5],"label":"R_1"},
+ {"t":"R","a":[2.5,1],"b":[2.5,5],"label":"R_2"},
+ {"t":"T","at":[5,3.1],"text":"· · ·","anchor":"middle"},
+ {"t":"R","a":[7,1],"b":[7,5],"label":"R_n"},
+ {"t":"N","at":[9.5,1],"open":true},
+ {"t":"N","at":[9.5,5],"open":true},
+ {"t":"T","at":[10.2,3.1],"text":"} R_N","anchor":"start","cls":"accent"}
+],"alt":"With all current sources removed (open), only R_1, R_2, ..., R_n remain, all in parallel between the two terminals; the resistance seen at the terminals is R_N."}</script>
+<figcaption>Sources removed: \(R_1 \parallel R_2 \parallel \cdots \parallel R_n\) between the terminals (<a class="ts" data-t="18:45"></a>–<a class="ts" data-t="20:00"></a>).</figcaption>
+</figure>
+<p>"It's just a bunch of resistors in parallel, so we can apply our parallel equation" <a class="ts" data-t="19:14"></a>:</p>
+<div class="formula">\[ R_N = \frac{1}{\dfrac{1}{R_1} + \dfrac{1}{R_2} + \cdots + \dfrac{1}{R_n}} = \frac{1}{\displaystyle\sum_{k=1}^{n}\frac{1}{R_k}} \]</div>
+<dl class="vardefs"><dt>\(R_N\)</dt><dd>Norton (= Thévenin) resistance seen at the terminals, Ω</dd></dl>
+<p>This is the resistance in series with Millman's voltage source.</p>
+<aside class="extra"><p><b>Same answer without step 1.</b> Disabling the original <em>voltage</em> sources (shorting them) also leaves \(R_1, \ldots, R_n\) in parallel. Source transformation does not change the resistance seen from the terminals.</p></aside>
+</section>
+
+<section class="g-sec" id="mt1-back" data-kind="lesson" data-ts="1180-1618">
+<h2>6. Step 4 — Norton equivalent, then transform back: Millman's formula</h2>
+<p>With \(I_N\) and \(R_N\) known, the whole network is a Norton equivalent circuit <a class="ts" data-t="19:40"></a>. The target was a Thévenin-form circuit, so "we can apply source transformation one more time" <a class="ts" data-t="20:07"></a>.</p>
+<figure class="circuit" id="mt1-fig-norton">
+<script type="application/json">{"parts":[
+ {"t":"I","a":[0,4],"b":[0,1],"label":"I_N","side":-1},
+ {"t":"W","pts":[[0,1],[2,1]]},
+ {"t":"W","pts":[[0,4],[2,4]]},
+ {"t":"R","a":[2,1],"b":[2,4],"label":"R_N"},
+ {"t":"W","pts":[[2,1],[4,1]]},
+ {"t":"W","pts":[[2,4],[4,4]]},
+ {"t":"N","at":[4,1],"open":true},
+ {"t":"N","at":[4,4],"open":true},
+ {"t":"ARROW","a":[5,2.5],"b":[7.2,2.5]},
+ {"t":"BAT","a":[8.5,4],"b":[8.5,1],"label":"V = I_N R_N"},
+ {"t":"W","pts":[[8.5,1],[9.5,1]]},
+ {"t":"R","a":[9.5,1],"b":[12.5,1],"label":"R_N"},
+ {"t":"W","pts":[[12.5,1],[13.5,1]]},
+ {"t":"N","at":[13.5,1],"open":true},
+ {"t":"W","pts":[[8.5,4],[13.5,4]]},
+ {"t":"N","at":[13.5,4],"open":true}
+],"alt":"Norton equivalent: current source I_N (arrow up) in parallel with R_N. Arrow to the transformed version: battery V = I_N R_N, positive on top, in series with R_N."}</script>
+<figcaption>Norton equivalent and its source transformation, as written at <a class="ts" data-t="21:15"></a>–<a class="ts" data-t="23:30"></a>. The arrow of \(I_N\) points up, so the + of \(V\) is on top.</figcaption>
+</figure>
+<div class="example" id="mt1-ex2">
+<h3>Putting it together <a class="ts" data-t="22:40"></a></h3>
+<p class="step">1. <b>Resistance stays the same</b> in a source transformation: the series resistor is \(R_N\) <a class="ts" data-t="22:40"></a>.</p>
+<p class="step">2. <b>Ohm's law</b> to go from the current source to the voltage source: \(V = I_N R_N\) <a class="ts" data-t="22:57"></a>.</p>
+<p class="step">3. <b>Substitute</b> the results of steps 2 and 3 <a class="ts" data-t="24:13"></a>:</p>
+<div class="formula">\[ V = I_N \cdot R_N = \left(\frac{V_1}{R_1} + \frac{V_2}{R_2} + \cdots + \frac{V_n}{R_n}\right) \cdot \frac{1}{\dfrac{1}{R_1} + \dfrac{1}{R_2} + \cdots + \dfrac{1}{R_n}} \]</div>
+<p class="step">4. <b>Write it as one fraction</b> <a class="ts" data-t="25:01"></a>. Multiplying by \(R_N\) puts the sum of inverse resistances in the denominator:</p>
+<div class="formula">\[ V = \frac{\dfrac{V_1}{R_1} + \dfrac{V_2}{R_2} + \cdots + \dfrac{V_n}{R_n}}{\dfrac{1}{R_1} + \dfrac{1}{R_2} + \cdots + \dfrac{1}{R_n}} \qquad\text{in series with}\qquad R_N = \frac{1}{\dfrac{1}{R_1} + \cdots + \dfrac{1}{R_n}} \]</div>
+<p class="answer">"Exactly what we had in the first place" <a class="ts" data-t="25:37"></a>: the same formula you would find for Millman's theorem in a book <a class="ts" data-t="26:08"></a>. Both results are boxed in red on the page <a class="ts" data-t="26:00"></a>.</p>
+</div>
+<aside class="instructor"><p>Recap of the method: source transformation → Norton equivalent (find \(I_N\) and \(R_N\)) → put it back together <a class="ts" data-t="26:08"></a>. He calls it "the most convenient and easiest process to arrive at this equation". Other techniques would probably reach the same equation, but this route is "the simplest and most straightforward" <a class="ts" data-t="26:32"></a>.</p></aside>
+<h3>Q: "Why is the numerator 1?" <a class="ts" data-t="23:31"></a></h3>
+<p>This question is about the \(R_N\) expression. It is the general formula for resistors in parallel. For two resistors the class had also used \(R_1R_2/(R_1+R_2)\), but with many resistors in parallel, "one over the summation of the inverse of all of our resistances" is the more useful form <a class="ts" data-t="23:31"></a>–<a class="ts" data-t="23:56"></a>.</p>
+<aside class="extra"><p><b>Cross-check with nodal analysis.</b> Call the top-rail voltage \(v\) (bottom rail = 0 V). KCL at the top node, with branch \(k\) carrying \((v - V_k)/R_k\) downward and nothing connected to the terminals: \(\sum_k \dfrac{v - V_k}{R_k} = 0 \;\Rightarrow\; v\sum_k \dfrac{1}{R_k} = \sum_k \dfrac{V_k}{R_k} \;\Rightarrow\; v = \dfrac{\sum V_k/R_k}{\sum 1/R_k}\). So Millman's theorem is single-node KCL in disguise. (Checked symbolically in Python for \(n = 3\).)</p></aside>
+</section>
+
+<section class="g-sec" id="mt1-qa" data-kind="lesson" data-ts="1618-2118">
+<h2>7. Questions from class: \(R_N\), the load, and simplifying the formula</h2>
+<h3>Is \(R_N\) just the sum of all the resistances? <a class="ts" data-t="25:37"></a></h3>
+<p>No. A student asked whether "one over the inverse" simply equals the sum of the resistances <a class="ts" data-t="27:22"></a>. You add the <em>inverses</em> and then invert the total. "If you were to just sum up all your resistances, that would be them in series" <a class="ts" data-t="27:38"></a>.</p>
+<aside class="extra"><p>Example: 200 Ω and 200 Ω in parallel: \(1/(1/200 + 1/200) = 100\ \Omega\), not 400 Ω. The parallel result is always <em>smaller</em> than the smallest branch resistance.</p></aside>
+<h3>Voltage vs. resistance: when does \(R_N\) matter? <a class="ts" data-t="28:02"></a></h3>
+<p>A student was confused about finding "\(V_{TH}\)" instead of "the voltage between the terminals". They are the same thing: \(V_{TH}\) <em>is</em> the Millman voltage between the two terminals <a class="ts" data-t="28:02"></a>. The original statement of Millman's theorem only mentioned that voltage, not the resistance <a class="ts" data-t="28:28"></a>.</p>
+<ul>
+<li>If all you want is the voltage between the two points, with nothing connected, the voltage formula is "the only equation we need" <a class="ts" data-t="28:52"></a>.</li>
+<li>"Once you attach something over here and you start having current flow through it", then \(R_N\) "comes into play" <a class="ts" data-t="28:52"></a>, because the load current makes a voltage drop across \(R_N\).</li>
+<li>In practical Millman circuits the current drawn is usually tiny (microamps, "negligible to zero"). Zero current means zero drop across \(R_N\), so you generally only care about the voltage <a class="ts" data-t="29:24"></a>–<a class="ts" data-t="30:09"></a>.</li>
+<li>If you connect a resistor that draws "a large amount of current" (milliamps, half an amp, an amp), then the \(R_N\) equation applies <a class="ts" data-t="30:33"></a>.</li>
+</ul>
+<aside class="extra"><p><b>Load current formula.</b> With a load \(R_L\) across the terminals, the Thévenin form gives \(I_L = \dfrac{V_{out}}{R_N + R_L}\) and \(V_L = V_{out}\dfrac{R_L}{R_N + R_L}\). If \(R_L \gg R_N\), then \(V_L \approx V_{out}\). That is the "negligible current" case the instructor describes. A numeric example is in section 9.</p></aside>
+<h3>Can the formula be simplified ("flip and multiply")? <a class="ts" data-t="30:59"></a></h3>
+<p>Another student asked why the formula is kept as a fraction of sums, instead of flipping the denominator and multiplying it out <a class="ts" data-t="30:59"></a>–<a class="ts" data-t="31:32"></a>. The instructor has "always seen and used it in this format". He thinks rewriting it just gets "overly complicated with no benefit" <a class="ts" data-t="34:06"></a>. The student concluded the same: with, say, 10 terms you would have to put everything over a lowest common denominator and distribute it across all of them, "a horrible equation" <a class="ts" data-t="34:31"></a>–<a class="ts" data-t="35:00"></a>.</p>
+<p><b>Equal resistors (student's observation)</b> <a class="ts" data-t="32:26"></a>: if all resistances are equal, the parallel resistance is the resistance divided by the number of resistors. Example: two 200 Ω resistors, \(1/200 + 1/200 = 2/200\), so 100 Ω <a class="ts" data-t="32:50"></a>. The instructor agrees, but says this only works when the resistances are the same. In practical circuits the branch resistances are almost always different, so use the general formula <a class="ts" data-t="33:14"></a>–<a class="ts" data-t="33:38"></a>.</p>
+<aside class="extra"><p>With \(n\) equal resistors \(R\), Millman's formula becomes \(V_{out} = \dfrac{\sum V_k/R}{n/R} = \dfrac{V_1 + V_2 + \cdots + V_n}{n}\), the plain average of the source voltages, and \(R_N = R/n\).</p></aside>
+</section>
+
+<section class="g-sec" id="mt1-dac" data-kind="lesson" data-ts="2195-2509">
+<h2>8. Application: the binary-weighted resistor DAC</h2>
+<p>"It's always hard to justify … why am I doing this without seeing where it could be applicable" <a class="ts" data-t="36:35"></a>. So the instructor shows a circuit from his notes, titled "Binary Weighted Resistor DAC". It is drawn "in a different form than you're probably used to seeing": the ends of all the resistors are tied together at \(V_{out}\) <a class="ts" data-t="36:35"></a>.</p>
+<figure class="circuit" id="mt1-fig-dac4">
+<script type="application/json">{"parts":[
+ {"t":"N","at":[0,0],"open":true,"label":"V_{B0}","pos":"w"},
+ {"t":"R","a":[0,0],"b":[3,0],"label":"R"},
+ {"t":"W","pts":[[3,0],[4.5,0]]},
+ {"t":"N","at":[0,1.6],"open":true,"label":"V_{B1}","pos":"w"},
+ {"t":"R","a":[0,1.6],"b":[3,1.6],"label":"2R"},
+ {"t":"W","pts":[[3,1.6],[4.5,1.6]]},
+ {"t":"N","at":[0,3.2],"open":true,"label":"V_{B2}","pos":"w"},
+ {"t":"R","a":[0,3.2],"b":[3,3.2],"label":"4R"},
+ {"t":"W","pts":[[3,3.2],[4.5,3.2]]},
+ {"t":"N","at":[0,4.8],"open":true,"label":"V_{B3}","pos":"w"},
+ {"t":"R","a":[0,4.8],"b":[3,4.8],"label":"8R"},
+ {"t":"W","pts":[[3,4.8],[4.5,4.8]]},
+ {"t":"W","pts":[[4.5,0],[4.5,4.8]]},
+ {"t":"W","pts":[[4.5,2.4],[6.5,2.4]]},
+ {"t":"N","at":[4.5,2.4]},
+ {"t":"N","at":[6.5,2.4],"open":true,"label":"V_{out}","pos":"e"}
+],"alt":"Binary-weighted resistor DAC from the notes: inputs V_B0, V_B1, V_B2, V_B3 through resistors R, 2R, 4R, 8R, all joined at one node, the output Vout. Each input is 0 V or 5 V relative to ground."}</script>
+<figcaption>"Binary Weighted Resistor DAC" from the instructor's pencil notes (<a class="ts" data-t="36:55"></a>–<a class="ts" data-t="39:12"></a>). Each input \(V_{Bk}\) is a 0 V or 5 V logic level measured from a common ground (the ground return is not drawn on the page).</figcaption>
+</figure>
+<ul>
+<li>Each input "can either be five volts or zero volts": a digital logic level, high or low, true or false <a class="ts" data-t="37:26"></a>.</li>
+<li>The resistors are R, 2R, 4R, 8R, "powers of two". Each one is "weighted according to the binary bit position" <a class="ts" data-t="37:26"></a>–<a class="ts" data-t="37:54"></a>.</li>
+<li>Look at just two of the inputs: each is "a voltage in series with a resistor", and they are all joined at one node. "This is Millman's", so you can use Millman's theorem to find \(V_{out}\) <a class="ts" data-t="38:17"></a>–<a class="ts" data-t="38:42"></a>.</li>
+<li>Purpose: turn a binary value into an <b>analog</b> value (1 V, 1.2 V, 2 V, 2.3 V …). Digital logic (as in the 201 course) only has 0 and 1, i.e. 0 V and 5 V <a class="ts" data-t="38:42"></a>–<a class="ts" data-t="39:08"></a>. There are several DACs "inside of your PC as we speak" <a class="ts" data-t="39:33"></a>.</li>
+</ul>
+<aside class="uncertain"><p><b>Which bit is the MSB?</b> The notes put \(V_{B0}\) on the smallest resistor R, and the instructor says "bit position zero gets R" <a class="ts" data-t="37:54"></a>. The smallest resistor gets the largest weight (it has the largest \(1/R_k\)). So for a correct binary DAC, the input on R must be the <b>most</b> significant bit. On the 4-bit table page shown later, \(D_0\) is labelled the LSB. If \(B_0\) also meant the LSB here, the weights would be reversed. The video does not settle this. Treat "R ↔ MSB, 8R ↔ LSB" as the rule.</p></aside>
+<figure class="circuit" id="mt1-fig-dac3">
+<script type="application/json">{"parts":[
+ {"t":"W","pts":[[0,0],[10,0]]},
+ {"t":"W","pts":[[0,6],[10,6]]},
+ {"t":"R","a":[0,0],"b":[0,3],"label":"R"},
+ {"t":"BAT","a":[0,6],"b":[0,3],"label":"V_{B0}","side":-1},
+ {"t":"R","a":[3.5,0],"b":[3.5,3],"label":"2R"},
+ {"t":"BAT","a":[3.5,6],"b":[3.5,3],"label":"V_{B1}","side":-1},
+ {"t":"R","a":[7,0],"b":[7,3],"label":"3R","value":"(4R expected)"},
+ {"t":"BAT","a":[7,6],"b":[7,3],"label":"V_{B2}","side":-1},
+ {"t":"N","at":[10,0],"open":true,"label":"V_{out}","pos":"e"},
+ {"t":"N","at":[10,6],"open":true,"pos":"e"}
+],"alt":"Three-bit version drawn with batteries: V_B0 with R, V_B1 with 2R, V_B2 with a resistor written as 3R, all in parallel between the output rail and the common bottom rail."}</script>
+<figcaption>The 3-bit sketch, "same thing with three bits" (<a class="ts" data-t="40:00"></a>), redrawn in the Millman layout. Each bit is a voltage source in series with a resistor.</figcaption>
+</figure>
+<aside class="uncertain"><p><b>Possible note error.</b> In the 3-bit pencil sketch at <a class="ts" data-t="40:02"></a>, the third resistor reads <b>3R</b>. For binary weighting (R, 2R, 4R) it should be <b>4R</b>, as on the 4-bit page above it. The instructor does not comment on the value.</p></aside>
+<p>He then shows two pages of block-diagram notes <a class="ts" data-t="40:25"></a>:</p>
+<ul>
+<li><b>"DAC – Digital to Analog Converter"</b>: an 8-bit DAC with inputs \(D_0 \ldots D_7\) and one output \(V_{out}\). "In general" it takes a digital value (e.g. 10101010) and turns it into an analog value, usually a voltage <a class="ts" data-t="40:30"></a>.</li>
+<li><b>4-bit DAC</b> <a class="ts" data-t="40:44"></a>: \(D_{in} = D_3D_2D_1D_0\) (\(D_3\) = MSB, \(D_0\) = LSB), \(V_{ref} = 5\ \text{V}\), \(V_{out}\) = 0 to 5 V. "With 4 bits we can only represent voltages on the range 0 to 5 V with \(2^4 = 16\) discrete values." The inputs run over the codes 0000 to 1111 (0 to F) <a class="ts" data-t="40:58"></a>.</li>
+</ul>
+<div class="example" id="mt1-ex3">
+<h3>The 4-bit DAC table from the notes <a class="ts" data-t="41:00"></a></h3>
+<p><b>Given (on the page):</b> \(V_{ref} = 5\ \text{V}\), 4 bits, step size 0.3125 V. Each code "gets converted to \(V_{out}\)" as code × step size.</p>
+<p class="step">1. Number of levels: \(2^4 = 16\).</p>
+<p class="step">2. Step size (the change produced by one LSB): \(5\ \text{V}/16 = 0.3125\ \text{V}\).</p>
+<p class="step">3. Output = decimal value of the code × 0.3125 V:</p>
+<table>
+<tr><th>\(D_3D_2D_1D_0\)</th><th>decimal</th><th>\(V_{out}\)</th></tr>
+<tr><td>0000</td><td>0</td><td>0(0.3125 V) = 0 V</td></tr>
+<tr><td>0001</td><td>1</td><td>1(0.3125 V) = 0.3125 V</td></tr>
+<tr><td>0010</td><td>2</td><td>2(0.3125 V) = 0.625 V</td></tr>
+<tr><td>1000</td><td>8</td><td>8(0.3125 V) = 2.5 V</td></tr>
+<tr><td>1110</td><td>14</td><td>14(0.3125 V) = 4.375 V</td></tr>
+<tr><td>1111</td><td>15</td><td>15(0.3125 V) = 4.6875 V, written as "5 V or 4.6875" with the note "Different DAC designs"</td></tr>
+</table>
+<p class="answer">The outputs step through 16 evenly spaced voltages between 0 and about 5 V. "Step size: the smallest change that can be produced. In other words, the LSB produces a voltage change equal to the step size." (all values checked in Python)</p>
+</div>
+<aside class="uncertain"><p>The step-size formula at the bottom of this page ("Stepsize = \(V_{ref}\)/…") is cut off at the frame edge, and the instructor only skims the page (<a class="ts" data-t="40:44"></a>–<a class="ts" data-t="41:24"></a>). The table values are consistent with \(V_{ref}/2^4 = 0.3125\ \text{V}\).</p></aside>
+<aside class="extra"><p><b>Millman applied to the R–2R–4R–8R network</b> (not done in the video). Put the MSB on R and the LSB on 8R, each input 0 V or 5 V, and nothing connected to the output. Then</p>
+<div class="formula">\[ V_{out} = \frac{\dfrac{5b_3}{R} + \dfrac{5b_2}{2R} + \dfrac{5b_1}{4R} + \dfrac{5b_0}{8R}}{\dfrac{1}{R} + \dfrac{1}{2R} + \dfrac{1}{4R} + \dfrac{1}{8R}} = \frac{5\,(8b_3 + 4b_2 + 2b_1 + b_0)/8R}{15/8R} = \frac{5\ \text{V}}{15}\times(\text{code}) \]</div>
+<p>So this passive network has a step of \(5/15 = 0.333\ \text{V}\): 0001 → 0.333 V, 1000 → 2.667 V, 1010 → 3.333 V, and 1111 → exactly 5 V. That matches the "5 V" option in the table. Designs with step \(V_{ref}/16\) reach only \(15/16 \times 5 = 4.6875\ \text{V}\), the other option. The \(R_N\) of this network is \(1/(15/8R) = 8R/15\). A load on \(V_{out}\) would pull the voltages down, which is why real DACs buffer the output.</p></aside>
+<div class="example" id="mt1-ex4">
+<h3>Two-input example in the pencil notes (not discussed aloud) <a class="ts" data-t="37:05"></a></h3>
+<p>Lower on the same notes page is a two-input version: \(V_{B0} = 3\ \text{V}\) through R and \(V_{B1} = 1\ \text{V}\) through 2R, joined at \(V_{out}\). Next to it is the partly hidden expression \(\dfrac{(V_{B0} - V_{B1})\,2R}{3R}\) <a class="ts" data-t="36:55"></a>.</p>
+<figure class="circuit" id="mt1-fig-notes2">
+<script type="application/json">{"parts":[
+ {"t":"W","pts":[[0,0],[6,0]]},
+ {"t":"W","pts":[[0,6],[6,6]]},
+ {"t":"R","a":[0,0],"b":[0,3],"label":"R"},
+ {"t":"BAT","a":[0,6],"b":[0,3],"label":"V_{B0}","value":"3 V","side":-1},
+ {"t":"R","a":[3.5,0],"b":[3.5,3],"label":"2R"},
+ {"t":"BAT","a":[3.5,6],"b":[3.5,3],"label":"V_{B1}","value":"1 V","side":-1},
+ {"t":"N","at":[6,0],"open":true,"label":"V_{out}","pos":"e"},
+ {"t":"N","at":[6,6],"open":true,"pos":"e"}
+],"alt":"Two branches in parallel: 3 V source with series R, and 1 V source with series 2R, output across the rails."}</script>
+<figcaption>Two-input case from the notes page (<a class="ts" data-t="37:05"></a>), redrawn with batteries (the notes show only the input labels and resistors).</figcaption>
+</figure>
+<p class="step">1. Millman: \(V_{out} = \dfrac{3/R + 1/(2R)}{1/R + 1/(2R)} = \dfrac{3.5/R}{1.5/R} = \dfrac{7}{3}\ \text{V} \approx 2.33\ \text{V}\). (The value of R cancels.)</p>
+<p class="step">2. Same thing, done the way the notes' expression suggests. The loop current is \((3-1)/(R+2R) = 2/(3R)\). The drop across 2R is \((V_{B0}-V_{B1})\cdot 2R/3R = 4/3\ \text{V}\). So \(V_{out} = 1 + 4/3 = 7/3\ \text{V}\).</p>
+<p class="answer">\(V_{out} = 7/3\ \text{V} \approx 2.33\ \text{V}\) (Python-checked).</p>
+<aside class="uncertain"><p>Under "\(V_{out}\)" the notes appear to read "2 V" <a class="ts" data-t="37:05"></a>. The pencil is faint and partly covered by the instructor's hand, and he never talks about this example. The exact Millman result is 2.33 V. If the note really says 2 V, it is rounded or a slip.</p></aside>
+</div>
+<aside class="instructor"><p>Why learn any of this? "Because it makes us better engineers" <a class="ts" data-t="41:24"></a>–<a class="ts" data-t="41:49"></a>. Millman's theorem lets you analyse circuits like the DAC, which take digital 0/5 V values and produce a continuous range of 0 to 5 V.</p></aside>
+</section>
+
+<section class="g-sec" id="mt1-apply" data-kind="lesson">
+<h2>9. Using the formula in practice: polarity, source-free branches, load current (additional)</h2>
+<aside class="extra"><p>This whole section is <b>additional teaching</b>. The video draws every source with + facing the output rail, gives no numeric example, and does not discuss reversed sources or branches without a source.</p></aside>
+<aside class="extra"><p><b>Sign convention.</b> \(V_{out}\) is the voltage of the top (output) rail relative to the bottom (reference) rail. In each branch, take \(V_k\) as <b>positive if its + terminal faces the output rail</b> (as in all the instructor's drawings), and <b>negative if it is reversed</b> (+ toward the reference rail). This follows from the source transformation: a reversed source becomes a current source whose arrow points <em>down</em>, so it subtracts from \(I_N\).</p>
+<p><b>Branch with no source.</b> A branch that is just a resistor \(R_k\) has \(V_k = 0\). It adds nothing to the numerator, but its \(1/R_k\) <b>still goes in the denominator</b>. It pulls \(V_{out}\) toward 0 V and lowers \(R_N\).</p>
+<p><b>Load.</b> A load resistor across the terminals can be treated as one more source-free branch. Or use the Thévenin form: \(I_L = V_{out}/(R_N + R_L)\).</p></aside>
+<div class="example" id="mt1-ex5">
+<h3>Example — three branches with one reversed source, one source-free branch, and a load (added for practice)</h3>
+<p><b>Given:</b> branch 1: \(V_1 = 12\ \text{V}\) (+ up) in series with 2 kΩ. Branch 2: a 6 V source <b>reversed</b> (+ down) in series with 3 kΩ. Branch 3: 6 kΩ with no source. Load \(R_L = 3\ \text{k}\Omega\). <b>Goal:</b> \(V_{out}\) without the load, \(R_N\), and the load current and voltage.</p>
+<figure class="circuit" id="mt1-fig-extra">
+<script type="application/json">{"parts":[
+ {"t":"W","pts":[[0,0],[11,0]]},
+ {"t":"W","pts":[[0,6],[11,6]]},
+ {"t":"R","a":[0,0],"b":[0,3],"label":"R_1","value":"2 kΩ"},
+ {"t":"BAT","a":[0,6],"b":[0,3],"label":"V_1","value":"12 V","side":-1},
+ {"t":"R","a":[4,0],"b":[4,3],"label":"R_2","value":"3 kΩ"},
+ {"t":"BAT","a":[4,6],"b":[4,3],"label":"V_2","value":"6 V","plus":"a","side":-1},
+ {"t":"R","a":[7.5,0],"b":[7.5,3],"label":"R_3","value":"6 kΩ"},
+ {"t":"W","pts":[[7.5,3],[7.5,6]]},
+ {"t":"R","a":[11,1.5],"b":[11,4.5],"label":"R_L","value":"3 kΩ"},
+ {"t":"W","pts":[[11,0],[11,1.5]]},
+ {"t":"W","pts":[[11,4.5],[11,6]]},
+ {"t":"N","at":[7.5,0],"label":"v","pos":"n"},
+ {"t":"G","at":[5.5,6]},
+ {"t":"IARR","a":[11,1.5],"b":[11,2.6],"label":"I_L","side":-1}
+],"alt":"Practice circuit: 12 V (+ up) with 2 kΩ, 6 V reversed (+ down) with 3 kΩ, 6 kΩ alone, and a 3 kΩ load, all between the top node v and the grounded bottom rail."}</script>
+<figcaption>Practice circuit (added for clarity, not from the video). The second source is reversed.</figcaption>
+</figure>
+<p class="step">1. Signs: \(V_1 = +12\ \text{V}\), \(V_2 = -6\ \text{V}\) (reversed), \(V_3 = 0\) (no source).</p>
+<p class="step">2. Numerator (this is \(I_N\)): \(\dfrac{12}{2\,\text{k}} + \dfrac{-6}{3\,\text{k}} + \dfrac{0}{6\,\text{k}} = 6\ \text{mA} - 2\ \text{mA} + 0 = 4\ \text{mA}\).</p>
+<p class="step">3. Denominator: \(\dfrac{1}{2\,\text{k}} + \dfrac{1}{3\,\text{k}} + \dfrac{1}{6\,\text{k}} = \dfrac{3 + 2 + 1}{6\,\text{k}\Omega} = \dfrac{1}{1\,\text{k}\Omega}\), so \(R_N = 1\ \text{k}\Omega\).</p>
+<p class="step">4. Open-circuit (Millman) voltage: \(V_{out} = 4\ \text{mA} \times 1\ \text{k}\Omega = 4\ \text{V}\).</p>
+<p class="step">5. With the load: \(I_L = \dfrac{4\ \text{V}}{1\,\text{k}\Omega + 3\,\text{k}\Omega} = 1\ \text{mA}\), \(V_L = 1\ \text{mA} \times 3\ \text{k}\Omega = 3\ \text{V}\).</p>
+<p class="step">6. Check by KCL at node \(v = 3\ \text{V}\): branch currents downward are \((3-12)/2\text{k} = -4.5\ \text{mA}\), \((3-(-6))/3\text{k} = +3\ \text{mA}\), \(3/6\text{k} = +0.5\ \text{mA}\), \(3/3\text{k} = +1\ \text{mA}\). Sum \(= 0\) ✔. Alternatively, include \(R_L\) as a fourth source-free branch: \(\dfrac{4\ \text{mA}}{1/1\text{k} + 1/3\text{k}} = 3\ \text{V}\) ✔.</p>
+<p class="answer">\(V_{out} = 4\ \text{V}\) open-circuit, \(R_N = 1\ \text{k}\Omega\). With the 3 kΩ load: \(I_L = 1\ \text{mA}\) and \(V_L = 3\ \text{V}\) (all verified in Python).</p>
+</div>
+</section>
+
+<section class="g-sec" id="mt1-assumptions" data-kind="assumptions">
+<h2>Assumptions &amp; limitations</h2>
+<ul>
+<li><b>Circuit shape</b> as taught: parallel branches, each a voltage source in series with a resistor, between the same two terminals <a class="ts" data-t="0:28"></a>.</li>
+<li><b>Open-circuit voltage.</b> \(V_{out}\) from the formula is the voltage with <b>no load current</b> <a class="ts" data-t="28:52"></a>. With a load, use the Thévenin form \(V_{out}\) in series with \(R_N\) <a class="ts" data-t="30:33"></a>. When the load current is microamps, the difference is negligible <a class="ts" data-t="29:48"></a>.</li>
+<li><b>Polarity.</b> As drawn in the video, every source has + toward the output rail.</li>
+<li><b>Linear resistive DC circuits</b> (the derivation uses only source transformation, KCL and Ohm's law).</li>
+<li><b>Equal-resistor shortcut</b> (\(R_N = R/n\)) works only if all branch resistances are equal <a class="ts" data-t="33:14"></a>.</li>
+</ul>
+<aside class="extra">
+<p><b>Circuit shape.</b> The formula applies to branches that are each a voltage source in series with a resistor (or a resistor alone), <b>all connected between the same two nodes</b>. If branches connect to other nodes in between, reduce the circuit first or use nodal analysis.</p>
+<p><b>Every source needs a series resistance.</b> An ideal voltage source with \(R_k = 0\) would make \(V_k/R_k\) and \(1/R_k\) infinite. That node voltage is then simply forced to \(V_k\) (two such sources with different values would be a contradiction).</p>
+<p><b>Reversed sources</b> enter with a minus sign, and source-free branches with \(V_k = 0\) (see section 9).</p>
+</aside>
+</section>
+
+<section class="g-sec" id="mt1-mistakes" data-kind="mistakes">
+<h2>Common mistakes</h2>
+<aside class="mistake"><p><b>Adding resistances instead of inverses.</b> \(R_N \ne R_1 + R_2 + \cdots\). That would be series <a class="ts" data-t="27:38"></a>. <em>Check:</em> \(R_N\) must be smaller than the smallest \(R_k\).</p></aside>
+<aside class="mistake"><p><b>Dropping \(1/R_k\) for a branch without a source.</b> It contributes 0 to the numerator but must stay in the denominator.</p></aside>
+<aside class="mistake"><p><b>Ignoring polarity.</b> A source whose + faces the reference rail enters as \(-V_k\).</p></aside>
+<aside class="mistake"><p><b>Confusing \(R_N\) (Norton) with \(R_n\) (the last branch).</b> The instructor uses a capital N for this reason <a class="ts" data-t="10:30"></a>.</p></aside>
+<aside class="mistake"><p><b>Wrong way to disable a current source.</b> Current sources are <em>opened</em> (removed), voltage sources are <em>shorted</em> <a class="ts" data-t="17:39"></a>. Shorting a current source would short out its parallel resistor and give \(R_N = 0\).</p></aside>
+<aside class="mistake"><p><b>Thinking current flows through \(R_k\) when finding \(I_N\).</b> With the terminals shorted, every \(R_k\) has 0 V across it and carries 0 A <a class="ts" data-t="12:43"></a>.</p></aside>
+<aside class="mistake"><p><b>Using \(V_{out}\) as the load voltage when the load draws real current.</b> Use \(V_L = V_{out}\,R_L/(R_N + R_L)\).</p></aside>
+<aside class="mistake"><p><b>"Simplifying" the formula wrongly.</b> \(\dfrac{\sum V_k/R_k}{\sum 1/R_k} \ne \sum V_k\). You cannot cancel \(R_k\) term by term. Keep it as a fraction of two sums <a class="ts" data-t="34:06"></a>.</p></aside>
+<aside class="mistake"><p><b>DAC resistor order.</b> The smallest resistor (R) must go with the most significant bit. Reversing them reverses the bit weights.</p></aside>
+</section>
+
+<section class="g-sec" id="mt1-recap" data-kind="recap">
+<h2>Recap &amp; formula sheet</h2>
+<ul>
+<li>Millman circuit: \(n\) parallel branches, each \(V_k\) in series with \(R_k\), between two rails.</li>
+<li>Derivation: transform every branch to \(V_k/R_k \parallel R_k\) → short the terminals: no current in any \(R_k\), so \(I_N = \sum V_k/R_k\) (KCL) → open the current sources: \(R_N = 1/\sum(1/R_k)\) → transform back: \(V = I_N R_N\).</li>
+<li>Only the voltage formula is needed when (almost) no current is drawn. \(R_N\) matters with a real load.</li>
+<li>Application: binary-weighted resistor DAC (R, 2R, 4R, 8R with 0/5 V inputs). A 4-bit, 5 V DAC has 16 levels, step 0.3125 V in the notes' table.</li>
+</ul>
+<div class="formula-sheet">
+<p><b>Millman voltage:</b> \(V_{out} = \dfrac{\sum_{k=1}^{n} V_k/R_k}{\sum_{k=1}^{n} 1/R_k}\) (V). \(V_k\) is + if its + terminal faces the output rail, 0 for a branch with no source.</p>
+<p><b>Equivalent (Norton = Thévenin) resistance:</b> \(R_N = \dfrac{1}{\sum_{k=1}^{n} 1/R_k}\) (Ω)</p>
+<p><b>Norton current:</b> \(I_N = \sum_{k=1}^{n} V_k/R_k\) (A), and \(V_{out} = I_N R_N\)</p>
+<p><b>Source transformation:</b> \(I = V/R\) and \(V = IR\), same \(R\)</p>
+<p><b>Disable sources:</b> voltage source → short; current source → open</p>
+<p><b>With a load \(R_L\)</b> (additional): \(I_L = \dfrac{V_{out}}{R_N + R_L}\), \(V_L = V_{out}\dfrac{R_L}{R_N + R_L}\)</p>
+<p><b>Equal resistors</b> (additional): \(R_N = R/n\), \(V_{out} = (V_1 + \cdots + V_n)/n\)</p>
+<p><b>DAC (notes):</b> levels \(= 2^{\text{bits}}\); step \(= V_{ref}/2^{\text{bits}} = 5/16 = 0.3125\ \text{V}\); \(V_{out} = \text{code} \times \text{step}\)</p>
+</div>
+</section>

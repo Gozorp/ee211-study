@@ -1,0 +1,63 @@
+{
+ "thevenin": [
+  {
+   "lesson": "st1",
+   "sec": "st1-idea",
+   "label": "Source transformation — converting between Thévenin-form and Norton-form sources (LectLab 14, 0:00–10:58)"
+  },
+  {
+   "lesson": "mt1",
+   "sec": "mt1-back",
+   "label": "Millman’s theorem builds a Norton equivalent and converts it back to a Thévenin source (LectLab 15)"
+  }
+ ],
+ "srcxform": [
+  {
+   "lesson": "mt1",
+   "sec": "mt1-step1",
+   "label": "Source transformation used as step 1 of Millman’s theorem (LectLab 15, 5:40)"
+  },
+  {
+   "lesson": "tn2",
+   "sec": "tn2-thev-norton",
+   "label": "Thévenin vs. Norton equivalents (LectLab 11)"
+  },
+  {
+   "url": "https://www.youtube.com/watch?v=2gwGaoMXRsQ&t=590s",
+   "label": "Background: what an ideal current source is, LectLab 8, about 9:50–15:00 — opens YouTube"
+  }
+ ],
+ "millman": [
+  {
+   "lesson": "st1",
+   "sec": "st1-idea",
+   "label": "Source transformation, the first step of Millman (LectLab 14)"
+  },
+  {
+   "lesson": "tn3",
+   "sec": "tn3-applications",
+   "label": "Instructor’s preview of Millman / DAC applications at the end of “Norton cont.” (LectLab 12)"
+  }
+ ],
+ "scope": [
+  {
+   "lesson": "cl4",
+   "t": 4449,
+   "label": "Measuring the RC time constant on the oscilloscope (LectLab 23, from 74:09)"
+  }
+ ],
+ "lc": [
+  {
+   "sub": "rl",
+   "lesson": "os3",
+   "sec": "os3-other",
+   "label": "Background for “Inductors in AC”: the previous lecture’s phasor and inductor-in-AC material (LectLab 28, outlined in the Oscilloscope tab)"
+  },
+  {
+   "sub": "rl",
+   "lesson": "os3",
+   "sec": "os3-freq",
+   "label": "Period, frequency and ω = 2πf (LectLab 28) — needed for X_L = 2πfL"
+  }
+ ]
+}

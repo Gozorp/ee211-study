@@ -1,0 +1,218 @@
+<section class="g-sec" id="os3-overview" data-kind="overview">
+<h2>Overview</h2>
+<p>This lecture (LectLab 28, 3 Dec 2020) is mainly about <strong>phasors</strong> and how <strong>inductors behave in AC</strong>. For this topic, the important part is the stretch where the instructor connects the rotating phasor to the everyday quantities you read off an oscilloscope: <strong>frequency \(f\) (Hz), period \(T\) (s) and angular frequency \(\omega\) (rad/s)</strong>, with \(f = 1/T\) and \(\omega = 2\pi f = 2\pi/T\). He then works the wall-outlet example — <strong>340 V peak-to-peak = 170 V peak = 120 V RMS at 60 Hz</strong> — finds \(T \approx 0.0167\) s and writes \(v(t) = 170\sin(2\pi\cdot 60\cdot t)\). Later, the 90° voltage–current shift of an inductor is explained as <strong>a quarter of a period</strong>.</p>
+<p><strong>Parts of the video</strong></p>
+<ul>
+<li><a class="ts" data-t="0:00"></a> Phasors introduced: circle in degrees and radians, one sine cycle ↔ one rotation (0 to 2π) — outside this topic, outlined below.</li>
+<li><a class="ts" data-t="10:12"></a> Instantaneous value \(v(t) = V_p\sin(\omega t)\) — <a href="#os3-sinusoid">§1</a></li>
+<li><a class="ts" data-t="12:51"></a> Hz = cycles per second; \(\omega = 2\pi f\); \(f = 1/T\); \(\omega = 2\pi/T\) — <a href="#os3-freq">§2</a></li>
+<li><a class="ts" data-t="14:31"></a> Outlet example: 340 V<sub>pp</sub> / 170 V<sub>pk</sub> / 120 V<sub>rms</sub>, 60 Hz, \(T\), \(v(t)\) — <a href="#os3-outlet">§3</a></li>
+<li><a class="ts" data-t="20:30"></a> Q&amp;A: values of the points on the 170 V sine — <a href="#os3-instant">§4</a>; then a phasor animation and the bicycle-wheel analogy (outside this topic)</li>
+<li><a class="ts" data-t="28:03"></a> Resistor in AC (in phase), phasor diagram — outside this topic</li>
+<li><a class="ts" data-t="37:33"></a> Inductor in AC: V leads I by 90°, back EMF, ELI the ICE man — outside this topic, except the "90° = quarter of a cycle" reading — <a href="#os3-quarter">§5</a></li>
+<li><a class="ts" data-t="1:01:28"></a> Wrap-up (reactance next class; break, then diode lab)</li>
+</ul>
+<aside class="note"><strong>Scope note.</strong> This guide fully covers the period / frequency / angular-frequency / amplitude material. Phasor theory, resistor/inductor phase relationships and back EMF are summarised only (with timestamps) in <a href="#os3-other">Other content in this video</a>. For the first look at peak, peak-to-peak and RMS and the first scope demo, see <a class="xref" data-lesson="os1">AC vs DC, Vp/Vpp/Vrms</a>.</aside>
+</section>
+<section class="g-sec" id="os3-objectives" data-kind="objectives">
+<h2>Learning objectives</h2>
+<p>After this lesson you should be able to…</p>
+<ul>
+<li>state what one hertz means (one cycle per second) and convert between frequency and period with \(f = 1/T\);</li>
+<li>compute angular frequency with \(\omega = 2\pi f\) or \(\omega = 2\pi/T\) and explain where the \(2\pi\) comes from (one cycle = one rotation = \(2\pi\) rad);</li>
+<li>write the instantaneous-value equation \(v(t) = V_p\sin(2\pi f t)\) for a sinusoid of given peak and frequency, and evaluate it at a given time;</li>
+<li>convert the outlet voltage between 340 V<sub>pp</sub>, 170 V<sub>pk</sub> and 120 V<sub>rms</sub> and say which one appears in \(v(t)\);</li>
+<li>find the period of 60 Hz (≈16.7 ms) and the number of cycles in a given time;</li>
+<li>convert a time shift between two waveforms into a phase angle (a quarter period = 90°).</li>
+</ul>
+</section>
+<section class="g-sec" id="os3-prereqs" data-kind="prereqs">
+<h2>Prerequisites</h2>
+<dl>
+<dt>AC waveform, peak / peak-to-peak / RMS</dt><dd>A sine wave swings symmetrically about 0 V. Peak \(V_p\) is centre-to-crest, peak-to-peak \(V_{pp}\) is trough-to-crest \(= 2V_p\), and RMS \(= V_p/\sqrt{2}\) for a sine (the "equivalent DC heating" value). Covered in <a class="xref" data-lesson="os1">AC vs DC, Vp/Vpp/Vrms</a>.</dd>
+<dt>Radians</dt><dd>An angle measure where a full circle is \(2\pi\) rad (= 360°); a quarter circle is \(\pi/2\) rad (= 90°). The instructor reviews this at <a class="ts" data-t="1:23"></a>.</dd>
+<dt>Sine function</dt><dd>\(\sin\theta\) is 0 at \(\theta = 0\), 1 at \(\pi/2\), 0 at \(\pi\), −1 at \(3\pi/2\), and repeats every \(2\pi\).</dd>
+<dt>Seconds and SI prefixes</dt><dd>1 ms = 10<sup>−3</sup> s, 1 kHz = 10<sup>3</sup> Hz. Hz is 1/s, so \(1/\text{Hz} = \text{s}\).</dd>
+</dl>
+</section>
+<section class="g-sec" id="os3-definitions" data-kind="definitions">
+<h2>Definitions &amp; symbols</h2>
+<table>
+<tr><th>Term / symbol</th><th>Meaning</th><th>Unit</th></tr>
+<tr><td>Cycle</td><td>One complete repetition of a periodic waveform (zero → peak → zero → trough → zero for a sine); one full rotation of the phasor.</td><td>—</td></tr>
+<tr><td>Period \(T\)</td><td>Time taken by one cycle.</td><td>s (often ms)</td></tr>
+<tr><td>Frequency \(f\)</td><td>Number of cycles per second, \(f = 1/T\).</td><td>Hz (hertz) = cycles/s</td></tr>
+<tr><td>Angular (radian) frequency \(\omega\)</td><td>Rate at which the phasor rotates: \(2\pi\) radians per cycle × \(f\) cycles per second, \(\omega = 2\pi f\).</td><td>rad/s (the video calls it dimensionless — radians are a ratio)</td></tr>
+<tr><td>Phasor</td><td>A vector of length equal to the peak value that rotates at \(\omega\); its projection on the y-axis is the instantaneous value. (Theory is outside this topic.)</td><td>—</td></tr>
+<tr><td>\(v(t)\)</td><td>Instantaneous voltage at time \(t\).</td><td>V</td></tr>
+<tr><td>\(V_p\) (V<sub>pk</sub>, V<sub>max</sub>)</td><td>Peak voltage — the coefficient in front of the sine.</td><td>V</td></tr>
+<tr><td>\(V_{pp}\)</td><td>Peak-to-peak voltage \(= 2V_p\).</td><td>V</td></tr>
+<tr><td>\(V_{rms}\)</td><td>Root-mean-square value \(= V_p/\sqrt{2}\) for a sine.</td><td>V</td></tr>
+<tr><td>Phase angle \(\theta\)</td><td>How far (in degrees or radians) one waveform is shifted from another; one full period = 360°.</td><td>° or rad</td></tr>
+</table>
+</section>
+<section class="g-sec" id="os3-sinusoid" data-kind="lesson" data-ts="612-771">
+<h2>1. Writing a sinusoid: \(v(t) = V_{pk}\sin(\omega t)\)</h2>
+<p><strong>Where this comes from (context).</strong> In the first ten minutes the instructor draws a circle marked in degrees and radians and then one cycle of a sine wave with the same marks: start at 0, peak at \(\pi/2\), zero crossing at \(\pi\), minimum at \(3\pi/2\), and back to the start at \(2\pi\) <a class="ts" data-t="2:42"></a>. A vector (the <em>phasor</em>) rotating once around the circle traces exactly one cycle, and the <strong>projection of the vector on the y-axis is the instantaneous value</strong> of the sine <a class="ts" data-t="7:46"></a>. The key fact for measuring waveforms: <strong>one cycle = one full rotation = \(2\pi\) radians = 360°</strong>.</p>
+<figure class="scope" id="os3-fig-cycle">
+<script type="application/json">{"type":"scope","ch":"one cycle","vdiv":"(arbitrary units)","tdiv":"(1 cycle = 8 div)","cols":8,"rows":8,
+"traces":[{"shape":"sine","amp":3,"period":8,"label":"v(t) = V_{pk} sin(ωt)"}],
+"marks":[{"type":"vline","x":2,"label":"π/2"},{"type":"vline","x":4,"label":"π"},{"type":"vline","x":6,"label":"3π/2"},{"type":"text","x":7.9,"y":-3.6,"text":"2π","anchor":"end"},{"type":"hline","y":3,"label":"V_{pk}"},{"type":"text","x":0.35,"y":-3.6,"text":"0"}],
+"alt":"One cycle of a sine wave with the angle marks 0, pi/2 (peak), pi (zero), 3 pi/2 (minimum) and 2 pi (end of the cycle)."}</script>
+<figcaption>(Added for clarity) One cycle with the angle marks the instructor used at <a class="ts" data-t="3:09"></a>. The whole cycle, one period \(T\) in time, corresponds to \(2\pi\) rad. The cycle ends at the right edge, marked 2π.</figcaption>
+</figure>
+<p><strong>The equation</strong> <a class="ts" data-t="10:41"></a>: the angle of the rotating phasor at time \(t\) is \(\omega t\), where \(\omega\) is the <strong>radian frequency</strong> ("ω, omega, is our radian frequency" is written on the page). Taking the y-projection with the sine function gives the instantaneous value <a class="ts" data-t="11:41"></a>:</p>
+<div class="formula">\[ v(t) = V_{pk}\,\sin(\omega t) \]</div>
+<dl class="vardefs"><dt>\(v(t)\)</dt><dd>instantaneous voltage at time \(t\) (V)</dd><dt>\(V_{pk}\)</dt><dd>peak voltage: the length of the phasor, the largest value the wave reaches (V)</dd><dt>\(\omega\)</dt><dd>radian (angular) frequency (rad/s)</dd><dt>\(t\)</dt><dd>time (s)</dd></dl>
+<p>This form applies to a sinusoid centred on 0 V that is at zero and rising at \(t = 0\). The instructor points out that this way "we can keep frequency out of it until we want to include it" <a class="ts" data-t="12:28"></a>: \(\omega\) stands in for the frequency until a number is needed. The same equation works for current or any other sinusoidal quantity. The instructor prefers the generic name "instantaneous value" for that reason <a class="ts" data-t="26:05"></a>.</p>
+<figure class="circuit" id="os3-fig-phasor">
+<script type="application/json">{"parts":[
+ {"t":"W","pts":[[-3,0],[3,0]]},
+ {"t":"W","pts":[[0,3],[0,-3]]},
+ {"t":"ARROW","a":[0,0],"b":[2.12,-2.12],"label":"V_{pk}","lat":[1.75,-0.95]},
+ {"t":"W","pts":[[0,-2.12],[2.12,-2.12]],"dashed":true},
+ {"t":"T","at":[0.9,-0.35],"text":"ωt","cls":"accent"},
+ {"t":"T","at":[-0.2,-2.12],"text":"V_{pk} sin(ωt)","anchor":"end","cls":"accent"},
+ {"t":"T","at":[3.2,0.5],"text":"x","cls":"muted"},
+ {"t":"T","at":[0.3,-3.2],"text":"y","cls":"muted"}
+],"alt":"A phasor of length V_pk at angle omega t from the x-axis; its projection on the y-axis is V_pk sin(omega t)."}</script>
+<figcaption>"Phasor in general" as drawn at <a class="ts" data-t="12:25"></a>: the angle is \(\omega t\) and the dotted projection onto the y-axis is the instantaneous value \(V_{pk}\sin(\omega t)\).</figcaption>
+</figure>
+</section>
+<section class="g-sec" id="os3-freq" data-kind="lesson" data-ts="771-871">
+<h2>2. Frequency, period and angular frequency</h2>
+<p><strong>Frequency in hertz</strong> <a class="ts" data-t="12:51"></a> is cycles per second: 1 Hz is one cycle per second, 2 Hz two cycles per second, 1 kHz a thousand cycles per second <a class="ts" data-t="13:19"></a>. This is the number used so far in LTspice and on the function generator.</p>
+<p><strong>Radian frequency</strong> <a class="ts" data-t="13:44"></a>: \(\omega\) is two pi, "the amount to do one complete rotation", times the frequency <a class="ts" data-t="14:10"></a>. Since frequency is one over the period, \(\omega\) can also be written with the period <a class="ts" data-t="14:31"></a>. The page at <a class="ts" data-t="14:48"></a> reads: "Frequency (Hz) Cycles per Second", "ω (omega) – dimensionless" (spelled "dimentionless" on the page), \(\omega = 2\pi f\), \(f = 1/T\), \(\omega = 2\pi/T\).</p>
+<div class="formula">\[ f = \frac{1}{T} \qquad\qquad \omega = 2\pi f = \frac{2\pi}{T} \]</div>
+<dl class="vardefs"><dt>\(f\)</dt><dd>frequency, cycles per second (Hz)</dd><dt>\(T\)</dt><dd>period, seconds per cycle (s)</dd><dt>\(\omega\)</dt><dd>radian (angular) frequency: radians per second (rad/s)</dd><dt>\(2\pi\)</dt><dd>radians in one complete cycle (one rotation of the phasor)</dd></dl>
+<p><strong>Derivation, step by step.</strong></p>
+<ol>
+<li>By definition, one cycle takes \(T\) seconds, so the number of cycles per second is \(f = 1/T\).</li>
+<li>Each cycle is one rotation of the phasor, which is \(2\pi\) radians.</li>
+<li>Radians per second = (radians per cycle) × (cycles per second): \(\omega = 2\pi \cdot f\).</li>
+<li>Substitute \(f = 1/T\): \(\omega = 2\pi/T\). In words, the phasor sweeps \(2\pi\) radians every period.</li>
+</ol>
+<p>Combining with §1: \(v(t) = V_{pk}\sin(\omega t) = V_{pk}\sin(2\pi f t) = V_{pk}\sin\!\left(\dfrac{2\pi t}{T}\right)\). Check: at \(t = T\) the argument is \(2\pi\), exactly one cycle.</p>
+<aside class="extra"><p><strong>About "dimensionless".</strong> Radians are a ratio (arc length / radius), so strictly \(\omega\) has units of 1/s, the same as Hz. To keep the two apart, engineers always write \(\omega\) in <strong>rad/s</strong> and \(f\) in <strong>Hz</strong>. Mixing them up is a factor-of-\(2\pi\) error (≈6.28×).</p>
+<table>
+<tr><th>\(f\)</th><th>\(T = 1/f\)</th><th>\(\omega = 2\pi f\)</th></tr>
+<tr><td>1 Hz</td><td>1 s</td><td>6.283 rad/s</td></tr>
+<tr><td>60 Hz</td><td>16.67 ms</td><td>377.0 rad/s</td></tr>
+<tr><td>1 kHz</td><td>1 ms</td><td>6283 rad/s</td></tr>
+</table>
+<p>On a scope you <em>measure</em> \(T\) (the horizontal distance of one cycle × time/div), then compute \(f\) and, if needed, \(\omega\). Measuring a period on a real scope is shown in <a class="xref" data-lesson="os2">the diode-lab scope demo</a>.</p></aside>
+</section>
+<section class="g-sec" id="os3-outlet" data-kind="lesson" data-ts="871-1179">
+<h2>3. Wall-outlet example: 340 V<sub>pp</sub>, 170 V<sub>pk</sub>, 120 V<sub>rms</sub> at 60 Hz</h2>
+<p>To make it concrete, the instructor uses "a voltage that I think we're all really familiar with": what comes out of the outlet <a class="ts" data-t="14:31"></a>.</p>
+<ul>
+<li><strong>Amplitude, three ways</strong> <a class="ts" data-t="15:09"></a>: the outlet is 170 V peak, which can equally be given as <strong>340 V peak-to-peak</strong>, <strong>170 V peak</strong>, or <strong>120 V RMS</strong>. Pick whichever is most useful for what you are solving <a class="ts" data-t="15:35"></a>. (Only "V<sub>ac</sub> = 170 V<sub>pk</sub>" is written on the page.)</li>
+<li><strong>Frequency</strong> <a class="ts" data-t="16:00"></a>: 60 Hz, i.e. 60 cycles per second. If one second has elapsed, 60 cycles have occurred.</li>
+</ul>
+<div class="example" id="os3-ex1"><h3>Example 1 — Period and instantaneous-value equation for the outlet <a class="ts" data-t="16:43"></a></h3>
+<p><strong>Given (page at <a class="ts" data-t="16:40"></a>):</strong> V<sub>ac</sub> = 170 V<sub>pk</sub>, f<sub>ac</sub> = 60 Hz; sine drawn between +170 and −170.</p>
+<p class="step">1. Check the amplitude forms. Peak-to-peak is crest to trough, \(V_{pp} = 2V_{pk} = 2(170) = 340\) V. For a sine, \(V_{rms} = V_{pk}/\sqrt{2} = 170/1.4142 = 120.2 \approx 120\) V. (Going the other way, \(120\sqrt{2} = 169.7 \approx 170\) V.)</p>
+<p class="step">2. Period <a class="ts" data-t="17:10"></a>: \(T = \dfrac{1}{f} = \dfrac{1}{60\,\text{Hz}} \approx 0.0167\,\text{s}\). The calculator shows 0.016666…7, written on the page as "T = 1/60Hz ≈ 0.0167 s" with an arrow spanning one cycle <a class="ts" data-t="18:32"></a>.</p>
+<p class="step">3. Instantaneous value <a class="ts" data-t="17:37"></a>: put the peak and the frequency into \(v(t) = V_{pk}\sin(2\pi f t)\): "our peak voltage which is 170 volts times sine of two pi times our frequency times t" <a class="ts" data-t="18:04"></a>.</p>
+<p class="step">4. (Not done in the video, for completeness:) \(\omega = 2\pi(60) = 377\) rad/s, so the same equation is \(v(t) = 170\sin(377\,t)\) V.</p>
+<p class="answer">\(T \approx 0.0167\,\text{s} = 16.7\,\text{ms}\), and \(v(t) = 170\,\text{V}\,\sin(2\pi\cdot 60\cdot t)\). This gives "the instantaneous voltage at any point along our sine" for any moment in time <a class="ts" data-t="18:04"></a>.</p>
+</div>
+<figure class="scope" id="os3-fig-outlet">
+<script type="application/json">{"type":"scope","ch":"outlet","vdiv":"50 V/div","tdiv":"2 ms/div","cols":10,"rows":8,
+"traces":[{"shape":"sine","amp":3.4,"period":8.333,"label":"v(t) = 170 sin(2π·60·t) V"}],
+"marks":[{"type":"hline","y":3.4,"label":"+170 V (peak)"},{"type":"hline","y":-3.4,"label":"−170 V"},{"type":"span","x1":0,"y1":-3.9,"x2":8.333,"y2":-3.9,"label":"T = 1/60 Hz ≈ 16.7 ms","dy":17},{"type":"span","x1":2.083,"y1":3.4,"x2":2.083,"y2":-3.4,"label":"340 V p-p","dx":40}],
+"alt":"The 170 V peak, 60 Hz outlet waveform on a 50 V per division, 2 ms per division grid: one period of 16.7 ms spans 8.33 divisions and the peak-to-peak swing is 340 V."}</script>
+<figcaption>(Added for clarity) The outlet waveform from <a class="ts" data-t="18:32"></a> drawn to scale on a scope grid. At 50 V/div the 170 V peak is 3.4 div; at 2 ms/div one period is 8.33 div.</figcaption>
+</figure>
+<aside class="instructor"><p>The instructor admits that when he first saw this it was "a little hard to wrap my mind around" a rotating vector. In practice, though, what we usually care about is the <em>relationship between two</em> of these vectors, which is where phasors become useful <a class="ts" data-t="18:56"></a>.</p></aside>
+<aside class="extra"><p><strong>Reading these numbers on a scope (do not try this on a wall outlet: use a transformer or the function generator).</strong> To display 340 V<sub>pp</sub> within 8 vertical divisions you need at least 340/8 = 42.5 V/div, so 50 V/div. For about three cycles of 60 Hz on 10 divisions, 3 × 16.7 ms / 10 ≈ 5 ms/div. The scope would show ±3.4 div, and one period would span 16.7/5 = 3.33 div. Note that a scope shows peak and peak-to-peak directly. RMS you either compute (\(V_{pk}/\sqrt{2}\), for sines only) or read from the scope's RMS measurement. See <a class="xref" data-lesson="os1">Vp / Vpp / Vrms on the scope</a>.</p></aside>
+</section>
+<section class="g-sec" id="os3-instant" data-kind="lesson" data-ts="1230-1531">
+<h2>4. Reading instantaneous values off the sinusoid (Q&amp;A)</h2>
+<p>A student asks to see the previous page again and whether we know "the values between the points" on the sine <a class="ts" data-t="20:55"></a> <a class="ts" data-t="21:22"></a>, i.e. the points between 0, \(\pi/2\), \(\pi\), … <a class="ts" data-t="21:46"></a>.</p>
+<ul>
+<li>The instructor puts the outlet equation next to the sine-and-phasor page <a class="ts" data-t="22:39"></a>. If the sine is 170 V peak, then \(v(t) = 170\sin(2\pi\cdot 60\, t)\) "gives you all of these points provided you enter in what time you want to know" <a class="ts" data-t="23:05"></a>. The frame at <a class="ts" data-t="23:15"></a> shows the sine labelled 170 V at the peak, with marks at \(\pi/2\), \(\pi\), \(3\pi/2\), \(2\pi\).</li>
+<li>That is why the <strong>projection on the y-axis is the instantaneous value</strong>. He draws the phasor at a few increasing angles <a class="ts" data-t="23:31"></a>. At 0 the projection is zero. As the phasor rotates, the projection grows, matching points further up the sine <a class="ts" data-t="24:12"></a>, until the phasor points straight up and the projection is the maximum, 170 V <a class="ts" data-t="25:06"></a>.</li>
+<li>"Our sine function gives us the value along the y-axis that we care about", which is why the equation is the peak voltage times sine <a class="ts" data-t="25:31"></a>. The page ends with \(V(t) = V_{pk}\sin(\omega t)\) boxed <a class="ts" data-t="25:28"></a>.</li>
+</ul>
+<aside class="extra"><p><strong>Worked values (not computed in the video).</strong> For the outlet, \(T = 16.67\) ms and \(v(t) = 170\sin(2\pi\cdot 60\,t)\). Evaluate with the calculator in <em>radian</em> mode:</p>
+<table>
+<tr><th>Fraction of a period</th><th>\(t\)</th><th>Angle \(\omega t\)</th><th>\(v(t)\)</th></tr>
+<tr><td>0</td><td>0 ms</td><td>0</td><td>0 V</td></tr>
+<tr><td>1/8</td><td>2.083 ms</td><td>\(\pi/4\) (45°)</td><td>\(170 \times 0.7071 = 120.2\) V</td></tr>
+<tr><td>1/4</td><td>4.167 ms</td><td>\(\pi/2\) (90°)</td><td>170 V (peak)</td></tr>
+<tr><td>3/8</td><td>6.25 ms</td><td>\(3\pi/4\) (135°)</td><td>120.2 V</td></tr>
+<tr><td>1/2</td><td>8.333 ms</td><td>\(\pi\) (180°)</td><td>0 V</td></tr>
+<tr><td>3/4</td><td>12.5 ms</td><td>\(3\pi/2\) (270°)</td><td>−170 V</td></tr>
+<tr><td>1</td><td>16.67 ms</td><td>\(2\pi\) (360°)</td><td>0 V (cycle repeats)</td></tr>
+</table>
+<p>Any time works, e.g. \(t = 1\) ms: \(170\sin(0.377) = 62.6\) V. (It is a coincidence of the numbers that the value at 45° equals the RMS value. In general \(v = V_{rms}\) at \(\omega t = 45^\circ\) only because \(\sin 45^\circ = 1/\sqrt{2}\).)</p></aside>
+</section>
+<section class="g-sec" id="os3-quarter" data-kind="lesson" data-ts="3203-3449">
+<h2>5. Phase shift as a fraction of the period (90° = a quarter cycle)</h2>
+<p>In the inductor part of the lecture (outlined below), the voltage and current sines are drawn with the voltage reaching its peak first, and the gap between the two peaks is labelled 90° <a class="ts" data-t="40:05"></a>. Later the instructor explains how to read that number off the time plot: the shift is "a quarter of a cycle". One quarter, two quarters, three quarters, four quarters make one cycle, and "a quarter of 360 degrees is 90 degrees" <a class="ts" data-t="53:52"></a>.</p>
+<div class="formula">\[ \theta = 360^\circ \times \frac{\Delta t}{T} \qquad \left(\text{or } \theta = 2\pi\,\frac{\Delta t}{T}\ \text{rad} = \omega\,\Delta t\right) \]</div>
+<dl class="vardefs"><dt>\(\theta\)</dt><dd>phase difference between two waves of the same frequency (° or rad)</dd><dt>\(\Delta t\)</dt><dd>time between corresponding points (e.g. the two peaks) (s)</dd><dt>\(T\)</dt><dd>period of either wave (s)</dd></dl>
+<p>Which one is "ahead"? Time increases to the right, so the wave whose peak occurs <em>earlier</em> (further left) <strong>leads</strong>. "The voltage occurs at a time earlier than the current", so voltage leads and current lags <a class="ts" data-t="52:41"></a> <a class="ts" data-t="53:23"></a>. On the phasor diagram the same 90° appears as the angle between the V and I arrows, and it stays the same whatever instant you draw it at <a class="ts" data-t="57:03"></a> <a class="ts" data-t="57:29"></a>.</p>
+<figure class="scope" id="os3-fig-quarter">
+<script type="application/json">{"type":"scope","ch":"v_L & i_L","vdiv":"(arbitrary units)","tdiv":"T = 8 div","cols":10,"rows":8,
+"traces":[{"shape":"sine","amp":3,"period":8,"x0":0,"label":"v_L (leads)"},{"shape":"sine","amp":2.2,"period":8,"x0":2,"label":"i_L (lags)"}],
+"marks":[{"type":"vline","x":2,"label":"v_L peak"},{"type":"vline","x":4,"label":"i_L peak"},{"type":"span","x1":2,"y1":-3.2,"x2":4,"y2":-3.2,"label":"Δt = T/4 → 90°"}],
+"alt":"Two sine waves of the same period; the current peaks a quarter period (2 of 8 divisions) after the voltage, a 90 degree phase difference."}</script>
+<figcaption>(Added for clarity) The inductor sketch of <a class="ts" data-t="41:05"></a> on a grid where one period is 8 divisions: the peaks are 2 divisions apart, \(2/8 = 1/4\) of a period, so 90°.</figcaption>
+</figure>
+<aside class="extra"><p><strong>Measuring it on a scope.</strong> Put two time cursors on the two peaks (or two rising zero crossings) to get \(\Delta t\). Measure \(T\) on either trace, then \(\theta = 360^\circ\cdot\Delta t/T\). For 60 Hz, a 90° shift is \(T/4 = 16.67/4 = 4.17\) ms. The GW Instek scope in <a class="xref" data-lesson="os2">the diode-lab demo</a> can even display cursor positions in degrees (its "H Unit" menu offers s, Hz, % and °).</p></aside>
+</section>
+<section class="g-sec" id="os3-other" data-kind="lesson">
+<h2>Other content in this video (outside this topic)</h2>
+<p>Outline only; phasor, resistor-in-AC and inductor-in-AC theory belong to other topics.</p>
+<ul>
+<li><a class="ts" data-t="0:01"></a> Introduction: a <strong>phasor</strong> is a rotating vector, used to describe how R, L and C behave with AC.</li>
+<li><a class="ts" data-t="0:56"></a> Circle marked 0°, 90°, 180°, 270°, 360°, then in radians 0, π/2, π, 3π/2, 2π <a class="ts" data-t="1:23"></a>.</li>
+<li><a class="ts" data-t="2:16"></a> One sine cycle drawn with the same marks: 0 → peak at π/2 → zero at π → minimum at 3π/2 → back to zero at 2π. A vector rotating around the circle traces the sine <a class="ts" data-t="4:10"></a>; its direction at each mark (right, up, left, down, right) <a class="ts" data-t="5:24"></a>. This rotating vector is the <strong>phasor</strong> <a class="ts" data-t="7:11"></a>.</li>
+<li><a class="ts" data-t="7:46"></a> The projection of the phasor on the <em>y</em>-axis is the <strong>instantaneous value</strong> of the sine (used in §1 and §4).</li>
+<li><a class="ts" data-t="26:05"></a> Online phasor animation; bicycle-wheel analogy (a point on a wheel seen edge-on moves up and down) <a class="ts" data-t="26:58"></a>.</li>
+<li><a class="ts" data-t="28:03"></a> <strong>Resistor in AC</strong>: \(V_{max} = I_{max}R\) <a class="ts" data-t="29:44"></a>; voltage and current peak and cross zero together → <strong>in phase</strong> <a class="ts" data-t="32:18"></a>; phasor diagram with V and I along the same direction, drawn at a zero crossing or at the peak — same picture <a class="ts" data-t="34:10"></a>.</li>
+<li><a class="ts" data-t="37:33"></a> <strong>Inductor in AC</strong>: the voltage reaches its max before the current, by 90° <a class="ts" data-t="40:05"></a>. Explanation via the inductor opposing changes in current: min/max rate of change of the applied voltage (slope) <a class="ts" data-t="41:30"></a>, back EMF (counter EMF) <a class="ts" data-t="44:03"></a> keeping the current high/low <a class="ts" data-t="46:50"></a>.</li>
+<li><a class="ts" data-t="47:52"></a> Mnemonic <strong>ELI the ICE man</strong>: in an inductor (L) voltage E leads current I; in a capacitor (C) current I leads voltage E <a class="ts" data-t="50:06"></a>. (The "quarter of a cycle = 90°" part is in <a href="#os3-quarter">§5</a>.)</li>
+<li><a class="ts" data-t="54:49"></a> Inductor phasor diagram: V and I phasors 90° apart at any instant; online animation (R–L) showing the two arrows rotating together <a class="ts" data-t="1:00:26"></a>.</li>
+<li><a class="ts" data-t="1:01:28"></a> Wrap-up: reactance next class; 10-minute break, then the diode lab (due next Tuesday) — not recorded.</li>
+</ul>
+</section>
+<section class="g-sec" id="os3-assumptions" data-kind="assumptions">
+<h2>Assumptions &amp; limitations</h2>
+<ul>
+<li><strong>\(f = 1/T\) and \(\omega = 2\pi f = 2\pi/T\)</strong> apply to any periodic waveform for \(f\) and \(T\); the angular frequency \(\omega\) is mainly used for <em>sinusoids</em>, where one cycle corresponds to \(2\pi\) radians of the rotating phasor.</li>
+<li><strong>\(v(t) = V_p \sin(\omega t)\)</strong> assumes the sine starts at zero and rising at \(t = 0\) (zero phase) and has no DC offset. A shifted wave needs a phase term, e.g. \(V_p\sin(\omega t + \phi)\) — the video only uses the zero-phase form.</li>
+<li><strong>\(V_{pp} = 2V_p\)</strong> holds for any waveform symmetric about 0 V (no DC offset). <strong>\(V_{rms} = V_p/\sqrt{2}\)</strong> holds <em>only for pure sinusoids</em>; squares, triangles, rectified waves have different ratios.</li>
+<li>The outlet numbers (120 V<sub>rms</sub>, 170 V<sub>pk</sub>, 340 V<sub>pp</sub>, 60 Hz) are nominal North-American values; real outlet voltage varies by a few percent, and \(120\sqrt{2} \approx 169.7\) V is rounded to 170 V.</li>
+<li>Calling \(\omega\) "dimensionless" (as in the video) means radians are treated as a pure number; in practice \(\omega\) is quoted in rad/s so that \(\omega t\) comes out in radians.</li>
+</ul>
+</section>
+<section class="g-sec" id="os3-mistakes" data-kind="mistakes">
+<h2>Common mistakes</h2>
+<ul>
+<li><strong>Using \(f\) where \(\omega\) belongs (or vice-versa).</strong> \(\sin(60t)\) is wrong for a 60 Hz wave; the argument must be \(2\pi\cdot 60\cdot t = 377t\). Check: the argument of the sine must advance by \(2\pi\) every period \(T\).</li>
+<li><strong>Calculator in degree mode.</strong> \(\omega t\) is in radians. Evaluating \(170\sin(377t)\) with the calculator set to degrees gives wrong instantaneous values.</li>
+<li><strong>Mixing up the three amplitude descriptions.</strong> 120 V is the RMS value, 170 V is the peak (centre line to crest), 340 V is peak-to-peak (trough to crest). Writing \(v(t) = 120\sin(\omega t)\) for the outlet is a classic error — the coefficient of the sine is always the <em>peak</em> value.</li>
+<li><strong>Applying \(V_{rms} = V_p/\sqrt{2}\) to non-sinusoids.</strong> It is only valid for sine waves.</li>
+<li><strong>Unit slips in \(T = 1/f\).</strong> \(1/60\,\text{Hz} = 0.0167\) s = 16.7 ms, not 16.7 s. Hz is 1/s, so dividing 1 by Hz gives seconds.</li>
+<li><strong>Reading "leads/lags" backwards on a time plot.</strong> Time increases to the right, so the waveform whose peak occurs <em>further left</em> (earlier) is the one that leads <a class="ts" data-t="52:41"></a>.</li>
+</ul>
+</section>
+<section class="g-sec" id="os3-recap" data-kind="recap">
+<h2>Recap &amp; formula sheet</h2>
+<p>A sinusoid is completely described by its <strong>amplitude</strong> (given as peak, peak-to-peak or RMS) and its <strong>rate of repetition</strong> (given as period \(T\), frequency \(f\) in Hz, or angular frequency \(\omega\) in rad/s). One cycle = one full rotation of the phasor = \(2\pi\) radians = 360° = one period \(T\). For the wall outlet: 170 V<sub>pk</sub> = 340 V<sub>pp</sub> ≈ 120 V<sub>rms</sub>, 60 Hz, \(T \approx 16.7\) ms, \(\omega \approx 377\) rad/s, so \(v(t) = 170\sin(2\pi\cdot 60\, t)\) V.</p>
+<div class="formula-sheet">
+<table>
+<tr><th>Formula</th><th>Variables &amp; units</th><th>Use</th></tr>
+<tr><td>\(f = \dfrac{1}{T}\), \(T = \dfrac{1}{f}\)</td><td>\(f\) frequency (Hz = cycles/s), \(T\) period (s)</td><td>convert between period read on a scope and frequency</td></tr>
+<tr><td>\(\omega = 2\pi f\)</td><td>\(\omega\) angular (radian) frequency (rad/s)</td><td>argument of the sine</td></tr>
+<tr><td>\(\omega = \dfrac{2\pi}{T}\)</td><td>\(T\) period (s)</td><td>same, when the period is what you measured</td></tr>
+<tr><td>\(v(t) = V_p\sin(\omega t) = V_p\sin(2\pi f t)\)</td><td>\(V_p\) peak voltage (V), \(t\) time (s)</td><td>instantaneous value of a zero-phase sinusoid</td></tr>
+<tr><td>\(V_{pp} = 2V_p\)</td><td>\(V_{pp}\) peak-to-peak (V)</td><td>symmetric waveforms</td></tr>
+<tr><td>\(V_{rms} = \dfrac{V_p}{\sqrt{2}} \approx 0.707\,V_p\)</td><td>\(V_{rms}\) RMS value (V)</td><td>sine waves only</td></tr>
+<tr><td>\(\theta = 360^\circ \cdot \dfrac{\Delta t}{T}\)</td><td>\(\Delta t\) time shift between two waves (s), \(\theta\) phase (°)</td><td>a quarter period \(= 90^\circ\) (inductor/capacitor V–I shift)</td></tr>
+</table>
+</div>
+</section>

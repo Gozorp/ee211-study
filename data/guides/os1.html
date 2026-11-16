@@ -1,0 +1,523 @@
+<section class="g-sec" id="os1-overview" data-kind="overview">
+<h2>Overview</h2>
+<p>This lecture/lab is where the course leaves constant (DC) voltages behind and starts working with <b>alternating current (AC)</b>. The instructor contrasts a DC source with an AC (sine-wave) source, names the positive and negative alternations, and gives the three ways an AC magnitude is quantified — <b>peak</b>, <b>peak-to-peak</b> and <b>RMS</b> — using the US wall outlet (120 V RMS = 170 V peak = 340 V peak-to-peak) as the running example. He explains why RMS is the "useful average" (it produces the same heating as an equal DC voltage). Then he fires up an <b>oscilloscope and function generator</b>: probe and ground-clip connections, zooming the time base, the scope's automatic frequency readout, AC passing through a transformer while a 9 V battery (DC) does not, and finally <b>cursor measurements</b> of a wall transformer's output (80 V p-p) and input (340 V p-p).</p>
+<p><b>Scope note:</b> the middle and later parts of the video teach transformer theory (turns ratio, step-up/step-down). That is outside this topic and is only outlined in the "Other content" section, except where a transformer calculation is needed to interpret a scope reading.</p>
+<ul>
+<li><a class="ts" data-t="0:00"></a> DC vs AC sources and graphs; positive and negative alternations</li>
+<li><a class="ts" data-t="7:40"></a> Three ways to quantify AC magnitude: peak, peak-to-peak, RMS; the 120 V outlet</li>
+<li><a class="ts" data-t="18:08"></a> Where "root mean square" comes from; \(V_{RMS} = 0.707\,V_{pk}\)</li>
+<li><a class="ts" data-t="24:57"></a> RMS = same heating effect as DC; Ohm's law and average power with RMS values</li>
+<li><a class="ts" data-t="32:40"></a> Transformers introduced (outside this topic)</li>
+<li><a class="ts" data-t="42:07"></a> Oscilloscope + function generator demo: probe, ground clip, time base, frequency readout (10 kHz, 60 Hz, 1 kHz)</li>
+<li><a class="ts" data-t="48:27"></a> AC through a 1 : 1 transformer on the scope; a 9 V battery (DC) gives a flat 0 V line</li>
+<li><a class="ts" data-t="54:48"></a> Compass demo: AC at 1 Hz and 2 Hz makes the field alternate; DC does not</li>
+<li><a class="ts" data-t="1:01:24"></a> Turns ratio, step-up and step-down examples (outside this topic)</li>
+<li><a class="ts" data-t="1:17:17"></a> Scope cursor measurements on a wall transformer: 80 V p-p out, 340 V p-p in</li>
+<li><a class="ts" data-t="1:25:41"></a> Turns ratio worked out from the two scope readings (4.25 : 1)</li>
+</ul>
+<aside class="note"><p>Related lessons: the scope is used again to read period, frequency and volts/division in <a class="xref" data-lesson="os2">the diodes-in-AC lab</a>; period, \(\omega\) and the \(V_{pp}/V_{pk}/V_{rms}\) conversions return in <a class="xref" data-lesson="os3">the phasors lecture</a>; and the scope was used to measure an RC time constant in <a class="xref" data-lesson="cl4">the RC time-constant lab</a>.</p></aside>
+</section>
+
+<section class="g-sec" id="os1-objectives" data-kind="objectives">
+<h2>Learning objectives</h2>
+<p>After this lesson you should be able to…</p>
+<ul>
+<li>Distinguish a DC waveform (constant line on a voltage-vs-time graph) from an AC waveform (sine wave centred on 0 V), and draw the DC (battery) and AC (circle with a sine) source symbols.</li>
+<li>Identify the positive and negative alternations of a sine wave and state which way current flows through a resistor during each.</li>
+<li>Define peak voltage \(V_{pk}\), peak-to-peak voltage \(V_{pp}\) and RMS voltage \(V_{RMS}\), and convert any one into the other two for a sine wave (e.g. 170 V peak = 340 V p-p ≈ 120 V RMS; 80 V p-p = 40 V peak = 28.28 V RMS).</li>
+<li>Explain why the plain average of a sine wave (0 V) is useless and how "square → mean → square root" fixes that.</li>
+<li>State the meaning of RMS (same heating/power as an equal DC value) and use \(V_{RMS} = I_{RMS}R\) and \(P_{avg} = I_{RMS}V_{RMS}\).</li>
+<li>Define frequency (cycles per second, Hz) and period (time of one cycle), and convert with \(T = 1/f\).</li>
+<li>Connect a scope probe tip and ground clip across a source, identify the volts/division, time/division, coupling and frequency readouts on the screen, and read amplitude and period from the number of divisions.</li>
+<li>Choose a time base that shows a few cycles, and explain why the frequency readout fails ("&lt;2 Hz") when less than one cycle is on screen.</li>
+<li>Use the scope's voltage cursors (Δ readout) to measure a peak-to-peak voltage and convert it to peak and RMS.</li>
+<li>Explain why a transformer's output on the scope is a sine wave for AC input but a flat 0 V line for a DC input, and compute a turns ratio from input and output scope readings.</li>
+<li>Check a measurement against the scope's voltage rating before connecting to mains.</li>
+</ul>
+</section>
+
+<section class="g-sec" id="os1-prereqs" data-kind="prereqs">
+<h2>Prerequisites</h2>
+<dl>
+<dt>Ohm's law and power</dt>
+<dd>\(V = IR\); a resistor dissipates \(P = VI = I^2R = V^2/R\). This lecture reuses exactly these equations with RMS values.</dd>
+<dt>Voltage is measured between two points</dt>
+<dd>A voltmeter (and a scope) always reads the difference between two nodes, so you need two connections: the "+" lead and the reference ("−"/ground) lead.</dd>
+<dt>Inductors store energy in a magnetic field</dt>
+<dd>A current through a coil builds a magnetic field; only a <i>changing</i> field induces a voltage in a nearby coil. This is why a transformer passes AC but not DC (shown on the scope in this video).</dd>
+<dt>Graphs of voltage versus time</dt>
+<dd>Time on the horizontal axis (increasing to the right), voltage on the vertical axis with 0 V on the centre line. An oscilloscope screen is exactly this graph.</dd>
+<dt>Sine function basics</dt>
+<dd>\(\sin\) swings between +1 and −1, repeats every full cycle, and spends equal time above and below zero.</dd>
+<dt>Metric prefixes</dt>
+<dd>k = 10³ (10 kHz = 10 000 Hz); m = 10⁻³ (5 ms = 0.005 s); μ = 10⁻⁶ (50 μs = 0.000 05 s).</dd>
+</dl>
+</section>
+
+<section class="g-sec" id="os1-definitions" data-kind="definitions">
+<h2>Definitions &amp; symbols</h2>
+<table>
+<tr><th>Term / symbol</th><th>Meaning</th><th>Unit</th></tr>
+<tr><td>DC (direct current)</td><td>A voltage/current that stays at one constant value for the whole time the circuit runs (e.g. 5 V, 10 V, 12 V). Graph: a horizontal line.</td><td>V, A</td></tr>
+<tr><td>AC (alternating current)</td><td>A voltage/current that repeatedly swings positive and negative; in this course a sine wave centred on 0 V. What comes out of a wall outlet.</td><td>V, A</td></tr>
+<tr><td>AC source symbol</td><td>A circle with a small sine wave drawn inside it.</td><td>—</td></tr>
+<tr><td>Positive alternation</td><td>The half of each cycle when the applied voltage is above the time axis (source "+" on top); current flows one way through the load.</td><td>—</td></tr>
+<tr><td>Negative alternation</td><td>The half of each cycle when the voltage is below the time axis; the polarity flips and the current reverses.</td><td>—</td></tr>
+<tr><td>\(V_{pk}\) (also \(V_{peak}\), \(V_p\))</td><td>Peak voltage: the highest voltage the AC waveform reaches, measured from 0 V.</td><td>V ("V peak", "V<sub>pk</sub>")</td></tr>
+<tr><td>\(V_{pp}\) (also \(V_{pk\text{-}pk}\), \(V_{pkpk}\))</td><td>Peak-to-peak voltage: highest minus lowest voltage. For a sine centred on 0 V, \(V_{pp} = 2V_{pk}\).</td><td>V ("V p-p")</td></tr>
+<tr><td>\(V_{RMS}\), \(I_{RMS}\)</td><td>Root-mean-square value: square the waveform, take the mean (average), take the square root. It is the AC value that produces the same heating (power in a resistor) as an equal DC value.</td><td>V RMS, A RMS</td></tr>
+<tr><td>\(P_{avg}\)</td><td>Average power. Power is never "RMS power" — it is average power.</td><td>W</td></tr>
+<tr><td>Cycle</td><td>One complete repetition of the waveform, measured from where it starts to where it repeats.</td><td>—</td></tr>
+<tr><td>Frequency \(f\)</td><td>Number of cycles per second.</td><td>hertz, Hz (1 Hz = 1 cycle/s); 1 kHz = 1000 Hz</td></tr>
+<tr><td>Period \(T\)</td><td>Time taken by one cycle; \(T = 1/f\).</td><td>s, ms, μs</td></tr>
+<tr><td>Oscilloscope ("scope")</td><td>Instrument that displays a changing voltage versus time on a grid. The one in the video is a GW Instek digital scope, shown on the computer through its PC software.</td><td>—</td></tr>
+<tr><td>Division (div)</td><td>One square of the scope's grid. This screen has 10 divisions across and 8 divisions vertically (4 above and 4 below the centre line).</td><td>—</td></tr>
+<tr><td>Volts/division (vertical scale)</td><td>How many volts one vertical division represents; shown in the bottom bar next to the channel number (e.g. "① ═ 1V" = channel 1, DC coupling, 1 V/div).</td><td>V/div</td></tr>
+<tr><td>Time/division (horizontal scale, time base)</td><td>How much time one horizontal division represents (e.g. "500us" = 500 μs/div). "Zooming in on the time axis" means choosing a smaller time/div.</td><td>s/div</td></tr>
+<tr><td>Coupling (DC "═" / AC)</td><td>DC coupling shows the whole signal including any constant part; AC coupling blocks the constant part. All measurements in this video use DC coupling.</td><td>—</td></tr>
+<tr><td>Frequency readout ("F")</td><td>The scope's automatic frequency measurement, lower right of the screen (e.g. "F 10.0001kHz").</td><td>Hz</td></tr>
+<tr><td>Cursors, Δ (delta)</td><td>Movable horizontal lines; the scope reads out each cursor's voltage and their difference Δ.</td><td>V</td></tr>
+<tr><td>Probe tip / ground clip</td><td>The two connections of a scope probe: the tip goes on the point being measured, the ground (reference) clip on the "−"/reference side.</td><td>—</td></tr>
+<tr><td>Function generator</td><td>Bench instrument that outputs an adjustable AC waveform (frequency and amplitude set by the user); behaves like an AC voltage source.</td><td>—</td></tr>
+<tr><td>Transformer: primary, secondary</td><td>Two coils sharing a magnetic core; input coil = primary, output coil = secondary. Works only with AC.</td><td>—</td></tr>
+<tr><td>\(N_P : N_S\) (turns ratio)</td><td>Turns on the primary : turns on the secondary; equals the voltage ratio \(V_P : V_S\).</td><td>—</td></tr>
+</table>
+</section>
+
+<section class="g-sec" id="os1-dc-vs-ac" data-kind="lesson" data-ts="0-460">
+<h2>1. DC versus AC</h2>
+<h3>1.1 Direct current <a class="ts" data-t="1:32"></a></h3>
+<p>Everything in the course so far has been <b>DC</b>: a source that always gives one fixed value (10 V, 12 V, 5 V…) for the whole time the circuit runs. Connect a DC source \(V_S\) to a resistor and a constant current \(I = V_S/R\) flows, by Ohm's law <a class="ts" data-t="1:56"></a>.</p>
+<p>Once voltages change, you have to look at a <b>graph of voltage versus time</b> <a class="ts" data-t="2:22"></a>. For DC the graph is "boring": a horizontal line at \(V_S\) (e.g. 10 V) while time increases to the right <a class="ts" data-t="2:43"></a>.</p>
+<figure class="circuit" id="os1-fig-dc">
+<script type="application/json">{"padX":2.2,"parts":[
+ {"t":"BAT","a":[0,3],"b":[0,0],"label":"V_S","plus":"b","side":-1},
+ {"t":"W","pts":[[0,0],[3,0]]},
+ {"t":"R","a":[3,0],"b":[3,3],"label":"R","side":-1},
+ {"t":"W","pts":[[3,3],[0,3]]},
+ {"t":"ARROW","a":[3.9,0.5],"b":[3.9,2.5],"label":"I = V_S / R","lat":[4.2,1.65],"anchor":"start"}
+],"alt":"Battery V_S connected across a resistor R; a constant current I flows down through the resistor."}</script>
+<figcaption>DC circuit as drawn at <a class="ts" data-t="3:20"></a>: battery \(V_S\) driving a resistor, constant current \(I\) (red arrow, downward through the resistor).</figcaption>
+</figure>
+<figure class="scope" id="os1-fig-dc-graph">
+<script type="application/json">{"type":"scope","ch":"v(t) sketch","vdiv":"5 V/div","cols":10,"rows":8,"traces":[{"shape":"dc","offset":2,"label":"v(t) = V_S"}],"marks":[{"type":"hline","y":2,"label":"V_S = 10 V"},{"type":"text","x":9.3,"y":-0.4,"text":"t →"}],"alt":"Graph of a DC voltage: a horizontal line at V_S = 10 V for all time."}</script>
+<figcaption>The DC graph (redrawn on a grid for clarity): a constant line at \(V_S\), drawn on paper at <a class="ts" data-t="3:07"></a>.</figcaption>
+</figure>
+<h3>1.2 Alternating current <a class="ts" data-t="3:27"></a></h3>
+<p>What comes into our houses is <b>alternating current</b>. (The instructor mentions the Tesla–Edison "battle" over how to power the country <a class="ts" data-t="1:06"></a>; AC won for practical reasons that turn out to be transformers, later in the video.) The AC source is drawn as a <b>circle with a small sine wave inside</b> <a class="ts" data-t="3:52"></a>. Its graph, centred at 0 V, goes up to \(V_S\), back down through zero to \(-V_S\), back up, and continues forever <a class="ts" data-t="5:10"></a>. On the paper the example source is labelled \(V_S = 10\,V_{pk}\), with the graph marked \(V_S = 10\,\text{V}\) at the top and \(-V_S = -10\,\text{V}\) at the bottom <a class="ts" data-t="11:04"></a>.</p>
+<figure class="circuit" id="os1-fig-ac">
+<script type="application/json">{"padX":4.4,"parts":[
+ {"t":"VAC","a":[0,3],"b":[0,0],"label":"V_S = 10 V_{pk}","side":-1},
+ {"t":"W","pts":[[0,0],[3,0]]},
+ {"t":"R","a":[3,0],"b":[3,3],"label":"R","side":-1},
+ {"t":"W","pts":[[3,3],[0,3]]},
+ {"t":"ARROW","a":[3.8,0.5],"b":[3.8,2.5],"label":"i ↓ during + alternation","lat":[4.7,1.1],"anchor":"start"},
+ {"t":"ARROW","a":[4.3,2.5],"b":[4.3,0.5],"label":"i ↑ during − alternation","lat":[4.7,2.2],"anchor":"start"}
+],"alt":"AC source V_S = 10 V peak across a resistor R; current flows down through R during the positive alternation and up during the negative alternation."}</script>
+<figcaption>AC circuit as drawn at <a class="ts" data-t="7:35"></a>: AC source (circle with a sine) across \(R\). During the positive alternation the source is "+" on top and current flows down through \(R\); during the negative alternation the polarity flips and current flows up.</figcaption>
+</figure>
+<h3>1.3 Positive and negative alternations <a class="ts" data-t="5:35"></a></h3>
+<ul>
+<li><b>Positive alternation</b> <a class="ts" data-t="6:24"></a>: whenever the applied voltage is above the time axis, the source's "+" is on top and "−" on the bottom, so current flows through the resistor in one direction.</li>
+<li><b>Negative alternation</b> <a class="ts" data-t="6:54"></a>: whenever the voltage is below the axis, the polarity has flipped ("+" on the bottom) and the current flows the opposite way <a class="ts" data-t="7:19"></a>.</li>
+</ul>
+<figure class="scope" id="os1-fig-alternations">
+<script type="application/json">{"type":"scope","ch":"v(t) sketch","vdiv":"5 V/div","cols":10,"rows":8,"traces":[{"shape":"sine","amp":2,"period":5,"label":"v_S(t)"}],"marks":[{"type":"text","x":1.25,"y":2.5,"text":"+ alternation"},{"type":"text","x":3.75,"y":-2.6,"text":"− alternation"},{"type":"text","x":6.25,"y":2.5,"text":"+ alternation"},{"type":"text","x":8.75,"y":-2.6,"text":"− alternation"}],"alt":"Sine wave of 10 V peak; the halves above the axis are positive alternations, the halves below are negative alternations."}</script>
+<figcaption>The AC graph with its alternations labelled, as on the paper at <a class="ts" data-t="7:35"></a> (redrawn on a grid).</figcaption>
+</figure>
+<p>Half of each cycle is positive and half is negative. Naming them is useful because many circuits behave differently when the voltage is positive versus negative <a class="ts" data-t="7:40"></a>.</p>
+</section>
+
+<section class="g-sec" id="os1-magnitude" data-kind="lesson" data-ts="460-1497">
+<h2>2. Three ways to quantify an AC magnitude: peak, peak-to-peak, RMS</h2>
+<p>How big is an AC voltage? Saying "it goes up to \(V_S\) and down to \(-V_S\)" is one answer, but there are <b>three ways to quantify the magnitude</b>, each useful in different circumstances <a class="ts" data-t="8:30"></a>. The page at <a class="ts" data-t="16:25"></a> lists them:</p>
+<ol>
+<li><b>Peak Voltage — \(V_{pk}\)</b></li>
+<li><b>Peak to Peak Voltage — \(V_{pk\text{-}pk}\) or \(V_{pp}\) or \(V_{pkpk}\)</b></li>
+<li><b>RMS — Root Mean Square — \(V_{RMS}\)</b></li>
+</ol>
+<h3>2.1 Peak voltage \(V_{pk}\) <a class="ts" data-t="9:43"></a></h3>
+<p>The <b>highest voltage the AC actually reaches</b>. If \(V_S\) is 10 V, the waveform goes up to 10 V, so it is "10 V peak".</p>
+<h3>2.2 Peak-to-peak voltage \(V_{pp}\) <a class="ts" data-t="10:13"></a></h3>
+<p>The difference between the highest and the lowest voltage. It may be written \(V_{pk\text{-}pk}\), \(V_{pp}\), \(V_{pkpk}\) or "V peak to peak" — all mean the same thing <a class="ts" data-t="10:38"></a>.</p>
+<div class="example" id="os1-ex1"><h3>Example 1 — 10 V peak expressed as peak-to-peak <a class="ts" data-t="11:04"></a></h3>
+<p><b>Given:</b> the AC source from section 1, \(V_S = 10\,V_{pk}\): the wave goes up to +10 V and down to −10 V. <b>Find:</b> its peak and peak-to-peak values.</p>
+<p class="step">1. Peak = highest value reached = 10 V → "10 V peak" <a class="ts" data-t="11:04"></a>.</p>
+<p class="step">2. Peak-to-peak = highest − lowest = \(10\,\text{V} - (-10\,\text{V}) = 20\,\text{V}\) <a class="ts" data-t="11:49"></a>.</p>
+<p class="answer">10 V peak is identical to 20 V peak-to-peak — two names for the same waveform.</p>
+<figure class="scope" id="os1-fig-pp">
+<script type="application/json">{"type":"scope","ch":"v(t) sketch","vdiv":"5 V/div","cols":10,"rows":8,"traces":[{"shape":"sine","amp":2,"period":5,"label":"v_S(t)"}],"marks":[{"type":"hline","y":2},{"type":"hline","y":-2},{"type":"text","x":0.15,"y":2.15,"text":"+10 V = peak","anchor":"start"},{"type":"text","x":0.15,"y":-2.45,"text":"−10 V","anchor":"start"},{"type":"span","x1":8.25,"y1":-2,"x2":8.25,"y2":2},{"type":"text","x":8.4,"y":0.8,"text":"20 V p-p","anchor":"start"}],"alt":"Sine wave between +10 V and -10 V: peak is 10 V measured from zero, peak-to-peak is 20 V measured from the bottom to the top."}</script>
+<figcaption>Peak is measured from 0 V to the top; peak-to-peak from the bottom to the top (added for clarity; values from <a class="ts" data-t="11:49"></a>).</figcaption>
+</figure>
+</div>
+<h3>2.3 RMS voltage \(V_{RMS}\) — motivated by the wall outlet <a class="ts" data-t="12:15"></a></h3>
+<p>The third way, <b>root mean square</b>, is written \(V_{RMS}\) <a class="ts" data-t="12:47"></a>. The instructor motivates it with a question: what is the voltage of a US electrical outlet? Students answer 120 V <a class="ts" data-t="13:41"></a>. But the outlet waveform he draws goes up to <b>170 V</b> and down to <b>−170 V</b> <a class="ts" data-t="14:10"></a>. So where is 120 V on this graph <a class="ts" data-t="14:35"></a>?</p>
+<figure class="scope" id="os1-fig-mains">
+<script type="application/json">{"type":"scope","ch":"v(t) sketch","vdiv":"50 V/div","cols":10,"rows":8,"traces":[{"shape":"sine","amp":3.4,"period":5,"label":"outlet v(t)"}],"marks":[{"type":"hline","y":3.4,"label":"+170 V"},{"type":"hline","y":2.4,"label":"120 V (RMS)"},{"type":"hline","y":-3.4},{"type":"text","x":0.15,"y":-3.85,"text":"−170 V","anchor":"start"},{"type":"span","x1":8.25,"y1":-3.4,"x2":8.25,"y2":3.4},{"type":"text","x":8.4,"y":0.9,"text":"340 V p-p","anchor":"start"}],"alt":"US outlet voltage: sine wave between +170 V and -170 V, with a dotted line at 120 V marking the RMS value."}</script>
+<figcaption>US outlet waveform as drawn at <a class="ts" data-t="16:25"></a>: peaks at ±170 V, a red dotted line at 120 V, and the heading "170 V<sub>pk</sub> = 340 V<sub>pkpk</sub> = 120 V<sub>RMS</sub>" (redrawn on a grid).</figcaption>
+</figure>
+<div class="example" id="os1-ex2"><h3>Example 2 — the US outlet in all three forms <a class="ts" data-t="15:32"></a></h3>
+<p><b>Given:</b> the outlet sine wave reaches +170 V and −170 V.</p>
+<p class="step">1. Peak: highest value = 170 V peak.</p>
+<p class="step">2. Peak-to-peak: \(170\,\text{V} - (-170\,\text{V}) = 340\,\text{V}\) p-p <a class="ts" data-t="15:58"></a>.</p>
+<p class="step">3. RMS: what the outlet is quoted as — 120 V RMS (the conversion is worked in Example 3).</p>
+<p class="answer">170 V peak = 340 V peak-to-peak = 120 V RMS (US outlet)</p>
+</div>
+<p><b>Why not just use peak or peak-to-peak?</b> <a class="ts" data-t="15:12"></a> You can't calculate much from them: the waveform is at its peak for only one moment; the rest of the time it is somewhere else. It would be nicer to describe the AC voltage by an <b>average</b> <a class="ts" data-t="16:27"></a>.</p>
+<p><b>But the plain average of a sine wave is zero</b> <a class="ts" data-t="17:17"></a> ("AVG V = 0 V" on the paper) — it dips negative exactly as much as it goes positive. That is useless: a sine wave applied to a resistor clearly drives current and dissipates power, so calling it "0 V" makes no sense <a class="ts" data-t="17:43"></a>.</p>
+<h3>2.4 Where "root mean square" comes from <a class="ts" data-t="18:08"></a></h3>
+<p>Each word of the name is an operation <a class="ts" data-t="18:25"></a>: <b>Root</b> = square root; <b>Mean</b> = average (written "½" on the paper — for a squared sine wave the average comes out to one half of its top value); <b>Square</b> = raise to the power 2. They are applied in reverse order of the name <a class="ts" data-t="20:40"></a>:</p>
+<ol>
+<li><b>Start</b> with the sine wave of peak \(V_{pk}\) <a class="ts" data-t="19:12"></a>.</li>
+<li><b>Square</b> it: every negative value becomes positive, so the squared wave is a train of positive humps reaching \(V_{pk}^2\) <a class="ts" data-t="19:33"></a>.</li>
+<li><b>Average</b> (mean) the squared wave: the result is \(\tfrac12 V_{pk}^2\) <a class="ts" data-t="20:44"></a>. This is a genuine average, but of the <i>squared</i> voltage.</li>
+<li><b>Square root</b> "to undo the square" <a class="ts" data-t="21:35"></a>.</li>
+</ol>
+<figure class="scope" id="os1-fig-rms">
+<script type="application/json">{"type":"scope","ch":"sketch","vdiv":"v and v² (scaled)","cols":10,"rows":8,"traces":[{"shape":"sine","amp":3,"period":5,"label":"v(t), peak Vpk"},{"fn":"3*pow(sin(2*PI*x/5),2)","color":2,"label":"v²(t), peak Vpk²"}],"marks":[{"type":"hline","y":1.5},{"type":"text","x":5,"y":-3.7,"text":"dashed line = mean of v² = ½·Vpk²"}],"alt":"A sine wave and its square; the square is always positive and its average is half of its peak value."}</script>
+<figcaption>Square → average → root, as sketched at <a class="ts" data-t="22:10"></a>: the squared wave (blue) is never negative and its average is \(\tfrac12 V_{pk}^2\) (redrawn on one grid; the two traces use different vertical units).</figcaption>
+</figure>
+<div class="formula">\[ V_{RMS} = \sqrt{\tfrac12 V_{pk}^{2}} \;\Rightarrow\; V_{RMS} = \frac{1}{\sqrt2}\,V_{pk} \quad\text{or}\quad V_{RMS} = 0.707\,V_{pk} \]</div>
+<dl class="vardefs"><dt>\(V_{RMS}\)</dt><dd>root-mean-square voltage, V (RMS)</dd><dt>\(V_{pk}\)</dt><dd>peak voltage, V</dd></dl>
+<p>This is the boxed result on the paper <a class="ts" data-t="23:16"></a>; the instructor says to <b>memorize it</b>. It holds for a <b>sine wave</b> centred on 0 V (the ½ comes from the shape of a squared sine). The same factor converts currents: \(I_{RMS} = 0.707\,I_{pk}\) <a class="ts" data-t="25:47"></a>.</p>
+<aside class="extra"><p><b>Why the mean of a squared sine is ½ of its peak.</b> With \(v(t) = V_{pk}\sin\omega t\), the identity \(\sin^2\theta = \tfrac12(1 - \cos 2\theta)\) gives \(v^2 = \tfrac12 V_{pk}^2 - \tfrac12 V_{pk}^2\cos 2\omega t\). Over a whole cycle the cosine term averages to zero, leaving \(\overline{v^2} = \tfrac12 V_{pk}^2\), so \(V_{RMS} = \sqrt{\overline{v^2}} = V_{pk}/\sqrt2\). In integral form, \(V_{RMS} = \sqrt{\frac1T\int_0^T v(t)^2\,dt}\). A numerical average of \((170\sin\theta)^2\) over one cycle gives 14 450 V², whose square root is 120.2 V. Other shapes have other factors (a ±A square wave has \(V_{RMS} = A\); a triangle wave \(A/\sqrt3\)).</p></aside>
+<div class="example" id="os1-ex3"><h3>Example 3 — where the outlet's 120 V comes from <a class="ts" data-t="23:45"></a></h3>
+<p><b>Given:</b> \(V_{pk} = 170\,\text{V}\). <b>Find:</b> \(V_{RMS}\).</p>
+<p class="step">1. Use \(V_{RMS} = \frac{1}{\sqrt2}V_{pk}\): \(\frac{1}{\sqrt2}(170\,\text{V}) = 120\,V_{RMS}\) <a class="ts" data-t="24:13"></a>.</p>
+<p class="step">2. With the rounded factor on the calculator: \(0.707 \times 170 = 120.19\) <a class="ts" data-t="24:33"></a> (exact \(1/\sqrt2\) gives 120.21).</p>
+<p class="answer">\(V_{RMS} \approx 120\,\text{V}\) — the "120 V" of a US outlet is its RMS value.</p>
+</div>
+</section>
+
+<section class="g-sec" id="os1-rms-meaning" data-kind="lesson" data-ts="1497-1960">
+<h2>3. What an RMS value means: equal heating, Ohm's law and average power</h2>
+<h3>3.1 Definition <a class="ts" data-t="24:57"></a></h3>
+<p>From the paper <a class="ts" data-t="27:20"></a>: <b>RMS voltage</b> is the value of AC voltage or current which produces the <b>same heating effect</b> (i.e. power) as an <b>equal value of DC voltage</b>. "In short: we get back Ohm's law &amp; power" <a class="ts" data-t="27:10"></a>.</p>
+<figure class="circuit" id="os1-fig-heat">
+<script type="application/json">{"parts":[
+ {"t":"BAT","a":[0,3],"b":[0,0],"label":"10 V","plus":"b","side":-1},
+ {"t":"W","pts":[[0,0],[3,0]]},
+ {"t":"R","a":[3,0],"b":[3,3],"label":"R_{L1}","value":"10 Ω"},
+ {"t":"W","pts":[[3,3],[0,3]]},
+ {"t":"VAC","a":[7,3],"b":[7,0],"label":"10 V_{RMS}","side":-1},
+ {"t":"W","pts":[[7,0],[10,0]]},
+ {"t":"R","a":[10,0],"b":[10,3],"label":"R_{L2}","value":"10 Ω"},
+ {"t":"W","pts":[[10,3],[7,3]]},
+ {"t":"T","at":[5.5,4.3],"text":"P(R_{L1}) = P(R_{L2})","anchor":"middle"}
+],"alt":"Left: 10 V DC battery across a 10 ohm load R_L1. Right: 10 V RMS AC source across a 10 ohm load R_L2. Both loads dissipate the same power."}</script>
+<figcaption>Equal-heating comparison drawn at <a class="ts" data-t="29:05"></a>: 10 V DC across \(R_{L1} = 10\,\Omega\) and 10 V<sub>RMS</sub> AC across \(R_{L2} = 10\,\Omega\); the paper writes \(P_{R_{L1}} = P_{R_{L2}}\).</figcaption>
+</figure>
+<p>The two loads are identical; one is driven by <b>10 V DC</b>, the other by <b>10 V RMS AC</b> <a class="ts" data-t="27:52"></a>. The power dissipated by \(R_{L1}\) equals the power dissipated by \(R_{L2}\) <a class="ts" data-t="28:28"></a>: as far as power is concerned, 10 V RMS is functionally identical to 10 V DC <a class="ts" data-t="28:48"></a>.</p>
+<h3>3.2 Ohm's law and power with RMS values <a class="ts" data-t="29:13"></a></h3>
+<div class="formula">\[ V_{RMS} = I_{RMS}\,R \qquad\qquad P_{avg} = I_{RMS}\,V_{RMS} \]</div>
+<dl class="vardefs"><dt>\(V_{RMS}\)</dt><dd>RMS voltage across the resistor, V</dd><dt>\(I_{RMS}\)</dt><dd>RMS current through it, A</dd><dt>\(R\)</dt><dd>resistance, Ω</dd><dt>\(P_{avg}\)</dt><dd>average power dissipated, W</dd></dl>
+<p>These are Ohm's law and the power equation, "written a little differently" for AC <a class="ts" data-t="29:37"></a> (boxed on the paper at <a class="ts" data-t="32:30"></a>). They apply to resistors, with both quantities in RMS.</p>
+<div class="example" id="os1-ex4"><h3>Example 4 — 10 V RMS across a 10 Ω load <a class="ts" data-t="30:28"></a></h3>
+<p><b>Given:</b> \(V_{RMS} = 10\,\text{V}\), \(R_{L2} = 10\,\Omega\). <b>Find:</b> \(I_{RMS}\) and \(P_{avg}\).</p>
+<p class="step">1. Ohm's law with RMS values: \(I_{RMS} = \dfrac{V_{RMS}}{R} = \dfrac{10\,V_{RMS}}{10\,\Omega} = 1\,\text{A}\) RMS <a class="ts" data-t="30:56"></a>.</p>
+<p class="step">2. Average power: \(P_{avg} = I_{RMS}V_{RMS} = (1\,A_{RMS})(10\,V_{RMS}) = 10\,\text{W}\) <a class="ts" data-t="31:21"></a>.</p>
+<p class="step">3. Check against the DC circuit: 10 V DC across 10 Ω gives 1 A and 10 W — the same, which is the whole point of RMS.</p>
+<p class="answer">\(I_{RMS} = 1\,\text{A}\), \(P_{avg} = 10\,\text{W}\) (average power, not "RMS watts")</p>
+</div>
+<aside class="instructor"><p>Power is never stated in terms of RMS — there is no "root-mean-square power"; it is <b>average power</b> <a class="ts" data-t="31:54"></a>.</p></aside>
+<aside class="extra"><p><b>Why equal heating and "root of the mean of the square" are the same idea.</b> The instantaneous power in a resistor is \(p(t) = v(t)^2/R\), so the average power is \(\overline{v^2}/R\). A DC voltage \(V_{DC}\) gives \(V_{DC}^2/R\). Setting them equal gives \(V_{DC} = \sqrt{\overline{v^2}}\) — the RMS value. A numerical check: a 10 V RMS sine (14.14 V peak) on 10 Ω averages 10.0 W. Equivalent forms: \(P_{avg} = I_{RMS}^2R = V_{RMS}^2/R\).</p></aside>
+</section>
+
+<section class="g-sec" id="os1-scope-demo" data-kind="lesson" data-ts="2527-2907">
+<h2>4. Lab demo: the oscilloscope and the function generator</h2>
+<p>To <i>see</i> AC, the instructor turns on an <b>oscilloscope</b> — an instrument that lets you view a changing voltage with respect to time <a class="ts" data-t="43:11"></a> — and a <b>function generator</b>, which behaves like an AC voltage source <a class="ts" data-t="43:25"></a>. The scope in the video is a GW Instek digital oscilloscope, displayed on the computer through its PC software; the function generator itself is not shown on screen.</p>
+<h3>4.1 Connecting the probe and ground clip <a class="ts" data-t="43:42"></a></h3>
+<p>The probe goes into the measurement instrument, and the leads come out of the function generator <a class="ts" data-t="43:25"></a>. Voltage is always measured <b>between two points</b>, so as well as the "+" side of the AC source you must also connect the "−" side <a class="ts" data-t="43:42"></a>: the probe tip clips to the generator's red lead and the probe's ground clip to its black lead (visible at <a class="ts" data-t="45:00"></a>). Nothing else is connected yet — the scope is simply looking at what comes out of the generator <a class="ts" data-t="43:59"></a>.</p>
+<figure class="circuit" id="os1-fig-probe">
+<script type="application/json">{"padX":2.6,"parts":[
+ {"t":"VAC","a":[0,3],"b":[0,0],"label":"function","value":"generator","side":-1},
+ {"t":"W","pts":[[0,0],[4,0]]},
+ {"t":"W","pts":[[0,3],[4,3]]},
+ {"t":"M","a":[4,0],"b":[4,3],"sym":"V"},
+ {"t":"N","at":[4,0],"label":"probe tip","pos":"ne"},
+ {"t":"N","at":[4,3],"label":"ground clip","pos":"se"},
+ {"t":"T","at":[1.8,-0.4],"text":"red lead (+)","anchor":"middle","size":12},
+ {"t":"T","at":[1.8,3.7],"text":"black lead (−)","anchor":"middle","size":12},
+ {"t":"BOX","a":[3.2,-1.4],"b":[7.4,4.4],"label":"oscilloscope CH1"}
+],"alt":"Function generator output connected to oscilloscope channel 1: the probe tip on the red (+) lead and the ground clip on the black (-) lead."}</script>
+<figcaption>Measuring the function generator directly, set up at <a class="ts" data-t="45:00"></a>: probe tip on the "+" (red) lead, ground clip on the "−" (black) lead (schematic added for clarity).</figcaption>
+</figure>
+<p>Proof that the trace really is the generator: when he disconnects the probe (lower left of the video) the waveform disappears, and when he reconnects it the waveform comes back <a class="ts" data-t="45:12"></a>.</p>
+<h3>4.2 What the screen shows <a class="ts" data-t="45:22"></a></h3>
+<p>The screen is a voltage-versus-time graph laid over a grid. Reading the frames:</p>
+<table>
+<tr><th>Screen element</th><th>What it showed</th><th>Meaning</th></tr>
+<tr><td>Grid</td><td>10 divisions across, 8 down; dotted lines</td><td>Each square is one division; the horizontal centre line is 0 V for channel 1 (the yellow "1" marker on the left edge sits on it — no offset)</td></tr>
+<tr><td>Bottom bar, left: "① ═ 2V" → "① ═ 1V"</td><td>Channel 1, DC coupling (═), volts/division</td><td>Vertical scale: 2 V per division at first, 1 V per division after he zooms the vertical axis <a class="ts" data-t="46:10"></a></td></tr>
+<tr><td>Bottom bar, middle: "500us" → "50us"</td><td>Time per division</td><td>Horizontal scale: 500 μs/div at first, 50 μs/div after zooming in on the time axis</td></tr>
+<tr><td>Lower right: "F 10.0001kHz"</td><td>Automatic frequency measurement</td><td>Frequency of the displayed signal</td></tr>
+<tr><td>Bottom right: "① ƒ 1.2V DC" (later "80mV")</td><td>Trigger source, slope, level</td><td>Starts each sweep when CH1 rises through that level so the picture stands still ("Trig'd" at the top)</td></tr>
+<tr><td>Box at top left</td><td>Cursor readout (two times and voltages, Δ, dV/dt)</td><td>Not used or discussed in this part of the demo</td></tr>
+</table>
+<aside class="uncertain"><p>The channel-1 volts/division at <a class="ts" data-t="45:22"></a> and <a class="ts" data-t="46:10"></a> is partly hidden behind the webcam inset; it appears to read "2V" and then "1V". "① ═ 1V" is fully legible later, at <a class="ts" data-t="53:52"></a>. The probe attenuation (1×/10×) is never mentioned and is not shown on screen.</p></aside>
+<aside class="extra"><p><b>Reading the grid (not spelled out in the video).</b> Voltage = (number of vertical divisions) × (V/div); time = (number of horizontal divisions) × (time/div). Count the peak from the centre line, the peak-to-peak from the bottom to the top, and the period between two matching points (e.g. crest to crest). The examples below apply this to the settings shown on screen.</p></aside>
+<h3>4.3 Frequency, cycles and period <a class="ts" data-t="46:01"></a></h3>
+<p><b>Frequency is how many cycles per second.</b> The scope's readout in the lower right says 10 kHz, which means <b>10 000 cycles per second</b> <a class="ts" data-t="46:26"></a>. Each <b>cycle</b> is measured from where it starts to where it repeats; one cycle starts at one point along the x-axis and ends where the pattern begins again — and you get 10 000 of those every second.</p>
+<div class="formula">\[ f = \frac{1}{T} \qquad\Longleftrightarrow\qquad T = \frac{1}{f} \]</div>
+<dl class="vardefs"><dt>\(f\)</dt><dd>frequency, Hz = cycles per second</dd><dt>\(T\)</dt><dd>period = time for one cycle, s</dd></dl>
+<p>(The video defines frequency as cycles per second; \(T = 1/f\) follows directly — if 10 000 cycles fit in one second, each takes 1/10 000 s.)</p>
+<div class="example" id="os1-ex5"><h3>Example 5 — 10 kHz on the screen, before and after zooming the time base <a class="ts" data-t="46:01"></a></h3>
+<p><b>Given (screen):</b> frequency readout 10.0001 kHz; time base first 500 μs/div <a class="ts" data-t="45:22"></a>, then 50 μs/div <a class="ts" data-t="46:10"></a>. <b>Find:</b> the period and how many cycles fit on the 10-division screen.</p>
+<p class="step">1. Period: \(T = 1/f = 1/(10\,000\,\text{Hz}) = 0.0001\,\text{s} = 100\,\mu\text{s}\).</p>
+<p class="step">2. At 500 μs/div: one cycle spans \(100\,\mu\text{s} \div 500\,\mu\text{s/div} = 0.2\) div, so the 10-div screen (5 ms) holds \(5\,\text{ms}/100\,\mu\text{s} = 50\) cycles — the crowded "zoomed out" picture.</p>
+<p class="step">3. At 50 μs/div: one cycle spans \(100 \div 50 = 2\) divisions; the screen (500 μs) holds 5 cycles — individual cycles are now easy to see.</p>
+<p class="step">4. Reading it back from the grid: crest-to-crest = 2 div × 50 μs/div = 100 μs → \(f = 1/100\,\mu\text{s} = 10\,\text{kHz}\), agreeing with the readout.</p>
+<p class="answer">\(T = 100\,\mu\text{s}\); 50 cycles on screen at 500 μs/div, 5 cycles (2 div each) at 50 μs/div.</p>
+<figure class="scope" id="os1-fig-10k">
+<script type="application/json">{"type":"scope","ch":"CH1","vdiv":"1 V/div","tdiv":"50 µs/div","coupling":"DC","info":"F 10.0001 kHz","cols":10,"rows":8,"traces":[{"shape":"sine","amp":2.5,"period":2,"x0":1,"label":"CH1"}],"marks":[{"type":"span","x1":5.5,"y1":3.1,"x2":7.5,"y2":3.1,"label":"1 cycle = 2 div = 100 µs"}],"alt":"Scope at 1 V/div and 50 microseconds/div showing a 10 kHz sine: one cycle spans 2 divisions."}</script>
+<figcaption>Screen at <a class="ts" data-t="46:10"></a> (recreated): 1 V/div, 50 μs/div, F = 10.0001 kHz. Five cycles, 2 divisions each.</figcaption>
+</figure>
+</div>
+<h3>4.4 Turning the generator down to 60 Hz <a class="ts" data-t="46:50"></a></h3>
+<p>What comes out of our outlets is not 10 000 cycles per second but <b>60 cycles per second, 60 Hz</b>, so the instructor cranks the generator down to 60 Hz to match the wall <a class="ts" data-t="46:50"></a>. At first the scope is still set for the fast signal and is "quite zoomed out" in the wrong sense <a class="ts" data-t="47:20"></a>: at 50 μs/div the screen shows only a sliver of a 60 Hz cycle, and the frequency readout shows "&lt;2Hz" because it cannot find a complete cycle. After he changes the time scale the sine wave comes back <a class="ts" data-t="47:36"></a>.</p>
+<figure class="scope" id="os1-fig-60-wrong">
+<script type="application/json">{"type":"scope","ch":"CH1","vdiv":"1 V/div","tdiv":"50 µs/div","coupling":"DC","info":"F <2 Hz","cols":10,"rows":8,"traces":[{"fn":"2.5*sin(2*PI*(x-5)/333.3)","label":"CH1"}],"marks":[{"type":"text","x":5,"y":-1.5,"text":"only 0.03 of a cycle fits on screen"}],"alt":"Scope at 50 microseconds per division showing a 60 Hz sine: it looks like an almost flat, slightly rising line and the frequency readout says less than 2 Hz."}</script>
+<figcaption>A 60 Hz signal on a 50 μs/div time base (idealized recreation): almost a straight line, and F reads "&lt;2Hz" as on the scope at <a class="ts" data-t="47:18"></a>. That frame was caught while the instructor was still adjusting, so its trace is not a clean picture of this.</figcaption>
+</figure>
+<div class="example" id="os1-ex6"><h3>Example 6 — three cycles of 60 Hz on 5 ms/div <a class="ts" data-t="47:36"></a></h3>
+<p><b>Given (screen at <a class="ts" data-t="47:45"></a>):</b> 1 V/div, 5 ms/div, frequency readout 59.9924 Hz. <b>Find:</b> the period and the number of cycles on screen; check against the instructor's count.</p>
+<p class="step">1. Period: \(T = 1/f = 1/60\,\text{Hz} = 16.67\,\text{ms}\) (from the readout, \(1/59.9924 = 16.669\,\text{ms}\)).</p>
+<p class="step">2. Divisions per cycle: \(16.67\,\text{ms} \div 5\,\text{ms/div} = 3.33\) div.</p>
+<p class="step">3. Screen width: \(10\,\text{div} \times 5\,\text{ms/div} = 50\,\text{ms}\); cycles shown \(= 50\,\text{ms} / 16.67\,\text{ms} = 3\).</p>
+<p class="answer">\(T \approx 16.7\,\text{ms}\) ≈ 3.33 div per cycle → about 3 cycles on screen — matching the instructor's count "one, two, about three cycles" <a class="ts" data-t="47:36"></a>.</p>
+<figure class="scope" id="os1-fig-60">
+<script type="application/json">{"type":"scope","ch":"CH1","vdiv":"1 V/div","tdiv":"5 ms/div","coupling":"DC","info":"F 59.9924 Hz","cols":10,"rows":8,"traces":[{"shape":"sine","amp":2.5,"period":3.333,"x0":5,"label":"CH1"}],"marks":[{"type":"span","x1":5.833,"y1":3.1,"x2":9.167,"y2":3.1,"label":"1 cycle ≈ 3.33 div = 16.7 ms"}],"alt":"Scope at 5 ms per division showing a 60 Hz sine: one cycle spans about 3.33 divisions, three cycles across the screen."}</script>
+<figcaption>Screen at <a class="ts" data-t="47:45"></a> (recreated): 60 Hz at 5 ms/div — about three cycles across the 10 divisions.</figcaption>
+</figure>
+</div>
+<div class="example" id="os1-ex7"><h3>Example 7 — back to 1 kHz: period and amplitude from the grid <a class="ts" data-t="47:56"></a></h3>
+<p><b>Given (screen at <a class="ts" data-t="48:34"></a>):</b> the instructor goes back up to 1 kHz "for the sake of this example"; settings 1 V/div, 500 μs/div, DC coupling; readout 999.994 Hz. <b>Find:</b> divisions per cycle, and the amplitude read from the grid.</p>
+<p class="step">1. Period: \(T = 1/1000\,\text{Hz} = 1\,\text{ms}\) → \(1\,\text{ms} \div 0.5\,\text{ms/div} = 2\) div per cycle (5 cycles on screen) — consistent with the trace, whose crests are 2 divisions apart.</p>
+<p class="step">2. Amplitude: the crests reach about 2½ divisions above the centre line → \(V_{pk} \approx 2.5\,\text{div} \times 1\,\text{V/div} \approx 2.5\,\text{V}\).</p>
+<p class="step">3. Converting (sine): \(V_{pp} \approx 5\,\text{V}\), \(V_{RMS} \approx 0.707 \times 2.5 \approx 1.8\,\text{V}\).</p>
+<p class="answer">\(T = 1\,\text{ms}\) (2 div); amplitude ≈ 2.5 V peak ≈ 5 V p-p (estimate read from the frame).</p>
+<aside class="uncertain"><p>The instructor never states the generator's amplitude; the ≈2.5 V peak figure is this guide's reading of the grid (crests about 2.4–2.6 divisions above centre at 1 V/div), so treat it as approximate.</p></aside>
+<figure class="scope" id="os1-fig-1k">
+<script type="application/json">{"type":"scope","ch":"CH1","vdiv":"1 V/div","tdiv":"500 µs/div","coupling":"DC","info":"F 999.994 Hz","cols":10,"rows":8,"traces":[{"shape":"sine","amp":2.5,"period":2,"x0":0,"label":"CH1"}],"marks":[{"type":"hline","y":2.5,"label":"2.5 div"},{"type":"span","x1":4.5,"y1":3.3,"x2":6.5,"y2":3.3,"label":"T = 2 div = 1 ms"}],"alt":"Scope at 1 V/div and 500 microseconds/div showing a 1 kHz sine of about 2.5 V peak; one cycle spans 2 divisions."}</script>
+<figcaption>Screen at <a class="ts" data-t="48:34"></a> (recreated): 1 kHz from the function generator, 1 V/div, 500 μs/div.</figcaption>
+</figure>
+</div>
+</section>
+
+<section class="g-sec" id="os1-transformer-scope" data-kind="lesson" data-ts="2907-3584">
+<h2>5. AC versus DC through a transformer, seen on the scope</h2>
+<h3>5.1 AC goes through <a class="ts" data-t="48:27"></a></h3>
+<p>With the generator at 1 kHz, the instructor connects the generator's leads to the transformer's <b>input (primary)</b> and moves the probe to the <b>output (secondary)</b> <a class="ts" data-t="48:52"></a>. The output is a sine wave: "it's exactly what I said, I'm getting AC out of this." He considers adding a second probe to show input and output together but decides it would take too long <a class="ts" data-t="49:42"></a>, so input and output are viewed one at a time.</p>
+<figure class="circuit" id="os1-fig-xfmr-ac">
+<script type="application/json">{"padX":3,"parts":[
+ {"t":"VAC","a":[0,3],"b":[0,0],"label":"function gen.","value":"1 kHz","side":-1},
+ {"t":"W","pts":[[0,0],[3,0]]},
+ {"t":"W","pts":[[0,3],[3,3]]},
+ {"t":"L","a":[3,0],"b":[3,3],"label":"primary","side":-1},
+ {"t":"W","pts":[[3.6,0.2],[3.6,2.8]]},
+ {"t":"W","pts":[[3.8,0.2],[3.8,2.8]]},
+ {"t":"L","a":[4.4,0],"b":[4.4,3],"label":"secondary"},
+ {"t":"W","pts":[[4.4,0],[7.5,0]]},
+ {"t":"W","pts":[[4.4,3],[7.5,3]]},
+ {"t":"N","at":[7.5,0],"label":"probe tip","pos":"e","open":true},
+ {"t":"N","at":[7.5,3],"label":"ground clip","pos":"e","open":true},
+ {"t":"T","at":[3.7,-0.6],"text":"1 : 1","anchor":"middle"}
+],"alt":"Function generator at 1 kHz driving the primary of a 1:1 transformer; the scope probe tip and ground clip are on the secondary."}</script>
+<figcaption>Transformer demo set-up at <a class="ts" data-t="49:10"></a>: generator on the primary, scope probe on the secondary (schematic added for clarity; the instructor's small transformer is 1 : 1 — see Example 8).</figcaption>
+</figure>
+<p>The scope at <a class="ts" data-t="50:00"></a> shows the secondary at 1 V/div and 500 μs/div with a readout of 999.971 Hz: still 2 divisions per cycle (same frequency as the input), and crests about 2½–2.6 divisions high — essentially the same size as the generator signal in Example 7.</p>
+<figure class="scope" id="os1-fig-xfmr-out">
+<script type="application/json">{"type":"scope","ch":"CH1","vdiv":"1 V/div","tdiv":"500 µs/div","coupling":"DC","info":"F 999.971 Hz","cols":10,"rows":8,"traces":[{"shape":"sine","amp":2.6,"period":2,"x0":0,"label":"secondary"}],"marks":[{"type":"hline","y":2.6,"label":"≈ 2.6 div"}],"alt":"Scope showing the transformer secondary: a 1 kHz sine about 2.6 divisions tall at 1 V/div, the same as the input."}</script>
+<figcaption>Transformer output at <a class="ts" data-t="50:00"></a> (recreated): same frequency, about the same amplitude as the input.</figcaption>
+</figure>
+<div class="example" id="os1-ex8"><h3>Example 8 — why the output looked the same as the input (1 : 1 transformer) <a class="ts" data-t="1:08:29"></a></h3>
+<p>Later in the video the instructor explains the demo: "this is a one-to-one transformer — that's why you did not see any magnitude change when I probed the input versus the output."</p>
+<p class="step">1. Transformer relation (taught at <a class="ts" data-t="1:06:32"></a>): \(\dfrac{N_P}{N_S} = \dfrac{V_P}{V_S}\).</p>
+<p class="step">2. For 1 : 1, \(N_P/N_S = 1\), so \(V_S = V_P\) — the same type of voltage (peak, p-p or RMS) on both sides. His board example: 10 V<sub>pk</sub> in → 10 V<sub>pk</sub> out <a class="ts" data-t="1:08:10"></a>.</p>
+<p class="step">3. Applied to the scope: input ≈ 2.5 div at 1 V/div → output ≈ 2.5 div at 1 V/div, same 1 kHz.</p>
+<p class="answer">A 1 : 1 transformer passes the AC unchanged in size and frequency, which is what the scope showed.</p>
+</div>
+<h3>5.2 DC does not go through: the 9 V battery <a class="ts" data-t="50:38"></a></h3>
+<p>Why not? With AC, the alternating current in the primary acts like a generator, inducing alternating current in the secondary. With a <b>constant</b> voltage on the primary, the magnetic field grows as large as it can and then just stays there; it doesn't get bigger or smaller, so nothing more is induced <a class="ts" data-t="51:05"></a>. The electrons in the secondary get one initial push and then nothing <a class="ts" data-t="51:32"></a>.</p>
+<p>Demonstration <a class="ts" data-t="52:01"></a>: a 9 V battery on the primary — black mini-grabber clip on the battery's "−" terminal, yellow clip on "+9 V" — and the scope on the secondary <a class="ts" data-t="52:54"></a>. Result: "nothing… we have no voltage coming out of this" <a class="ts" data-t="53:46"></a>. When the battery was first attached there was a brief change in the field, but once the field stopped changing the output was zero <a class="ts" data-t="54:23"></a>. The paper summarises: AC in → AC out; DC in → ⊘ → 0 V, "DC cannot pass" <a class="ts" data-t="53:25"></a>.</p>
+<figure class="circuit" id="os1-fig-xfmr-dc">
+<script type="application/json">{"padX":3,"parts":[
+ {"t":"BAT","a":[0,3],"b":[0,0],"label":"9 V","plus":"b","side":-1},
+ {"t":"W","pts":[[0,0],[3,0]]},
+ {"t":"W","pts":[[0,3],[3,3]]},
+ {"t":"L","a":[3,0],"b":[3,3],"label":"primary","side":-1},
+ {"t":"W","pts":[[3.6,0.2],[3.6,2.8]]},
+ {"t":"W","pts":[[3.8,0.2],[3.8,2.8]]},
+ {"t":"L","a":[4.4,0],"b":[4.4,3],"label":"secondary"},
+ {"t":"W","pts":[[4.4,0],[7.5,0]]},
+ {"t":"W","pts":[[4.4,3],[7.5,3]]},
+ {"t":"N","at":[7.5,0],"label":"probe tip","pos":"e","open":true},
+ {"t":"N","at":[7.5,3],"label":"ground clip","pos":"e","open":true},
+ {"t":"T","at":[7.9,1.6],"text":"scope reads 0 V","anchor":"start","cls":"accent"}
+],"alt":"A 9 V battery on the transformer primary; the scope on the secondary reads 0 V."}</script>
+<figcaption>DC test at <a class="ts" data-t="53:25"></a>: 9 V battery on the primary, scope on the secondary (schematic added for clarity).</figcaption>
+</figure>
+<figure class="scope" id="os1-fig-dc-out">
+<script type="application/json">{"type":"scope","ch":"CH1","vdiv":"1 V/div","tdiv":"500 µs/div","coupling":"DC","info":"F <2 Hz   Trig?","cols":10,"rows":8,"traces":[{"shape":"dc","offset":0,"label":"secondary"}],"marks":[{"type":"text","x":5,"y":1,"text":"flat line on the 0 V centre line"}],"alt":"Scope at 1 V/div showing a flat line at 0 V: no output from the transformer with a DC input."}</script>
+<figcaption>Scope at <a class="ts" data-t="53:52"></a> (recreated): CH1 "① ═ 1V" (DC coupled, 1 V/div), 500 μs/div; a flat trace on the centre (0 V) line, frequency "&lt;2Hz", trigger status "Trig?" (nothing to trigger on).</figcaption>
+</figure>
+<h3>5.3 Seeing the alternating field: the compass demo <a class="ts" data-t="54:48"></a></h3>
+<p>Inside a transformer driven by AC the magnetic field keeps alternating. To show it, the instructor places a plain coil of wire (an inductor) next to a compass and drives it from the function generator <a class="ts" data-t="56:35"></a>:</p>
+<ul>
+<li>At <b>1 Hz</b> the compass needle wobbles back and forth once per second — one cycle per second <a class="ts" data-t="57:02"></a>.</li>
+<li>At <b>2 Hz</b> it wobbles twice as fast <a class="ts" data-t="57:26"></a>.</li>
+<li>Increasing the <b>amplitude</b> gives a stronger magnetic field, so the needle swings further ("more weeble to my wobble") <a class="ts" data-t="57:52"></a>.</li>
+<li>With straight <b>DC</b> the needle just gets stuck in one direction — a one-time push and that's it <a class="ts" data-t="58:51"></a>.</li>
+</ul>
+<aside class="extra"><p>The compass makes frequency tangible: at 1 Hz the period is \(T = 1/1\,\text{Hz} = 1\,\text{s}\) per swing cycle, at 2 Hz it is 0.5 s. At 60 Hz (16.7 ms) or 1 kHz (1 ms) the changes are far too fast for a compass or your eye to follow — which is exactly why the oscilloscope is needed.</p></aside>
+</section>
+
+<section class="g-sec" id="os1-wall-measure" data-kind="lesson" data-ts="4637-5276">
+<h2>6. Measuring a wall transformer with the scope's cursors</h2>
+<h3>6.1 Set-up and safety <a class="ts" data-t="1:18:09"></a></h3>
+<p>Now the input is the wall outlet: 120 V RMS into the primary of a larger transformer <a class="ts" data-t="1:18:09"></a>. (He remarks that once you start looking at changing voltages you really need something to view them, and the oscilloscope is your number one tool for that <a class="ts" data-t="1:18:34"></a>.) He probes the <b>output</b> first, between the outer secondary terminals ("don't worry about that center tap for now") <a class="ts" data-t="1:19:28"></a>.</p>
+<figure class="circuit" id="os1-fig-wall">
+<script type="application/json">{"padX":3.4,"parts":[
+ {"t":"VAC","a":[0,3],"b":[0,0],"label":"wall outlet","value":"120 V_{RMS}, 60 Hz","side":-1},
+ {"t":"W","pts":[[0,0],[3,0]]},
+ {"t":"W","pts":[[0,3],[3,3]]},
+ {"t":"L","a":[3,0],"b":[3,3],"label":"primary","side":-1},
+ {"t":"W","pts":[[3.6,0.2],[3.6,2.8]]},
+ {"t":"W","pts":[[3.8,0.2],[3.8,2.8]]},
+ {"t":"L","a":[4.4,0],"b":[4.4,3],"label":"secondary"},
+ {"t":"W","pts":[[4.4,0],[7.5,0]]},
+ {"t":"W","pts":[[4.4,3],[7.5,3]]},
+ {"t":"N","at":[7.5,0],"open":true},
+ {"t":"N","at":[7.5,3],"open":true},
+ {"t":"VM","a":[8.1,0.3],"b":[8.1,2.7],"label":"V_S: 80 V p-p","lat":[8.4,1.5]},
+ {"t":"T","at":[1.6,3.7],"text":"V_P: 340 V p-p","anchor":"middle"}
+],"alt":"Wall outlet 120 V RMS 60 Hz on the transformer primary; the scope measures 340 V peak-to-peak on the primary and 80 V peak-to-peak on the secondary."}</script>
+<figcaption>Wall-transformer measurement (schematic added for clarity) with the two scope readings: output measured at <a class="ts" data-t="1:21:19"></a>, input at <a class="ts" data-t="1:24:40"></a>.</figcaption>
+</figure>
+<h3>6.2 Output: adjusting the vertical scale <a class="ts" data-t="1:20:10"></a></h3>
+<p>With the scope still at 1 V/div the trace is far too big — "it's a bit high" — so he changes the vertical scale <a class="ts" data-t="1:20:10"></a> and backs it off <a class="ts" data-t="1:20:37"></a>. The screen at <a class="ts" data-t="1:20:50"></a> shows <b>20 V/div</b>, <b>5 ms/div</b>, DC coupling, frequency 60.0106 Hz.</p>
+<ul>
+<li>Peaks: about 2 divisions above and below centre → \(2 \times 20\,\text{V/div} = 40\,\text{V}\) peak.</li>
+<li>Period: about 3⅓ divisions per cycle → \(3.33 \times 5\,\text{ms} = 16.7\,\text{ms}\) → 60 Hz (three cycles on the screen), agreeing with the readout.</li>
+</ul>
+<div class="example" id="os1-ex9"><h3>Example 9 — output voltage with the cursors <a class="ts" data-t="1:20:37"></a></h3>
+<p><b>Given (screen at <a class="ts" data-t="1:21:35"></a>):</b> 20 V/div, 5 ms/div; one horizontal cursor placed at the bottom of the waveform and one at the top <a class="ts" data-t="1:21:00"></a>. Cursor readout: cursor 1 = 40.0 V, cursor 2 = −39.2 V, Δ = 79.2 V. <b>Find:</b> \(V_{pp}\), \(V_{pk}\), \(V_{RMS}\).</p>
+<p class="step">1. The Δ readout is the difference between the high and the low voltage — that is the peak-to-peak value: \(40.0 - (-39.2) = 79.2\,\text{V}\), which the instructor rounds to <b>80 V peak-to-peak</b>: the top cursor is at 40 V and the bottom cursor at about −40 V <a class="ts" data-t="1:21:19"></a>.</p>
+<p class="step">2. Peak = half of peak-to-peak: \(80/2 = 40\,V_{pk}\) <a class="ts" data-t="1:21:44"></a>.</p>
+<p class="step">3. RMS (sine): \(V_{RMS} = \frac{1}{\sqrt2}(40\,\text{V}) = 0.707 \times 40 = 28.28\,V_{RMS}\) <a class="ts" data-t="1:22:10"></a>.</p>
+<p class="answer">Output: 80 V<sub>pkpk</sub> = 40 V<sub>pk</sub> = 28.28 V<sub>RMS</sub> (written on the paper at <a class="ts" data-t="1:26:40"></a>)</p>
+<figure class="scope" id="os1-fig-wall-out">
+<script type="application/json">{"type":"scope","ch":"CH1","vdiv":"20 V/div","tdiv":"5 ms/div","coupling":"DC","info":"F 60.02 Hz","cols":10,"rows":8,"traces":[{"shape":"sine","amp":2,"period":3.333,"x0":5,"label":"secondary"}],"marks":[{"type":"hline","y":2.0},{"type":"hline","y":-1.96},{"type":"text","x":0.2,"y":2.15,"text":"cursor 1: 40.0 V","anchor":"start"},{"type":"text","x":0.2,"y":-2.45,"text":"cursor 2: −39.2 V","anchor":"start"},{"type":"span","x1":0.1,"y1":-1.96,"x2":0.1,"y2":2.0},{"type":"text","x":0.3,"y":0.55,"text":"Δ 79.2 V","anchor":"start"}],"alt":"Scope at 20 V/div and 5 ms/div showing the 60 Hz transformer output; cursors at +40.0 V and -39.2 V, delta 79.2 V."}</script>
+<figcaption>Output with cursors at <a class="ts" data-t="1:21:35"></a> (recreated): 20 V/div, 5 ms/div; cursors 40.0 V and −39.2 V, Δ 79.2 V.</figcaption>
+</figure>
+</div>
+<p>The scope was also displaying an automatic "Rise Time 4.699 ms" measurement at this point; the instructor didn't use it.</p>
+<h3>6.3 Input: measuring the wall outlet <a class="ts" data-t="1:22:36"></a></h3>
+<aside class="instructor"><p>There are 120 V coming out of the wall — "I don't suggest playing with your wall outlets unless you know what you're doing." Before probing, he checks the instrument's rating: <b>"my oscilloscope is rated to safely do 300 volts RMS, so 120 volts should not be an issue"</b> <a class="ts" data-t="1:23:26"></a>, and he takes care not to short anything. The probe pierces the heat-shrink tubing he had put over the primary connections to keep from touching them <a class="ts" data-t="1:23:50"></a>.</p></aside>
+<div class="example" id="os1-ex10"><h3>Example 10 — input (wall) voltage with the cursors <a class="ts" data-t="1:24:10"></a></h3>
+<p><b>Given (screen at <a class="ts" data-t="1:24:58"></a>):</b> same 5 ms/div time base, readout 60.02 Hz; cursor readout: cursor 1 = 172 V, cursor 2 = −176 V, Δ = 348 V. <b>Find:</b> \(V_{pk}\), \(V_{pp}\), \(V_{RMS}\) and compare with the outlet values from section 2.</p>
+<p class="step">1. Peak: the top cursor reads 172 V; the instructor reads it as "about 170 volts" peak <a class="ts" data-t="1:24:40"></a> — "exactly what I expect to get out of my electrical outlets."</p>
+<p class="step">2. Peak-to-peak: Δ = \(172 - (-176) = 348\,\text{V}\); the instructor says "look at the delta, 340 volts peak to peak", adding that he should have "backed this off a little bit" <a class="ts" data-t="1:24:40"></a>.</p>
+<p class="step">3. RMS: \(0.707 \times 170 = 120\,V_{RMS}\).</p>
+<p class="step">4. Rating check: 120 V RMS is well below the scope's 300 V RMS rating.</p>
+<p class="answer">Input: 340 V<sub>pkpk</sub> = 170 V<sub>pk</sub> = 120 V<sub>RMS</sub> — what the instructor said comes out of the outlet.</p>
+<figure class="scope" id="os1-fig-wall-in">
+<script type="application/json">{"type":"scope","ch":"CH1","vdiv":"≈100 V/div (inferred)","tdiv":"5 ms/div","coupling":"DC","info":"F 60.02 Hz","cols":10,"rows":8,"traces":[{"shape":"sine","amp":1.7,"period":3.333,"x0":5,"label":"primary (wall)"}],"marks":[{"type":"hline","y":1.72},{"type":"hline","y":-1.76},{"type":"text","x":0.2,"y":1.87,"text":"cursor 1: 172 V","anchor":"start"},{"type":"text","x":0.2,"y":-2.25,"text":"cursor 2: −176 V","anchor":"start"},{"type":"span","x1":0.1,"y1":-1.76,"x2":0.1,"y2":1.72},{"type":"text","x":0.3,"y":0.55,"text":"Δ 348 V","anchor":"start"}],"alt":"Scope showing the 60 Hz wall voltage about 1.7 divisions tall; cursors at 172 V and -176 V, delta 348 V."}</script>
+<figcaption>Input with cursors at <a class="ts" data-t="1:24:58"></a> (recreated): cursors 172 V and −176 V, Δ 348 V. The volts/division setting is hidden behind the webcam inset; the trace height (≈1.7 div for ≈172 V) implies about 100 V/div.</figcaption>
+</figure>
+</div>
+<aside class="uncertain"><p><b>Rounding, not an error.</b> The cursor readouts were 79.2 V and 348 V peak-to-peak; the instructor rounds them to 80 V and 340 V (and the peaks to 40 V and 170 V). The input's bottom cursor (−176 V) sat a little below the waveform, which is why its Δ is larger than 2 × 172. Neither the probe attenuation (1×/10×) nor the input's volts/division is visible or mentioned.</p></aside>
+<aside class="extra"><p><b>Rating in other units.</b> 300 V RMS corresponds (for a sine) to \(300\sqrt2 \approx 424\,\text{V}\) peak, so the outlet's 170 V peak is comfortably inside it. Always compare like with like: RMS with RMS, peak with peak. Ratings also depend on the probe and on its 1×/10× setting, so check the probe's own marking too.</p></aside>
+<h3>6.4 Turns ratio from the two scope readings <a class="ts" data-t="1:25:41"></a></h3>
+<p>This is a transformer calculation, but it is how the instructor interprets the two measurements, so it is worked here.</p>
+<div class="example" id="os1-ex11"><h3>Example 11 — step-down and 4.25 : 1 <a class="ts" data-t="1:26:05"></a></h3>
+<p><b>Given:</b> input 170 V<sub>pk</sub>, output 40 V<sub>pk</sub> (both peak — same type of voltage). <b>Find:</b> step-up or step-down, and the turns ratio.</p>
+<p class="step">1. Less voltage comes out than goes in (40 V &lt; 170 V), so it is a <b>step-down transformer</b> <a class="ts" data-t="1:26:34"></a>.</p>
+<p class="step">2. Turns ratio = voltage ratio: \(\dfrac{N_P}{N_S} = \dfrac{V_P}{V_S} = \dfrac{170\,V_{pk}}{40\,V_{pk}} = 4.25\) <a class="ts" data-t="1:27:16"></a>.</p>
+<p class="step">3. The primary has more turns than the secondary, because the side with fewer turns has the lower voltage.</p>
+<p class="step">4. Check with the other voltage types: p-p \(340/80 = 4.25\); RMS \(120/28.28 = 4.24\). (With the unrounded cursor values, \(348/79.2 = 4.39\).)</p>
+<p class="answer">\(N_P : N_S = 4.25 : 1\), a step-down transformer (paper at <a class="ts" data-t="1:27:35"></a>).</p>
+</div>
+<aside class="extra"><p>The transformer's label, visible at <a class="ts" data-t="1:19:35"></a>, appears to read "117V Pri." and "12V CT 12V Sec." (24 V centre-tapped). Measured unloaded, 28.3 V RMS is higher than the 24 V rating; small transformers are rated at full load and their unloaded output is noticeably higher, so a ratio computed from unloaded measurements (4.25) differs from the nameplate ratio (117/24 ≈ 4.9). This doesn't change anything in the video's method.</p></aside>
+</section>
+
+<section class="g-sec" id="os1-other" data-kind="lesson">
+<h2>Other content in this video (outside this topic)</h2>
+<p>Transformer theory is taught in the rest of the video. Only an outline is given here; the parts needed to interpret scope readings are worked in sections 5 and 6.</p>
+<ul>
+<li><a class="ts" data-t="32:40"></a> AC is "already changing", which a transformer can make use of; transformers are why Tesla's AC won — they make a voltage higher or lower <a class="ts" data-t="33:57"></a>.</li>
+<li><a class="ts" data-t="35:15"></a> Transformers only work with AC. Schematic symbol: two coupled coils; input side = <b>primary</b>, output side = <b>secondary</b> <a class="ts" data-t="35:48"></a>.</li>
+<li><a class="ts" data-t="36:39"></a> The coils are not electrically connected; they share a magnetic field. Physical picture: a ferrous <b>core</b> with primary and secondary <b>windings</b> <a class="ts" data-t="37:23"></a>; an air core also works if the coils are close <a class="ts" data-t="38:05"></a>.</li>
+<li><a class="ts" data-t="39:51"></a> Small-signal and larger transformers shown; primaries and secondaries are electrically isolated <a class="ts" data-t="40:50"></a>; AC in the primary makes the core's field alternate, inducing AC in the secondary <a class="ts" data-t="41:15"></a>.</li>
+<li><a class="ts" data-t="59:44"></a> Summary: a transformer works for AC, not DC; it is just coils of wire, and that simplicity is why AC won for power distribution <a class="ts" data-t="1:00:33"></a>.</li>
+<li><a class="ts" data-t="1:01:54"></a> <b>Turns ratio</b> \(N_P : N_S\) (e.g. 10 turns : 10 turns = 1 : 1) <a class="ts" data-t="1:03:28"></a>; only the ratio matters, not the absolute number of turns <a class="ts" data-t="1:05:07"></a>.</li>
+<li><a class="ts" data-t="1:05:56"></a> \(N_P/N_S = V_P/V_S\). 1 : 1 example: 10 V<sub>pk</sub> in → 10 V<sub>pk</sub> out <a class="ts" data-t="1:07:07"></a>; keep the voltage type (peak, p-p or RMS) the same on both sides <a class="ts" data-t="1:07:37"></a>.</li>
+<li><a class="ts" data-t="1:08:56"></a> <b>Step-up</b> (increases \(V_S\): \(V_P \lt V_S\)) and <b>step-down</b> (decreases \(V_S\): \(V_P \gt V_S\)) transformers.</li>
+<li><a class="ts" data-t="1:10:28"></a> Step-up example: 1 : 4 with 120 V<sub>RMS</sub> in → \(120 \times 4 = 480\,V_{RMS}\) out <a class="ts" data-t="1:13:18"></a>; the instructor's shortcut: multiply when the bigger number is on the secondary, divide when it is on the primary <a class="ts" data-t="1:13:53"></a>. A step-down transformer can be flipped and used as a step-up <a class="ts" data-t="1:11:30"></a>.</li>
+<li><a class="ts" data-t="1:14:45"></a> Step-down example: 2 : 1 with 60 V<sub>pkpk</sub> in → \(60/2 = 30\,V_{pkpk}\) out <a class="ts" data-t="1:15:53"></a>.</li>
+<li><a class="ts" data-t="1:17:17"></a> Q&amp;A: distribution lines run at thousands of volts because transmitting at higher voltage is more efficient; a practical limit is core saturation <a class="ts" data-t="1:17:43"></a>. At-home oscilloscopes for 211/311 mentioned <a class="ts" data-t="1:18:34"></a>.</li>
+<li><a class="ts" data-t="1:27:56"></a> Wrap-up; childhood outlet anecdote (non-instructional) <a class="ts" data-t="1:28:22"></a>.</li>
+</ul>
+</section>
+
+<section class="g-sec" id="os1-assumptions" data-kind="assumptions">
+<h2>Assumptions &amp; limitations</h2>
+<ul>
+<li><b>Sine-wave assumption.</b> \(V_{RMS} = V_{pk}/\sqrt2 \approx 0.707\,V_{pk}\) and \(V_{pp} = 2V_{pk}\) hold for a <b>pure sine wave centred on 0 V</b> (no DC offset). Other shapes have different RMS factors, and a waveform with a DC offset does not have \(V_{pp} = 2V_{pk}\) measured from 0 V. Everything in this video is a sine wave.</li>
+<li><b>0.707 is rounded.</b> \(1/\sqrt2 = 0.70711\ldots\); 0.707 × 170 gives 120.19 V instead of 120.21 V — fine for lab work.</li>
+<li><b>RMS Ohm's law and power</b> (\(V_{RMS} = I_{RMS}R\), \(P_{avg} = I_{RMS}V_{RMS}\)) as used here apply to <b>resistive</b> loads. With capacitors and inductors, voltage and current are out of phase and later lessons add more to the power calculation.</li>
+<li><b>Same voltage type on both sides</b> of any ratio or conversion: peak with peak, p-p with p-p, RMS with RMS.</li>
+<li><b>Reading the scope screen.</b> Divisions × volts/div gives volts only if the scope's probe setting matches the probe (1× or 10×); the cursor and automatic readouts depend on it too. Grid readings by eye are approximate (±0.1–0.2 div); cursors and automatic measurements are more precise.</li>
+<li><b>Frequency readout</b> needs at least about one full, triggered cycle on screen; with too fast a time base it reports "&lt;2Hz" (seen at <a class="ts" data-t="47:18"></a>).</li>
+<li><b>Mains measurements</b> are only safe within the scope's and probe's ratings (here "rated to safely do 300 V RMS"); 120 V RMS (170 V peak) is inside that rating.</li>
+<li><b>Transformers</b> pass only <i>changing</i> (AC) signals; a steady DC input gives at most a brief transient, then 0 V.</li>
+<li>The turns ratio from measured voltages assumes an ideal transformer; real, unloaded transformers give a somewhat higher output than their rating.</li>
+</ul>
+</section>
+
+<section class="g-sec" id="os1-mistakes" data-kind="mistakes">
+<h2>Common mistakes</h2>
+<ul>
+<li><b>Dropping the qualifier.</b> "30 V" is not an answer — say 30 V peak, 30 V p-p or 30 V RMS. The instructor insists on this every time (<a class="ts" data-t="1:13:38"></a>, <a class="ts" data-t="1:16:17"></a>, <a class="ts" data-t="1:21:19"></a>).</li>
+<li><b>Mixing peak and RMS</b>, e.g. dividing 170 V peak by 28.28 V RMS (gives 6.0, not 4.25). Convert both readings to the same type first.</li>
+<li><b>Using \(V_{pp}\) in place of \(V_{pk}\)</b> in \(V_{RMS} = 0.707\,V_{pk}\): \(0.707 \times 80 = 56.6\,\text{V}\) is wrong for the 80 V p-p reading; halve it first (40 V peak → 28.28 V RMS).</li>
+<li><b>Treating the average of a sine as its size.</b> It is 0 V; that's why RMS exists.</li>
+<li><b>Calling power "RMS power".</b> It's average power, \(P_{avg} = I_{RMS}V_{RMS}\).</li>
+<li><b>Counting divisions from the wrong place.</b> Peak is from the centre (0 V) line to the top; peak-to-peak from the bottom to the top. Multiply by the V/div setting <i>shown on the screen</i> — it changes when you rescale (2 V → 1 V → 20 V per division in this video).</li>
+<li><b>Wrong time base.</b> Too slow (500 μs/div for 10 kHz) crams 50 cycles together; too fast (50 μs/div for 60 Hz) shows a nearly flat line and the frequency readout gives up. Aim for a few cycles on screen.</li>
+<li><b>Measuring with only one lead.</b> Voltage is between two points: the ground clip must be on the source's "−"/reference. With the probe disconnected the trace disappears (shown at <a class="ts" data-t="45:12"></a>).</li>
+<li><b>Expecting a transformer to pass DC.</b> A 9 V battery on the primary gives a flat 0 V line on the secondary.</li>
+<li><b>Connecting a scope to mains without checking ratings</b> or with exposed conductors. Check the rating (here 300 V RMS) and never touch exposed mains connections.</li>
+</ul>
+</section>
+
+<section class="g-sec" id="os1-recap" data-kind="recap">
+<h2>Recap &amp; formula sheet</h2>
+<ul>
+<li>DC is a constant line on a v–t graph; AC is a sine wave centred on 0 V with a positive and a negative alternation each cycle (current reverses).</li>
+<li>Three magnitudes for the same sine: <b>peak</b> (0 V to top), <b>peak-to-peak</b> (bottom to top = 2 × peak), <b>RMS</b> (= 0.707 × peak). US outlet: 170 V peak = 340 V p-p = 120 V RMS.</li>
+<li>RMS = square → mean → root; it is the AC value giving the same heating as that much DC, so Ohm's law and \(P_{avg} = I_{RMS}V_{RMS}\) work with RMS values.</li>
+<li>Frequency = cycles per second (Hz); period \(T = 1/f\). Mains is 60 Hz (16.7 ms).</li>
+<li>Scope: probe tip on the signal, ground clip on the reference; the grid is a voltage-vs-time graph; value = divisions × (V/div or time/div). Use the frequency readout and Δ cursors for quick measurements, and pick a time base that shows a few cycles.</li>
+<li>Transformers pass AC, not DC (9 V battery → 0 V out). Wall transformer: 340 V p-p (170 V peak) in, 80 V p-p (40 V peak, 28.28 V RMS) out → 4.25 : 1 step-down.</li>
+</ul>
+<div class="formula-sheet">
+<p><b>Amplitude conversions (sine wave, no DC offset)</b></p>
+<div class="formula">\[ V_{pp} = 2V_{pk} \qquad V_{RMS} = \frac{V_{pk}}{\sqrt2} \approx 0.707\,V_{pk} \qquad V_{pk} = \sqrt2\,V_{RMS} \approx 1.414\,V_{RMS} \]</div>
+<dl class="vardefs"><dt>\(V_{pk}\)</dt><dd>peak voltage (0 V to maximum), V</dd><dt>\(V_{pp}\)</dt><dd>peak-to-peak voltage (minimum to maximum), V</dd><dt>\(V_{RMS}\)</dt><dd>root-mean-square voltage, V</dd></dl>
+<p><b>RMS from its definition</b> (square → mean → root)</p>
+<div class="formula">\[ V_{RMS} = \sqrt{\overline{v^2}} = \sqrt{\tfrac12 V_{pk}^2}\ \ (\text{sine}) \qquad I_{RMS} = 0.707\,I_{pk} \]</div>
+<p><b>Ohm's law and power with RMS values (resistive load)</b></p>
+<div class="formula">\[ V_{RMS} = I_{RMS}R \qquad P_{avg} = I_{RMS}V_{RMS} \;\big(= I_{RMS}^2R = V_{RMS}^2/R\big) \]</div>
+<dl class="vardefs"><dt>\(I_{RMS}\)</dt><dd>RMS current, A</dd><dt>\(R\)</dt><dd>resistance, Ω</dd><dt>\(P_{avg}\)</dt><dd>average power, W</dd></dl>
+<p><b>Period and frequency</b></p>
+<div class="formula">\[ f = \frac{1}{T} \qquad T = \frac{1}{f} \]</div>
+<dl class="vardefs"><dt>\(f\)</dt><dd>frequency, Hz = cycles/s</dd><dt>\(T\)</dt><dd>period (time of one cycle), s</dd></dl>
+<p><b>Reading the oscilloscope grid</b></p>
+<div class="formula">\[ V = (\text{vertical divisions}) \times \frac{\text{V}}{\text{div}} \qquad T = (\text{horizontal divisions per cycle}) \times \frac{\text{time}}{\text{div}} \qquad \text{cycles on screen} = \frac{10\,\text{div} \times (\text{time/div})}{T} \]</div>
+<p><b>Transformer (used to interpret the scope readings)</b></p>
+<div class="formula">\[ \frac{N_P}{N_S} = \frac{V_P}{V_S} \]</div>
+<dl class="vardefs"><dt>\(N_P, N_S\)</dt><dd>primary / secondary turns</dd><dt>\(V_P, V_S\)</dt><dd>primary / secondary voltages, in the <i>same</i> type (peak, p-p or RMS)</dd></dl>
+<p><b>Key numbers:</b> US outlet 120 V RMS ≈ 170 V peak ≈ 340 V p-p, 60 Hz (\(T \approx 16.7\,\text{ms}\)); 10 kHz → 100 μs; 1 kHz → 1 ms; \(1/\sqrt2 = 0.7071\); scope rating in the video: 300 V RMS (≈ 424 V peak).</p>
+</div>
+</section>

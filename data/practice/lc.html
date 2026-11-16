@@ -1,0 +1,413 @@
+<article class="q" id="lc-q1" data-level="1" data-kind="conceptual" data-title="Just after the switch and long after: C and L in one circuit">
+  <div class="q-prompt">
+    <p>Switch S in the circuit below has been open for a long time, so the capacitor \(C = 10\,\mu\text{F}\) is uncharged and the inductor \(L = 10\,\text{H}\) carries no current. At \(t = 0\) S closes and connects the 12 V source. Node a is fed from the source through \(R_s = 1\,\text{k}\Omega\). Two branches hang from node a to the bottom wire: \(R_1 = 2\,\text{k}\Omega\) in series with \(C\), and \(L\) in series with \(R_2 = 3\,\text{k}\Omega\). Reference directions: \(i_C\) flows down through the capacitor branch and \(i_L\) down through the inductor branch; \(v_C\) and \(v_L\) are + at the top of their elements. Treat L and C as ideal.</p>
+    <p><b>(a)</b> Which quantities are guaranteed to have the same value at \(t = 0^+\) (just after S closes) as at \(t = 0^-\) (just before)?</p>
+    <p><b>(b)</b> Find \(v_L(0^+)\) and \(i_C(0^+)\).</p>
+    <p><b>(c)</b> Find the DC steady-state values \(v_C(\infty)\) and \(i_L(\infty)\), a long time after S closes.</p>
+    <p>Give voltages in V and currents in A (mA is fine). Signs follow the reference directions above.</p>
+  </div>
+  <figure class="circuit"><script type="application/json">{"pad":1.3,"parts":[
+   {"t":"BAT","a":[0,5],"b":[0,2],"label":"V_s","value":"12 V","plus":"b","side":-1},
+   {"t":"W","pts":[[0,2],[0,0],[1,0]]},
+   {"t":"SW","a":[1,0],"b":[3,0],"label":"S (t = 0)","state":"open","arrow":true},
+   {"t":"R","a":[3,0],"b":[5.5,0],"label":"R_s","value":"1 kΩ"},
+   {"t":"W","pts":[[5.5,0],[10.5,0]]},
+   {"t":"N","at":[6.5,0],"label":"a","pos":"n"},
+   {"t":"W","pts":[[6.5,0],[6.5,0.9]]},
+   {"t":"IARR","a":[6.5,0.1],"b":[6.5,0.8],"label":"i_C"},
+   {"t":"R","a":[6.5,0.9],"b":[6.5,3.4],"label":"R_1","value":"2 kΩ","side":-1},
+   {"t":"C","a":[6.5,3.4],"b":[6.5,5.9],"label":"C","value":"10 μF","side":-1},
+   {"t":"W","pts":[[6.5,5.9],[6.5,7]]},
+   {"t":"VM","a":[7.2,3.7],"b":[7.2,5.6],"label":"v_C","lat":[7.75,4.65]},
+   {"t":"W","pts":[[10.5,0],[10.5,0.9]]},
+   {"t":"IARR","a":[10.5,0.1],"b":[10.5,0.8],"label":"i_L"},
+   {"t":"L","a":[10.5,0.9],"b":[10.5,3.9],"label":"L","value":"10 H"},
+   {"t":"R","a":[10.5,3.9],"b":[10.5,6.4],"label":"R_2","value":"3 kΩ"},
+   {"t":"W","pts":[[10.5,6.4],[10.5,7]]},
+   {"t":"VM","a":[9.8,1.2],"b":[9.8,3.6],"label":"v_L","lat":[9.25,2.4]},
+   {"t":"W","pts":[[10.5,7],[0,7],[0,5]]},
+   {"t":"N","at":[6.5,7]}
+  ],"alt":"A 12 V battery, + on top, feeds switch S (closes at t = 0) and R_s = 1 kilohm to node a. From node a two branches go down to the bottom wire: R_1 = 2 kilohm in series with C = 10 microfarad (current i_C downward, v_C plus at the top of C), and L = 10 H in series with R_2 = 3 kilohm (current i_L downward, v_L plus at the top of L)."}</script>
+    <figcaption>Switched circuit with a capacitor branch and an inductor branch. The battery's long plate (+) is on top.</figcaption>
+  </figure>
+  <div class="q-answers">
+    <div class="ans" data-type="mc" data-name="cont" data-label="(a) Guaranteed equal at \(0^-\) and \(0^+\):" data-correct="a">
+      <div class="opt" data-v="a">\(v_C\) and \(i_L\) only.<span class="opt-fb">Correct. The capacitor voltage and the inductor current hold the circuit's stored energy, \(\tfrac12 C v_C^2\) and \(\tfrac12 L i_L^2\). Changing either in zero time would take infinite power. Put another way, a jump in \(v_C\) would need an infinite \(i_C\), and a jump in \(i_L\) an infinite \(v_L\). So \(v_C(0^+) = v_C(0^-) = 0\) and \(i_L(0^+) = i_L(0^-) = 0\). The capacitor opposes a change in voltage, the inductor a change in current.</span></div>
+      <div class="opt" data-v="b">\(i_C\) and \(v_L\) only.<span class="opt-fb">Wrong. These are exactly the quantities that are free to jump: \(i_C\) goes from 0 to 4 mA and \(v_L\) from 0 to 8 V the instant S closes. You have swapped the rules. A capacitor opposes a change in its <em>voltage</em>, an inductor a change in its <em>current</em>.</span></div>
+      <div class="opt" data-v="c">Every voltage and current in the circuit, because nothing can change in zero time.<span class="opt-fb">Wrong. Resistors store no energy, so their voltages and currents can jump. The current in \(R_s\) goes from 0 to 4 mA instantly, just like the resistor-only circuit in the L/R lecture. Only \(v_C\) and \(i_L\) are forced to be continuous by the elements themselves (\(R_2\) is continuous here only because it is in series with L).</span></div>
+      <div class="opt" data-v="d">None of them. At a switching instant every quantity can jump, which is why the \(0^+\) values need a separate calculation.<span class="opt-fb">Wrong. If nothing carried over from \(0^-\), you would have nothing to start the \(0^+\) calculation from. Continuity of \(v_C\) and \(i_L\) is exactly what tells you how C and L behave at \(0^+\).</span></div>
+    </div>
+    <div class="ans" data-type="num" data-name="vl0" data-label="(b) \(v_L(0^+)\)" data-value="8" data-unit="V"></div>
+    <div class="ans" data-type="num" data-name="ic0" data-label="(b) \(i_C(0^+)\)" data-value="0.004" data-unit="A"></div>
+    <div class="ans" data-type="num" data-name="vcinf" data-label="(c) \(v_C(\infty)\)" data-value="9" data-unit="V"></div>
+    <div class="ans" data-type="num" data-name="ilinf" data-label="(c) \(i_L(\infty)\)" data-value="0.003" data-unit="A"></div>
+  </div>
+  <div class="fb" data-for="vl0" data-match="0">0 V is the DC-steady-state picture, with the inductor as a wire. At \(t = 0^+\) the inductor still carries \(i_L = 0\) (it cannot jump), so it behaves like an <b>open</b> circuit. With no current in \(R_2\), the whole node-a voltage appears across L.</div>
+  <div class="fb" data-for="vl0" data-match="12">12 V would mean no current anywhere and therefore no drop across \(R_s\). But at \(0^+\) the uncharged capacitor acts like a <b>short</b>, so current flows through \(R_s\) and \(R_1\), and \(R_s\) takes part of the 12 V.</div>
+  <div class="fb" data-for="ic0" data-match="0">Zero is the value a long time after S closes, when the capacitor is charged and acts as an open. At \(0^+\) it is still uncharged (\(v_C = 0\)), so it acts like a <b>short</b>, and the capacitor branch is just \(R_1\).</div>
+  <div class="fb" data-for="ic0" data-match="0.012">12 mA is \(12\,\text{V}/R_s\), which means you shorted node a straight to the bottom wire. The capacitor is a short at \(0^+\), but \(R_1\) is still in series with it.</div>
+  <div class="fb" data-for="ic0" data-match="0.0032727">You treated the inductor as a wire too, so part of the current went into the \(R_2\) branch. At \(0^+\) the inductor current is still 0 (it cannot jump), so the inductor branch is <b>open</b>, and all the source current goes into the capacitor branch.</div>
+  <div class="fb" data-for="vcinf" data-match="12">The capacitor charges to whatever voltage is across it at steady state, and here that is not the full 12 V. The inductor branch keeps drawing current through \(R_s\), so node a, and with it the capacitor, settles below 12 V.</div>
+  <div class="fb" data-for="vcinf" data-match="0">At DC steady state a capacitor is an <b>open</b> circuit (fully charged, no current), not a short. With no current in \(R_1\), its voltage equals the node-a voltage.</div>
+  <div class="fb" data-for="vcinf" data-match="8">8 V is the node-a voltage at \(t = 0^+\), when the inductor was still open. Long after switching the inductor acts as a wire, and that changes the divider.</div>
+  <div class="fb" data-for="ilinf" data-match="0">At DC steady state an ideal inductor is a <b>wire</b> (short), not an open. Its current is set by the resistors in its path.</div>
+  <div class="fb" data-for="ilinf" data-match="0.004">4 mA is either \(12\,\text{V}/R_2\), which leaves out \(R_s\) (still in series), or the source current at \(t = 0^+\). At steady state the inductor current flows through \(R_s\) and \(R_2\) in series.</div>
+  <div class="fb" data-for="ilinf" data-match="0.0021818">You left the capacitor as a short. Once it is fully charged it carries no current (open), so the \(R_1\)–C branch drops out and only \(R_s\) and \(R_2\) remain in the inductor's path.</div>
+  <div class="q-hint">Continuity first. \(v_C\) and \(i_L\) cannot change instantly, and both are zero at \(0^-\). How does a capacitor with 0 V across it behave at the switching instant? An inductor carrying 0 A?</div>
+  <div class="q-hint">At \(0^+\), replace C by a short and L by an open, then solve the resistive circuit. At \(t \to \infty\) (DC steady state), replace C by an open and L by a short.</div>
+  <div class="q-hint">At \(0^+\) the 12 V drives a single loop through \(R_s + R_1 = 3\,\text{k}\Omega\). At \(\infty\) it drives a single loop through \(R_s + R_2 = 4\,\text{k}\Omega\).</div>
+  <div class="q-solution">
+    <p class="step">1. <b>\(t = 0^-\).</b> S has been open for a long time, so nothing flows and nothing is stored: \(v_C(0^-) = 0\), \(i_L(0^-) = 0\), and every other current and voltage is 0 too.</p>
+    <p class="step">2. <b>Continuity (a).</b> Only the energy-storing quantities must carry over: \(v_C(0^+) = v_C(0^-) = 0\) and \(i_L(0^+) = i_L(0^-) = 0\). A capacitor with 0 V across it behaves like a <b>short</b> at that instant, and an inductor with 0 A through it behaves like an <b>open</b>.</p>
+    <figure class="circuit"><script type="application/json">{"pad":1.3,"parts":[
+     {"t":"BAT","a":[0,4],"b":[0,1],"label":"12 V","plus":"b","side":-1},
+     {"t":"W","pts":[[0,1],[0,0],[1,0]]},
+     {"t":"R","a":[1,0],"b":[3.5,0],"label":"R_s","value":"1 kΩ"},
+     {"t":"W","pts":[[3.5,0],[7,0]]},
+     {"t":"N","at":[4,0],"label":"a","pos":"n"},
+     {"t":"R","a":[4,0],"b":[4,2.6],"label":"R_1","value":"2 kΩ","side":-1},
+     {"t":"W","pts":[[4,2.6],[4,5]]},
+     {"t":"T","at":[4.3,3.8],"text":"C → short","anchor":"start","cls":"accent"},
+     {"t":"W","pts":[[7,0],[7,1.6]]},
+     {"t":"N","at":[7,1.6],"open":true},
+     {"t":"N","at":[7,2.4],"open":true},
+     {"t":"T","at":[7.3,2.1],"text":"L → open","anchor":"start","cls":"accent"},
+     {"t":"W","pts":[[7,2.4],[7,5]]},
+     {"t":"W","pts":[[7,5],[0,5],[0,4]]},
+     {"t":"IARR","a":[1.2,5],"b":[0.6,5],"label":"4 mA","side":-1}
+    ],"alt":"Equivalent circuit at t = 0+: the capacitor is replaced by a wire, the inductor branch by a gap. 12 V drives 4 mA through R_s and R_1 in series."}</script>
+      <figcaption>Equivalent circuit at \(t = 0^+\) (added for clarity): C is a short, L is an open.</figcaption>
+    </figure>
+    <p class="step">3. <b>\(t = 0^+\) (b).</b> One loop: \(i = \dfrac{12\,\text{V}}{R_s + R_1} = \dfrac{12\,\text{V}}{3\,\text{k}\Omega} = 4\,\text{mA}\), and all of it flows down the capacitor branch, so \(i_C(0^+) = 4\,\text{mA}\). Node a: \(v_a = (4\,\text{mA})(2\,\text{k}\Omega) = 8\,\text{V}\). The inductor branch carries no current, so \(R_2\) drops nothing and \(v_L(0^+) = v_a = 8\,\text{V}\). It is positive (+ on top): the back EMF opposes the current that is trying to start flowing down through L.</p>
+    <figure class="circuit"><script type="application/json">{"pad":1.3,"parts":[
+     {"t":"BAT","a":[0,4],"b":[0,1],"label":"12 V","plus":"b","side":-1},
+     {"t":"W","pts":[[0,1],[0,0],[1,0]]},
+     {"t":"R","a":[1,0],"b":[3.5,0],"label":"R_s","value":"1 kΩ"},
+     {"t":"W","pts":[[3.5,0],[7,0]]},
+     {"t":"N","at":[4,0],"label":"a","pos":"n"},
+     {"t":"W","pts":[[4,0],[4,1.6]]},
+     {"t":"N","at":[4,1.6],"open":true},
+     {"t":"N","at":[4,2.4],"open":true},
+     {"t":"T","at":[4.3,2.1],"text":"C → open","anchor":"start","cls":"accent"},
+     {"t":"W","pts":[[4,2.4],[4,5]]},
+     {"t":"W","pts":[[7,0],[7,1.6]]},
+     {"t":"T","at":[7.3,1],"text":"L → short","anchor":"start","cls":"accent"},
+     {"t":"R","a":[7,1.6],"b":[7,4.2],"label":"R_2","value":"3 kΩ"},
+     {"t":"W","pts":[[7,4.2],[7,5]]},
+     {"t":"W","pts":[[7,5],[0,5],[0,4]]},
+     {"t":"IARR","a":[1.2,5],"b":[0.6,5],"label":"3 mA","side":-1}
+    ],"alt":"Equivalent circuit at DC steady state: the capacitor branch is open, the inductor is replaced by a wire. 12 V drives 3 mA through R_s and R_2 in series."}</script>
+      <figcaption>Equivalent circuit at \(t \to \infty\) (added for clarity): C is an open, L is a short. \(R_1\) carries no current, so it is not drawn.</figcaption>
+    </figure>
+    <p class="step">4. <b>\(t \to \infty\) (c).</b> Once everything has stopped changing, the charged capacitor passes no current (open) and the inductor is a plain wire (short). One loop again: \(i_L(\infty) = \dfrac{12\,\text{V}}{R_s + R_2} = \dfrac{12\,\text{V}}{4\,\text{k}\Omega} = 3\,\text{mA}\). Node a: \(v_a = (3\,\text{mA})(3\,\text{k}\Omega) = 9\,\text{V}\). No current flows in \(R_1\), so it drops nothing and \(v_C(\infty) = v_a = 9\,\text{V}\).</p>
+    <p class="step">5. <b>All three instants together.</b></p>
+    <table>
+      <tr><th>Quantity</th><th>\(t = 0^-\)</th><th>\(t = 0^+\)</th><th>\(t \to \infty\)</th></tr>
+      <tr><td>\(v_C\)</td><td>0</td><td>0 (continuous)</td><td>9 V</td></tr>
+      <tr><td>\(i_C\)</td><td>0</td><td>4 mA (jumps)</td><td>0</td></tr>
+      <tr><td>\(v_L\)</td><td>0</td><td>8 V (jumps)</td><td>0</td></tr>
+      <tr><td>\(i_L\)</td><td>0</td><td>0 (continuous)</td><td>3 mA</td></tr>
+      <tr><td>source current</td><td>0</td><td>4 mA (jumps)</td><td>3 mA</td></tr>
+    </table>
+    <p class="answer">(a) Only \(v_C\) and \(i_L\) (option a). (b) \(v_L(0^+) = 8\,\text{V}\), \(i_C(0^+) = 4\,\text{mA}\). (c) \(v_C(\infty) = 9\,\text{V}\), \(i_L(\infty) = 3\,\text{mA}\).</p>
+  </div>
+  <div class="q-check">In the table, \(v_C\) and \(i_L\) have the same value in the \(0^-\) and \(0^+\) columns. Only \(i_C\), \(v_L\), the currents in \(R_s\) and \(R_1\), and the source current jump. \(R_2\) carries \(i_L\), so its current cannot jump either. KVL at steady state: \((3\,\text{mA})(1\,\text{k}\Omega) + 9\,\text{V} = 12\,\text{V}\) ✓. At \(0^+\): \((4\,\text{mA})(1\,\text{k}\Omega) + 8\,\text{V} = 12\,\text{V}\) ✓. The values of L and C never entered the calculation. They only set <em>how fast</em> the circuit moves from the \(0^+\) picture to the \(\infty\) picture: a numerical simulation with other L and C values gives the same 8 V, 4 mA, 9 V and 3 mA. (With two storage elements the path between the two snapshots is not a single exponential. That is beyond this topic, and you don't need it for these snapshots.) Energy at the end: \(\tfrac12(10\,\mu\text{F})(9\,\text{V})^2 = 0.405\,\text{mJ}\) in C and \(\tfrac12(10\,\text{H})(3\,\text{mA})^2 = 45\,\mu\text{J}\) in L, both delivered by the source during the transient.</div>
+  <div class="q-links">Links back: <a class="xref" data-lesson="cl4" data-sec="cl4-charging">uncharged C is a short at t = 0, open after 5τ</a> <a class="ts" data-lesson="cl4" data-t="1:46"></a> · <a class="ts" data-lesson="cl4" data-t="10:02"></a> · <a class="xref" data-lesson="cl1" data-sec="cl1-selfind">inductor current cannot change instantly</a> <a class="ts" data-lesson="cl1" data-t="28:34"></a> · <a class="xref" data-lesson="cl1" data-sec="cl1-property">constant current: the inductor is just a wire</a> <a class="ts" data-lesson="cl1" data-t="3:17"></a> · <a class="xref" data-lesson="cl3" data-sec="cl3-charging">capacitor as a temporary battery (continuity notes)</a> <a class="ts" data-lesson="cl3" data-t="15:33"></a></div>
+</article>
+
+<article class="q" id="lc-q2" data-level="2" data-kind="calculation" data-title="RC charging: a power-on delay">
+  <div class="q-prompt">
+    <p>A power-on delay circuit: when switch S closes at \(t = 0\), a \(V_S = 12\,\text{V}\) supply charges an <b>uncharged</b> capacitor \(C = 220\,\mu\text{F}\) through \(R = 15\,\text{k}\Omega\). A logic input connected across C switches when \(v_C\) reaches 9.0 V. Assume the logic input draws no current.</p>
+    <p><b>(a)</b> Find the time constant τ (in s).</p>
+    <p><b>(b)</b> Use the universal time-constant chart to find \(v_C\) at \(t = 6.6\,\text{s}\).</p>
+    <p><b>(c)</b> Find \(v_C\) at \(t = 5.0\,\text{s}\). This is between chart points, so use the charging formula.</p>
+    <p><b>(d)</b> How long after S closes does the logic input switch, i.e. when does \(v_C = 9.0\,\text{V}\)?</p>
+  </div>
+  <figure class="circuit"><script type="application/json">{"pad":1.3,"parts":[
+   {"t":"BAT","a":[0,5],"b":[0,1],"label":"V_S","value":"12 V","plus":"b","side":-1},
+   {"t":"W","pts":[[0,1],[0,0],[2,0]]},
+   {"t":"SW","a":[2,0],"b":[4,0],"label":"S (t = 0)","state":"open","arrow":true},
+   {"t":"W","pts":[[4,0],[6,0]]},
+   {"t":"IARR","a":[4.6,0],"b":[5.6,0],"label":"i"},
+   {"t":"R","a":[6,0],"b":[6,3],"label":"R","value":"15 kΩ","side":-1},
+   {"t":"C","a":[6,3],"b":[6,6],"label":"C","value":"220 μF","side":-1},
+   {"t":"W","pts":[[6,6],[0,6],[0,5]]},
+   {"t":"VM","a":[7,3.4],"b":[7,5.6],"label":"v_C","lat":[7.7,4.5]},
+   {"t":"T","at":[3.5,6.8],"text":"v_C feeds a logic input that switches at 9.0 V","anchor":"middle","cls":"muted"}
+  ],"alt":"Series RC charging circuit: 12 V battery, switch S closing at t = 0, R = 15 kilohm and C = 220 microfarad; v_C measured across the capacitor, plus at the top, goes to a logic input that switches at 9.0 V."}</script>
+    <figcaption>Series RC charging circuit, capacitor initially uncharged.</figcaption>
+  </figure>
+  <div class="q-answers">
+    <div class="ans" data-type="num" data-name="tau" data-label="(a) \(\tau\)" data-value="3.3" data-unit="s"></div>
+    <div class="ans" data-type="num" data-name="v66" data-label="(b) \(v_C(6.6\,\text{s})\)" data-value="10.376" data-unit="V"></div>
+    <div class="ans" data-type="num" data-name="v5" data-label="(c) \(v_C(5.0\,\text{s})\)" data-value="9.3627" data-unit="V"></div>
+    <div class="ans" data-type="num" data-name="t9" data-label="(d) \(t\) when \(v_C = 9.0\,\text{V}\)" data-value="4.5748" data-unit="s"></div>
+  </div>
+  <div class="fb" data-for="tau" data-match="16.5">16.5 s is \(5\tau\), the time after which the course treats the capacitor as fully charged. One time constant is just \(RC\).</div>
+  <div class="fb" data-for="v66" data-match="7.584">7.58 V is 63.2 % of 12 V, the chart value after <b>one</b> time constant. First work out how many time constants 6.6 s is.</div>
+  <div class="fb" data-for="v66" data-match="1.62">1.62 V is 13.5 % of 12 V, a value from the <b>decay</b> curve. That curve gives \(v_R\) and \(i\) while the capacitor charges, or \(v_C\) while it discharges. A charging \(v_C\) follows the build-up curve.</div>
+  <div class="fb" data-for="v5" data-match="2.6373">2.64 V is \(12\,\mathrm{e}^{-t/\tau}\), the resistor voltage \(v_R\) (decay curve). The capacitor voltage is \(V_S\left(1-\mathrm{e}^{-t/\tau}\right)\). You dropped the "1 −".</div>
+  <div class="fb" data-for="v5" data-match="7.584">That is the 63.2 % value, which holds only at \(t = \tau = 3.3\,\text{s}\), not at 5.0 s. Between chart points, evaluate the formula.</div>
+  <div class="fb" data-for="v5" data-match="5.7978">The exponent is upside down. It is \(-t/\tau\) (time on top), not \(-\tau/t\). Check: at \(t = \tau\) the exponent must equal −1.</div>
+  <div class="fb" data-for="t9" data-match="0.94935">That is the log of the wrong ratio: \(\ln(12/9)\), or \(-\ln(9/12)\). It gives the time for a capacitor <b>discharging</b> from 12 V down to 9 V. For charging, isolate the exponential first: \(\mathrm{e}^{-t/\tau} = 1 - v_C/V_S\), so the ratio inside the log is \(V_S/(V_S - v_C) = 12/3\).</div>
+  <div class="fb" data-for="t9" data-match="1.9868">You used \(\log_{10}\). The exponential has base \(\mathrm{e}\), so take the natural log (the ln key).</div>
+  <div class="fb" data-for="t9" data-match="4.9712">You interpolated in a straight line on the chart between 63.2 % (1τ) and 86.5 % (2τ). The curve is not straight between chart points. Use \(t = -\tau\ln\left(1 - v_C/V_S\right)\).</div>
+  <div class="q-hint">\(\tau = RC\). Convert the prefixes first (kΩ → Ω, μF → F). Then express each given time as a multiple of τ.</div>
+  <div class="q-hint">Charging from 0 V: \(v_C = V_S\left(1-\mathrm{e}^{-t/\tau}\right)\). To find a time, isolate the exponential, \(\mathrm{e}^{-t/\tau} = 1 - v_C/V_S\), then take the natural log of both sides.</div>
+  <div class="q-hint">\(\tau = 3.3\,\text{s}\), so 6.6 s is exactly 2τ. 9 V is 75 % of 12 V, so the answer to (d) lies between 1τ and 2τ.</div>
+  <div class="q-solution">
+    <p class="step">1. <b>(a) Time constant.</b> \(\tau = RC = (15\,000\,\Omega)(220\times10^{-6}\,\text{F}) = 3.3\,\text{s}\). (Ω·F = s.) The course's "fully charged" time is \(5\tau = 16.5\,\text{s}\).</p>
+    <p class="step">2. <b>(b) Chart value.</b> \(6.6\,\text{s}/3.3\,\text{s} = 2\), so this is 2τ, where the build-up curve is at 86.5 %: \(v_C = 0.865 \times 12\,\text{V} = 10.38\,\text{V}\). The formula agrees: \(12\left(1-\mathrm{e}^{-2}\right) = 12 \times 0.8647 = 10.38\,\text{V}\).</p>
+    <p class="step">3. <b>(c) Between chart points.</b> \(t/\tau = 5.0/3.3 = 1.515\), and \(\mathrm{e}^{-1.515} = 0.2198\). So \(v_C = 12\,\text{V}\,(1 - 0.2198) = 12 \times 0.7802 = 9.36\,\text{V}\). This lies between the 1τ value (7.58 V) and the 2τ value (10.38 V), as it must.</p>
+    <p class="step">4. <b>(d) Solve for time.</b> \(9 = 12\left(1-\mathrm{e}^{-t/\tau}\right)\) ⇒ \(\mathrm{e}^{-t/\tau} = 1 - \dfrac{9}{12} = 0.25\) ⇒ \(-\dfrac{t}{\tau} = \ln 0.25 = -1.386\) ⇒ \(t = 1.386 \times 3.3\,\text{s} = 4.57\,\text{s}\). Equivalently, \(t = \tau \ln\dfrac{V_S}{V_S - v_C} = 3.3\,\ln 4\).</p>
+    <p class="answer">\(\tau = 3.3\,\text{s}\); \(v_C(6.6\,\text{s}) = 10.38\,\text{V}\); \(v_C(5.0\,\text{s}) = 9.36\,\text{V}\); the logic input switches at \(t = 4.57\,\text{s}\).</p>
+  </div>
+  <div class="q-check">Order: 4.57 s (9.0 V) &lt; 5.0 s (9.36 V) &lt; 6.6 s (10.38 V). Later times give higher voltages, all below 12 V. 9 V is 75 % of the final value, between the 63.2 % and 86.5 % chart points, so the time must lie between \(\tau = 3.3\,\text{s}\) and \(2\tau = 6.6\,\text{s}\) ✓. Back-substitute: \(12\left(1-\mathrm{e}^{-4.575/3.3}\right) = 12(1 - 0.25) = 9.0\,\text{V}\) ✓. KVL at 5 s: \(v_R = 12 - 9.36 = 2.64\,\text{V}\), so \(i = 2.64\,\text{V}/15\,\text{k}\Omega = 0.176\,\text{mA}\). That is already well below the starting current \(V_S/R = 0.8\,\text{mA}\), as the decay curve says it should be.</div>
+  <div class="q-links">Links back: <a class="xref" data-lesson="cl4" data-sec="cl4-formulas">charging equations (and solving for time)</a> <a class="ts" data-lesson="cl4" data-t="15:39"></a> · <a class="xref" data-lesson="cl4" data-sec="cl4-utc">universal time constant chart</a> <a class="ts" data-lesson="cl4" data-t="13:07"></a> · <a class="xref" data-lesson="cl4" data-sec="cl4-example">worked example 50 V, 100 kΩ, 0.1 μF</a> <a class="ts" data-lesson="cl4" data-t="17:26"></a> · <a class="xref" data-lesson="cl3" data-sec="cl3-rc">\(\tau = RC\) introduced</a> <a class="ts" data-lesson="cl3" data-t="46:02"></a> · <a class="ts" data-lesson="cl4" data-t="9:11"></a> (τ = RC, first time constant)</div>
+</article>
+
+<article class="q" id="lc-q3" data-level="3" data-kind="multistep" data-title="RL: energize through R₁, de-energize through R₂ (inductive kick)">
+  <div class="q-prompt">
+    <p>The two-position switch starts with its blade touching neither contact, and the inductor carries no current. At \(t = 0\) the blade moves to <b>A</b>: the \(V_s = 12\,\text{V}\) source drives the ideal inductor \(L = 2\,\text{H}\) through \(R_1 = 40\,\Omega\). At \(t_1 = 60\,\text{ms}\) the blade moves instantly from A to <b>B</b>. This disconnects the source and \(R_1\), and the inductor current now flows around the loop formed by L and \(R_2 = 200\,\Omega\).</p>
+    <p>Reference directions: \(i_L\) is positive flowing <b>down</b> through L, and \(v_L\) is + at the <b>top</b> of L. With these references, \(v_L(0^+) = +12\,\text{V}\) while the current starts to build.</p>
+    <p><b>(a)</b> Find the time constant \(\tau_1\) of the build-up (switch at A).</p>
+    <p><b>(b)</b> Find \(i_L\) at \(t_1 = 60\,\text{ms}\), just before the switch moves.</p>
+    <p><b>(c)</b> Find the time constant \(\tau_2\) of the decay (switch at B).</p>
+    <p><b>(d)</b> Find \(v_L\) just after the blade reaches B (\(t = 60\,\text{ms}^+\)), <b>with its sign</b>.</p>
+    <p><b>(e)</b> Find \(i_L\) at \(t = 75\,\text{ms}\).</p>
+  </div>
+  <figure class="circuit"><script type="application/json">{"pad":1.3,"parts":[
+   {"t":"BAT","a":[0,5],"b":[0,1],"label":"V_s","value":"12 V","plus":"b","side":-1},
+   {"t":"W","pts":[[0,1],[0,0],[0.5,0]]},
+   {"t":"R","a":[0.5,0],"b":[3,0],"label":"R_1","value":"40 Ω"},
+   {"t":"SW","a":[3,0],"b":[5.5,0],"label":"A","state":"open"},
+   {"t":"N","at":[5.5,0]},
+   {"t":"SW","a":[5.5,0],"b":[8,0],"label":"B","state":"open"},
+   {"t":"W","pts":[[8,0],[9.5,0],[9.5,1]]},
+   {"t":"R","a":[9.5,1],"b":[9.5,4],"label":"R_2","value":"200 Ω"},
+   {"t":"W","pts":[[9.5,4],[9.5,5]]},
+   {"t":"W","pts":[[5.5,0],[5.5,1]]},
+   {"t":"IARR","a":[5.5,0.15],"b":[5.5,0.85],"label":"i_L"},
+   {"t":"L","a":[5.5,1],"b":[5.5,4],"label":"L","value":"2 H"},
+   {"t":"W","pts":[[5.5,4],[5.5,5]]},
+   {"t":"VM","a":[4.7,1.2],"b":[4.7,3.8],"label":"v_L","lat":[4.1,2.5]},
+   {"t":"W","pts":[[9.5,5],[0,5]]},
+   {"t":"N","at":[5.5,5]},
+   {"t":"T","at":[4.75,6.1],"text":"t = 0: blade to A (energize through R_1)","anchor":"middle","cls":"muted"},
+   {"t":"T","at":[4.75,6.7],"text":"t = 60 ms: blade from A to B (de-energize through R_2)","anchor":"middle","cls":"muted"}
+  ],"alt":"A 12 V battery, + on top, in series with R_1 = 40 ohm goes to contact A. The switch blade (common terminal) connects to the top of the 2 H inductor, whose bottom goes to the bottom wire. Contact B connects to R_2 = 200 ohm, which returns to the bottom wire. i_L is drawn downward through L; v_L is plus at the top of L."}</script>
+    <figcaption>Energize at A, de-energize at B. Only one contact is ever made. The battery's long plate (+) is on top.</figcaption>
+  </figure>
+  <div class="q-answers">
+    <div class="ans" data-type="num" data-name="tau1" data-label="(a) \(\tau_1\)" data-value="0.05" data-unit="s"></div>
+    <div class="ans" data-type="num" data-name="i1" data-label="(b) \(i_L(60\,\text{ms})\)" data-value="0.20964" data-unit="A"></div>
+    <div class="ans" data-type="num" data-name="tau2" data-label="(c) \(\tau_2\)" data-value="0.01" data-unit="s"></div>
+    <div class="ans" data-type="num" data-name="vkick" data-label="(d) \(v_L(60\,\text{ms}^+)\)" data-value="-41.928" data-unit="V"></div>
+    <div class="ans" data-type="num" data-name="i75" data-label="(e) \(i_L(75\,\text{ms})\)" data-value="0.046777" data-unit="A"></div>
+  </div>
+  <div class="fb" data-for="tau1" data-match="80">80 is \(L \cdot R\). The RL time constant is \(L/R\) (H/Ω = s). More resistance makes an RL circuit <em>faster</em>, so R belongs in the denominator.</div>
+  <div class="fb" data-for="tau1" data-match="20">20 is \(R/L\), the reciprocal of the time constant (its unit is 1/s, not s). Use \(\tau = L/R\).</div>
+  <div class="fb" data-for="i1" data-match="0.3">0.3 A is \(I_{max} = V_s/R_1\). The current reaches it only after about \(5\tau_1 = 250\,\text{ms}\), and at 60 ms it is still building.</div>
+  <div class="fb" data-for="i1" data-match="0.1896">That is 63.2 % of 0.3 A, the value at exactly one time constant (50 ms). But 60 ms is \(1.2\tau_1\), so evaluate the formula at the actual time.</div>
+  <div class="fb" data-for="i1" data-match="0.090358">\(I_{max}\mathrm{e}^{-t/\tau}\) is the <b>decay</b> formula. While the switch is at A the current is building up: \(i = I_{max}\left(1-\mathrm{e}^{-t/\tau_1}\right)\).</div>
+  <div class="fb" data-for="tau2" data-match="0.05">That is \(\tau_1\), which uses the charging-path resistor \(R_1\). After the switch moves, \(R_1\) is no longer in the inductor's loop and the current decays through \(R_2\), so recompute τ for the new path.</div>
+  <div class="fb" data-for="tau2" data-match="0.0083333">\(L/(R_1+R_2) = 8.33\,\text{ms}\) keeps \(R_1\) in the decay loop. At B the source and \(R_1\) are disconnected, and only \(R_2\) is in series with L.</div>
+  <div class="fb" data-for="tau2" data-match="400">400 is \(L \cdot R_2\). The time constant is \(L/R\).</div>
+  <div class="fb" data-for="tau2" data-match="100">100 is \(R_2/L\), the reciprocal of \(\tau_2\).</div>
+  <div class="fb" data-for="vkick" data-match="41.928">Right size, wrong sign. With the source gone, the inductor is the only thing driving the L–\(R_2\) loop, so it now acts as a source. Its current still flows <b>down</b> through it and leaves from its <b>bottom</b> terminal, round the bottom wire and up through \(R_2\). Current leaves a source at its + terminal, so the bottom of L is now +, and \(v_L\) (+ at top) is <b>negative</b>. During the build-up it was positive: the polarity flips at the switching instant.</div>
+  <div class="fb" data-for="vkick" data-match="-60">−60 V is \(I_{max}R_2\), which assumes the current had reached 0.3 A. The switch moves at 60 ms, only \(1.2\tau_1\), so the current at that instant is \(i(60\,\text{ms})\). That is the initial value for the decay.</div>
+  <div class="fb" data-for="vkick" data-match="-8.3857">You multiplied by \(R_1 = 40\,\Omega\). After the switch, the inductor current is forced through \(R_2 = 200\,\Omega\), and that resistor sets the kick: \(|v| = i R_2\).</div>
+  <div class="fb" data-for="vkick" data-match="-12">The kick is not limited to the source voltage. The inductor forces its present current through whatever resistance its new path has, so \(|v_L| = i(t_1)R_2\), which here is much more than 12 V.</div>
+  <div class="fb" data-for="i75" data-match="0.066939">You started the decay from \(I_{max} = 0.3\,\text{A}\). In \(i = I_f + (I_0 - I_f)\,\mathrm{e}^{-t'/\tau_2}\) the initial value \(I_0\) is the current at the switching instant, \(i(60\,\text{ms})\), and \(I_f = 0\).</div>
+  <div class="fb" data-for="i75" data-match="0.15531">You used \(\tau_1 = 50\,\text{ms}\) for the decay. After switching, the current decays through \(R_2\), so use \(\tau_2 = L/R_2\). (0.155 A is what you would get with the wrong τ.)</div>
+  <div class="fb" data-for="i75" data-match="0.00011595">You put \(t = 75\,\text{ms}\) in the exponent. The decay starts at the switching instant, so use \(t' = 75 - 60 = 15\,\text{ms}\).</div>
+  <div class="fb" data-for="i75" data-match="0.23306">That is the build-up formula carried on to 75 ms, as if the source were still connected. After 60 ms the source is gone, so the current decays.</div>
+  <div class="q-hint">Treat this as two separate first-order intervals. Each has its own \(\tau = L/R\), using the resistance in series with L <em>in that switch position</em>. The only link between them is the inductor current at 60 ms, which cannot jump.</div>
+  <div class="q-hint">Build-up: \(i = I_{max}\left(1-\mathrm{e}^{-t/\tau_1}\right)\) with \(I_{max} = V_s/R_1\). Decay: \(i = i(t_1)\,\mathrm{e}^{-(t-t_1)/\tau_2}\). Just after switching, L and \(R_2\) are the only elements in the loop, so \(v_L\) must be equal and opposite to the voltage across \(R_2\) (going round the loop).</div>
+  <div class="q-hint">\(\tau_1 = 50\,\text{ms}\), so 60 ms is \(1.2\tau_1\) and \(i(t_1) \approx 0.21\,\text{A}\). \(\tau_2 = 10\,\text{ms}\), so 75 ms is \(1.5\tau_2\) after the switching instant.</div>
+  <div class="q-solution">
+    <p class="step">1. <b>(a) Build-up, switch at A.</b> The loop is \(V_s\), \(R_1\), L. \(\tau_1 = \dfrac{L}{R_1} = \dfrac{2\,\text{H}}{40\,\Omega} = 0.05\,\text{s} = 50\,\text{ms}\). Final current, with the inductor as a wire: \(I_{max} = \dfrac{12\,\text{V}}{40\,\Omega} = 0.3\,\text{A}\).</p>
+    <p class="step">2. <b>(b) Current when the switch moves.</b> \(i(60\,\text{ms}) = 0.3\,\text{A}\left(1-\mathrm{e}^{-60/50}\right) = 0.3\,(1 - \mathrm{e}^{-1.2}) = 0.3\,(1 - 0.3012) = 0.3 \times 0.6988 = 0.2096\,\text{A}\). That is 69.9 % of \(I_{max}\), between the chart's 63.2 % (1τ) and 86.5 % (2τ). Just before the switch moves, \(v_L(60\,\text{ms}^-) = 12\,\mathrm{e}^{-1.2} = 3.61\,\text{V}\), still + on top.</p>
+    <p class="step">3. <b>(c) Decay, switch at B.</b> The inductor current cannot jump, so \(i(60\,\text{ms}^+) = 0.2096\,\text{A}\), still flowing down through L. The loop is now L and \(R_2\) only: \(\tau_2 = \dfrac{L}{R_2} = \dfrac{2\,\text{H}}{200\,\Omega} = 0.01\,\text{s} = 10\,\text{ms}\). The larger resistor makes the decay five times faster, and it is practically over after \(5\tau_2 = 50\,\text{ms}\).</p>
+    <p class="step">4. <b>(d) Inductive kick.</b> The current comes down through L, along the bottom wire and <em>up</em> through \(R_2\) back to the top of L. The resistor therefore has its + at the bottom: \(v_{R2} = (0.2096\,\text{A})(200\,\Omega) = 41.9\,\text{V}\). L and \(R_2\) connect the same two nodes, so the top of L is 41.9 V <em>below</em> its bottom: \(v_L(60\,\text{ms}^+) = -41.9\,\text{V}\). The collapsing field turns the inductor into the source of the loop. Its back EMF reverses polarity so that it keeps the current flowing. In 0 s, \(v_L\) jumps from +3.61 V to −41.9 V, a spike 3.5 times the supply voltage.</p>
+    <p class="step">5. <b>(e) Current at 75 ms.</b> Use the general form \(i = I_f + (I_0 - I_f)\,\mathrm{e}^{-t'/\tau_2}\) with \(I_0 = 0.2096\,\text{A}\), \(I_f = 0\) and \(t' = 75 - 60 = 15\,\text{ms}\): \(i = 0.2096\,\mathrm{e}^{-15/10} = 0.2096 \times 0.2231 = 0.0468\,\text{A} = 46.8\,\text{mA}\).</p>
+    <p class="answer">\(\tau_1 = 0.05\,\text{s}\) (50 ms); \(i_L(60\,\text{ms}) = 0.2096\,\text{A}\); \(\tau_2 = 0.01\,\text{s}\) (10 ms); \(v_L(60\,\text{ms}^+) = -41.9\,\text{V}\) (+ now at the bottom of L); \(i_L(75\,\text{ms}) = 0.0468\,\text{A}\).</p>
+  </div>
+  <div class="q-check">\(\tau_2 \lt \tau_1\) because \(R_2 \gt R_1\): in an RL circuit more resistance means a faster response (the opposite of RC). At 75 ms the decay is 1.5τ₂ old, so the current should be between 36.8 % and 13.5 % of 0.2096 A (77 mA and 28 mA). 46.8 mA ✓. Energy: at 60 ms the field holds \(\tfrac12 L i^2 = \tfrac12(2)(0.2096)^2 = 43.9\,\text{mJ}\), and all of it ends up as heat in \(R_2\). A numerical integration of \(\int i^2R_2\,dt\) gives the same 43.9 mJ. The kick (41.9 V) is far larger than the 12 V supply because the same current is forced through a bigger resistance. If the switch simply opened with no \(R_2\) at all, the "resistance" would be enormous and so would the spike.</div>
+  <div class="q-links">Links back: <a class="xref" data-lesson="cl2" data-sec="cl2-tau">\(\tau = L/R\) (and which R)</a> <a class="ts" data-lesson="cl2" data-t="6:52"></a> · <a class="xref" data-lesson="cl2" data-sec="cl2-equations">build-up and decay equations</a> <a class="ts" data-lesson="cl2" data-t="40:27"></a> <a class="ts" data-lesson="cl2" data-t="42:14"></a> · <a class="xref" data-lesson="cl2" data-sec="cl2-ex-68us">switch A → B decay example</a> <a class="ts" data-lesson="cl2" data-t="44:54"></a> · <a class="xref" data-lesson="cl2" data-sec="cl2-chart-decay">collapsing field and the inductive kick (notes)</a> <a class="ts" data-lesson="cl2" data-t="23:18"></a> · <a class="xref" data-lesson="cl1" data-sec="cl1-collapse">back EMF reverses at B</a> <a class="ts" data-lesson="cl1" data-t="37:04"></a></div>
+</article>
+
+<article class="q" id="lc-q4" data-level="4" data-kind="troubleshooting" data-title="Scope says τ is off: discharge through R₂ ∥ R₃ and the real capacitance">
+  <div class="q-prompt">
+    <p>In the lab circuit below the switch has been at <b>A</b> for a long time, so the electrolytic capacitor (marked \(10\,\mu\text{F}\), ±20 %) is charged to 12 V through \(R_1 = 1\,\text{k}\Omega\). At \(t = 0\) the switch moves to <b>B</b>. The capacitor is now disconnected from the source and \(R_1\), and discharges into \(R_2 = 10\,\text{k}\Omega\) and \(R_3 = 15\,\text{k}\Omega\).</p>
+    <p>Scope CH1 is connected across C (DC coupling, 2 V/div, 20 ms/div, 1 MΩ input). 0 V is 3 divisions below the centre line, and the switch moves to B 1.0 division from the left edge of the screen. Two horizontal cursors are placed: H1 at 7.58 V, which the trace crosses 2.17 div from the left edge, and H2 at 4.41 V, which it crosses 3.55 div from the left edge.</p>
+    <p>Your lab partner concludes: "τ should be \(R_1C = 1\,\text{k}\Omega \times 10\,\mu\text{F} = 10\,\text{ms}\). In the charging lab, τ was where the trace reached 63.2 % of 12 V, which is 7.58 V. So τ = (2.17 − 1) div × 20 ms/div = 23.4 ms, and \(C = 23.4\,\text{ms}/1\,\text{k}\Omega = 23.4\,\mu\text{F}\). The capacitor is way out of spec."</p>
+    <p><b>(a)</b> What resistance \(R_{TH}\) does the capacitor see while it discharges (in Ω)?</p>
+    <p><b>(b)</b> What discharge time constant does the screen actually show (in s)?</p>
+    <p><b>(c)</b> What capacitance does this measurement imply (in F; μF is fine)?</p>
+    <p><b>(d)</b> What is the correct verdict?</p>
+  </div>
+  <figure class="circuit"><script type="application/json">{"pad":1.3,"parts":[
+   {"t":"BAT","a":[0,5],"b":[0,1],"label":"V_s","value":"12 V","plus":"b","side":-1},
+   {"t":"W","pts":[[0,1],[0,0],[0.5,0]]},
+   {"t":"R","a":[0.5,0],"b":[3,0],"label":"R_1","value":"1 kΩ"},
+   {"t":"SW","a":[3,0],"b":[5,0],"label":"A","state":"closed"},
+   {"t":"N","at":[5,0]},
+   {"t":"SW","a":[5,0],"b":[7,0],"label":"B (t = 0)","state":"open"},
+   {"t":"W","pts":[[7,0],[12,0]]},
+   {"t":"W","pts":[[5,0],[5,1]]},
+   {"t":"C","a":[5,1],"b":[5,4],"label":"C","value":"10 μF ±20 %","polar":true,"side":-1},
+   {"t":"W","pts":[[5,4],[5,5]]},
+   {"t":"VM","a":[5.7,1.3],"b":[5.7,3.7],"label":"CH1","lat":[6.45,2.5]},
+   {"t":"N","at":[8.5,0]},
+   {"t":"W","pts":[[8.5,0],[8.5,1]]},
+   {"t":"R","a":[8.5,1],"b":[8.5,4],"label":"R_2","value":"10 kΩ"},
+   {"t":"W","pts":[[8.5,4],[8.5,5]]},
+   {"t":"W","pts":[[12,0],[12,1]]},
+   {"t":"R","a":[12,1],"b":[12,4],"label":"R_3","value":"15 kΩ"},
+   {"t":"W","pts":[[12,4],[12,5]]},
+   {"t":"W","pts":[[12,5],[0,5]]},
+   {"t":"N","at":[5,5]},
+   {"t":"N","at":[8.5,5]}
+  ],"alt":"A 12 V battery, + on top, in series with R_1 = 1 kilohm goes to contact A. The switch common terminal is the top (+) of the 10 microfarad electrolytic capacitor, whose bottom goes to the bottom wire. Contact B connects to a top wire that feeds R_2 = 10 kilohm and R_3 = 15 kilohm, both returning to the bottom wire. Scope CH1 measures the capacitor voltage, + at the top."}</script>
+    <figcaption>Drawn in the position before \(t = 0\) (blade at A). At \(t = 0\) the blade moves to B. The battery's long plate and the capacitor's flat plate (+) are on top.</figcaption>
+  </figure>
+  <figure class="scope"><script type="application/json">{"type":"scope","cols":10,"rows":8,"ch":"CH1 = v_C","vdiv":"2 V/div","tdiv":"20 ms/div","coupling":"DC","probe":"×1",
+   "traces":[{"fn":"x<1 ? 3 : -3+6*exp(-(x-1)/2.55)","label":"v_C","color":2}],
+   "marks":[{"type":"hline","y":0.792,"label":"H1 = 7.58 V"},{"type":"hline","y":-0.793,"label":"H2 = 4.41 V"},
+    {"type":"vline","x":1},{"type":"vline","x":2.17},{"type":"vline","x":3.55},
+    {"type":"text","x":1.08,"y":3.45,"text":"switch to B","anchor":"start"},
+    {"type":"text","x":2.25,"y":-3.6,"text":"2.17 div","anchor":"start"},
+    {"type":"text","x":3.63,"y":-3.15,"text":"3.55 div","anchor":"start"},
+    {"type":"text","x":0.1,"y":-2.75,"text":"0 V","anchor":"start"},
+    {"type":"text","x":0.1,"y":2.55,"text":"12 V","anchor":"start"}],
+   "alt":"Scope screen, 2 volts per division, 20 milliseconds per division, 0 V three divisions below centre. The capacitor voltage sits at 12 V until 1 division from the left edge, then decays exponentially toward 0 V. Horizontal cursor H1 at 7.58 V is crossed at 2.17 divisions; H2 at 4.41 V is crossed at 3.55 divisions."}</script>
+    <figcaption>The discharge as captured. Vertical lines mark the switching instant and the two cursor crossings.</figcaption>
+  </figure>
+  <div class="q-answers">
+    <div class="ans" data-type="num" data-name="rth" data-label="(a) \(R_{TH}\)" data-value="6000" data-unit="Ω"></div>
+    <div class="ans" data-type="num" data-name="taum" data-label="(b) measured \(\tau\)" data-value="0.051" data-unit="s" data-tol="0.04"></div>
+    <div class="ans" data-type="num" data-name="cact" data-label="(c) actual \(C\)" data-value="8.5e-6" data-unit="F" data-tol="0.04"></div>
+    <div class="ans" data-type="mc" data-name="verdict" data-label="(d) Verdict:" data-correct="b">
+      <div class="opt" data-v="a">The capacitor is out of spec. It is more than twice its marked value, so it should be replaced.<span class="opt-fb">Wrong. 23.4 μF is the partner's number, and it comes from two analysis errors: \(R_1\) instead of \(R_2 \parallel R_3\), and the "63.2 % of 12 V" level instead of the level for one τ of a <em>discharge</em> (36.8 % of 12 V). The corrected measurement gives 8.5 μF.</span></div>
+      <div class="opt" data-v="b">The capacitor is fine. The measurement gives \(C \approx 8.5\,\mu\text{F}\), 15 % below the marked 10 μF and inside the ±20 % window (8 μF to 12 μF). The circuit discharges with τ ≈ 51 ms instead of the predicted 60 ms simply because this particular part is a little low.<span class="opt-fb">Correct. Aluminium electrolytics are typically ±20 %, so anything from 8 μF to 12 μF is in spec. For a fixed \(R_{TH}\), τ is proportional to C, so a τ 15 % short means a C 15 % low. To confirm, measure the part on an LCR meter, as in the RC lab (that capacitor read 9.70 μF).</span></div>
+      <div class="opt" data-v="c">The capacitor is fine, but τ is shorter than 60 ms because the scope's 1 MΩ input resistance adds an extra discharge path in parallel with \(R_2\) and \(R_3\).<span class="opt-fb">Wrong. The scope input is indeed in parallel, but \(6\,\text{k}\Omega \parallel 1\,\text{M}\Omega = 5.96\,\text{k}\Omega\). That lowers τ by only 0.6 %, so it cannot explain a τ that is 15 % short.</span></div>
+      <div class="opt" data-v="d">The capacitor is too small and must be replaced, because a working capacitor matches its marked value to within a few percent.<span class="opt-fb">Wrong. Ordinary aluminium electrolytics are ±20 %, and some are +20 %/−40 %. 8.5 μF is within tolerance. Tighter-tolerance parts exist, but they cost more and are rarely used where a few percent of timing does not matter.</span></div>
+    </div>
+  </div>
+  <div class="fb" data-for="rth" data-match="1000">1 kΩ is the <b>charging</b> resistor. With the switch at B, \(R_1\) is no longer connected to the capacitor at all. Look at what sits across C's two terminals after switching.</div>
+  <div class="fb" data-for="rth" data-match="25000">\(R_2\) and \(R_3\) are not in series. Each one connects from the top of C (through contact B) straight to the bottom wire, so the capacitor sees them in parallel.</div>
+  <div class="fb" data-for="rth" data-match="7000">\(R_1 + (R_2 \parallel R_3)\) keeps \(R_1\) in the path. At B, contact A is open, so the source and \(R_1\) carry no current and are not part of the discharge loop.</div>
+  <div class="fb" data-for="taum" data-match="0.0234">That is the partner's reading at 7.58 V, which is 63.2 % <em>of</em> 12 V. In a <b>discharge</b>, one τ is where the voltage has fallen by 63.2 % of the change, i.e. down to 36.8 % of its starting value: \(0.368 \times 12\,\text{V} = 4.41\,\text{V}\) (cursor H2). A discharging capacitor reaches 7.58 V after only \(\tau\ln(12/7.58) \approx 0.46\tau\).</div>
+  <div class="fb" data-for="taum" data-match="0.071">You measured from the left edge of the screen. Time constants count from the switching instant, which is 1.0 div in: \(\Delta t = (3.55 - 1.0)\,\text{div} \times 20\,\text{ms/div}\).</div>
+  <div class="fb" data-for="taum" data-match="0.06">60 ms is the <em>predicted</em> τ, \((R_2 \parallel R_3) \times 10\,\mu\text{F}\), using the marked value. The question asks what the screen actually shows.</div>
+  <div class="fb" data-for="cact" data-match="2.34e-5">That is the partner's number, and it contains both mistakes: the wrong resistor (\(R_1\) is not in the discharge loop) and the wrong level (63.2 % <em>of</em> 12 V instead of the 36.8 %-of-12 V level that marks one τ of a discharge).</div>
+  <div class="fb" data-for="cact" data-match="5.1e-5">The Δt is right, but you divided by \(R_1 = 1\,\text{k}\Omega\), the charging resistor. The discharge runs through \(R_2 \parallel R_3\).</div>
+  <div class="fb" data-for="cact" data-match="3.9e-6">The resistance is right, but the Δt is wrong. 23.4 ms is the time to reach the 7.58 V level, and a discharging capacitor gets there well before one τ. Use the 4.41 V crossing (36.8 % of 12 V).</div>
+  <div class="fb" data-for="cact" data-match="1e-5">10 μF is just the marked value. The point of the measurement is to find what the part really is: \(C = \tau_{meas}/R_{TH}\).</div>
+  <div class="q-hint">After the switch reaches B, remove C and look back into its two terminals. Which resistors are still connected between them, and how? (No sources remain in that loop.)</div>
+  <div class="q-hint">For a discharge, \(v_C = V_f + (V_0 - V_f)\,\mathrm{e}^{-t/\tau}\) with \(V_0 = 12\,\text{V}\) and \(V_f = 0\). After one τ the voltage is down to 36.8 % of 12 V. Which cursor marks that level? Measure Δt from the switching instant, not from the screen edge.</div>
+  <div class="q-hint">\(R_{TH} = 6\,\text{k}\Omega\). The one-τ level is \(0.368 \times 12\,\text{V} = 4.41\,\text{V}\), crossed \(3.55 - 1.0 = 2.55\) divisions after the switching instant.</div>
+  <div class="q-solution">
+    <p class="step">1. <b>(a) Resistance seen by C.</b> At B, the top of C connects through contact B to the tops of \(R_2\) and \(R_3\), and all three bottoms share the bottom wire. Contact A is open, so the source and \(R_1\) are disconnected and play no part. Both resistors sit directly across the capacitor, i.e. in parallel: \(R_{TH} = R_2 \parallel R_3 = \dfrac{(10\,\text{k}\Omega)(15\,\text{k}\Omega)}{10\,\text{k}\Omega + 15\,\text{k}\Omega} = 6\,\text{k}\Omega\). (While charging at A, the capacitor saw only \(R_1\): the charge and discharge paths are different, so they have different time constants.)</p>
+    <p class="step">2. <b>Prediction with the marked value.</b> \(\tau = R_{TH}C = (6\,\text{k}\Omega)(10\,\mu\text{F}) = 60\,\text{ms}\), and \(v_C = 12\,\mathrm{e}^{-t/\tau}\) volts.</p>
+    <p class="step">3. <b>Which level marks one τ?</b> With \(V_0 = 12\,\text{V}\) and \(V_f = 0\): \(v_C(\tau) = 0 + (12 - 0)\,\mathrm{e}^{-1} = 4.41\,\text{V}\), which is cursor H2. The 63.2 % rule refers to the <em>change</em>: after 1τ the voltage has dropped by \(0.632 \times 12 = 7.58\,\text{V}\), not dropped <em>to</em> 7.58 V. The partner's level is reached after only \(t = \tau\ln(12/7.58) = 0.459\,\tau\).</p>
+    <p class="step">4. <b>(b) Read τ from the screen.</b> Count from the switching instant, not the screen edge: \(\Delta t = (3.55 - 1.00)\,\text{div} \times 20\,\text{ms/div} = 2.55 \times 20 = 51\,\text{ms}\).</p>
+    <p class="step">5. <b>(c) Actual capacitance.</b> \(C = \dfrac{\tau}{R_{TH}} = \dfrac{51\,\text{ms}}{6\,\text{k}\Omega} = 8.5\,\mu\text{F}\).</p>
+    <p class="step">6. <b>Consistency check with the partner's own cursor.</b> With τ = 51 ms, the trace should reach 7.58 V at \(51\,\text{ms} \times 0.459 = 23.4\,\text{ms}\) after switching, which is 1.17 div, so 2.17 div from the edge. That is exactly what H1 shows. The trace is fine; only its interpretation was wrong.</p>
+    <p class="step">7. <b>(d) Verdict.</b> \(8.5/10 = 0.85\), i.e. 15 % low, inside the ±20 % tolerance (8–12 μF). The scope's 1 MΩ input changes \(R_{TH}\) to \(6\,\text{k}\Omega \parallel 1\,\text{M}\Omega = 5.96\,\text{k}\Omega\), only 0.6 %, so it is not the explanation. The part is simply on the low side of its tolerance.</p>
+    <p class="answer">\(R_{TH} = 6\,\text{k}\Omega\); measured \(\tau = 51\,\text{ms}\); \(C \approx 8.5\,\mu\text{F}\); the capacitor is within its ±20 % tolerance (option b). The partner used the charging resistor and the wrong 63.2 % level.</p>
+  </div>
+  <div class="q-check">Both cursor readings must fit one exponential. With τ = 51 ms, 7.58 V comes at 0.459τ = 23.4 ms (2.17 div ✓) and 4.41 V at 1τ = 51 ms (3.55 div ✓). Direction: the measured τ is shorter than predicted, so C must be smaller than marked (τ ∝ C at fixed \(R_{TH}\)) ✓. Bounds: 8.5 μF lies inside 8–12 μF. The partner's 23.4 μF would mean τ = 140 ms with \(R_{TH}\), which would put the 4.41 V crossing about 7 div after the switching instant instead of 2.55 div. The screen shows 9 div = 180 ms ≈ 3.5τ after switching, so the trace is still slightly above 0 V at the right edge, as it should be (5τ ≈ 255 ms).</div>
+  <div class="q-links">Links back: <a class="xref" data-lesson="cl4" data-sec="cl4-scope">measuring τ on the scope with cursors</a> <a class="ts" data-lesson="cl4" data-t="1:19:45"></a> · <a class="xref" data-lesson="cl4" data-sec="cl4-charging">which R? (Thévenin resistance seen by C)</a> <a class="ts" data-lesson="cl4" data-t="9:11"></a> · <a class="xref" data-lesson="cl4" data-sec="cl4-formulas">discharging and the general form</a> · <a class="xref" data-lesson="cl4" data-sec="cl4-utc">curve B: capacitor voltage on discharge</a> <a class="ts" data-lesson="cl4" data-t="34:24"></a> · capacitor tolerance <a class="ts" data-lesson="cl4" data-t="1:23:21"></a> <a class="ts" data-lesson="cl4" data-t="1:24:22"></a> · LCR meter reading <a class="ts" data-lesson="cl4" data-t="1:32:47"></a></div>
+</article>
+
+<article class="q" id="lc-b1" data-level="3" data-kind="multistep" data-title="Series RL on a 5 kHz sine: reactance, impedance, phase angle and RMS voltages">
+  <div class="q-prompt">
+    <p>A function generator produces a sine wave of \(V_T = 6.0\,\text{V}_{\text{rms}}\) (an <b>RMS</b> value) at \(f = 5.0\,\text{kHz}\). It drives a resistor \(R = 470\,\Omega\) in series with an inductor \(L = 33\,\text{mH}\). Treat the inductor as ideal (its winding resistance is negligible), and assume the circuit is in sinusoidal steady state. \(I_T\) is the series current, leaving the + terminal of the source. \(V_R\) and \(V_L\) are the voltages across R and L, + where \(I_T\) enters.</p>
+    <p><b>(a)</b> Find the inductive reactance \(X_L\) (in Ω).</p>
+    <p><b>(b)</b> Find the impedance \(Z\) of the circuit (its magnitude \(|Z|\), in Ω).</p>
+    <p><b>(c)</b> Find the circuit phase angle \(\theta\) between \(V_T\) and \(I_T\), <b>in degrees</b>, positive if the voltage leads the current.</p>
+    <p><b>(d)</b> Find the magnitude of the current \(I_T\).</p>
+    <p><b>(e)</b> Find the magnitudes \(V_R\) and \(V_L\).</p>
+    <p>Give every voltage and current as an <b>RMS</b> value, the same amplitude type as the source.</p>
+  </div>
+  <figure class="circuit"><script type="application/json">{"pad":1.3,"padX":2.8,"parts":[
+   {"t":"VAC","a":[0,5],"b":[0,1],"label":"V_T","value":"6.0 V_{rms}\n5.0 kHz","plus":"b","side":-1},
+   {"t":"W","pts":[[0,1],[0,0],[1,0]]},
+   {"t":"R","a":[1,0],"b":[4,0],"label":"R","value":"470 Ω"},
+   {"t":"W","pts":[[4,0],[7,0],[7,1]]},
+   {"t":"IARR","a":[4.8,0],"b":[6.2,0],"label":"I_T"},
+   {"t":"L","a":[7,1],"b":[7,5],"label":"L","value":"33 mH"},
+   {"t":"W","pts":[[7,5],[7,6],[0,6],[0,5]]},
+   {"t":"VM","a":[1.3,0.8],"b":[3.7,0.8],"label":"V_R","lat":[2.5,1.45]},
+   {"t":"VM","a":[6.2,1.4],"b":[6.2,4.6],"label":"V_L","lat":[5.55,3]}
+  ],"alt":"Series RL circuit: an AC sine source V_T of 6.0 volts RMS at 5.0 kilohertz, plus terminal on top, drives R = 470 ohm in the top wire and L = 33 millihenry on the right side, back to the source. The current I_T flows clockwise (left to right through R, down through L). V_R is plus on the left end of R; V_L is plus at the top of L."}</script>
+    <figcaption>Series RL circuit driven by a sinusoidal source of 6.0 V RMS at 5.0 kHz. The + marks give the reference polarities.</figcaption>
+  </figure>
+  <div class="q-answers">
+    <div class="ans" data-type="num" data-name="xl" data-label="(a) \(X_L\)" data-value="1036.7256" data-unit="Ω"></div>
+    <div class="ans" data-type="num" data-name="z" data-label="(b) \(Z\) (magnitude)" data-value="1138.2882" data-unit="Ω"></div>
+    <div class="ans" data-type="num" data-name="theta" data-label="(c) \(\theta\), in degrees" data-value="65.612816" data-unit=""></div>
+    <div class="ans" data-type="num" data-name="it" data-label="(d) \(I_T\) (RMS)" data-value="0.005271073" data-unit="A"></div>
+    <div class="ans" data-type="num" data-name="vr" data-label="(e) \(V_R\) (RMS)" data-value="2.4774043" data-unit="V"></div>
+    <div class="ans" data-type="num" data-name="vl" data-label="(e) \(V_L\) (RMS)" data-value="5.4646562" data-unit="V"></div>
+  </div>
+  <div class="fb" data-for="xl" data-match="165">165 Ω is \(f \cdot L\): the \(2\pi\) is missing. Inductive reactance is \(X_L = 2\pi f L\). The \(2\pi\) turns cycles per second into radians per second (\(\omega = 2\pi f\)).</div>
+  <div class="fb" data-for="xl" data-match="6513.9389">You used \(2\pi\) twice (\(2\pi \cdot \omega L\)). \(\omega = 2\pi f\) already contains it: \(X_L = 2\pi f L = \omega L\), with \(f\) in Hz.</div>
+  <div class="fb" data-for="z" data-match="1506.7256">About 1507 Ω is \(R + X_L\), added like two resistors in series. \(R\) and \(X_L\) act 90° apart: the resistor's voltage is in phase with the current, while the inductor's leads it by 90°. They combine like the two legs of a right triangle, not end to end.</div>
+  <div class="fb" data-for="z" data-match="498.12147">You combined \(R\) and \(X_L\) correctly with Pythagoras, but with \(X_L = fL = 165\,\Omega\), which is missing the \(2\pi\). Fix (a) first.</div>
+  <div class="fb" data-for="z" data-match="1295699.9">That is \(R^2 + X_L^2\), whose unit is Ω²: the square root is missing. \(Z\) is the <em>hypotenuse</em> of the triangle with legs \(R\) and \(X_L\).</div>
+  <div class="fb" data-for="theta" data-match="24.387184">24.4° is \(\tan^{-1}(R/X_L)\), the <em>other</em> acute angle of the triangle. θ is measured from \(I_T\) (which lies along \(V_R\)) to \(V_T\), so the side opposite θ is \(X_L\) (or \(V_L\)). Quick check: here \(X_L \gt R\), so θ must be more than 45°.</div>
+  <div class="fb" data-for="theta" data-match="1.1451597">That is the right angle, but in <b>radians</b> (calculator in RAD mode). Switch the calculator to degree mode, or multiply by \(180/\pi\).</div>
+  <div class="fb" data-for="theta" data-match="19.344329">That is \(\tan^{-1}(fL/R)\): your \(X_L\) is missing the \(2\pi\).</div>
+  <div class="fb" data-for="theta" data-match="-65.612816">Right size, wrong sign for the convention given (positive = voltage leads current). In an inductor the voltage leads the current (ELI the ICE man). In a series RL circuit the total voltage therefore leads the common current, so θ is positive.</div>
+  <div class="fb" data-for="it" data-match="0.007454423">7.45 mA is the <b>peak</b> current: somewhere you multiplied by \(\sqrt2\), for example by turning the 6.0 V into 8.49 V<sub>pk</sub> first. The source is given in RMS and the answer is wanted in RMS. An RMS voltage divided by an impedance gives an RMS current directly, so no conversion is needed.</div>
+  <div class="fb" data-for="it" data-match="0.0037272115">You divided by \(\sqrt2\), as if 6.0 V were a peak value that had to be converted. It is already RMS, so use it as it is: all amplitudes in one calculation must be the same kind, and here they are all RMS.</div>
+  <div class="fb" data-for="it" data-match="0.0039821452">That current comes from \(Z = R + X_L \approx 1507\,\Omega\). Because \(R\) and \(X_L\) are 90° apart, \(Z = \sqrt{R^2 + X_L^2}\). That is smaller than the arithmetic sum, so the current is larger.</div>
+  <div class="fb" data-for="it" data-match="0.012045255">About 12.0 mA follows from \(X_L = fL\) (no \(2\pi\)), which makes the impedance far too small. Re-check (a).</div>
+  <div class="fb" data-for="vr" data-match="3.5035788">3.50 V is the <b>peak</b> of \(v_R\) (\(\sqrt2\) times the RMS value). The question asks for the same amplitude type as the source: RMS.</div>
+  <div class="fb" data-for="vr" data-match="0.53534376">0.535 V is \(V_T - V_L\): KVL applied to the magnitudes as if they were DC voltages. \(V_R\) and \(V_L\) are 90° apart, so their magnitudes do not add or subtract arithmetically. Use Ohm's law on the resistor alone: \(V_R = I_T R\).</div>
+  <div class="fb" data-for="vr" data-match="1.8716082">This is the voltage-divider result with \(Z = R + X_L\) in the denominator. The divider needs the true impedance, \(Z = \sqrt{R^2 + X_L^2}\).</div>
+  <div class="fb" data-for="vl" data-match="7.728191">7.73 V is the <b>peak</b> of \(v_L\) (\(\sqrt2\) times the RMS value). Keep RMS, like the source.</div>
+  <div class="fb" data-for="vl" data-match="3.5225957">3.52 V is \(V_T - V_R\): scalar KVL. The magnitudes of two perpendicular phasors do not subtract like numbers. Use \(V_L = I_T X_L\). You can confirm it with Pythagoras, \(V_L = \sqrt{V_T^2 - V_R^2}\).</div>
+  <div class="fb" data-for="vl" data-match="4.1283918">This is the voltage-divider result with \(Z = R + X_L\) in the denominator. The divider needs the true impedance, \(Z = \sqrt{R^2 + X_L^2}\).</div>
+  <div class="q-hint">Start with the inductor alone: \(X_L = 2\pi f L\), with \(f\) in Hz and \(L\) in H. Then remember that in a series RL circuit \(R\) and \(X_L\) are 90° apart, just like \(V_R\) and \(V_L\). They combine as the two legs of a right triangle.</div>
+  <div class="q-hint">\(Z = \sqrt{R^2 + X_L^2}\) and \(\tan\theta = X_L/R\) (calculator in degree mode). Then use Ohm's law with the impedance, \(I_T = V_T/Z\), and with each part, \(V_R = I_T R\) and \(V_L = I_T X_L\). The source is given in RMS, so every result is RMS: you need no \(\sqrt2\) anywhere.</div>
+  <div class="q-hint">\(X_L \approx 1037\,\Omega\), so \(X_L/R \approx 2.21\), \(Z \approx 1.14\,\text{k}\Omega\), and θ is well above 45°. \(I_T\) comes out a little above 5 mA.</div>
+  <div class="q-solution">
+    <p class="step">1. <b>Base units.</b> \(f = 5.0\,\text{kHz} = 5000\,\text{Hz}\), \(L = 33\,\text{mH} = 0.033\,\text{H}\), \(R = 470\,\Omega\), \(V_T = 6.0\,\text{V}_{\text{rms}}\). The source is given as an RMS value, so every voltage and current below is RMS too: all amplitudes in one calculation must be the same kind.</p>
+    <p class="step">2. <b>(a) Inductive reactance.</b> \(X_L = 2\pi f L = 2\pi(5000\,\text{Hz})(0.033\,\text{H}) = (31\,416\,\text{rad/s})(0.033\,\text{H}) = 1036.7\,\Omega\).</p>
+    <p class="step">3. <b>(b) Impedance.</b> \(R\) lies along the current and \(X_L\) is 90° ahead of it, so \(Z\) is the hypotenuse: \(Z = \sqrt{R^2 + X_L^2} = \sqrt{470^2 + 1036.7^2} = \sqrt{220\,900 + 1\,074\,800} = \sqrt{1\,295\,700} = 1138.3\,\Omega\).</p>
+    <p class="step">4. <b>(c) Phase angle.</b> The impedance triangle has the same shape as the voltage triangle, so \(\tan\theta = \dfrac{X_L}{R} = \dfrac{1036.7}{470} = 2.206\) and \(\theta = \tan^{-1}(2.206) = 65.61^\circ\). The angle is positive because in an inductor the voltage leads the current (ELI): \(V_T\) leads \(I_T\). Since \(X_L \gt R\), θ is above 45°.</p>
+    <p class="step">5. <b>(d) Current.</b> Ohm's law with impedance: \(I_T = \dfrac{V_T}{Z} = \dfrac{6.0\,\text{V}}{1138.3\,\Omega} = 5.271\,\text{mA}_{\text{rms}}\). (Its peak would be \(\sqrt2 \times 5.271 = 7.454\,\text{mA}\), but the question asks for RMS.)</p>
+    <p class="step">6. <b>(e) Component voltages.</b> The same current flows through both parts: \(V_R = I_T R = (5.271\,\text{mA})(470\,\Omega) = 2.477\,\text{V}_{\text{rms}}\) and \(V_L = I_T X_L = (5.271\,\text{mA})(1036.7\,\Omega) = 5.465\,\text{V}_{\text{rms}}\). The voltage-divider form gives the same values: \(V_R = V_T\,R/Z = 6.0 \times 470/1138.3\) and \(V_L = V_T\,X_L/Z = 6.0 \times 1036.7/1138.3\).</p>
+    <p class="step">7. <b>Angle check, the instructor's way.</b> \(\sin\theta = \dfrac{V_L}{V_T} = \dfrac{5.465}{6.0} = 0.9108\), so \(\theta = \sin^{-1}(0.9108) = 65.6^\circ\), the same as step 4.</p>
+    <figure class="circuit"><script type="application/json">{"pad":1.2,"parts":[
+     {"t":"W","pts":[[0.3,6.5],[6.4,6.5]]},
+     {"t":"W","pts":[[1,0.3],[1,7.7]]},
+     {"t":"ARROW","a":[1,6.5],"b":[3.48,6.5],"label":"V_R = 2.48 V","lat":[3.65,6.95],"anchor":"start"},
+     {"t":"ARROW","a":[1,6.5],"b":[1,1.04],"label":"V_L = 5.46 V","lat":[0.75,1.5],"anchor":"end"},
+     {"t":"ARROW","a":[1,6.5],"b":[3.48,1.04],"label":"V_T = 6.00 V","lat":[3.7,0.95],"anchor":"start"},
+     {"t":"W","pts":[[1,1.04],[3.48,1.04]],"dashed":true},
+     {"t":"W","pts":[[3.48,6.5],[3.48,1.04]],"dashed":true},
+     {"t":"T","at":[1.55,6.1],"text":"θ","anchor":"start","cls":"accent"},
+     {"t":"ARROW","a":[1,7.3],"b":[2.6,7.3],"label":"I_T (reference)","lat":[2.8,7.45],"anchor":"start"}
+    ],"alt":"Phasor diagram drawn to scale, 1 grid unit = 1 volt RMS. V_R = 2.48 V points right along the current I_T, V_L = 5.46 V points straight up, and V_T = 6.00 V is the diagonal at angle theta = 65.6 degrees above V_R."}</script>
+      <figcaption>Phasor diagram (added for clarity, drawn to scale, RMS values). \(V_R\) lies along the common current \(I_T\), \(V_L\) is 90° ahead of it, and \(V_T\) is their phasor sum at \(\theta = 65.6^\circ\).</figcaption>
+    </figure>
+    <p class="answer">\(X_L = 1036.7\,\Omega\) (≈ 1.04 kΩ); \(Z = 1138.3\,\Omega\) (≈ 1.14 kΩ); \(\theta = +65.6^\circ\) (\(V_T\) leads \(I_T\)); \(I_T = 5.271\,\text{mA}_{\text{rms}}\); \(V_R = 2.477\,\text{V}_{\text{rms}}\); \(V_L = 5.465\,\text{V}_{\text{rms}}\).</p>
+  </div>
+  <div class="q-check">
+    <p><b>Triangle sizes.</b> \(Z\) is longer than either leg (1138 Ω &gt; 1037 Ω &gt; 470 Ω) but shorter than \(R + X_L = 1507\,\Omega\) ✓. \(X_L \gt R\), so \(V_L \gt V_R\) and θ is between 45° and 90° ✓.</p>
+    <p><b>Why \(V_R + V_L \ne V_T\).</b> \(V_R + V_L = 2.477 + 5.465 = 7.94\,\text{V}\), more than the 6.0 V source. This is the series RL "puzzle" from the lecture, not an error. \(V_R\) is in phase with \(I_T\) while \(V_L\) leads it by 90°, so the two sine waves reach their peaks a quarter period apart (50 μs at 5 kHz). RMS values, like peak values, are the <em>lengths</em> of phasors, and these two phasors are perpendicular. They therefore add by Pythagoras: \(\sqrt{V_R^2 + V_L^2} = \sqrt{2.477^2 + 5.465^2} = \sqrt{6.14 + 29.86} = \sqrt{36.00} = 6.00\,\text{V} = V_T\) ✓. KVL still holds at every instant, \(v_R(t) + v_L(t) = v_T(t)\). In the waveforms below, at the moment \(v_T\) peaks (line A) (\(\sqrt2 \times 6.0 = 8.49\,\text{V}\)), \(v_R = 1.45\,\text{V}\) and \(v_L = 7.04\,\text{V}\), which add to 8.49 V. When the current peaks (line B), \(v_R = 3.50\,\text{V}\), \(v_L = 0\) and \(v_T = 3.50\,\text{V}\). The two individual peaks (3.50 V and 7.73 V) never occur at the same moment, so they never add to 11.23 V.</p>
+    <figure class="scope"><script type="application/json">{"type":"scope","cols":10,"rows":10,"ch":"v_R, v_L, v_T (instantaneous)","vdiv":"2 V/div","tdiv":"20 μs/div",
+     "traces":[{"fn":"1.7518*sin(2*PI*(x-6)/10)","label":"v_R (3.50 V pk, in phase with i)"},{"fn":"3.8641*cos(2*PI*(x-6)/10)","label":"v_L (7.73 V pk, leads i by 90°)"},{"fn":"4.2426*sin(2*PI*(x-6)/10+1.14516)","label":"v_T = v_R + v_L (8.49 V pk)"}],
+     "marks":[{"type":"vline","x":6.6774,"label":"A"},{"type":"vline","x":8.5,"label":"B"}],
+     "alt":"One period (200 microseconds) of the three voltages at 2 V per division and 20 microseconds per division. v_R has a 3.50 V peak, v_L a 7.73 V peak and leads v_R by a quarter period, and v_T, their sum, has an 8.49 V peak. Line A marks the v_T peak, where v_R is 1.45 V and v_L is 7.04 V. Line B marks the current peak: v_R is 3.50 V, v_L is zero and v_T equals 3.50 V."}</script>
+      <figcaption>(Added for clarity.) Instantaneous voltages over one period (200 μs). Peak values are \(\sqrt2\) times the RMS values. At A, \(v_T\) peaks: \(v_R = 1.45\,\text{V}\) and \(v_L = 7.04\,\text{V}\) add to 8.49 V. At B, the current and \(v_R\) peak (3.50 V) while \(v_L = 0\), so \(v_T = 3.50\,\text{V}\). The instantaneous values always add (KVL), but the individual peaks occur at different moments.</figcaption>
+    </figure>
+    <p><b>Limits and units.</b> At DC (\(f \to 0\)), \(X_L \to 0\), so \(Z \to R\), \(\theta \to 0^\circ\) and \(I_T \to 6.0\,\text{V}/470\,\Omega = 12.8\,\text{mA}\). At very high \(f\), θ approaches 90° and the current approaches zero: the inductor chokes the AC. The units work out as Hz × H = Ω. A time-domain simulation (Runge–Kutta integration of \(L\,di/dt = v_T(t) - R\,i\), run to steady state) gives the same 7.454 mA peak (5.271 mA RMS), with the current lagging the source voltage by 65.6°.</p>
+  </div>
+  <div class="q-links">Links back: <a class="xref" data-lesson="cl5" data-sec="cl5-xl-formula">\(X_L = 2\pi f L\), base units</a> <a class="ts" data-lesson="cl5" data-t="11:23"></a> · <a class="xref" data-lesson="cl5" data-sec="cl5-z-series">impedance of a series RL circuit</a> <a class="ts" data-lesson="cl5" data-t="49:12"></a> · <a class="xref" data-lesson="cl5" data-sec="cl5-phase-angle">circuit phase angle</a> <a class="ts" data-lesson="cl5" data-t="38:45"></a> · <a class="xref" data-lesson="cl5" data-sec="cl5-ohm">Ohm's law with \(X_L\) and \(Z\)</a> <a class="ts" data-lesson="cl5" data-t="52:13"></a> · <a class="xref" data-lesson="cl5" data-sec="cl5-puzzle">10 V + 10 V = 14.14 V, and all amplitudes the same kind</a> <a class="ts" data-lesson="cl5" data-t="22:35"></a> · <a class="xref" data-lesson="cl5" data-sec="cl5-phasors">adding the phasors with Pythagoras</a> <a class="ts" data-lesson="cl5" data-t="33:30"></a></div>
+</article>

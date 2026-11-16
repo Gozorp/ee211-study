@@ -1,0 +1,497 @@
+<section class="g-sec" id="dw1-overview" data-kind="overview">
+<h2>Overview</h2>
+<p>This lecture introduces the <strong>Δ–Y (delta–wye) conversion</strong>, a tool for circuits that cannot be simplified with series and parallel rules alone. It opens with a five-resistor <strong>bridge circuit</strong> that "can't be solved" with the tools so far. It then defines Δ (= π) and Y (= T) networks, draws them on top of each other on the same three nodes, and gives the conversion formulas in both directions with a memory rule for each. Two examples follow: a plain Y→Δ conversion (3.3 Ω, 4.7 Ω, 5.6 Ω), and a Δ→Y conversion that turns the opening bridge into an ordinary series–parallel circuit.</p>
+<p>Parts of the video:</p>
+<ul>
+<li><a class="ts" data-t="0:01"></a> The 84 V bridge circuit: why series/parallel reduction fails, and what a "bridge" is</li>
+<li><a class="ts" data-t="3:34"></a> Δ network = π network; Y network = T network</li>
+<li><a class="ts" data-t="6:55"></a> There are three equations for each direction of conversion</li>
+<li><a class="ts" data-t="7:44"></a> Drawing Δ and Y on the same three points, labelling \(R_A, R_B, R_C\) and \(R_1, R_2, R_3\)</li>
+<li><a class="ts" data-t="10:26"></a> Y → Δ formulas and the "divide by the opposite resistor" rule</li>
+<li><a class="ts" data-t="14:25"></a> Example 1: Y (3.3, 4.7, 5.6 Ω) → Δ (18.28, 12.83, 10.77 Ω)</li>
+<li><a class="ts" data-t="21:48"></a> Back to the bridge: finding the Δ (π) inside it and replacing it with a Y</li>
+<li><a class="ts" data-t="28:22"></a> Δ → Y formulas and the "other two resistors" rule</li>
+<li><a class="ts" data-t="30:52"></a> Example 2: Δ (2.7, 3.9, 4.7 Ω) → Y (1.62, 1.12, 0.93 Ω)</li>
+<li><a class="ts" data-t="35:28"></a> The reduced circuit and how to finish it (the full numbers are worked out in this guide)</li>
+<li><a class="ts" data-t="37:42"></a> Wrap-up; the recording stops before the lab discussion</li>
+</ul>
+</section>
+
+<section class="g-sec" id="dw1-objectives" data-kind="objectives">
+<h2>Learning objectives</h2>
+<p>After this lesson you should be able to:</p>
+<ol>
+<li>Explain why a bridge circuit (two parallel branches joined in the middle by a "bridge" resistor) cannot be reduced using only series and parallel rules.</li>
+<li>Recognise a Δ network, also drawn as a π, and a Y network, also drawn as a T, in a schematic. This includes spotting the two π networks hidden inside a bridge.</li>
+<li>Draw a Δ and a Y on the same three nodes and label them consistently, so that \(R_1\) is opposite \(R_A\), \(R_2\) is opposite \(R_B\) and \(R_3\) is opposite \(R_C\).</li>
+<li>Convert a Y to an equivalent Δ with \(R_A=\frac{R_1R_2+R_2R_3+R_3R_1}{R_1}\) and its two partner formulas.</li>
+<li>Convert a Δ to an equivalent Y with \(R_1=\frac{R_BR_C}{R_A+R_B+R_C}\) and its two partner formulas.</li>
+<li>Replace a Δ inside a larger circuit with its Y (or a Y with its Δ) at the same three nodes, then finish with series–parallel reduction and Ohm's law (\(R_{eq}\), total current, branch currents).</li>
+<li>State when the conversion is valid and what it does and doesn't preserve. It preserves the three terminal voltages and currents. It does not preserve the currents inside the replaced resistors.</li>
+</ol>
+</section>
+
+<section class="g-sec" id="dw1-prereqs" data-kind="prereqs">
+<h2>Prerequisites</h2>
+<dl>
+<dt>Series resistors</dt>
+<dd>Two resistors are in series when they share a node that nothing else connects to, so the same current flows through both: \(R_{s}=R_1+R_2\).</dd>
+<dt>Parallel resistors</dt>
+<dd>Two resistors are in parallel when they connect between the same two nodes, so they have the same voltage: \(R_1\parallel R_2=\frac{R_1R_2}{R_1+R_2}\). The instructor's practical test: look at <em>where the current divides and where it sums back together</em>. Elements between those two places are in parallel.</dd>
+<dt>Equivalent resistance</dt>
+<dd>The single resistance that draws the same current from the source as the whole network, found by repeatedly combining series and parallel groups.</dd>
+<dt>Ohm's law, KCL, KVL</dt>
+<dd>\(V=IR\). The currents entering a node sum to zero (KCL). The voltages around a loop sum to zero (KVL). You need these to finish a circuit after it has been reduced.</dd>
+<dt>"Equivalent as seen from the terminals"</dt>
+<dd>Two networks are interchangeable if nothing connected to their terminals can tell them apart. You will meet the same idea in <a class="xref" data-lesson="st1">source transformation</a> and in <a class="xref" data-lesson="tn1">Thévenin equivalents</a>. Δ–Y uses it with <em>three</em> terminals instead of two.</dd>
+</dl>
+</section>
+
+<section class="g-sec" id="dw1-definitions" data-kind="definitions">
+<h2>Definitions &amp; symbols</h2>
+<dl>
+<dt>Bridge circuit</dt>
+<dd>Two parallel branches, each made of two resistors in series, with a fifth resistor (the <em>bridge</em>) connecting the middle of one branch to the middle of the other <a class="ts" data-t="2:32"></a>.</dd>
+<dt>Δ (delta) network</dt>
+<dd>Three resistances connected in a triangle between three nodes, so each resistor connects a different pair of nodes. It is named for its shape (Δ) <a class="ts" data-t="4:02"></a>.</dd>
+<dt>π (pi) network</dt>
+<dd>The same circuit as a Δ, drawn with one resistor across the top and two hanging down to a common bottom wire. "If I took the bottom legs … and pulled them apart" you get a π <a class="ts" data-t="5:08"></a>. Δ and π are identical circuits.</dd>
+<dt>Y (wye) network</dt>
+<dd>Three resistances that each run from a common <em>centre node</em> out to one of three terminals. It is named for its Y shape <a class="ts" data-t="5:48"></a>.</dd>
+<dt>T (tee) network</dt>
+<dd>The same circuit as a Y, drawn with two resistors in a horizontal line and the third hanging down from the junction <a class="ts" data-t="6:03"></a>. Y and T are identical circuits.</dd>
+<dt>\(R_A,\ R_B,\ R_C\)</dt>
+<dd>The instructor's names for the three <strong>Δ</strong> resistors, which use <em>letter</em> subscripts <a class="ts" data-t="8:45"></a>. Unit: Ω.</dd>
+<dt>\(R_1,\ R_2,\ R_3\)</dt>
+<dd>The instructor's names for the three <strong>Y</strong> resistors, which use <em>number</em> subscripts <a class="ts" data-t="9:16"></a>. Unit: Ω.</dd>
+<dt>Opposite</dt>
+<dd>With the Δ and Y drawn on the same three nodes, a Y resistor is "opposite" the Δ resistor that does not touch its node. \(R_1\) is opposite \(R_A\), \(R_2\) is opposite \(R_B\), and \(R_3\) is opposite \(R_C\) <a class="ts" data-t="27:37"></a>.</dd>
+<dt>Nodes A, B, C</dt>
+<dd>The three connection points (terminals) that the Δ and the Y share. The instructor labels them A, B, C in Example 1 <a class="ts" data-t="21:00"></a>. Careful: <em>node</em> A is not where <em>resistor</em> \(R_A\) "lives". In his drawing \(R_A\) runs between nodes A and B (see the table in section 3).</dd>
+<dt>Δ–Y conversion (transformation)</dt>
+<dd>Replacing a Δ with an equivalent Y, or the reverse, connected to the same three nodes, so that the rest of the circuit behaves exactly the same <a class="ts" data-t="7:20"></a>.</dd>
+</dl>
+<aside class="extra">
+<p>Textbooks also call this the Π–T transformation or star–mesh (star = Y, mesh = Δ) transformation. A <strong>balanced</strong> network has all three resistors equal: \(R_A=R_B=R_C=R_\Delta\) or \(R_1=R_2=R_3=R_Y\). See section 10.</p>
+</aside>
+</section>
+
+<section class="g-sec" id="dw1-bridge" data-kind="lesson" data-ts="0-242">
+<h2>1. The bridge circuit: why series–parallel rules fail</h2>
+<p>The lecture opens with this circuit and asks for the equivalent resistance of the five resistors <a class="ts" data-t="0:01"></a>:</p>
+<figure class="circuit" id="dw1-fig-bridge">
+<script type="application/json">{"parts":[
+ {"t":"BAT","a":[0,6],"b":[0,2],"label":"84 V","side":-1,"plus":"b"},
+ {"t":"W","pts":[[0,2],[0,0],[7,0]]},
+ {"t":"R","a":[3,0],"b":[3,4],"value":"10 Ω"},
+ {"t":"R","a":[7,0],"b":[7,4],"value":"10 Ω"},
+ {"t":"R","a":[3,4],"b":[7,4],"value":"2.7 Ω"},
+ {"t":"R","a":[3,4],"b":[3,8],"value":"4.7 Ω"},
+ {"t":"R","a":[7,4],"b":[7,8],"value":"3.9 Ω"},
+ {"t":"W","pts":[[0,6],[0,8],[7,8]]},
+ {"t":"N","at":[3,0]},{"t":"N","at":[3,4]},{"t":"N","at":[7,4]},{"t":"N","at":[3,8]}
+],"alt":"84 V battery, positive at top, feeding a bridge: 10 ohm from top to left-middle node, 10 ohm from top to right-middle node, 2.7 ohm between the two middle nodes, 4.7 ohm from left-middle to bottom, 3.9 ohm from right-middle to bottom; bottom returns to battery negative."}</script>
+<figcaption>The bridge circuit as drawn at the start <a class="ts" data-t="0:20"></a> and redrawn at <a class="ts" data-t="24:50"></a>. The long battery plate (+) is at the top.</figcaption>
+</figure>
+<p><strong>Trying series/parallel.</strong> The instructor traces the current with arrows <a class="ts" data-t="0:50"></a>. The current leaves the battery and splits at the top node, part going down each 10 Ω. Then the 2.7 Ω resistor gets in the way <a class="ts" data-t="1:21"></a>:</p>
+<ul>
+<li>Is the current through the 2.7 Ω going left or right? That depends on the voltages at its two ends.</li>
+<li>Those voltages in turn depend on the current through the 2.7 Ω <a class="ts" data-t="1:38"></a>. You can't decide the split before you know the answer.</li>
+<li>The usual test, "where the current divides and where it sums back together", doesn't give clean parallel groups here.</li>
+</ul>
+<p>His conclusion: with our basic rules, this circuit "as it sits right now" can't be solved. We need another tool <a class="ts" data-t="2:00"></a>.</p>
+<p><strong>What makes it a bridge</strong> <a class="ts" data-t="2:32"></a>: there are two parallel branches (10 Ω + 4.7 Ω on the left and 10 Ω + 3.9 Ω on the right). They would be in parallel, except that the 2.7 Ω connects the middle of one branch to the middle of the other. That middle resistor is the <em>bridge</em> <a class="ts" data-t="2:46"></a>.</p>
+<aside class="extra">
+<p><strong>A precise way to see it.</strong> Check each resistor. No two resistors connect the same pair of nodes, so nothing is in parallel. No node has exactly two resistors and nothing else, so nothing is in series. For example, the left-middle node touches 10 Ω, 4.7 Ω <em>and</em> 2.7 Ω. Since no single series or parallel step is available, reduction stalls at the very first step. Δ–Y conversion changes the node structure so that series/parallel steps appear (section 6).</p>
+<p>(Answering the opening question with the final numbers from section 9: the left-middle node sits at about 25.65 V and the right-middle node at about 24.63 V. So about 0.378 A flows through the 2.7 Ω from <em>left to right</em>. You couldn't know that in advance, which was the instructor's point.)</p>
+</aside>
+</section>
+
+<section class="g-sec" id="dw1-networks" data-kind="lesson" data-ts="214-464">
+<h2>2. Δ (pi) and Y (T) networks</h2>
+<p>New topic: "Delta &amp; Wye Networks" <a class="ts" data-t="3:34"></a>.</p>
+<p><strong>Delta / pi.</strong> A Δ is three resistances in a triangle <a class="ts" data-t="4:02"></a>. It is also called a π network <a class="ts" data-t="4:44"></a>. Take the two slanted legs of the Δ, pull their bottom ends apart and straighten them, and you get the π. They are "the exact same thing" <a class="ts" data-t="5:08"></a>.</p>
+<figure class="circuit" id="dw1-fig-delta-pi">
+<script type="application/json">{"parts":[
+ {"t":"R","a":[0,0],"b":[4,0],"label":"R_A"},
+ {"t":"R","a":[0,0],"b":[2,3.4],"label":"R_C","side":-1},
+ {"t":"R","a":[4,0],"b":[2,3.4],"label":"R_B","side":-1},
+ {"t":"N","at":[0,0],"label":"A","pos":"nw"},{"t":"N","at":[4,0],"label":"B","pos":"ne"},{"t":"N","at":[2,3.4],"label":"C","pos":"s"},
+ {"t":"T","at":[5.6,2],"text":"=","size":28},
+ {"t":"R","a":[7,0],"b":[11,0],"label":"R_A"},
+ {"t":"R","a":[7,0],"b":[7,3.4],"label":"R_C","side":-1},
+ {"t":"R","a":[11,0],"b":[11,3.4],"label":"R_B"},
+ {"t":"W","pts":[[7,3.4],[11,3.4]]},
+ {"t":"N","at":[7,0],"label":"A","pos":"nw"},{"t":"N","at":[11,0],"label":"B","pos":"ne"},{"t":"N","at":[9,3.4],"label":"C","pos":"s"}
+],"alt":"Delta network (triangle of three resistors between nodes A, B, C) equals pi network (R_A across the top from A to B, R_C from A down to bottom wire C, R_B from B down to bottom wire C)."}</script>
+<figcaption>Δ = π <a class="ts" data-t="5:22"></a>. The instructor drew these shapes unlabelled. The letters were added for clarity and use the same labelling as section 3. In the π, the bottom wire is node C.</figcaption>
+</figure>
+<p><strong>Wye / tee.</strong> A Y network looks like the letter Y <a class="ts" data-t="5:48"></a>. (He jokes that it shouldn't be confused with the flux capacitor from <em>Back to the Future</em>.) A Y is the same circuit as a T network <a class="ts" data-t="6:03"></a>: bend the two top arms of the Y up into a horizontal line and you get a T <a class="ts" data-t="6:29"></a>.</p>
+<figure class="circuit" id="dw1-fig-wye-tee">
+<script type="application/json">{"parts":[
+ {"t":"R","a":[0,0],"b":[2,1.8],"label":"R_2","lpos":[-0.75,0.4]},
+ {"t":"R","a":[2,1.8],"b":[4,0],"label":"R_3","lpos":[0.75,0.4]},
+ {"t":"R","a":[2,1.8],"b":[2,4.4],"label":"R_1"},
+ {"t":"N","at":[0,0],"label":"A","pos":"nw"},{"t":"N","at":[4,0],"label":"B","pos":"ne"},{"t":"N","at":[2,4.4],"label":"C","pos":"s"},{"t":"N","at":[2,1.8]},
+ {"t":"T","at":[5.6,2.2],"text":"=","size":28},
+ {"t":"R","a":[7,0],"b":[9,0],"label":"R_2"},
+ {"t":"R","a":[9,0],"b":[11,0],"label":"R_3"},
+ {"t":"R","a":[9,0],"b":[9,3],"label":"R_1"},
+ {"t":"N","at":[7,0],"label":"A","pos":"w"},{"t":"N","at":[11,0],"label":"B","pos":"e"},{"t":"N","at":[9,3],"label":"C","pos":"s"},{"t":"N","at":[9,0]}
+],"alt":"Wye network: R_2 from terminal A to centre, R_3 from terminal B to centre, R_1 from centre down to terminal C; equals tee network with R_2 and R_3 in a horizontal line and R_1 hanging down from their junction to C."}</script>
+<figcaption>Y = T <a class="ts" data-t="6:50"></a>. The letters were added for clarity and match section 3.</figcaption>
+</figure>
+<p><strong>Why we care</strong> <a class="ts" data-t="6:55"></a>: we can <em>convert</em> a Δ into a Y and a Y into a Δ. Each direction has three equations, one per resistor <a class="ts" data-t="7:20"></a>. The conversion gives us a way to swap one network for the other.</p>
+</section>
+
+<section class="g-sec" id="dw1-overlay" data-kind="lesson" data-ts="464-642">
+<h2>3. Drawing Δ and Y on the same three nodes: the labelling convention</h2>
+<p>The swap is always made <strong>at the same three points</strong>. So the instructor draws the two networks on top of each other <a class="ts" data-t="8:01"></a>:</p>
+<ul>
+<li>The Δ resistors get <em>letter</em> subscripts: \(R_A\) across the top, \(R_C\) on the left side, \(R_B\) on the right side <a class="ts" data-t="8:45"></a>.</li>
+<li>The Y resistors get <em>number</em> subscripts: \(R_1\) is the vertical leg down to the bottom point, \(R_2\) is the arm to the upper-left point, and \(R_3\) is the arm to the upper-right point <a class="ts" data-t="9:16"></a>.</li>
+<li>Whichever direction you convert, the new network replaces the old one in the circuit "from these three points" <a class="ts" data-t="9:41"></a>. The red dots mark those three points <a class="ts" data-t="9:58"></a>.</li>
+</ul>
+<figure class="circuit" id="dw1-fig-overlay">
+<script type="application/json">{"parts":[
+ {"t":"R","a":[0,0],"b":[8,0],"label":"R_A"},
+ {"t":"R","a":[0,0],"b":[4,6.6],"label":"R_C","side":-1},
+ {"t":"R","a":[8,0],"b":[4,6.6],"label":"R_B","side":-1},
+ {"t":"R","a":[1.4,1.0],"b":[4,2.7],"label":"R_2","lpos":[0.15,-0.65]},
+ {"t":"R","a":[4,2.7],"b":[6.6,1.0],"label":"R_3","lpos":[-0.15,-0.65]},
+ {"t":"R","a":[4,2.7],"b":[4,5.1],"label":"R_1"},
+ {"t":"W","pts":[[1.4,1.0],[0,0]],"dashed":true},
+ {"t":"W","pts":[[6.6,1.0],[8,0]],"dashed":true},
+ {"t":"W","pts":[[4,5.1],[4,6.6]],"dashed":true},
+ {"t":"N","at":[1.4,1.0],"open":true},{"t":"N","at":[6.6,1.0],"open":true},{"t":"N","at":[4,5.1],"open":true},
+ {"t":"N","at":[4,2.7]},
+ {"t":"N","at":[0,0],"label":"A","pos":"nw"},{"t":"N","at":[8,0],"label":"B","pos":"ne"},{"t":"N","at":[4,6.6],"label":"C","pos":"s"}
+],"alt":"Delta R_A (top, between nodes A and B), R_C (left side, between A and C), R_B (right side, between B and C). Inside it a wye: R_2 from the centre to node A, R_3 from the centre to node B, R_1 from the centre down to node C. Dashed lines show that each wye terminal is the same node as the nearby delta corner."}</script>
+<figcaption>The instructor's overlay <a class="ts" data-t="9:58"></a> (also at <a class="ts" data-t="10:55"></a>, "Δ ↔ Y"). The dashed lines mean "same node". The Y's terminals connect to the Δ's corners. The node letters A, B, C are the ones he uses in Example 1 <a class="ts" data-t="21:00"></a>, with the same orientation.</figcaption>
+</figure>
+<p>Read off the drawing, the connections are:</p>
+<table>
+<tr><th>Y resistor</th><th>connects centre to node</th><th>Δ resistors that meet at that node (adjacent)</th><th>Δ resistor it is <em>opposite</em></th></tr>
+<tr><td>\(R_1\)</td><td>C (bottom)</td><td>\(R_B,\ R_C\)</td><td>\(R_A\)</td></tr>
+<tr><td>\(R_2\)</td><td>A (upper left)</td><td>\(R_A,\ R_C\)</td><td>\(R_B\)</td></tr>
+<tr><td>\(R_3\)</td><td>B (upper right)</td><td>\(R_A,\ R_B\)</td><td>\(R_C\)</td></tr>
+</table>
+<table>
+<tr><th>Δ resistor</th><th>connects nodes</th><th>opposite Y resistor (at the node it doesn't touch)</th></tr>
+<tr><td>\(R_A\)</td><td>A – B</td><td>\(R_1\) (at C)</td></tr>
+<tr><td>\(R_B\)</td><td>B – C</td><td>\(R_2\) (at A)</td></tr>
+<tr><td>\(R_C\)</td><td>A – C</td><td>\(R_3\) (at B)</td></tr>
+</table>
+<aside class="instructor">
+<p>Label your circuit so it matches the equations before you plug in numbers. If you stay consistent you won't "get turned around" <a class="ts" data-t="15:33"></a>. The pairing that matters is that \(R_1\) is opposite \(R_A\), \(R_2\) is opposite \(R_B\), and \(R_3\) is opposite \(R_C\) <a class="ts" data-t="27:37"></a>.</p>
+</aside>
+</section>
+
+<section class="g-sec" id="dw1-y2d" data-kind="lesson" data-ts="626-865">
+<h2>4. Converting Y → Δ</h2>
+<p>Goal: given the Y resistors \(R_1, R_2, R_3\), find the Δ resistors \(R_A, R_B, R_C\) that act the same at nodes A, B, C <a class="ts" data-t="10:26"></a>. The board heading is "Converting Wye → Delta" <a class="ts" data-t="10:59"></a>.</p>
+<div class="formula">\[ R_A=\frac{R_1R_2+R_2R_3+R_3R_1}{R_1}\qquad R_B=\frac{R_1R_2+R_2R_3+R_3R_1}{R_2}\qquad R_C=\frac{R_1R_2+R_2R_3+R_3R_1}{R_3} \]</div>
+<dl class="vardefs">
+<dt>\(R_1, R_2, R_3\)</dt><dd>Y resistors (Ω). \(R_1\) goes to node C, \(R_2\) to node A and \(R_3\) to node B, as in the overlay.</dd>
+<dt>\(R_A, R_B, R_C\)</dt><dd>Equivalent Δ resistors (Ω). \(R_A\) is between A and B, \(R_B\) between B and C, \(R_C\) between A and C.</dd>
+</dl>
+<p>The formulas apply whenever three resistors meet at a centre node that nothing else connects to. Remove the centre node, and the three new resistors go between the same three outer nodes.</p>
+<p><strong>The instructor's memory rule</strong> <a class="ts" data-t="13:00"></a>:</p>
+<ol>
+<li><strong>Numerator:</strong> multiply the Y resistors in every pair (\(R_1R_2\), \(R_2R_3\), \(R_3R_1\)) and add the three products. The numerator is the <em>same</em> for all three Δ resistors <a class="ts" data-t="11:25"></a>.</li>
+<li><strong>Denominator:</strong> divide by the Y resistor <em>opposite</em> the Δ resistor you want. \(R_A\) is divided by \(R_1\), \(R_B\) by \(R_2\) and \(R_C\) by \(R_3\) <a class="ts" data-t="13:25"></a>.</li>
+</ol>
+<aside class="instructor">
+<p>Compute the numerator once, write it down, and "carry that through" to the other two resistors. It isn't a hard calculation <a class="ts" data-t="14:07"></a>.</p>
+</aside>
+<aside class="extra">
+<p><strong>Equivalent shortcut form.</strong> Dividing each term by the opposite resistor gives \(R_A = R_2 + R_3 + \dfrac{R_2R_3}{R_1}\). In words: the two Y resistors that touch \(R_A\)'s two nodes, plus their product over the third. This shows that each Δ resistor is always <em>larger</em> than the series sum of the two Y arms it spans, which is a quick sanity check.</p>
+</aside>
+</section>
+
+<section class="g-sec" id="dw1-y2d-example" data-kind="lesson" data-ts="865-1308">
+<h2>5. Example 1: Y → Δ with 3.3 Ω, 4.7 Ω, 5.6 Ω</h2>
+<div class="example" id="dw1-ex1">
+<h3>Example 1: change a Y into a Δ <a class="ts" data-t="14:44"></a></h3>
+<p><strong>Given</strong> <a class="ts" data-t="15:11"></a>: a Y with \(R_1=3.3\,\Omega\) (vertical leg, to node C), \(R_2=4.7\,\Omega\) (upper-left arm, to node A) and \(R_3=5.6\,\Omega\) (upper-right arm, to node B). The instructor labels them to match the equations first <a class="ts" data-t="16:12"></a>. <strong>Goal:</strong> the equivalent Δ resistors \(R_A, R_B, R_C\).</p>
+<figure class="circuit" id="dw1-fig-ex1">
+<script type="application/json">{"parts":[
+ {"t":"R","a":[0,0],"b":[2,1.8],"label":"R_2","value":"4.7 Ω","lpos":[-0.95,0.5]},
+ {"t":"R","a":[2,1.8],"b":[4,0],"label":"R_3","value":"5.6 Ω","lpos":[0.95,0.5]},
+ {"t":"R","a":[2,1.8],"b":[2,4.4],"label":"R_1","value":"3.3 Ω"},
+ {"t":"N","at":[0,0],"label":"A","pos":"nw"},{"t":"N","at":[4,0],"label":"B","pos":"ne"},{"t":"N","at":[2,4.4],"label":"C","pos":"s"},{"t":"N","at":[2,1.8]},
+ {"t":"ARROW","a":[4.9,2.2],"b":[6.3,2.2]},
+ {"t":"R","a":[8,0],"b":[12,0],"label":"R_A","value":"18.28 Ω"},
+ {"t":"R","a":[8,0],"b":[10,3.4],"label":"R_C","value":"10.77 Ω","side":-1},
+ {"t":"R","a":[12,0],"b":[10,3.4],"label":"R_B","value":"12.83 Ω","side":-1},
+ {"t":"N","at":[8,0],"label":"A","pos":"nw"},{"t":"N","at":[12,0],"label":"B","pos":"ne"},{"t":"N","at":[10,3.4],"label":"C","pos":"s"}
+],"pad":1.4,"alt":"Given wye: R_2 = 4.7 ohm to node A, R_3 = 5.6 ohm to node B, R_1 = 3.3 ohm to node C. Arrow to the equivalent delta: R_A = 18.28 ohm between A and B, R_C = 10.77 ohm between A and C, R_B = 12.83 ohm between B and C."}</script>
+<figcaption>Example 1 as on the board <a class="ts" data-t="16:52"></a>, with the results and node letters added at <a class="ts" data-t="21:45"></a>.</figcaption>
+</figure>
+<p class="step">1. <strong>Common numerator</strong> <a class="ts" data-t="17:51"></a>. Keep the order \(R_1R_2 + R_2R_3 + R_3R_1\):
+\[ R_1R_2+R_2R_3+R_3R_1 = 3.3(4.7)+4.7(5.6)+5.6(3.3) = 15.51+26.32+18.48 = 60.31\ \Omega^2 \]</p>
+<p class="step">2. <strong>\(R_A\)</strong>: divide by the opposite Y resistor, \(R_1\) <a class="ts" data-t="18:43"></a>:
+\[ R_A=\frac{60.31}{3.3}=18.28\,\Omega \]</p>
+<p class="step">3. <strong>\(R_B\)</strong>: same numerator, divide by \(R_2\) <a class="ts" data-t="19:45"></a>:
+\[ R_B=\frac{60.31}{4.7}=12.83\,\Omega \]</p>
+<p class="step">4. <strong>\(R_C\)</strong>: same numerator, divide by \(R_3\) <a class="ts" data-t="20:11"></a>:
+\[ R_C=\frac{60.31}{5.6}=10.77\,\Omega \]</p>
+<p class="step">5. <strong>Placing the Δ</strong> <a class="ts" data-t="21:00"></a>: label the three points A, B, C on both drawings. Wherever this Y appears in a circuit, you can remove it and connect the Δ to the <em>same</em> three points A, B, C <a class="ts" data-t="21:25"></a>. \(R_A\) goes between A and B, \(R_B\) between B and C, and \(R_C\) between A and C.</p>
+<p class="answer">\(R_A = 18.28\,\Omega\) (A–B), \(R_B = 12.83\,\Omega\) (B–C), \(R_C = 10.77\,\Omega\) (A–C).</p>
+</div>
+<aside class="extra">
+<p><strong>Check that it really is equivalent.</strong> Measure the resistance between two terminals with the third left open, in both networks:</p>
+<table>
+<tr><th>Terminals</th><th>Y (two arms in series)</th><th>Δ (one resistor ∥ the other two in series)</th></tr>
+<tr><td>A–B</td><td>\(4.7+5.6=10.3\,\Omega\)</td><td>\(18.28\parallel(12.83+10.77)=10.3\,\Omega\)</td></tr>
+<tr><td>A–C</td><td>\(4.7+3.3=8.0\,\Omega\)</td><td>\(10.77\parallel(18.28+12.83)=8.0\,\Omega\)</td></tr>
+<tr><td>B–C</td><td>\(5.6+3.3=8.9\,\Omega\)</td><td>\(12.83\parallel(18.28+10.77)=8.9\,\Omega\)</td></tr>
+</table>
+<p>All three pairs match. The shortcut form gives the same answer, for example \(R_A = 4.7+5.6+\frac{4.7(5.6)}{3.3} = 18.28\,\Omega\).</p>
+</aside>
+<aside class="uncertain">
+<p><strong>Spoken slip (the board is correct).</strong> At <a class="ts" data-t="20:11"></a> the audio first says "12.88". The board and the instructor's next sentence give \(R_B = 12.83\,\Omega\), which is correct (\(60.31/4.7 = 12.832\)).</p>
+</aside>
+</section>
+
+<section class="g-sec" id="dw1-bridge-delta" data-kind="lesson" data-ts="1308-1702">
+<h2>6. Back to the bridge: spotting the Δ and why converting helps</h2>
+<p>Example 1 was just a Y converted on its own. The instructor points out that the harder part is <em>recognising</em> a Δ or Y inside a circuit and seeing where converting it helps <a class="ts" data-t="21:48"></a>. That's why he showed the "unsolvable" bridge first <a class="ts" data-t="22:13"></a>.</p>
+<p><strong>Finding the Δ.</strong> The bridge actually contains two Δs, drawn as π networks <a class="ts" data-t="22:40"></a>:</p>
+<ul>
+<li>the <em>top</em> π: 10 Ω, 10 Ω and 2.7 Ω, between the top node and the two middle nodes;</li>
+<li>the <em>bottom</em> π: 2.7 Ω, 4.7 Ω and 3.9 Ω, between the two middle nodes and the bottom node.</li>
+</ul>
+<p>He works with the bottom one. He redraws the circuit without the current arrows <a class="ts" data-t="23:32"></a> (84 V; 10, 10, 2.7, 4.7, 3.9 Ω <a class="ts" data-t="24:31"></a>) and marks its three points with red dots. You can remove the Δ from these three points and replace it with an equivalent Y <a class="ts" data-t="25:02"></a>.</p>
+<figure class="circuit" id="dw1-fig-bridge-labelled">
+<script type="application/json">{"parts":[
+ {"t":"BAT","a":[0,6],"b":[0,2],"label":"84 V","side":-1,"plus":"b"},
+ {"t":"W","pts":[[0,2],[0,0],[7,0]]},
+ {"t":"R","a":[3,0],"b":[3,4],"value":"10 Ω"},
+ {"t":"R","a":[7,0],"b":[7,4],"value":"10 Ω"},
+ {"t":"R","a":[3,4],"b":[7,4],"label":"R_A","value":"2.7 Ω"},
+ {"t":"R","a":[3,4],"b":[3,8],"label":"R_C","value":"4.7 Ω"},
+ {"t":"R","a":[7,4],"b":[7,8],"label":"R_B","value":"3.9 Ω"},
+ {"t":"W","pts":[[0,6],[0,8],[7,8]]},
+ {"t":"BOX","a":[2.3,2.75],"b":[8.7,8.6]},
+ {"t":"N","at":[3,0],"label":"T","pos":"n"},
+ {"t":"N","at":[3,4],"label":"A","pos":"w"},{"t":"N","at":[7,4],"label":"B","pos":"e"},{"t":"N","at":[5,8],"label":"C","pos":"s"}
+],"alt":"The bridge with the bottom delta labelled: R_A = 2.7 ohm between the left-middle node A and the right-middle node B, R_C = 4.7 ohm between A and the bottom node C, R_B = 3.9 ohm between B and C. A dashed box surrounds the delta. The two 10 ohm resistors run from the top node T to A and to B."}</script>
+<figcaption>The bottom Δ (dashed box) labelled in red at <a class="ts" data-t="27:11"></a> to <a class="ts" data-t="28:20"></a>. The node letters T, A, B, C are not on the board. They were added for clarity and follow the same orientation as the overlay in section 3.</figcaption>
+</figure>
+<p><strong>What the swap does</strong> <a class="ts" data-t="25:32"></a>. Remove the Δ and insert the Y at the same three points <a class="ts" data-t="26:01"></a>. The circuit becomes something we <em>can</em> solve <a class="ts" data-t="26:27"></a>:</p>
+<ul>
+<li>left 10 Ω in series with one Y arm, and right 10 Ω in series with the other Y arm;</li>
+<li>those two series branches in parallel with each other (both run from the top node to the Y centre);</li>
+<li>that parallel combination in series with the third Y leg, back to the battery.</li>
+</ul>
+<p>"This is the motivation for doing that conversion: it allows us to solve things we couldn't previously" (paraphrase, <a class="ts" data-t="26:48"></a>).</p>
+<p><strong>Labelling for Δ → Y</strong> <a class="ts" data-t="27:11"></a>. To stay on track, label the Δ resistors first: \(R_A = 2.7\,\Omega\) (top of the π), \(R_C = 4.7\,\Omega\) (left) and \(R_B = 3.9\,\Omega\) (right) <a class="ts" data-t="27:37"></a>. Then place the unknown Y so that \(R_1\) is opposite \(R_A\), \(R_2\) is opposite \(R_B\) and \(R_3\) is opposite \(R_C\) <a class="ts" data-t="28:06"></a>. In this drawing:</p>
+<table>
+<tr><th>Y resistor</th><th>goes from the Y centre to</th><th>touches (adjacent Δ resistors)</th><th>opposite</th></tr>
+<tr><td>\(R_1\)</td><td>bottom node C</td><td>\(R_B=3.9\,\Omega\), \(R_C=4.7\,\Omega\)</td><td>\(R_A=2.7\,\Omega\)</td></tr>
+<tr><td>\(R_2\)</td><td>left-middle node A</td><td>\(R_A=2.7\,\Omega\), \(R_C=4.7\,\Omega\)</td><td>\(R_B=3.9\,\Omega\)</td></tr>
+<tr><td>\(R_3\)</td><td>right-middle node B</td><td>\(R_A=2.7\,\Omega\), \(R_B=3.9\,\Omega\)</td><td>\(R_C=4.7\,\Omega\)</td></tr>
+</table>
+<aside class="extra">
+<p>The top π would work too. Converting the top Δ (10, 10, 2.7 Ω) to a Y gives 4.405 Ω at the top node and 1.189 Ω at each middle node. Then \(R_{eq} = 4.405 + (1.189+4.7)\parallel(1.189+3.9) = 7.135\,\Omega\), the same answer as section 9. Any Δ (or any node where exactly three resistors meet, which is a Y) is a candidate. Pick the one that leaves series/parallel groups behind.</p>
+</aside>
+</section>
+
+<section class="g-sec" id="dw1-d2y" data-kind="lesson" data-ts="1702-1852">
+<h2>7. Converting Δ → Y</h2>
+<p>For Δ → Y the equations "change a bit". They are the same relationships rewritten to solve for \(R_1, R_2, R_3\) in terms of \(R_A, R_B, R_C\) <a class="ts" data-t="28:56"></a>:</p>
+<div class="formula">\[ R_1=\frac{R_BR_C}{R_A+R_B+R_C}\qquad R_2=\frac{R_CR_A}{R_A+R_B+R_C}\qquad R_3=\frac{R_AR_B}{R_A+R_B+R_C} \]</div>
+<dl class="vardefs">
+<dt>\(R_A, R_B, R_C\)</dt><dd>Δ resistors (Ω): \(R_A\) between A–B, \(R_B\) between B–C, \(R_C\) between A–C.</dd>
+<dt>\(R_1, R_2, R_3\)</dt><dd>Equivalent Y resistors (Ω), from the new centre node to C, A and B respectively.</dd>
+</dl>
+<p>Use these whenever three resistors form a triangle (Δ or π) between three nodes. All three are removed, and a new centre node is created.</p>
+<p><strong>The instructor's memory rule</strong> <a class="ts" data-t="29:43"></a>:</p>
+<ol>
+<li><strong>Denominator:</strong> the sum of all three Δ resistors. It is the <em>same</em> for all three Y resistors <a class="ts" data-t="29:43"></a>.</li>
+<li><strong>Numerator:</strong> think of \(R_1\) as "like" \(R_A\), \(R_2\) as "like" \(R_B\) and \(R_3\) as "like" \(R_C\). Then multiply <em>the other two</em> Δ resistors: \(R_1\) uses \(R_BR_C\), \(R_2\) uses \(R_CR_A\) and \(R_3\) uses \(R_AR_B\) <a class="ts" data-t="30:08"></a>.</li>
+</ol>
+<aside class="extra">
+<p><strong>Geometric version of the same rule.</strong> The numerator is the product of the two Δ resistors that <em>touch the node</em> the Y resistor attaches to (the adjacent ones in the tables of section 3). For example, \(R_1\) attaches to node C, where \(R_B\) and \(R_C\) meet. This version doesn't depend on letters, so it works in any textbook's labelling. Each Y resistor is also always <em>smaller</em> than both Δ resistors in its numerator, because \(\frac{R_BR_C}{R_A+R_B+R_C} &lt; \frac{R_BR_C}{R_C} = R_B\).</p>
+</aside>
+</section>
+
+<section class="g-sec" id="dw1-d2y-example" data-kind="lesson" data-ts="1852-2128">
+<h2>8. Example 2: Δ → Y in the bridge (2.7 Ω, 3.9 Ω, 4.7 Ω)</h2>
+<div class="example" id="dw1-ex2">
+<h3>Example 2: convert the bridge's bottom Δ to a Y <a class="ts" data-t="30:52"></a></h3>
+<p><strong>Given</strong> (figure in section 6): \(R_A = 2.7\,\Omega\) (A–B), \(R_B = 3.9\,\Omega\) (B–C), \(R_C = 4.7\,\Omega\) (A–C). <strong>Goal:</strong> \(R_1\) (to C), \(R_2\) (to A), \(R_3\) (to B).</p>
+<p class="step">1. <strong>Common denominator</strong> <a class="ts" data-t="31:15"></a>. Write it down once so you can reuse it <a class="ts" data-t="31:56"></a>:
+\[ R_A+R_B+R_C = 2.7+3.9+4.7 = 11.3\,\Omega \]</p>
+<p class="step">2. <strong>\(R_1\)</strong> (the other two besides \(R_A\)):
+\[ R_1=\frac{R_BR_C}{R_A+R_B+R_C}=\frac{3.9(4.7)}{11.3}=\frac{18.33}{11.3}=1.62\,\Omega \]
+<a class="ts" data-t="32:16"></a></p>
+<p class="step">3. <strong>\(R_2\)</strong> <a class="ts" data-t="33:18"></a>:
+\[ R_2=\frac{R_CR_A}{11.3}=\frac{4.7(2.7)}{11.3}=\frac{12.69}{11.3}=1.12\,\Omega \]</p>
+<p class="step">4. <strong>\(R_3\)</strong> <a class="ts" data-t="34:07"></a>:
+\[ R_3=\frac{R_AR_B}{11.3}=\frac{2.7(3.9)}{11.3}=\frac{10.53}{11.3}=0.93\,\Omega \]</p>
+<p class="answer">\(R_1 = 1.62\,\Omega\) (centre to bottom node C), \(R_2 = 1.12\,\Omega\) (centre to left-middle node A), \(R_3 = 0.93\,\Omega\) (centre to right-middle node B). This Y is "functionally identical" to the Δ it replaces <a class="ts" data-t="34:32"></a>.</p>
+</div>
+<aside class="uncertain">
+<p><strong>Board transposition, corrected by the instructor.</strong> At <a class="ts" data-t="32:33"></a> he first writes \(R_1 = 1.26\,\Omega\) next to the Y on the circuit drawing. Then he crosses it out and writes the correct \(1.62\,\Omega\) <a class="ts" data-t="32:59"></a>. The calculation on the page already showed \(18.33/11.3 = 1.62\) (exactly 1.622).</p>
+</aside>
+<aside class="extra">
+<p><strong>Equivalence check</strong> (third terminal open):</p>
+<table>
+<tr><th>Terminals</th><th>Δ</th><th>Y</th></tr>
+<tr><td>A–B</td><td>\(2.7\parallel(4.7+3.9)=2.055\,\Omega\)</td><td>\(1.123+0.932=2.055\,\Omega\)</td></tr>
+<tr><td>A–C</td><td>\(4.7\parallel(2.7+3.9)=2.745\,\Omega\)</td><td>\(1.123+1.622=2.745\,\Omega\)</td></tr>
+<tr><td>B–C</td><td>\(3.9\parallel(2.7+4.7)=2.554\,\Omega\)</td><td>\(0.932+1.622=2.554\,\Omega\)</td></tr>
+</table>
+</aside>
+</section>
+
+<section class="g-sec" id="dw1-solve" data-kind="lesson" data-ts="2128-2312">
+<h2>9. Solving the reduced circuit</h2>
+<p>Put the Y values into the new circuit <a class="ts" data-t="34:57"></a>. The two 10 Ω resistors are unchanged. \(R_2 = 1.12\,\Omega\) now hangs below the left 10 Ω, \(R_3 = 0.93\,\Omega\) below the right 10 Ω, and \(R_1 = 1.62\,\Omega\) runs from the Y centre down to the battery's negative side <a class="ts" data-t="35:28"></a>.</p>
+<figure class="circuit" id="dw1-fig-bridge-y">
+<script type="application/json">{"parts":[
+ {"t":"BAT","a":[0,6],"b":[0,2],"label":"84 V","side":-1,"plus":"b"},
+ {"t":"W","pts":[[0,2],[0,0],[7,0]]},
+ {"t":"R","a":[3,0],"b":[3,3],"value":"10 Ω"},
+ {"t":"R","a":[7,0],"b":[7,3],"value":"10 Ω"},
+ {"t":"R","a":[3,3],"b":[5,5],"label":"R_2","value":"1.12 Ω","lpos":[-1.05,0.65]},
+ {"t":"R","a":[7,3],"b":[5,5],"label":"R_3","value":"0.93 Ω","lpos":[1.05,0.65]},
+ {"t":"R","a":[5,5],"b":[5,8],"label":"R_1","value":"1.62 Ω"},
+ {"t":"W","pts":[[5,8],[0,8],[0,6]]},
+ {"t":"N","at":[3,0]},
+ {"t":"N","at":[3,3],"label":"A","pos":"w"},{"t":"N","at":[7,3],"label":"B","pos":"e"},
+ {"t":"N","at":[5,5],"label":"N","pos":"w"},{"t":"N","at":[5,8],"label":"C","pos":"s"}
+],"alt":"After replacement: 84 V battery; top node feeds left 10 ohm down to node A and right 10 ohm down to node B; R_2 = 1.12 ohm from A to the new centre node N, R_3 = 0.93 ohm from B to N; R_1 = 1.62 ohm from N down to node C, which returns to the battery negative."}</script>
+<figcaption>The circuit with the Δ replaced by the Y, as drawn at <a class="ts" data-t="26:45"></a> and with values at <a class="ts" data-t="35:50"></a>. N is the new Y centre node (letter added).</figcaption>
+</figure>
+<p>He keeps the Y shaped like a Y so you can see where the substitution was made. The same circuit can be redrawn to make the series/parallel structure obvious <a class="ts" data-t="35:55"></a>. He shows this on a pre-drawn page titled "Now Replace the Delta w/ the Wye" <a class="ts" data-t="36:18"></a>. There, 1.12 Ω is in series with one 10 Ω, 0.93 Ω is in series with the other 10 Ω, and the single 1.62 Ω resistor connects back to the negative of the source <a class="ts" data-t="36:22"></a>.</p>
+<figure class="circuit" id="dw1-fig-sp">
+<script type="application/json">{"parts":[
+ {"t":"BAT","a":[0,6],"b":[0,2],"label":"84 V","side":-1,"plus":"b"},
+ {"t":"W","pts":[[0,2],[0,0],[7,0]]},
+ {"t":"IARR","a":[0.6,0],"b":[2.4,0],"label":"I_T"},
+ {"t":"R","a":[3,0],"b":[3,2.5],"value":"10 Ω","side":-1},
+ {"t":"R","a":[3,2.5],"b":[3,5],"label":"R_2","value":"1.12 Ω","side":-1},
+ {"t":"R","a":[7,0],"b":[7,2.5],"value":"10 Ω"},
+ {"t":"R","a":[7,2.5],"b":[7,5],"label":"R_3","value":"0.93 Ω"},
+ {"t":"W","pts":[[3,5],[7,5]]},
+ {"t":"IARR","a":[3,5],"b":[4.6,5],"label":"I_L","side":-1},
+ {"t":"IARR","a":[7,5],"b":[5.4,5],"label":"I_R","side":-1},
+ {"t":"R","a":[5,5],"b":[5,8],"label":"R_1","value":"1.62 Ω"},
+ {"t":"W","pts":[[5,8],[0,8],[0,6]]},
+ {"t":"N","at":[3,0]},
+ {"t":"N","at":[3,2.5],"label":"A","pos":"e"},{"t":"N","at":[7,2.5],"label":"B","pos":"w"},
+ {"t":"N","at":[5,5],"label":"N","pos":"n"},{"t":"N","at":[5,8],"label":"C","pos":"s"}
+],"alt":"Series-parallel redraw: left branch 10 ohm plus R_2 = 1.12 ohm and right branch 10 ohm plus R_3 = 0.93 ohm, both from the top node down to node N, in parallel; then R_1 = 1.62 ohm from N to the battery negative. Arrows mark total current I_T and branch currents I_L and I_R flowing into N."}</script>
+<figcaption>The redrawn series–parallel circuit from the pre-drawn page <a class="ts" data-t="36:18"></a>. The current arrows and node letters were added for clarity.</figcaption>
+</figure>
+<p><strong>The procedure the instructor describes</strong> <a class="ts" data-t="36:38"></a>. He doesn't compute the numbers in the video; he says "I know that everyone can solve this".</p>
+<ol>
+<li>Combine 10 Ω in series with 1.12 Ω, and 10 Ω in series with 0.93 Ω.</li>
+<li>Put those two in parallel.</li>
+<li>Add the 1.62 Ω in series to get the total resistance.</li>
+<li>Divide 84 V by the total resistance to get the total current.</li>
+<li>Find the voltage drop across 1.62 Ω. Subtract it from 84 V to get the voltage across each parallel branch, then find each branch current <a class="ts" data-t="37:04"></a>.</li>
+</ol>
+<div class="example" id="dw1-ex3">
+<h3>Example 3: finishing the bridge (the instructor's procedure, numbers worked out for this guide) <a class="ts" data-t="36:38"></a></h3>
+<p><strong>Given:</strong> the circuit above with \(R_1 = 1.62\,\Omega\), \(R_2 = 1.12\,\Omega\), \(R_3 = 0.93\,\Omega\) and 84 V. <strong>Goal:</strong> \(R_{eq}\), \(I_T\) and the branch currents.</p>
+<p class="step">1. Series branches: \(R_L = 10 + 1.12 = 11.12\,\Omega\) and \(R_R = 10 + 0.93 = 10.93\,\Omega\).</p>
+<p class="step">2. Parallel: \(R_L\parallel R_R = \dfrac{11.12(10.93)}{11.12+10.93} = \dfrac{121.54}{22.05} = 5.512\,\Omega\).</p>
+<p class="step">3. Series with \(R_1\): \(R_{eq} = 5.512 + 1.62 = 7.132\,\Omega\).</p>
+<p class="step">4. Ohm's law: \(I_T = \dfrac{84\,\text{V}}{7.132\,\Omega} = 11.78\,\text{A}\).</p>
+<p class="step">5. Drop across \(R_1\): \(V_{R_1} = 11.78(1.62) = 19.08\,\text{V}\). The voltage across each parallel branch (top node to N) is \(84 - 19.08 = 64.92\,\text{V}\) (KVL).</p>
+<p class="step">6. Branch currents: \(I_L = \dfrac{64.92}{11.12} = 5.84\,\text{A}\) through the left 10 Ω, and \(I_R = \dfrac{64.92}{10.93} = 5.94\,\text{A}\) through the right 10 Ω. KCL check: \(5.84 + 5.94 = 11.78\,\text{A}\) ✓.</p>
+<p class="answer">\(R_{eq} \approx 7.13\,\Omega\), \(I_T \approx 11.8\,\text{A}\), \(I_{10\,\Omega,\text{left}} \approx 5.84\,\text{A}\), \(I_{10\,\Omega,\text{right}} \approx 5.94\,\text{A}\). Without rounding the Y values, \(R_{eq} = 7.135\,\Omega\) and \(I_T = 11.77\,\text{A}\).</p>
+</div>
+<aside class="extra">
+<p><strong>Getting back to the original resistors.</strong> The conversion keeps the voltages at nodes A, B, C (and everything outside the Δ) correct. It does <em>not</em> give you the currents in the removed 2.7, 4.7 and 3.9 Ω resistors directly, because they no longer exist in the new circuit and node N is fictitious. To find them, take the terminal voltages back to the original circuit. These values use unrounded Y values, with the bottom node C = 0 V:</p>
+<ul>
+<li>\(V_A = 84 - 10\,I_L = 84 - 10(5.835) = 25.65\,\text{V}\) and \(V_B = 84 - 10\,I_R = 84 - 10(5.937) = 24.63\,\text{V}\).</li>
+<li>\(I_{4.7} = V_A/4.7 = 5.457\,\text{A}\), \(I_{3.9} = V_B/3.9 = 6.315\,\text{A}\), and \(I_{2.7} = (V_A - V_B)/2.7 = 0.378\,\text{A}\) from A to B (left to right).</li>
+<li>Checks: KCL at A gives \(5.835 = 5.457 + 0.378\) ✓. At the bottom, \(5.457 + 6.315 = 11.772\,\text{A} = I_T\) ✓. A direct nodal analysis of the original bridge gives the same \(V_A\), \(V_B\) and \(R_{eq} = 7.135\,\Omega\).</li>
+</ul>
+</aside>
+<p><strong>Closing remark</strong> <a class="ts" data-t="37:42"></a>. The Y → Δ example was a bare network conversion. The Δ → Y example shows where the substitution is really valuable: it turns an unsolvable bridge into a series–parallel circuit. The recording then stops before the lab discussion <a class="ts" data-t="38:24"></a>.</p>
+</section>
+
+<section class="g-sec" id="dw1-derivation" data-kind="lesson">
+<h2>10. Where the formulas come from, and the balanced case (added)</h2>
+<aside class="extra">
+<p>The video gives the formulas without a derivation. Here is the standard one, using the labelling of section 3.</p>
+<p><strong>Idea:</strong> the two networks must look identical from every pair of terminals. Leave the third terminal open, so no current flows in the Y arm connected to it, and equate the resistances. Let \(S = R_A+R_B+R_C\).</p>
+<ul>
+<li>A–B (C open): the Y gives \(R_2+R_3\). The Δ gives \(R_A\parallel(R_B+R_C)\). So \(R_2+R_3=\dfrac{R_A(R_B+R_C)}{S}\) … (1)</li>
+<li>A–C (B open): \(R_2+R_1=\dfrac{R_C(R_A+R_B)}{S}\) … (2)</li>
+<li>B–C (A open): \(R_3+R_1=\dfrac{R_B(R_A+R_C)}{S}\) … (3)</li>
+</ul>
+<p><strong>Δ → Y.</strong> Compute (1) + (2) − (3). The left side is \(2R_2\). On the right, \(R_AR_B+R_AR_C+R_CR_A+R_CR_B-R_BR_A-R_BR_C = 2R_AR_C\). So \(R_2=\dfrac{R_CR_A}{S}\). The same steps give \(R_1=\dfrac{R_BR_C}{S}\) and \(R_3=\dfrac{R_AR_B}{S}\).</p>
+<p><strong>Y → Δ.</strong> Substitute the three results into the pairwise-product sum: \(R_1R_2+R_2R_3+R_3R_1=\dfrac{R_AR_BR_C(R_A+R_B+R_C)}{S^2}=\dfrac{R_AR_BR_C}{S}\). Dividing by \(R_1=\dfrac{R_BR_C}{S}\) leaves \(R_A\). Dividing by \(R_2\) leaves \(R_B\), and dividing by \(R_3\) leaves \(R_C\). These are exactly the Y → Δ formulas of section 4.</p>
+<p>A three-terminal resistor network is fully described by these three pairwise resistances. So matching all three pairs guarantees equivalence for <em>any</em> external circuit, not just the open-terminal tests.</p>
+<p><strong>Balanced case.</strong> If all Δ resistors are equal (\(R_\Delta\)), then \(R_Y=\dfrac{R_\Delta R_\Delta}{3R_\Delta}=\dfrac{R_\Delta}{3}\). If all Y resistors are equal (\(R_Y\)), then \(R_\Delta=\dfrac{3R_Y^2}{R_Y}=3R_Y\). For example, a Δ of three 9 Ω resistors becomes a Y of three 3 Ω resistors.</p>
+</aside>
+</section>
+
+<section class="g-sec" id="dw1-assumptions" data-kind="assumptions">
+<h2>Assumptions &amp; limitations</h2>
+<ul>
+<li><strong>Same three nodes.</strong> The replacement is made between the same three points the original network connected to <a class="ts" data-t="9:41"></a>. All three original resistors are removed, and all three new ones are connected to those points. Everything else in the circuit stays exactly as it was.</li>
+<li><strong>Equivalent only at the terminals.</strong> The new network gives the same voltages at A, B, C and the same currents into A, B, C. It "behaves every which way" like the original as seen from those three points <a class="ts" data-t="17:02"></a>. Voltages and currents of the individual replaced resistors are not preserved. Go back to the original circuit to find them (section 9).</li>
+<li><strong>Δ → Y adds a node; Y → Δ removes one.</strong> The Y centre (N) is a new node that doesn't exist in the original circuit. For Y → Δ, the centre node must have <em>only</em> the three Y resistors attached. If anything else connects there, it isn't a plain Y.</li>
+<li><strong>Labelling must match the formulas.</strong> \(R_1\) is opposite \(R_A\), \(R_2\) opposite \(R_B\) and \(R_3\) opposite \(R_C\). With any other pairing the formulas give wrong values.</li>
+<li><strong>Resistors only (this course).</strong> The networks here contain only resistors, and the formulas are for resistances. Sources inside the Δ or Y are not handled by these formulas.</li>
+<li><strong>Not always necessary.</strong> Use Δ–Y only when series/parallel reduction is stuck, as in a bridge. Choose a Δ or Y whose conversion leaves series/parallel groups behind.</li>
+<li><strong>Rounding.</strong> Carry 3–4 significant figures. With the rounded Y values the bridge gives \(R_{eq} = 7.132\,\Omega\). Unrounded it is \(7.135\,\Omega\).</li>
+</ul>
+</section>
+
+<section class="g-sec" id="dw1-mistakes" data-kind="mistakes">
+<h2>Common mistakes</h2>
+<aside class="mistake">
+<p><strong>Dividing by the wrong Y resistor (Y → Δ).</strong> \(R_A\) is divided by the Y resistor <em>opposite</em> it (\(R_1\)), not by one that touches its nodes. <em>Fix:</em> draw the Y inside the Δ first and label it as in section 3. <em>Spot it:</em> the Δ resistor should come out larger than the two Y arms it spans in series (\(R_A &gt; R_2 + R_3\)).</p>
+</aside>
+<aside class="mistake">
+<p><strong>Mixing up node letters and resistor letters.</strong> In Example 1, nodes are named A, B, C and resistors \(R_A, R_B, R_C\). But \(R_A\) runs between <em>nodes</em> A and B; it is not "at node A". <em>Fix:</em> use the tables in section 3. Remember that \(R_A\) is opposite \(R_1\), and \(R_1\) is at node C.</p>
+</aside>
+<aside class="mistake">
+<p><strong>Using the wrong formula set.</strong> Y → Δ has the <em>same numerator</em> (sum of pairwise products) for all three. Δ → Y has the <em>same denominator</em> (sum of the three Δ resistors) for all three. If you are summing products to get a Y resistor, you are using the wrong set.</p>
+</aside>
+<aside class="mistake">
+<p><strong>Treating the bridge resistor as series or parallel.</strong> The 2.7 Ω bridge doesn't share both nodes with any other resistor, and its nodes have three resistors each. It is in neither series nor parallel with anything. Convert a Δ (or a Y) first.</p>
+</aside>
+<aside class="mistake">
+<p><strong>Connecting the new network to the wrong points.</strong> Each Y arm must land on the node where its two adjacent Δ resistors met. For example, \(R_1 = 1.62\,\Omega\) goes to the bottom node, where 4.7 Ω and 3.9 Ω met. Each new Δ resistor must span the same pair of nodes as the pair of Y arms it replaces.</p>
+</aside>
+<aside class="mistake">
+<p><strong>Looking for the 2.7 Ω current in the converted circuit.</strong> It isn't there. Find \(V_A\) and \(V_B\) from the converted circuit, then use \(I = (V_A - V_B)/2.7\) in the original circuit.</p>
+</aside>
+<aside class="mistake">
+<p><strong>Digit slips when copying.</strong> Even the instructor briefly wrote 1.26 for 1.62 <a class="ts" data-t="32:33"></a>. <em>Spot it:</em> each Y resistor must be smaller than both Δ resistors in its numerator (\(1.62 &lt; 3.9\) and \(1.62 &lt; 4.7\)). Check one terminal pair, e.g. \(R_2+R_3 = R_A\parallel(R_B+R_C)\).</p>
+</aside>
+</section>
+
+<section class="g-sec" id="dw1-recap" data-kind="recap">
+<h2>Recap &amp; formula sheet</h2>
+<ul>
+<li>A bridge circuit (two parallel branches joined in the middle by a bridge resistor) can't be reduced by series/parallel rules alone.</li>
+<li>Δ = π and Y = T. These are the same circuits drawn differently, each connecting three nodes.</li>
+<li>A Δ and a Y on the same three nodes can be made equivalent, with three equations per direction. Swap one for the other at those three points.</li>
+<li>Label with \(R_1\) opposite \(R_A\), \(R_2\) opposite \(R_B\) and \(R_3\) opposite \(R_C\). The Δ uses letter subscripts and the Y uses number subscripts.</li>
+<li>In the bridge, replacing the bottom Δ (2.7, 3.9, 4.7 Ω) with a Y (1.62, 1.12, 0.93 Ω) gives a series–parallel circuit with \(R_{eq}\approx 7.13\,\Omega\) and \(I_T\approx 11.8\,\text{A}\) from 84 V.</li>
+</ul>
+<div class="formula-sheet">
+<p><strong>Labelling</strong> (overlay, section 3): \(R_A\): A–B, \(R_B\): B–C, \(R_C\): A–C. \(R_1\): centre–C, \(R_2\): centre–A, \(R_3\): centre–B. Opposite pairs: \(R_1\leftrightarrow R_A\), \(R_2\leftrightarrow R_B\), \(R_3\leftrightarrow R_C\).</p>
+<p><strong>Y → Δ</strong> (same numerator; divide by the opposite Y resistor):</p>
+\[ R_A=\frac{R_1R_2+R_2R_3+R_3R_1}{R_1},\quad R_B=\frac{R_1R_2+R_2R_3+R_3R_1}{R_2},\quad R_C=\frac{R_1R_2+R_2R_3+R_3R_1}{R_3} \]
+<p>Equivalent form: \(R_A=R_2+R_3+\dfrac{R_2R_3}{R_1}\) (and cyclic).</p>
+<p><strong>Δ → Y</strong> (same denominator; multiply the other two / the two adjacent Δ resistors):</p>
+\[ R_1=\frac{R_BR_C}{R_A+R_B+R_C},\quad R_2=\frac{R_CR_A}{R_A+R_B+R_C},\quad R_3=\frac{R_AR_B}{R_A+R_B+R_C} \]
+<p><strong>Balanced:</strong> \(R_Y = R_\Delta/3\) and \(R_\Delta = 3R_Y\).</p>
+<p><strong>Equivalence check</strong> (third terminal open): \(R_2+R_3 = R_A\parallel(R_B+R_C)\), \(R_1+R_2 = R_C\parallel(R_A+R_B)\), \(R_1+R_3 = R_B\parallel(R_A+R_C)\).</p>
+<p><strong>Finishing a reduced circuit:</strong> \(R_s = R_1+R_2\), \(R_1\parallel R_2 = \dfrac{R_1R_2}{R_1+R_2}\), \(I = V/R\), and KVL/KCL for branch voltages and currents.</p>
+<p>All resistances are in ohms (Ω). Pairwise products are in Ω², and dividing by one resistance gives Ω again.</p>
+<p><strong>Video's numbers:</strong> Ex 1: 3.3, 4.7, 5.6 Ω (Y) → 18.28, 12.83, 10.77 Ω (Δ), with numerator 60.31. Ex 2: 2.7, 3.9, 4.7 Ω (Δ) → 1.62, 1.12, 0.93 Ω (Y), with denominator 11.3.</p>
+</div>
+</section>

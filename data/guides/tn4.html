@@ -1,0 +1,427 @@
+<section class="g-sec" id="tn4-overview" data-kind="overview">
+<h2>Overview</h2>
+<p>The first 24 minutes of this lecture cover the <strong>maximum power transfer theorem</strong>. The instructor first admits something earlier lectures skipped: a real battery or bench power supply is not an ideal voltage source. It behaves like an ideal source \(V\) in series with an <strong>internal resistance</strong> \(r_{int}\), which is the same shape as a Thévenin equivalent circuit. The theorem says the load receives the most power when \(R_L = r_{int}\). He shows this with one source (20&nbsp;V, \(r_{int} = 10\,\Omega\)) and three loads: 10&nbsp;Ω gives 10&nbsp;W, 5&nbsp;Ω gives 8.89&nbsp;W and 30&nbsp;Ω gives 7.5&nbsp;W.</p>
+<p><strong>Scope note:</strong> only 0:00–23:53 belongs to this topic. The rest of the video (23:53–1:16:58) introduces <em>mesh analysis</em>. It is outlined briefly at the end of this guide.</p>
+<p>Parts of the video:</p>
+<ul>
+<li><a class="ts" data-t="0:00"></a> Today's plan: maximum power transfer ("really straightforward"), then mesh analysis</li>
+<li><a class="ts" data-t="1:04"></a> Ideal vs. real-world voltage sources; <a class="ts" data-t="1:56"></a> internal resistance; <a class="ts" data-t="2:52"></a> "it looks like a Thévenin equivalent"</li>
+<li><a class="ts" data-t="3:37"></a> Two 9&nbsp;V batteries snapped together get hot: internal resistance is real</li>
+<li><a class="ts" data-t="4:53"></a> Source and load; <a class="ts" data-t="6:16"></a> when power transfer matters (speakers, antennas, microwave ovens) and <a class="ts" data-t="7:41"></a> when it doesn't (digital/embedded circuits)</li>
+<li><a class="ts" data-t="9:22"></a> The theorem: maximum power when \(r_{int} = R_L\)</li>
+<li><a class="ts" data-t="11:18"></a> Three examples with the same 20&nbsp;V / 10&nbsp;Ω source: <a class="ts" data-t="11:56"></a> \(R_L = 10\,\Omega\) → 10&nbsp;W, <a class="ts" data-t="14:37"></a> \(R_L = 5\,\Omega\) → 8.89&nbsp;W, <a class="ts" data-t="19:01"></a> \(R_L = 30\,\Omega\) → 7.5&nbsp;W</li>
+<li><a class="ts" data-t="20:56"></a> Conclusion; <a class="ts" data-t="21:20"></a> real battery internal resistance; audio amplifier model; <a class="ts" data-t="22:26"></a> why computer engineers rarely care</li>
+<li><a class="ts" data-t="23:53"></a> (Outside this topic) Mesh analysis</li>
+</ul>
+<p>Related lessons: <a class="xref" data-lesson="tn1">Thévenin introduction</a>, <a class="xref" data-lesson="tn2">Thévenin (cont.) and Norton</a>, <a class="xref" data-lesson="tn3">Norton (cont.)</a>, <a class="xref" data-lesson="st1">source transformation</a>.</p>
+</section>
+
+<section class="g-sec" id="tn4-objectives" data-kind="objectives">
+<h2>Learning objectives</h2>
+<p>After this lesson you should be able to:</p>
+<ul>
+<li>Explain the difference between an ideal constant-voltage source and a real battery or bench power supply, and draw the real one as \(V\) in series with an internal resistance \(r_{int}\).</li>
+<li>Say why a real source "looks like" a Thévenin equivalent circuit.</li>
+<li>Identify the <em>source</em> and the <em>load</em> in a circuit, and give examples where maximum power transfer matters (speaker, antenna, microwave oven) and where it usually doesn't (digital logic, embedded systems).</li>
+<li>State the maximum power transfer theorem: the load gets maximum power when \(R_L = r_{int}\).</li>
+<li>For a source \(V\) with \(r_{int}\) and a load \(R_L\), find \(I_{RL}\), \(V_{RL}\) and \(P_{RL} = I_{RL}V_{RL}\) using series resistance, Ohm's law and KVL.</li>
+<li>Reproduce the three examples (20&nbsp;V, \(r_{int} = 10\,\Omega\); \(R_L\) = 10, 5, 30&nbsp;Ω) and explain why more current (5&nbsp;Ω) or more voltage (30&nbsp;Ω) still gives less load power.</li>
+<li>(Added) Use \(P_L = \dfrac{V_{TH}^2 R_L}{(R_{TH}+R_L)^2}\) and \(P_{max} = \dfrac{V_{TH}^2}{4R_{TH}}\), and explain why the efficiency at maximum power is only 50&nbsp;%.</li>
+</ul>
+</section>
+
+<section class="g-sec" id="tn4-prereqs" data-kind="prereqs">
+<h2>Prerequisites</h2>
+<dl>
+<dt>Ohm's law</dt>
+<dd>\(V = IR\). The instructor uses it to get each resistor's voltage from the loop current, e.g. \(1\,\text{A}\times 10\,\Omega = 10\,\text{V}\).</dd>
+<dt>Series resistors and the single-loop current</dt>
+<dd>In a single loop the same current flows through every element, and series resistances add. For a source \(V\) with \(r_{int}\) and \(R_L\): \(I = V/(r_{int}+R_L)\).</dd>
+<dt>Kirchhoff's voltage law (KVL)</dt>
+<dd>The voltage drops around a closed loop sum to the source voltage (the algebraic sum is zero). The drop across the load is therefore \(V_{RL} = V - V_{r_{int}}\).</dd>
+<dt>Electric power</dt>
+<dd>The power absorbed by a resistor is \(P = IV\), which can also be written \(P = I^2R = V^2/R\). Unit: watt (W) = V·A.</dd>
+<dt>Thévenin equivalent (<a class="xref" data-lesson="tn1">tn1</a>, <a class="xref" data-lesson="tn2">tn2</a>)</dt>
+<dd>Any linear two-terminal network can be replaced by a voltage source \(V_{TH}\) in series with a resistance \(R_{TH}\). The real-source model in this lesson has exactly this form.</dd>
+<dt>Norton equivalent and source transformation (<a class="xref" data-lesson="tn3">tn3</a>, <a class="xref" data-lesson="st1">st1</a>)</dt>
+<dd>A current source \(I_N\) in parallel with \(R_N = R_{TH}\) is equivalent to the Thévenin form, with \(V_{TH} = I_N R_N\). This is only needed for the added material at the end.</dd>
+</dl>
+</section>
+
+<section class="g-sec" id="tn4-definitions" data-kind="definitions">
+<h2>Definitions &amp; symbols</h2>
+<table>
+<tr><th>Term / symbol</th><th>Meaning</th><th>Unit</th></tr>
+<tr><td>Maximum power transfer theorem</td><td>Maximum power is transferred from a source to a load when the load resistance equals the source's internal (Thévenin) resistance: \(R_L = r_{int}\).</td><td>—</td></tr>
+<tr><td>Ideal (constant) voltage source</td><td>Gives the same voltage whatever is connected, e.g. "10&nbsp;V all the time". It has no internal resistance. The instructor notes this is an idealization.</td><td>V</td></tr>
+<tr><td>Real-world battery / bench power supply (PS)</td><td>Modeled as an ideal source \(V\) in series with an internal resistance \(r_{int}\).</td><td>—</td></tr>
+<tr><td>\(r_{int}\) (internal resistance)</td><td>The resistance inside a real source. It comes from the battery chemistry or the supply's construction ("a fact of life"), not from a resistor someone added.</td><td>Ω</td></tr>
+<tr><td>Source</td><td>The part that delivers power: \(V\) plus \(r_{int}\). The instructor calls its terminals the "output".</td><td>—</td></tr>
+<tr><td>Load, \(R_L\)</td><td>The part that receives the power, e.g. a speaker. Its terminals are the "input".</td><td>Ω</td></tr>
+<tr><td>\(I_{RL}\)</td><td>Current through the load. In a single loop it equals the source current.</td><td>A</td></tr>
+<tr><td>\(V_{RL}\)</td><td>Voltage across the load.</td><td>V</td></tr>
+<tr><td>\(V_{r_{int}}\)</td><td>Voltage dropped inside the source across \(r_{int}\). This voltage never reaches the load.</td><td>V</td></tr>
+<tr><td>\(P_{RL}\)</td><td>Power dissipated by the load, \(P_{RL} = I_{RL}V_{RL}\).</td><td>W</td></tr>
+<tr><td>\(V_{TH},\ R_{TH}\) (added)</td><td>Thévenin voltage and resistance of a general source network. They play the roles of \(V\) and \(r_{int}\).</td><td>V, Ω</td></tr>
+<tr><td>\(\eta\) (efficiency, added)</td><td>The fraction of the source's total power that reaches the load: \(\eta = P_{RL}/P_{total}\).</td><td>% (none)</td></tr>
+</table>
+</section>
+
+<section class="g-sec" id="tn4-ideal-real" data-kind="lesson" data-ts="20-293">
+<h2>1. Ideal vs. real-world voltage sources: internal resistance</h2>
+<p>The instructor writes the title "Maximum Power Transfer Theorem" <a class="ts" data-t="0:20"></a> and describes the goal: transfer the most power possible from the <strong>source</strong> to the <strong>load</strong> <a class="ts" data-t="0:39"></a>. First, though, he points out something the course has not acknowledged yet.</p>
+<h3>Ideal sources are an idealization <a class="ts" data-t="1:04"></a></h3>
+<p>So far every voltage source has been drawn as an <strong>ideal</strong> constant-voltage source. If it says 10&nbsp;V, we expect 10&nbsp;V from it all the time. That is not what a battery or the bench-top power supply used in lab really is.</p>
+<h3>Real sources have internal resistance <a class="ts" data-t="1:56"></a></h3>
+<p>The thing that most resembles a constant voltage source in real life "actually has a bit of internal resistance." On the paper (<a class="ts" data-t="2:26"></a>) he draws, next to the ideal battery, a dotted box labelled <strong>"Realworld Battery or Bench PS"</strong>. It contains a battery \(V\) in series with a resistor, which he labels \(r_{int}\) for <strong>internal resistance</strong> <a class="ts" data-t="3:14"></a>.</p>
+<figure class="circuit" id="tn4-fig-ideal-real">
+<script type="application/json">{"parts":[
+{"t":"BAT","a":[0,4],"b":[0,1],"label":"V","plus":"b","side":-1},
+{"t":"W","pts":[[0,1],[1.5,1]]},
+{"t":"W","pts":[[0,4],[1.5,4]]},
+{"t":"N","at":[1.5,1],"open":true},
+{"t":"N","at":[1.5,4],"open":true},
+{"t":"T","at":[0.75,5.4],"text":"Ideal","bold":true},
+{"t":"BOX","a":[3.6,-0.4],"b":[11,5]},
+{"t":"BAT","a":[5,4],"b":[5,1],"label":"V","plus":"b","side":-1},
+{"t":"W","pts":[[5,1],[6,1]]},
+{"t":"R","a":[6,1],"b":[9,1],"label":"r_{int}","value":"internal resistance"},
+{"t":"W","pts":[[9,1],[10,1]]},
+{"t":"W","pts":[[5,4],[10,4]]},
+{"t":"N","at":[10,1],"open":true},
+{"t":"N","at":[10,4],"open":true},
+{"t":"T","at":[7.3,5.8],"text":"Real-world battery\nor bench power supply","bold":true}
+],"alt":"Left: an ideal battery V with two open terminals, labelled Ideal. Right: a dotted box labelled real-world battery or bench power supply, containing a battery V in series with an internal resistance r_int, ending at two open terminals."}</script>
+<figcaption>Ideal source vs. the real-world model, as drawn at <a class="ts" data-t="3:45"></a>. The long plate (top) is +. The instructor writes \(r_{int}\) above the resistor.</figcaption>
+</figure>
+<p>He says this is how we <em>model</em> a battery or power supply. It applies to a bench supply, the power-supply unit in a PC, and "everything you've ever plugged into the wall" <a class="ts" data-t="2:52"></a>.</p>
+<aside class="instructor"><p><strong>It looks like a Thévenin equivalent circuit</strong> <a class="ts" data-t="2:52"></a>. The instructor points out that the model looks like a Thévenin equivalent because it <em>is</em> a voltage source in series with a resistance. "So many things end up looking like this"; what changes is the context you use it in <a class="ts" data-t="3:14"></a>.</p></aside>
+<aside class="extra"><p>This is why the theorem is usually stated with Thévenin quantities. Any linear source network, however complicated, can be reduced to \(V_{TH}\) in series with \(R_{TH}\) (<a class="xref" data-lesson="tn1">tn1</a>). In this lecture \(V\) plays the role of \(V_{TH}\) and \(r_{int}\) plays the role of \(R_{TH}\). So "\(R_L = r_{int}\)" and "\(R_L = R_{TH}\)" are the same statement.</p></aside>
+<h3>The two-9-volt-battery story <a class="ts" data-t="3:37"></a></h3>
+<p>On a separate sheet (<a class="ts" data-t="4:28"></a>) he sketches two 9&nbsp;V batteries snapped into each other, one flipped around. He mentions it as something he did as a child. Connected like that, they get warm, even hot <a class="ts" data-t="4:02"></a>. The reason is <strong>internal resistance</strong> <a class="ts" data-t="4:27"></a>.</p>
+<aside class="instructor"><p>The internal resistance was not put there by the battery's designer. It is "an artifact of existence", a result of the battery's chemistry. It exists inherently in batteries and in bench-top supplies, so we have to live with it <a class="ts" data-t="4:27"></a>.</p></aside>
+<aside class="extra"><p>Why they heat up: snapping two 9&nbsp;V batteries together joins each battery's + snap to the other's − snap. The two sources are then in series, aiding each other, around a closed loop. The only resistance in that loop is the two internal resistances, so the current is large and limited only by \(r_{int}\). The power \(I^2 r_{int}\) is dissipated <em>inside</em> the batteries as heat. An ideal source with \(r_{int} = 0\) would predict an infinite current, which is another sign that the ideal model is incomplete. (Please don't try this: shorted batteries can leak or rupture.)</p></aside>
+</section>
+
+<section class="g-sec" id="tn4-source-load" data-kind="lesson" data-ts="293-562">
+<h2>2. Source and load: when do we care about power?</h2>
+<p>Sometimes we are not interested in the circuit's voltages and currents. All we care about is getting the most power from our <strong>source</strong> to our <strong>load</strong> <a class="ts" data-t="4:53"></a>. In red, below the first drawing, the instructor draws the model (<a class="ts" data-t="5:50"></a>). Dotted boxes separate the <strong>Source</strong> (\(V\) and \(r_{int}\)) from the <strong>Load</strong> (\(R_L\)), and the two meet at a pair of terminals.</p>
+<figure class="circuit" id="tn4-fig-source-load">
+<script type="application/json">{"parts":[
+{"t":"BOX","a":[-1.4,-1.2],"b":[6.6,4.6]},
+{"t":"BOX","a":[7.4,-1.2],"b":[11,4.6]},
+{"t":"BAT","a":[0,3.5],"b":[0,0.5],"label":"V","plus":"b","side":-1},
+{"t":"W","pts":[[0,0.5],[0,0],[1,0]]},
+{"t":"R","a":[1,0],"b":[4,0],"label":"r_{int}"},
+{"t":"W","pts":[[4,0],[6,0]]},
+{"t":"W","pts":[[0,3.5],[0,4],[6,4]]},
+{"t":"N","at":[6,0],"open":true},
+{"t":"N","at":[6,4],"open":true},
+{"t":"W","pts":[[6,0],[9,0]]},
+{"t":"R","a":[9,0],"b":[9,4],"label":"R_L"},
+{"t":"W","pts":[[9,4],[6,4]]},
+{"t":"T","at":[2.6,5.4],"text":"Source (output)","bold":true},
+{"t":"T","at":[9.2,5.4],"text":"Load (input)","bold":true}
+],"alt":"Source box containing battery V and series internal resistance r_int, ending at two terminals; the terminals connect to a load box containing R_L."}</script>
+<figcaption>Source–load model, drawn in red at <a class="ts" data-t="5:50"></a> (complete at <a class="ts" data-t="6:50"></a>). The source's terminals act as an output and the load's as an input <a class="ts" data-t="8:56"></a>.</figcaption>
+</figure>
+<h3>When maximum power transfer matters <a class="ts" data-t="6:16"></a></h3>
+<ul>
+<li><strong>Speaker system</strong> <a class="ts" data-t="6:16"></a>. The speaker is the load. The source is the amplifier or receiver driving it <a class="ts" data-t="6:51"></a>. On the paper he sketches a block labelled "Amp, Audio Amplifier" connected to a speaker symbol labelled "Speaker" (<a class="ts" data-t="7:50"></a>).</li>
+<li><strong>Antennas</strong> transmitting radio frequencies: we want to transfer as much power as possible <a class="ts" data-t="7:16"></a>.</li>
+<li><strong>Microwave oven</strong>: the part emitting the microwaves should get the most power from the source <a class="ts" data-t="7:16"></a>.</li>
+</ul>
+<h3>When it usually doesn't matter <a class="ts" data-t="7:41"></a></h3>
+<p>In embedded systems (the "262 type material"), FPGAs and digital logic, we typically don't care about transferring the most power. We care that the <strong>voltages and currents are correct</strong> <a class="ts" data-t="8:06"></a>. The cases where power matters are audio, microwave appliances, and antenna transmitters and receivers <a class="ts" data-t="8:31"></a>.</p>
+<p>He adds that the internal resistance is "always" present, in every bench-top supply or battery. That makes this a good place in the course to bring it up <a class="ts" data-t="8:31"></a>.</p>
+<figure class="circuit" id="tn4-fig-amp-speaker">
+<script type="application/json">{"parts":[
+{"t":"BOX","a":[-1.4,-1.2],"b":[6.6,4.6]},
+{"t":"BOX","a":[7.4,-1.2],"b":[11.4,4.6]},
+{"t":"VAC","a":[0,3.5],"b":[0,0.5],"label":"v(t)","plus":"b","side":-1},
+{"t":"W","pts":[[0,0.5],[0,0],[1,0]]},
+{"t":"R","a":[1,0],"b":[4,0],"label":"r_{int}"},
+{"t":"W","pts":[[4,0],[6,0]]},
+{"t":"W","pts":[[0,3.5],[0,4],[6,4]]},
+{"t":"N","at":[6,0],"open":true},
+{"t":"N","at":[6,4],"open":true},
+{"t":"W","pts":[[6,0],[9,0]]},
+{"t":"R","a":[9,0],"b":[9,4],"label":"R_{speaker}"},
+{"t":"W","pts":[[9,4],[6,4]]},
+{"t":"T","at":[2.6,5.4],"text":"Audio amplifier (source)","bold":true},
+{"t":"T","at":[9.4,5.4],"text":"Speaker (load)","bold":true}
+],"alt":"An audio amplifier modelled as a changing voltage v(t) in series with an internal resistance r_int, driving a speaker modelled as a resistance."}</script>
+<figcaption>Amplifier → speaker. The paper only shows the block sketch (<a class="ts" data-t="7:50"></a>). The circuit model here follows the instructor's spoken description at <a class="ts" data-t="21:47"></a>: "a changing voltage with a series resistance" driving a speaker that also has some resistance. Drawn for clarity.</figcaption>
+</figure>
+</section>
+
+<section class="g-sec" id="tn4-theorem" data-kind="lesson" data-ts="562-716">
+<h2>3. The maximum power transfer theorem</h2>
+<p>"Very simply" <a class="ts" data-t="9:22"></a>: <strong>maximum power is transferred from the source to the load when \(r_{int} = R_L\)</strong> <a class="ts" data-t="9:50"></a>. That is, the load gets the most power when its resistance equals the source's internal resistance. He writes the statement in red at the top of a new page (<a class="ts" data-t="10:50"></a>).</p>
+<div class="formula">\[ P_{RL} \text{ is maximum when } R_L = r_{int} \quad (\text{equivalently } R_L = R_{TH}) \]</div>
+<dl class="vardefs">
+<dt>\(R_L\)</dt><dd>load resistance, Ω</dd>
+<dt>\(r_{int}\)</dt><dd>internal resistance of the source (its Thévenin resistance \(R_{TH}\)), Ω</dd>
+<dt>\(P_{RL}\)</dt><dd>power dissipated by the load, W</dd>
+</dl>
+<p>This applies to a fixed source (fixed \(V\) and \(r_{int}\)) whose load you can choose. It tells you which load value takes the most power out of that source.</p>
+<aside class="note"><p>The written statement on the paper reads "Maximum is transferred from the source to the load when \(r_{int} = R_L\)". The word "power" is missing from the page but is spoken at <a class="ts" data-t="9:22"></a>.</p></aside>
+<h3>How he demonstrates it <a class="ts" data-t="10:31"></a></h3>
+<p>Instead of proving it, he uses "three very simple examples" <a class="ts" data-t="10:31"></a>. In all three the <strong>source stays the same</strong>: the same bench-top supply or battery, 20&nbsp;V with \(r_{int} = 10\,\Omega\). Only the <strong>load changes</strong>, and each time we calculate the power dissipated by the load <a class="ts" data-t="11:18"></a>. The method is the same each time:</p>
+<ol>
+<li>Total resistance: \(R_T = r_{int} + R_L\) (series).</li>
+<li>Loop current: \(I_{RL} = V/R_T\) (Ohm's law).</li>
+<li>Load voltage: \(V_{RL} = I_{RL}R_L\) (Ohm's law), or \(V - I_{RL}r_{int}\) (KVL).</li>
+<li>Load power: \(P_{RL} = I_{RL}V_{RL}\).</li>
+</ol>
+<aside class="extra"><p>A general formula and a short calculus proof are in section 9, "Beyond the video".</p></aside>
+</section>
+
+<section class="g-sec" id="tn4-load10" data-kind="lesson" data-ts="716-877">
+<h2>4. Example 1: matched load, \(R_L = r_{int} = 10\,\Omega\)</h2>
+<div class="example" id="tn4-ex1">
+<h3>Example 1 — 20&nbsp;V, \(r_{int} = 10\,\Omega\), \(R_L = 10\,\Omega\) <a class="ts" data-t="11:56"></a></h3>
+<p><strong>Given</strong> (paper at <a class="ts" data-t="11:52"></a>): a 20&nbsp;V battery, + on top. \(r_{int} = 10\,\Omega\) in series, then terminals, then the load \(R_L = 10\,\Omega\).</p>
+<figure class="circuit" id="tn4-fig-ex1">
+<script type="application/json">{"parts":[
+{"t":"BAT","a":[0,4],"b":[0,0],"label":"20 V","plus":"b","side":-1},
+{"t":"W","pts":[[0,0],[1,0]]},
+{"t":"R","a":[1,0],"b":[4,0],"label":"r_{int}","value":"10 Ω"},
+{"t":"W","pts":[[4,0],[6,0]]},
+{"t":"IARR","a":[4.2,0],"b":[5.8,0],"label":"1 A","side":-1},
+{"t":"N","at":[6,0],"open":true},
+{"t":"W","pts":[[6,0],[8,0]]},
+{"t":"R","a":[8,0],"b":[8,4],"label":"R_L","value":"10 Ω"},
+{"t":"VM","a":[10,0.6],"b":[10,3.4],"label":"V_{RL} = 10 V","lat":[10.4,2],"anchor":"start"},
+{"t":"W","pts":[[8,4],[6,4]]},
+{"t":"N","at":[6,4],"open":true},
+{"t":"W","pts":[[6,4],[0,4]]}
+],"padX":2.4,"pad":1.3,"alt":"20 V battery with r_int = 10 ohm in series, terminals, and load R_L = 10 ohm; loop current 1 A; V_RL = 10 V."}</script>
+<figcaption>Example 1 as finished at <a class="ts" data-t="14:40"></a>: 1&nbsp;A arrows through \(r_{int}\) and \(R_L\), and \(V_{RL} = 10\,\text{V}\) written in blue.</figcaption>
+</figure>
+<p><strong>Goal:</strong> the power dissipated by the load, \(P_{RL} = I_{RL}V_{RL}\) <a class="ts" data-t="12:23"></a>.</p>
+<p class="step">1. Total resistance (series): \(R_T = 10\,\Omega + 10\,\Omega = 20\,\Omega\) <a class="ts" data-t="12:23"></a>.</p>
+<p class="step">2. Current (Ohm's law): \(I_{RL} = \dfrac{20\,\text{V}}{20\,\Omega} = 1\,\text{A}\) <a class="ts" data-t="12:23"></a>.</p>
+<p class="step">3. Voltages: \(V_{r_{int}} = 1\,\text{A}\times 10\,\Omega = 10\,\text{V}\), and the load also drops 10&nbsp;V. By KVL, \(20 - 10 = 10\,\text{V}\); by Ohm's law, \(1\,\text{A}\times 10\,\Omega = 10\,\text{V}\) <a class="ts" data-t="12:50"></a>.</p>
+<p class="step">4. Power: \(P_{RL} = I_{RL}V_{RL} = 1\,\text{A}\times 10\,\text{V}\) <a class="ts" data-t="14:21"></a>.</p>
+<p class="answer">\(P_{RL} = 10\,\text{W}\) <a class="ts" data-t="14:37"></a>. This is the maximum the theorem promises.</p>
+<aside class="note"><p>At <a class="ts" data-t="13:49"></a> the instructor says "10 volts times 10 ohms". He catches it himself at <a class="ts" data-t="14:21"></a> ("surprised nobody caught me"): power is volts × <em>amps</em>, \(10\,\text{V}\times 1\,\text{A}\). The final value on the paper, 10&nbsp;W, is correct.</p></aside>
+<aside class="extra"><p>Where the rest of the power goes: \(r_{int}\) also dissipates \(1\,\text{A}\times 10\,\text{V} = 10\,\text{W}\). The ideal source therefore delivers \(20\,\text{V}\times 1\,\text{A} = 20\,\text{W}\), and exactly <strong>half</strong> of it (50&nbsp;%) reaches the load.</p></aside>
+</div>
+</section>
+
+<section class="g-sec" id="tn4-load5" data-kind="lesson" data-ts="877-1141">
+<h2>5. Example 2: smaller load, \(R_L = 5\,\Omega\)</h2>
+<div class="example" id="tn4-ex2">
+<h3>Example 2 — same source, \(R_L = 5\,\Omega\) <a class="ts" data-t="14:37"></a></h3>
+<p><strong>Given:</strong> the same 20&nbsp;V source with \(r_{int} = 10\,\Omega\). The load is lowered to \(R_L = 5\,\Omega\) <a class="ts" data-t="15:03"></a>.</p>
+<figure class="circuit" id="tn4-fig-ex2">
+<script type="application/json">{"parts":[
+{"t":"BAT","a":[0,4],"b":[0,0],"label":"20 V","plus":"b","side":-1},
+{"t":"W","pts":[[0,0],[1,0]]},
+{"t":"R","a":[1,0],"b":[4,0],"label":"r_{int}","value":"10 Ω","side":-1},
+{"t":"VM","a":[0.7,-1.2],"b":[4.3,-1.2],"label":"V_{rint} = 13.33 V","lat":[2.5,-1.2]},
+{"t":"W","pts":[[4,0],[6,0]]},
+{"t":"IARR","a":[4.2,0],"b":[5.8,0],"label":"1.33 A"},
+{"t":"N","at":[6,0],"open":true},
+{"t":"W","pts":[[6,0],[8,0]]},
+{"t":"R","a":[8,0],"b":[8,4],"label":"R_L","value":"5 Ω"},
+{"t":"VM","a":[10,0.6],"b":[10,3.4],"label":"V_{RL} = 6.66 V","lat":[10.4,2],"anchor":"start"},
+{"t":"W","pts":[[8,4],[6,4]]},
+{"t":"N","at":[6,4],"open":true},
+{"t":"W","pts":[[6,4],[0,4]]}
+],"padX":2.4,"alt":"20 V battery, r_int = 10 ohm, load R_L = 5 ohm; current 1.33 A; V_rint = 13.33 V; V_RL = 6.66 V."}</script>
+<figcaption>Example 2 as on the paper at <a class="ts" data-t="18:58"></a>: 1.33&nbsp;A, \(V_{r_{int}} = 13.33\,\text{V}\) (above \(r_{int}\)), \(V_{RL} = 6.66\) (blue).</figcaption>
+</figure>
+<p class="step">1. Total resistance: \(10 + 5 = 15\,\Omega\) <a class="ts" data-t="15:30"></a>.</p>
+<p class="step">2. Current: \(I_{RL} = \dfrac{20\,\text{V}}{15\,\Omega} = 1.33\,\text{A}\) <a class="ts" data-t="15:30"></a>. "Oh cool, current's gone up", but the theorem says the power should go <em>down</em> <a class="ts" data-t="15:57"></a>.</p>
+<p class="step">3. The voltage drops have shifted. Across the internal resistance: \(V_{r_{int}} = 1.33\,\text{A}\times 10\,\Omega = 13.33\,\text{V}\) <a class="ts" data-t="16:32"></a>. Because more voltage is lost inside the source, <strong>less is left for the load</strong>.</p>
+<p class="step">4. Load voltage (Ohm's law; 20&nbsp;V − 13.33&nbsp;V by KVL gives the same): \(V_{RL} = 1.33\,\text{A}\times 5\,\Omega = 6.66\ldots\,\text{V}\) ("6.66 repeating") <a class="ts" data-t="16:58"></a> <a class="ts" data-t="17:25"></a>.</p>
+<p class="step">5. Power: \(P_{RL} = 6.666\,\text{V}\times 1.3333\,\text{A}\) <a class="ts" data-t="17:25"></a>.</p>
+<p class="answer">\(P_{RL} = 8.89\,\text{W}\), less than the 10&nbsp;W of the matched case <a class="ts" data-t="17:51"></a>.</p>
+<p>Exact check: \(I = \tfrac{4}{3}\,\text{A}\), \(V_{RL} = \tfrac{20}{3}\,\text{V}\), so \(P_{RL} = \tfrac{80}{9} = 8.889\,\text{W}\).</p>
+<aside class="instructor"><p>Even though the current went <em>up</em>, the load power went <em>down</em>. More power is now wasted by the source <a class="ts" data-t="18:16"></a>. In his words, he wants his power used by the load, not by the battery's internal resistance, which he doesn't care about "but I have to live with".</p></aside>
+<aside class="note"><p>On the paper, \(V_{r_{int}}\) was first written "13.33 A". He notices at <a class="ts" data-t="18:16"></a> ("did I write amps") and corrects it to 13.33&nbsp;V at <a class="ts" data-t="18:46"></a>.</p></aside>
+<aside class="uncertain"><p><strong>Rounding.</strong> If you multiply the rounded numbers literally, \(1.33\times 6.66 = 8.86\,\text{W}\). The board's 8.89&nbsp;W is the correct value, using the repeating decimals \(1.3\overline{3}\) and \(6.6\overline{6}\). Keep extra digits (or fractions) until the last step.</p>
+<p><strong>Legibility.</strong> On the page, "\(R_L =\)" is followed by a blacked-out character and then "5&nbsp;Ω". The value used throughout, both spoken and in the arithmetic, is 5&nbsp;Ω. The blot appears to be an overwritten character.</p></aside>
+<aside class="extra"><p>Power split for this load: \(r_{int}\) dissipates \(1.33\,\text{A}\times 13.33\,\text{V} = 17.78\,\text{W}\). The source delivers \(20\times 1.33 = 26.67\,\text{W}\) in total, and only \(8.89/26.67 = 33\,\%\) reaches the load.</p></aside>
+</div>
+</section>
+
+<section class="g-sec" id="tn4-load30" data-kind="lesson" data-ts="1141-1256">
+<h2>6. Example 3: larger load, \(R_L = 30\,\Omega\)</h2>
+<div class="example" id="tn4-ex3">
+<h3>Example 3 — same source, \(R_L = 30\,\Omega\) <a class="ts" data-t="19:01"></a></h3>
+<p><strong>Given:</strong> the same 20&nbsp;V source with 10&nbsp;Ω internal resistance. The load is now made larger, \(R_L = 30\,\Omega\). "Maybe" more load resistance gives more power? "I highly doubt it", because that's not what the theorem says <a class="ts" data-t="19:28"></a>.</p>
+<figure class="circuit" id="tn4-fig-ex3">
+<script type="application/json">{"parts":[
+{"t":"BAT","a":[0,4],"b":[0,0],"label":"20 V","plus":"b","side":-1},
+{"t":"W","pts":[[0,0],[1,0]]},
+{"t":"R","a":[1,0],"b":[4,0],"label":"r_{int}","value":"10 Ω"},
+{"t":"W","pts":[[4,0],[6,0]]},
+{"t":"IARR","a":[4.2,0],"b":[5.8,0],"label":"0.5 A","side":-1},
+{"t":"N","at":[6,0],"open":true},
+{"t":"W","pts":[[6,0],[8,0]]},
+{"t":"R","a":[8,0],"b":[8,4],"label":"R_L","value":"30 Ω"},
+{"t":"VM","a":[10,0.6],"b":[10,3.4],"label":"V_{RL} = 15 V","lat":[10.4,2],"anchor":"start"},
+{"t":"W","pts":[[8,4],[6,4]]},
+{"t":"N","at":[6,4],"open":true},
+{"t":"W","pts":[[6,4],[0,4]]}
+],"padX":2.4,"pad":1.3,"alt":"20 V battery, 10 ohm internal resistance, load R_L = 30 ohm; current 0.5 A; V_RL = 15 V."}</script>
+<figcaption>Example 3 as on the paper at <a class="ts" data-t="21:02"></a>. The internal resistor is labelled just "10&nbsp;Ω" there; it is the same \(r_{int}\).</figcaption>
+</figure>
+<p class="step">1. Total resistance: \(10 + 30 = 40\,\Omega\) <a class="ts" data-t="19:43"></a>.</p>
+<p class="step">2. Current: \(I_{RL} = \dfrac{20\,\text{V}}{40\,\Omega} = 0.5\,\text{A}\) ("half an amp") <a class="ts" data-t="19:43"></a>.</p>
+<p class="step">3. Load voltage: \(V_{RL} = 0.5\,\text{A}\times 30\,\Omega = 15\,\text{V}\) <a class="ts" data-t="20:07"></a>. The load voltage is now <em>higher</em> than in Example 1.</p>
+<p class="step">4. Power: \(P_{RL} = 15\,\text{V}\times 0.5\,\text{A}\) <a class="ts" data-t="20:31"></a>.</p>
+<p class="answer">\(P_{RL} = 7.5\,\text{W}\), again less than 10&nbsp;W <a class="ts" data-t="20:56"></a>.</p>
+<aside class="extra"><p>Power split: \(r_{int}\) drops \(0.5 \times 10 = 5\,\text{V}\) and dissipates \(2.5\,\text{W}\). The source delivers \(20\times 0.5 = 10\,\text{W}\), so 75&nbsp;% reaches the load. The efficiency is <em>higher</em> than in Example 1, but the load power is <em>lower</em>, because the total power the source delivers has dropped.</p></aside>
+</div>
+</section>
+
+<section class="g-sec" id="tn4-compare" data-kind="lesson" data-ts="1256-1280">
+<h2>7. Comparing the three loads</h2>
+<p>The conclusion <a class="ts" data-t="20:56"></a>: when the internal resistance of the source and the load resistance are equal, the load gets the <strong>maximum power</strong>. The full page at <a class="ts" data-t="23:15"></a> shows all three circuits side by side. Collected in one table:</p>
+<table>
+<tr><th>Example</th><th>\(R_L\)</th><th>\(R_T = r_{int}+R_L\)</th><th>\(I_{RL}\)</th><th>\(V_{r_{int}}\)</th><th>\(V_{RL}\)</th><th>\(P_{RL}\) (board)</th></tr>
+<tr><td>2 <a class="ts" data-t="14:37"></a></td><td>5&nbsp;Ω</td><td>15&nbsp;Ω</td><td>1.33&nbsp;A</td><td>13.33&nbsp;V</td><td>6.66&nbsp;V</td><td>8.89&nbsp;W</td></tr>
+<tr><td><strong>1</strong> <a class="ts" data-t="11:56"></a></td><td><strong>10&nbsp;Ω \(= r_{int}\)</strong></td><td>20&nbsp;Ω</td><td>1&nbsp;A</td><td>10&nbsp;V</td><td>10&nbsp;V</td><td><strong>10&nbsp;W (maximum)</strong></td></tr>
+<tr><td>3 <a class="ts" data-t="19:01"></a></td><td>30&nbsp;Ω</td><td>40&nbsp;Ω</td><td>0.5&nbsp;A</td><td>5&nbsp;V*</td><td>15&nbsp;V</td><td>7.5&nbsp;W</td></tr>
+</table>
+<p>*Not written on the board: \(0.5\,\text{A}\times 10\,\Omega\). (Rows are sorted by \(R_L\); the video order was 10, 5, 30&nbsp;Ω.) All values were checked in Python.</p>
+<ul>
+<li>Lowering \(R_L\) raises the <strong>current</strong> but lowers \(V_{RL}\), because more voltage is lost inside the source. Net effect: less load power.</li>
+<li>Raising \(R_L\) raises \(V_{RL}\) but lowers the <strong>current</strong>. Net effect: less load power.</li>
+<li>The best compromise is in between, at \(R_L = r_{int}\).</li>
+</ul>
+<figure class="scope" id="tn4-fig-plot">
+<script type="application/json">{"type":"scope","cols":10,"rows":8,"divPx":40,"ch":"P_{RL}: 2 W/div (0 W at bottom)","tdiv":"R_L: 5 Ω/div",
+"traces":[{"fn":"400*(5*x)/pow(10+5*x,2)/2-4","label":"P_{RL} = 20²·R_L/(10+R_L)²","color":1}],
+"marks":[{"type":"vline","x":2,"label":"R_L = r_{int} = 10 Ω"},{"type":"hline","y":1,"label":"P_{max} = 10 W"},
+{"type":"span","x1":1,"y1":0.444,"x2":1,"y2":0.444},{"type":"span","x1":2,"y1":1,"x2":2,"y2":1},{"type":"span","x1":6,"y1":-0.25,"x2":6,"y2":-0.25},
+{"type":"text","x":0.2,"y":1.5,"text":"5 Ω: 8.89 W","anchor":"start"},
+{"type":"text","x":6,"y":-0.85,"text":"30 Ω: 7.5 W"}],
+"alt":"Plot of load power versus load resistance for a 20 V source with 10 ohm internal resistance. Power rises from 0 at R_L = 0 to a peak of 10 W at R_L = 10 ohm and then falls slowly: 8.89 W at 5 ohm, 7.5 W at 30 ohm, 5.56 W at 50 ohm."}</script>
+<figcaption>\(P_{RL}\) versus \(R_L\) for the lecture's source (20&nbsp;V, \(r_{int} = 10\,\Omega\)), with the three board results marked. Vertical axis: 2&nbsp;W per division, 0&nbsp;W at the bottom line; horizontal axis: 5&nbsp;Ω per division, 0&nbsp;Ω at the left edge. Added for clarity: the instructor computes only the three points (<a class="ts" data-t="23:15"></a>) and does not sketch this curve.</figcaption>
+</figure>
+<aside class="extra"><p>Reading the curve: it rises steeply for \(R_L &lt; r_{int}\) and falls slowly for \(R_L &gt; r_{int}\). Pairs of loads with \(R_{L1}R_{L2} = r_{int}^2\) give the same power. For example, 5&nbsp;Ω and 20&nbsp;Ω both give 8.89&nbsp;W, since \(5\times 20 = 10^2\). So a mismatch "by a factor of 2" costs about 11&nbsp;% of the maximum power in either direction.</p></aside>
+</section>
+
+<section class="g-sec" id="tn4-practical" data-kind="lesson" data-ts="1280-1433">
+<h2>8. Real sources, and when this matters</h2>
+<ul>
+<li><strong>A real battery's internal resistance</strong> is much smaller than the 10&nbsp;Ω used in the examples, but it is <strong>not negligible</strong> <a class="ts" data-t="21:20"></a>. On the whiteboard we usually treat sources as ideal, but there is always a small amount of resistance to contend with.</li>
+<li><strong>More complicated sources</strong> such as an audio amplifier have a lot going on internally: a sound wave is turned into a signal and applied to a load. Still, you can model one as a changing voltage with a series (internal) resistance, delivering power to a speaker that has its own resistance <a class="ts" data-t="21:47"></a>. The circuit is drawn in the figure in section 2.</li>
+<li><strong>It doesn't matter all the time</strong> <a class="ts" data-t="22:26"></a>. As computer engineers we usually care more that the bits are correct and the digital logic and its interface circuits work as expected than about wasted power on the source side.</li>
+</ul>
+<aside class="instructor"><p>"This matters sometimes, depending on your application" <a class="ts" data-t="20:56"></a>. It also shows a "sad fact of reality": internal resistance is something we have to live with. He still covers the topic because it is one "we should cover" <a class="ts" data-t="22:50"></a>.</p></aside>
+<p>He asks for questions <a class="ts" data-t="22:50"></a>. A student says it makes sense ("that's a good answer"), and he moves on to mesh analysis <a class="ts" data-t="23:36"></a>.</p>
+<aside class="extra"><p><strong>Maximum power vs. maximum efficiency.</strong> These are different goals. Matching (\(R_L = r_{int}\)) gives the most load power, but only 50&nbsp;% efficiency: half the power is burned in the source.</p>
+<ul>
+<li><em>Signal and RF systems</em> (amplifier → speaker, transmitter → antenna, a weak sensor or antenna feeding a receiver) often match, because the available power is limited and you want as much of it as possible. In RF, matching also prevents reflections on transmission lines.</li>
+<li><em>Power systems</em> (the electric grid, battery-powered devices, a bench supply feeding a circuit) deliberately do <strong>not</strong> match. They keep \(R_L \gg r_{int}\) so the efficiency is high and the load voltage stays close to \(V\). Running a power plant "matched" would waste half of everything it generates.</li>
+<li>Practical speaker amplifiers have an output resistance much smaller than the speaker's impedance (a high "damping factor"). The textbook matching picture is a simplification for that case.</li>
+</ul></aside>
+</section>
+
+<section class="g-sec" id="tn4-beyond" data-kind="lesson">
+<h2>9. Beyond the video: the general formula, the Thévenin view, and efficiency</h2>
+<aside class="extra">
+<p>The instructor demonstrates the theorem numerically. Here is the general result that the three examples illustrate.</p>
+<h3>Load power for any \(R_L\)</h3>
+<p>Source \(V_{TH}\) with \(R_{TH}\) (here \(V = 20\,\text{V}\), \(r_{int} = 10\,\Omega\)), load \(R_L\):</p>
+<p class="step">1. Series loop (Ohm's law): \(I = \dfrac{V_{TH}}{R_{TH}+R_L}\).</p>
+<p class="step">2. Load voltage (voltage divider): \(V_{RL} = V_{TH}\dfrac{R_L}{R_{TH}+R_L}\).</p>
+<p class="step">3. Load power: \(P_{RL} = I\,V_{RL} = I^2R_L\).</p>
+<div class="formula">\[ P_{RL} = \frac{V_{TH}^2\,R_L}{(R_{TH}+R_L)^2} \]</div>
+<dl class="vardefs"><dt>\(V_{TH}\)</dt><dd>Thévenin (open-circuit) voltage of the source, V</dd><dt>\(R_{TH}\)</dt><dd>Thévenin (internal) resistance of the source, Ω</dd><dt>\(R_L\)</dt><dd>load resistance, Ω</dd><dt>\(P_{RL}\)</dt><dd>load power, W</dd></dl>
+<p>Check: \(V_{TH} = 20\), \(R_{TH} = 10\): \(R_L = 5\) gives \(400\cdot 5/225 = 8.89\,\text{W}\); \(R_L = 10\) gives \(4000/400 = 10\,\text{W}\); \(R_L = 30\) gives \(12000/1600 = 7.5\,\text{W}\). These match the board.</p>
+<h3>Why the maximum is at \(R_L = R_{TH}\)</h3>
+<p>Differentiate with respect to \(R_L\) (quotient rule), holding \(V_{TH}\) and \(R_{TH}\) fixed:</p>
+<div class="formula">\[ \frac{dP_{RL}}{dR_L} = V_{TH}^2\,\frac{(R_{TH}+R_L)^2 - 2R_L(R_{TH}+R_L)}{(R_{TH}+R_L)^4} = V_{TH}^2\,\frac{R_{TH}-R_L}{(R_{TH}+R_L)^3} \]</div>
+<p>The derivative is positive for \(R_L &lt; R_{TH}\), zero at \(R_L = R_{TH}\) and negative for \(R_L &gt; R_{TH}\). So \(R_L = R_{TH}\) is the maximum. Substituting it in:</p>
+<div class="formula">\[ P_{max} = \frac{V_{TH}^2}{4R_{TH}} \qquad \left(= \frac{I_N^2 R_N}{4} \text{ in Norton form}\right) \]</div>
+<dl class="vardefs"><dt>\(P_{max}\)</dt><dd>largest power the source can deliver to any resistive load, W</dd><dt>\(I_N,\ R_N\)</dt><dd>Norton current (A) and resistance (Ω), with \(R_N = R_{TH}\)</dd></dl>
+<p>For the lecture's source: \(P_{max} = 20^2/(4\times 10) = 10\,\text{W}\), which is Example 1.</p>
+<p>When the load is matched, \(V_{RL} = V_{TH}/2\) and \(I = V_{TH}/(2R_{TH})\). In Example 1 these are 10&nbsp;V and 1&nbsp;A.</p>
+<h3>Efficiency</h3>
+<div class="formula">\[ \eta = \frac{P_{RL}}{P_{total}} = \frac{I^2R_L}{I^2(R_{TH}+R_L)} = \frac{R_L}{R_{TH}+R_L} \]</div>
+<dl class="vardefs"><dt>\(\eta\)</dt><dd>efficiency, no unit (often written in %)</dd><dt>\(P_{total}\)</dt><dd>power delivered by the ideal source \(V_{TH}\), equal to \(V_{TH}I\), W</dd></dl>
+<table>
+<tr><th>\(R_L\) (Ω)</th><th>\(P_{RL}\) (W)</th><th>\(P_{r_{int}}\) (W)</th><th>\(P_{total}\) (W)</th><th>\(\eta\)</th></tr>
+<tr><td>5</td><td>8.89</td><td>17.78</td><td>26.67</td><td>33&nbsp;%</td></tr>
+<tr><td>10</td><td>10.00</td><td>10.00</td><td>20.00</td><td>50&nbsp;%</td></tr>
+<tr><td>30</td><td>7.50</td><td>2.50</td><td>10.00</td><td>75&nbsp;%</td></tr>
+</table>
+<p>At maximum power the efficiency is exactly <strong>50&nbsp;%</strong>. Efficiency keeps rising as \(R_L\) grows, while load power falls.</p>
+<h3>Applying it to a whole network</h3>
+<p>To find the load that takes the most power from a complicated circuit: remove the load, find \(V_{TH}\) and \(R_{TH}\) at its terminals as in <a class="xref" data-lesson="tn1">tn1</a>/<a class="xref" data-lesson="tn2">tn2</a>, then set \(R_L = R_{TH}\) and compute \(P_{max} = V_{TH}^2/(4R_{TH})\). You can also start from a Norton equivalent (<a class="xref" data-lesson="tn3">tn3</a>) or use source transformation (<a class="xref" data-lesson="st1">st1</a>) to switch between the forms.</p>
+</aside>
+</section>
+
+<section class="g-sec" id="tn4-other" data-kind="lesson" data-ts="1433-4618">
+<h2>10. Other content in this video (outside this topic)</h2>
+<p>From 23:53 the lecture introduces <strong>mesh analysis</strong>. Below is an outline taken from the transcript only. The circuit values are as spoken.</p>
+<ul>
+<li><a class="ts" data-t="23:53"></a> Moving on to mesh analysis. No new lab today; the lecture runs into lab time, and the next lab is about mesh analysis.</li>
+<li><a class="ts" data-t="24:55"></a> Logistics: no materials needed yet. The department received home test-equipment units; he may save them for 311.</li>
+<li><a class="ts" data-t="25:44"></a> Mesh analysis is one of the network analysis techniques. <a class="ts" data-t="26:00"></a> A circuit with two clockwise mesh currents \(I_a\) and \(I_b\).</li>
+<li><a class="ts" data-t="27:58"></a> Why doesn't the current branch at the node? Mesh currents are an abstract analysis tool ("a fake current") that does not branch <a class="ts" data-t="28:38"></a>.</li>
+<li><a class="ts" data-t="29:11"></a> Mesh currents don't have to flow from + to −; they are assigned arbitrarily. <a class="ts" data-t="30:37"></a> Any direction works, but he always picks clockwise for consistency.</li>
+<li><a class="ts" data-t="32:27"></a> Think of the circuit as "windows". <a class="ts" data-t="33:00"></a> A four-window circuit gets four mesh currents \(I_a\)–\(I_d\). Superposition would need three separate solutions; mesh analysis is systematic.</li>
+<li><a class="ts" data-t="35:30"></a> Simpler example: \(V_{S1} = 15\,\text{V}\), \(R_1 = 3.9\,\Omega\), \(R_2 = 5.6\,\Omega\), \(R_3 = 6.8\,\Omega\), \(V_{S2} = 12\,\text{V}\).</li>
+<li><a class="ts" data-t="37:21"></a> Step 1: draw and label the mesh currents (two clockwise). <a class="ts" data-t="38:52"></a> Step 2: write KVL for each mesh, using Ohm's law for each drop (\(V_{R1} = 3.9I_a\)). <a class="ts" data-t="40:44"></a> Shared resistor: add or subtract the two mesh currents depending on their directions.</li>
+<li><a class="ts" data-t="42:39"></a> KVL for \(I_a\): \(3.9I_a + 5.6I_a - 5.6I_b + 15 = 0\). <a class="ts" data-t="46:19"></a> Q&amp;A: if both currents run the same way through \(R_2\), you add instead (shown with \(I_b\) counterclockwise: \(+5.6I_b\)).</li>
+<li><a class="ts" data-t="48:59"></a> Simplified: \(9.5I_a - 5.6I_b = -15\,\text{V}\). <a class="ts" data-t="50:14"></a> KVL for \(I_b\): \(5.6I_b - 5.6I_a + 6.8I_b - 12 = 0\), so \(12.4I_b - 5.6I_a = 12\,\text{V}\) <a class="ts" data-t="52:23"></a>.</li>
+<li><a class="ts" data-t="54:00"></a> Step 3: solve the system (two equations, two unknowns; four windows would give four). <a class="ts" data-t="57:11"></a> Elimination: multiply the first equation by 2.214 (= 12.4/5.6), giving \(21I_a - 12.4I_b = -33.21\). Add: \(15.4I_a = -21.21\), so \(I_a = -1.377\,\text{A}\) <a class="ts" data-t="1:00:02"></a>.</li>
+<li><a class="ts" data-t="1:02:32"></a> Substitute: \(12.4I_b = 4.29\), so \(I_b = 0.346\,\text{A}\) <a class="ts" data-t="1:03:55"></a>.</li>
+<li><a class="ts" data-t="1:05:24"></a> Real currents from mesh currents. <a class="ts" data-t="1:08:23"></a> 3.9&nbsp;Ω: 1.377&nbsp;A, opposite to \(I_a\) because of the minus sign. <a class="ts" data-t="1:10:23"></a> 6.8&nbsp;Ω: 0.346&nbsp;A in the direction of \(I_b\). <a class="ts" data-t="1:11:10"></a> 5.6&nbsp;Ω: both contributions point up, \(1.377 + 0.346 = 1.723\,\text{A}\). Voltages then follow from Ohm's law <a class="ts" data-t="1:13:27"></a>.</li>
+<li><a class="ts" data-t="1:14:17"></a> Q&amp;A: a negative mesh current means the real current flows opposite to the assumed direction. <a class="ts" data-t="1:15:06"></a> Parallel elements don't matter: mesh analysis needs no series/parallel reasoning.</li>
+<li><a class="ts" data-t="1:16:21"></a> Wrap-up: next class, a more advanced problem and a simulation-based lab on mesh analysis.</li>
+</ul>
+</section>
+
+<section class="g-sec" id="tn4-assumptions" data-kind="assumptions">
+<h2>Assumptions &amp; limitations</h2>
+<ul>
+<li><strong>Linear, resistive circuits (DC).</strong> The theorem as taught assumes the source can be modeled as \(V\) (or \(V_{TH}\)) in series with a resistance \(r_{int}\) (or \(R_{TH}\)), and that the load is a resistor.</li>
+<li><strong>The source is fixed; the load is chosen.</strong> The theorem answers "which \(R_L\) takes the most power from <em>this</em> source?" It does not say to increase \(r_{int}\) to match a given load. If you can change the source, a smaller \(r_{int}\) always gives more load power (added).</li>
+<li><strong>Maximum power ≠ maximum efficiency</strong> (added). At \(R_L = r_{int}\) only 50&nbsp;% of the source's power reaches the load. Systems that care about efficiency keep \(R_L \gg r_{int}\).</li>
+<li><strong>Ideal source</strong> (\(r_{int} = 0\)) (added). There is no maximum: load power \(V^2/R_L\) grows without limit as \(R_L \to 0\). Real sources always have some \(r_{int}\), which the instructor stresses.</li>
+<li><strong>Real internal resistance is small and not constant</strong> (added). A battery's \(r_{int}\) is much smaller than 10&nbsp;Ω (stated in the video) and changes with charge level, temperature and age. Bench supplies regulate their output so they behave nearly ideally within their current limit.</li>
+<li><strong>AC sources</strong> (added). With capacitors or inductors the condition becomes "load impedance = complex conjugate of the source impedance". That is beyond this course section.</li>
+</ul>
+</section>
+
+<section class="g-sec" id="tn4-mistakes" data-kind="mistakes">
+<h2>Common mistakes</h2>
+<aside class="mistake"><p><strong>"More current means more load power."</strong> Example 2 has more current (1.33&nbsp;A vs. 1&nbsp;A), yet less load power (8.89&nbsp;W vs. 10&nbsp;W). Much more voltage is lost inside the source. Always compute \(P_{RL} = I_{RL}V_{RL}\) with <em>both</em> factors.</p></aside>
+<aside class="mistake"><p><strong>"More load voltage means more load power."</strong> Example 3 has more load voltage (15&nbsp;V vs. 10&nbsp;V), yet less power (7.5&nbsp;W), because the current halved.</p></aside>
+<aside class="mistake"><p><strong>Multiplying volts by ohms.</strong> Power is \(V\times I\), not \(V\times R\). The instructor slips on this aloud at <a class="ts" data-t="13:49"></a> and fixes it at <a class="ts" data-t="14:21"></a>. A units check catches it: \(\text{V}\cdot\Omega\) is not a watt; \(\text{V}\cdot\text{A}\) is.</p></aside>
+<aside class="mistake"><p><strong>Wrong unit on a voltage drop.</strong> \(1.33\,\text{A}\times 10\,\Omega\) is 13.33&nbsp;<em>V</em>, not "13.33&nbsp;A". This happened on the board and was corrected at <a class="ts" data-t="18:46"></a>.</p></aside>
+<aside class="mistake"><p><strong>Rounding too early.</strong> \(1.33\times 6.66 = 8.86\), but the true answer is 8.89&nbsp;W. Keep fractions (\(4/3\), \(20/3\)) or several digits until the end.</p></aside>
+<aside class="mistake"><p><strong>Using only \(R_L\) to find the current.</strong> The current is \(V/(r_{int}+R_L)\), not \(V/R_L\). Forgetting \(r_{int}\) is exactly the "ideal source" mistake this lecture warns about.</p></aside>
+<aside class="mistake"><p><strong>Matching to the wrong resistance</strong> (added). For a multi-resistor source network, \(R_L\) must equal the network's <em>Thévenin</em> resistance seen from the load terminals, not some single resistor in it.</p></aside>
+<aside class="mistake"><p><strong>Expecting high efficiency at maximum power</strong> (added). At the matched point half the power is wasted in the source (50&nbsp;%).</p></aside>
+</section>
+
+<section class="g-sec" id="tn4-recap" data-kind="recap">
+<h2>Recap &amp; formula sheet</h2>
+<ul>
+<li>Real batteries and power supplies are an ideal source \(V\) in series with an internal resistance \(r_{int}\). This has the same form as a Thévenin equivalent.</li>
+<li><strong>Maximum power transfer theorem:</strong> the load receives maximum power when \(R_L = r_{int}\) (\(= R_{TH}\)).</li>
+<li>Lecture source, 20&nbsp;V with \(r_{int} = 10\,\Omega\): \(R_L = 5\,\Omega\) → 8.89&nbsp;W; \(R_L = 10\,\Omega\) → <strong>10&nbsp;W (max)</strong>; \(R_L = 30\,\Omega\) → 7.5&nbsp;W.</li>
+<li>It matters for audio, antennas and microwave ovens. Digital and embedded designers usually care more about correct voltages and currents.</li>
+<li>(Added) At maximum power the efficiency is only 50&nbsp;%. Power systems avoid matching.</li>
+</ul>
+<div class="formula-sheet">
+<p><strong>Loop current:</strong> \(I_{RL} = \dfrac{V}{r_{int}+R_L}\) (A)</p>
+<p><strong>Load voltage:</strong> \(V_{RL} = I_{RL}R_L = V - I_{RL}r_{int}\) (V)</p>
+<p><strong>Load power:</strong> \(P_{RL} = I_{RL}V_{RL} = I_{RL}^2R_L\) (W)</p>
+<p><strong>Theorem:</strong> \(P_{RL}\) is maximum when \(R_L = r_{int} = R_{TH}\)</p>
+<p><strong>(Added) General load power:</strong> \(P_{RL} = \dfrac{V_{TH}^2R_L}{(R_{TH}+R_L)^2}\) (W)</p>
+<p><strong>(Added) Maximum power:</strong> \(P_{max} = \dfrac{V_{TH}^2}{4R_{TH}} = \dfrac{I_N^2R_N}{4}\) (W)</p>
+<p><strong>(Added) Efficiency:</strong> \(\eta = \dfrac{R_L}{R_{TH}+R_L}\); \(\eta = 50\,\%\) at \(R_L = R_{TH}\)</p>
+<p>Variables: \(V\) or \(V_{TH}\) source voltage (V); \(r_{int}\) or \(R_{TH}\) internal/Thévenin resistance (Ω); \(R_L\) load resistance (Ω); \(I_{RL}\) load current (A); \(V_{RL}\) load voltage (V); \(P_{RL}\) load power (W).</p>
+</div>
+</section>

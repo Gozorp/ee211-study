@@ -1,0 +1,310 @@
+<section class="g-sec" id="st1-overview" data-kind="overview">
+<h2>Overview</h2>
+<p>This lecture opens with <b>source transformation</b>: a voltage source in series with a resistor can be swapped for a current source in parallel with the <em>same</em> resistor (and back again), using nothing more than Ohm's law. The instructor works two quick conversions (10 V with 2 Ω, and 2 A with 3 Ω). He then checks the class's Thévenin/Norton lab results (5 V with 666.6… Ω turns into 7.5 mA with 666.6… Ω). He also says the technique will be the key step for <a class="xref" data-lesson="mt1">Millman's theorem</a> next class.</p>
+<p>Only the source-transformation part (<a class="ts" data-t="0:00"></a>–<a class="ts" data-t="10:58"></a>, plus a one-line mention in the closing summary at <a class="ts" data-t="1:21:57"></a>) belongs to this site's topic. The rest of the video, on the Wheatstone bridge, potentiometers and the resistance substitution box, is outlined in the last lesson section.</p>
+<h3>Parts of the video</h3>
+<ul>
+<li><a class="ts" data-t="0:00"></a> Source transformation: the idea and why it is <em>not</em> the same thing as a Thévenin/Norton equivalent</li>
+<li><a class="ts" data-t="2:43"></a> The conversion rules: \(I = V/R\), \(V = IR\), same \(R\)</li>
+<li><a class="ts" data-t="3:29"></a> Example 1: 10 V in series with 2 Ω → 5 A in parallel with 2 Ω</li>
+<li><a class="ts" data-t="4:55"></a> Example 2: 2 A in parallel with 3 Ω → 6 V in series with 3 Ω</li>
+<li><a class="ts" data-t="6:30"></a> Check against the Thévenin/Norton lab: 5 V, 666.6… Ω ↔ 7.5 mA, 666.6… Ω</li>
+<li><a class="ts" data-t="10:06"></a> Why it matters: it will be used next class for Millman's theorem; questions; switch to the next topic</li>
+<li><a class="ts" data-t="11:18"></a> (Outside this topic) Wheatstone bridge, potentiometers/trimmers, resistance substitution box, sensor demos</li>
+<li><a class="ts" data-t="1:21:57"></a> Closing summary: "source transformation and … the Wheatstone bridge"; no new lab this week</li>
+</ul>
+</section>
+
+<section class="g-sec" id="st1-objectives" data-kind="objectives">
+<h2>Learning objectives</h2>
+<p>After this lesson you should be able to…</p>
+<ul>
+<li>Recognise a <b>voltage source in series with a resistor</b> and a <b>current source in parallel with a resistor</b> as two interchangeable forms.</li>
+<li>Convert a series \(V\)–\(R\) pair into a parallel \(I\)–\(R\) pair with \(I = V/R\), keeping the same \(R\).</li>
+<li>Convert a parallel \(I\)–\(R\) pair into a series \(V\)–\(R\) pair with \(V = IR\), keeping the same \(R\).</li>
+<li>Draw the new source with the correct orientation: the current-source arrow points toward the terminal that the voltage source's + side faces.</li>
+<li>Use a source transformation to check that a Thévenin result (\(V_{TH}, R_{TH}\)) and a Norton result (\(I_N, R_N\)) agree, as the class did with 5 V / 666.6… Ω and 7.5 mA.</li>
+<li>Explain why a source transformation is a local swap of one source–resistor pair, not a Thévenin or Norton equivalent of the whole circuit.</li>
+</ul>
+</section>
+
+<section class="g-sec" id="st1-prereqs" data-kind="prereqs">
+<h2>Prerequisites</h2>
+<dl>
+<dt>Ohm's law</dt>
+<dd>\(V = IR\). The voltage across a resistor equals the current through it times its resistance. Every source transformation is just this law used once.</dd>
+<dt>Ideal voltage and current sources</dt>
+<dd>An ideal voltage source keeps a fixed voltage between its terminals no matter what current flows. An ideal current source pushes a fixed current in the direction of its arrow no matter what voltage appears across it.</dd>
+<dt>Series and parallel</dt>
+<dd>Elements in <b>series</b> carry the same current. Elements in <b>parallel</b> share the same two nodes, so they have the same voltage.</dd>
+<dt>Thévenin and Norton equivalent circuits</dt>
+<dd>Any linear two-terminal network can be replaced, as seen from its two terminals, by \(V_{TH}\) in series with \(R_{TH}\) (Thévenin) or \(I_N\) in parallel with \(R_N\) (Norton), with \(R_N = R_{TH}\). See <a class="xref" data-lesson="tn1">Thévenin &amp; Norton</a> (also <a class="xref" data-lesson="tn2">tn2</a>, <a class="xref" data-lesson="tn3">tn3</a>); the class had just done the lab on this.</dd>
+</dl>
+</section>
+
+<section class="g-sec" id="st1-definitions" data-kind="definitions">
+<h2>Definitions &amp; symbols</h2>
+<table>
+<tr><th>Term / symbol</th><th>Meaning</th><th>Unit</th></tr>
+<tr><td>Source transformation</td><td>Replacing a voltage source in series with a resistor by a current source in parallel with the same resistor (or the reverse). The two forms behave identically at their two terminals.</td><td>—</td></tr>
+<tr><td>\(V\)</td><td>Value of the voltage source in the series form</td><td>V (volt)</td></tr>
+<tr><td>\(I\)</td><td>Value of the current source in the parallel form</td><td>A (ampere); mA = \(10^{-3}\) A; μA = \(10^{-6}\) A</td></tr>
+<tr><td>\(R\)</td><td>The resistor that goes with the source. It is the same in both forms: in series with \(V\), in parallel with \(I\).</td><td>Ω (ohm)</td></tr>
+<tr><td>\(V_{TH},\ R_{TH}\)</td><td>Thévenin voltage and resistance found in the lab</td><td>V, Ω</td></tr>
+<tr><td>\(I_N,\ R_N\)</td><td>Norton current and resistance found in the lab (\(R_N = R_{TH}\))</td><td>A, Ω</td></tr>
+<tr><td>Battery symbol (long/short plates)</td><td>How the instructor draws the DC voltage source; the long plate is the + terminal</td><td>—</td></tr>
+<tr><td>Circle with arrow</td><td>Ideal current source; the arrow shows the direction the current is pushed</td><td>—</td></tr>
+<tr><td>666.6̄ Ω (written 666.66 with a bar)</td><td>Repeating decimal, \(666.666\ldots\ \Omega = \tfrac{2000}{3}\ \Omega\)</td><td>Ω</td></tr>
+</table>
+</section>
+
+<section class="g-sec" id="st1-idea" data-kind="lesson" data-ts="0-209">
+<h2>1. Source transformation: the idea and the rule</h2>
+<h3>Two interchangeable pairs <a class="ts" data-t="0:29"></a></h3>
+<p>The instructor calls this topic "really easy, really straightforward" but potentially "incredibly valuable", depending on the situation <a class="ts" data-t="0:29"></a>. Take a <b>voltage source in series with a resistor</b>: you can turn it into a <b>current source in parallel with a resistor</b> <a class="ts" data-t="1:00"></a>. You can also go back the other way <a class="ts" data-t="2:19"></a>. Seen from the two output terminals, the two circuits are identical.</p>
+<figure class="circuit" id="st1-fig-general">
+<script type="application/json">{"parts":[
+ {"t":"BAT","a":[0,4],"b":[0,1],"label":"V","side":-1},
+ {"t":"W","pts":[[0,1],[1,1]]},
+ {"t":"R","a":[1,1],"b":[4,1],"label":"R"},
+ {"t":"W","pts":[[4,1],[5,1]]},
+ {"t":"N","at":[5,1],"open":true,"label":"a","pos":"e"},
+ {"t":"W","pts":[[0,4],[5,4]]},
+ {"t":"N","at":[5,4],"open":true,"label":"b","pos":"e"},
+ {"t":"ARROW","a":[6,2.2],"b":[8.4,2.2]},
+ {"t":"ARROW","a":[8.4,2.8],"b":[6,2.8]},
+ {"t":"I","a":[10.5,4],"b":[10.5,1],"label":"I","side":-1},
+ {"t":"W","pts":[[10.5,1],[12.5,1]]},
+ {"t":"W","pts":[[10.5,4],[12.5,4]]},
+ {"t":"R","a":[12.5,1],"b":[12.5,4],"label":"R"},
+ {"t":"W","pts":[[12.5,1],[14.5,1]]},
+ {"t":"W","pts":[[12.5,4],[14.5,4]]},
+ {"t":"N","at":[14.5,1],"open":true,"label":"a","pos":"e"},
+ {"t":"N","at":[14.5,4],"open":true,"label":"b","pos":"e"},
+ {"t":"T","at":[2.5,5.4],"text":"V = I R","anchor":"middle","cls":"accent"},
+ {"t":"T","at":[12.5,5.4],"text":"I = V / R","anchor":"middle","cls":"accent"}
+],"alt":"Left: battery V, positive plate on top, in series with resistor R between terminals a (top) and b (bottom). Right: current source I with arrow pointing up toward terminal a, in parallel with resistor R between terminals a and b. Under them: V = I R and I = V / R."}</script>
+<figcaption>The two forms as drawn on the "Source Transformation" page (<a class="ts" data-t="1:00"></a>, rules added at <a class="ts" data-t="3:07"></a>). The battery's long plate (+) is on top, and the current-source arrow points up toward the same top terminal. Terminal names a, b are added for clarity.</figcaption>
+</figure>
+
+<h3>It looks like Thévenin/Norton, but it is not the same thing <a class="ts" data-t="1:28"></a></h3>
+<p>The left circuit is exactly what you get at the end of a Thévenin analysis, and the right circuit is exactly what you get at the end of a Norton analysis <a class="ts" data-t="1:28"></a>. The instructor warns against mixing the ideas up:</p>
+<aside class="instructor"><p>"Don't get confused and think these are Thévenin or Norton equivalent circuits" <a class="ts" data-t="1:28"></a>. A Thévenin or Norton equivalent is the <em>result of a procedure</em>: you derive it for a whole network. These two drawings only have the same output as that procedure would give <a class="ts" data-t="1:54"></a>. "Let's just take this for what it is," he says: a voltage source in series with a resistor that you can swap for the other form whenever you see it <a class="ts" data-t="2:19"></a>.</p></aside>
+<aside class="extra"><p><b>Why the difference matters.</b> In a source transformation you replace <em>one</em> source–resistor pair that is already sitting in your circuit. Everything else in the circuit stays exactly where it was, and nothing is "looked into" from a pair of terminals. A Thévenin or Norton equivalent replaces an <em>entire network</em>, which may hold many sources and resistors, by one source and one resistor as seen from two chosen terminals. You have to compute \(V_{TH}\) (or \(I_N\)) and \(R_{TH}\) from that whole network. A source transformation needs no analysis at all, just Ohm's law on the pair. That is why it can be repeated branch by branch inside a bigger circuit, which is exactly how it is used for <a class="xref" data-lesson="mt1">Millman's theorem</a>.</p></aside>
+
+<h3>The conversion rule: Ohm's law, same R <a class="ts" data-t="2:43"></a></h3>
+<p>"All we have to do is perform Ohm's law on the voltage source … with its given resistor" <a class="ts" data-t="2:43"></a>. Written on the page <a class="ts" data-t="3:07"></a>:</p>
+<div class="formula">\[ I = \frac{V}{R} \qquad\text{(series } V\text{–}R \;\to\; \text{parallel } I\text{–}R\text{)} \]</div>
+<div class="formula">\[ V = I\,R \qquad\text{(parallel } I\text{–}R \;\to\; \text{series } V\text{–}R\text{)} \]</div>
+<dl class="vardefs">
+<dt>\(V\)</dt><dd>voltage of the source in the series form, V</dd>
+<dt>\(I\)</dt><dd>current of the source in the parallel form, A</dd>
+<dt>\(R\)</dt><dd>the resistor of the pair, Ω. It <b>stays the same</b>: in series with the voltage source, in parallel with the current source.</dd>
+</dl>
+<p>These apply whenever a voltage source has a resistor <b>in series</b> with it (for the first rule), or a current source has a resistor <b>in parallel</b> with it (for the second). The resistance stays the same, which matches how the class found \(R_{TH}\) and \(R_N\) "the same exact way" in the lab <a class="ts" data-t="4:09"></a>.</p>
+
+<h3>Orientation: which way does the arrow point?</h3>
+<p>The instructor does not say the orientation rule out loud, but every drawing in this lecture follows it. In each case the battery's <b>long plate (+) faces the top terminal</b>, and the current-source <b>arrow points up toward that same top terminal</b> (general form at <a class="ts" data-t="2:20"></a>; examples at <a class="ts" data-t="4:50"></a> and <a class="ts" data-t="6:12"></a>; lab at <a class="ts" data-t="9:58"></a>).</p>
+<div class="formula">\[ \text{The arrow of } I \text{ points toward the terminal connected to the } + \text{ side of } V. \]</div>
+<aside class="extra"><p><b>Why the arrow must point that way.</b> Look at the open-circuit voltage \(v_{ab}\) in both forms. In the series form no current flows, so \(v_{ab} = +V\): terminal a is positive. In the parallel form all of \(I\) has to flow through \(R\). If the arrow pushes current <em>into</em> node a, that current goes down through \(R\) from a to b, so \(v_{ab} = +IR = +V\). That matches only if the arrow points toward a, the + side. Check the short-circuit current too: the series form drives \(V/R\) out of the + terminal through the short. The parallel form drives all of \(I\) out of the terminal the arrow points to. Same direction, same size.</p>
+<p>If the voltage source is flipped (+ at the bottom), the arrow must point down.</p></aside>
+<figure class="circuit" id="st1-fig-flipped">
+<script type="application/json">{"parts":[
+ {"t":"BAT","a":[0,4],"b":[0,1],"label":"V","plus":"a","side":-1},
+ {"t":"W","pts":[[0,1],[1,1]]},
+ {"t":"R","a":[1,1],"b":[4,1],"label":"R"},
+ {"t":"W","pts":[[4,1],[5,1]]},
+ {"t":"N","at":[5,1],"open":true,"label":"a","pos":"e"},
+ {"t":"W","pts":[[0,4],[5,4]]},
+ {"t":"N","at":[5,4],"open":true,"label":"b","pos":"e"},
+ {"t":"ARROW","a":[6,2.2],"b":[8.4,2.2]},
+ {"t":"ARROW","a":[8.4,2.8],"b":[6,2.8]},
+ {"t":"I","a":[10.5,1],"b":[10.5,4],"label":"I = V/R","side":-1},
+ {"t":"W","pts":[[10.5,1],[12.5,1]]},
+ {"t":"W","pts":[[10.5,4],[12.5,4]]},
+ {"t":"R","a":[12.5,1],"b":[12.5,4],"label":"R"},
+ {"t":"W","pts":[[12.5,1],[14.5,1]]},
+ {"t":"W","pts":[[12.5,4],[14.5,4]]},
+ {"t":"N","at":[14.5,1],"open":true,"label":"a","pos":"e"},
+ {"t":"N","at":[14.5,4],"open":true,"label":"b","pos":"e"}
+],"alt":"Flipped case: battery with its positive plate at the bottom, toward terminal b, is equivalent to a current source whose arrow points down toward terminal b, in parallel with R."}</script>
+<figcaption>Flipped polarity: + toward terminal b means the arrow points down toward b (added for clarity, not drawn in the video).</figcaption>
+</figure>
+</section>
+
+<section class="g-sec" id="st1-examples" data-kind="lesson" data-ts="209-390">
+<h2>2. Worked conversions</h2>
+<div class="example" id="st1-ex1">
+<h3>Example 1 — 10 V in series with 2 Ω → current source <a class="ts" data-t="3:43"></a></h3>
+<p><b>Given:</b> a 10 V source in series with a 2 Ω resistor <a class="ts" data-t="3:43"></a>. <b>Goal:</b> the equivalent current source in parallel with a resistor.</p>
+<figure class="circuit" id="st1-fig-ex1">
+<script type="application/json">{"parts":[
+ {"t":"BAT","a":[0,4],"b":[0,1],"label":"10 V","side":-1},
+ {"t":"W","pts":[[0,1],[1,1]]},
+ {"t":"R","a":[1,1],"b":[4,1],"label":"2 Ω"},
+ {"t":"W","pts":[[4,1],[5,1]]},
+ {"t":"N","at":[5,1],"open":true},
+ {"t":"W","pts":[[0,4],[5,4]]},
+ {"t":"N","at":[5,4],"open":true},
+ {"t":"ARROW","a":[6,2.5],"b":[8.4,2.5]},
+ {"t":"I","a":[10.5,4],"b":[10.5,1],"label":"5 A","side":-1},
+ {"t":"W","pts":[[10.5,1],[12.5,1]]},
+ {"t":"W","pts":[[10.5,4],[12.5,4]]},
+ {"t":"R","a":[12.5,1],"b":[12.5,4],"label":"2 Ω"},
+ {"t":"W","pts":[[12.5,1],[14.5,1]]},
+ {"t":"W","pts":[[12.5,4],[14.5,4]]},
+ {"t":"N","at":[14.5,1],"open":true},
+ {"t":"N","at":[14.5,4],"open":true}
+],"alt":"10 volt battery, positive on top, in series with 2 ohms, converted to a 5 ampere current source with upward arrow in parallel with 2 ohms."}</script>
+<figcaption>Example 1 as drawn at <a class="ts" data-t="4:50"></a>: 10 V + 2 Ω → 5 A ∥ 2 Ω (arrow up, toward the side where the + plate was).</figcaption>
+</figure>
+<p class="step">1. Keep the resistor: \(R = 2\ \Omega\). "R stays the same" <a class="ts" data-t="4:09"></a>.</p>
+<p class="step">2. Ohm's law for the source value: \(I = \dfrac{V}{R} = \dfrac{10\ \text{V}}{2\ \Omega} = 5\ \text{A}\) <a class="ts" data-t="4:31"></a>.</p>
+<p class="step">3. Draw the 5 A source in parallel with 2 Ω, arrow pointing toward the terminal that the + plate faced (up).</p>
+<p class="answer">10 V in series with 2 Ω ⇔ 5 A in parallel with 2 Ω. "This is identical to this from these two points" <a class="ts" data-t="4:31"></a>.</p>
+</div>
+
+<div class="example" id="st1-ex2">
+<h3>Example 2 — 2 A in parallel with 3 Ω → voltage source <a class="ts" data-t="4:55"></a></h3>
+<p><b>Given:</b> a 2 A current source in parallel with a 3 Ω resistor <a class="ts" data-t="4:55"></a>. <b>Goal:</b> the equivalent voltage source in series with a resistor. Suppose that in some circuit this form "didn't suit us" and a voltage source with a series resistor would be more useful. The instructor says next class will show such a case <a class="ts" data-t="5:18"></a>.</p>
+<figure class="circuit" id="st1-fig-ex2">
+<script type="application/json">{"parts":[
+ {"t":"I","a":[1,4],"b":[1,1],"label":"2 A","side":-1},
+ {"t":"W","pts":[[1,1],[3,1]]},
+ {"t":"W","pts":[[1,4],[3,4]]},
+ {"t":"R","a":[3,1],"b":[3,4],"label":"3 Ω"},
+ {"t":"W","pts":[[3,1],[5,1]]},
+ {"t":"W","pts":[[3,4],[5,4]]},
+ {"t":"N","at":[5,1],"open":true},
+ {"t":"N","at":[5,4],"open":true},
+ {"t":"ARROW","a":[6,2.5],"b":[8.4,2.5]},
+ {"t":"BAT","a":[10,4],"b":[10,1],"label":"6 V","side":-1},
+ {"t":"W","pts":[[10,1],[11,1]]},
+ {"t":"R","a":[11,1],"b":[14,1],"label":"3 Ω"},
+ {"t":"W","pts":[[14,1],[14.5,1]]},
+ {"t":"N","at":[14.5,1],"open":true},
+ {"t":"W","pts":[[10,4],[14.5,4]]},
+ {"t":"N","at":[14.5,4],"open":true}
+],"alt":"2 ampere current source with upward arrow in parallel with 3 ohms, converted to a 6 volt battery, positive on top, in series with 3 ohms."}</script>
+<figcaption>Example 2 as drawn at <a class="ts" data-t="6:12"></a>: 2 A ∥ 3 Ω → 6 V + 3 Ω (+ plate on top, the side the arrow pointed to).</figcaption>
+</figure>
+<p class="step">1. Keep the resistor: the parallel 3 Ω "is going to be 3 Ω" <a class="ts" data-t="5:44"></a>, now in series.</p>
+<p class="step">2. Ohm's law for the source value: \(V = IR = (2\ \text{A})(3\ \Omega) = 6\ \text{V}\) <a class="ts" data-t="5:44"></a>.</p>
+<p class="step">3. Draw the 6 V source with its + side toward the terminal the arrow pointed at (top).</p>
+<p class="answer">2 A in parallel with 3 Ω ⇔ 6 V in series with 3 Ω.</p>
+</div>
+<aside class="instructor"><p>The conversion itself is easy. The skill is noticing <em>when</em> it helps, and that "you probably need a little more experience to see when doing this source transformation … is beneficial" <a class="ts" data-t="6:08"></a>.</p></aside>
+<aside class="extra"><p><b>Quick check that the two forms really match.</b> Put any load \(R_L\) across the terminals. Series form: \(i_L = \dfrac{V}{R+R_L}\). Parallel form (current divider): \(i_L = I\,\dfrac{R}{R+R_L} = \dfrac{V}{R}\cdot\dfrac{R}{R+R_L} = \dfrac{V}{R+R_L}\). They are the same for every \(R_L\). For Example 1 with \(R_L = 3\ \Omega\): \(10/(2+3) = 2\ \text{A}\), and \(5 \cdot 2/(2+3) = 2\ \text{A}\).</p></aside>
+</section>
+
+<section class="g-sec" id="st1-lab" data-kind="lesson" data-ts="390-658">
+<h2>3. Checking the Thévenin/Norton lab with a source transformation</h2>
+<p>The instructor asks the class (out loud or in chat) for the Thévenin and Norton equivalents they measured or calculated in the previous lab <a class="ts" data-t="6:30"></a>. A few fragments are read from chat ("3 volts and 3 milliamps, 7.5 volts") <a class="ts" data-t="6:56"></a>. Then one student gives a complete set <a class="ts" data-t="7:14"></a>:</p>
+<table>
+<tr><th>Lab result (one student)</th><th>Value</th></tr>
+<tr><td>Thévenin voltage \(V_{TH}\)</td><td>5 V <a class="ts" data-t="7:14"></a></td></tr>
+<tr><td>Thévenin resistance \(R_{TH}\)</td><td>666.6̄ Ω (666.666… Ω) <a class="ts" data-t="7:40"></a></td></tr>
+<tr><td>Norton current \(I_N\)</td><td>7.5 mA <a class="ts" data-t="8:37"></a></td></tr>
+<tr><td>Norton resistance \(R_N\)</td><td>the same 666.6̄ Ω ("you should have gotten the same resistance") <a class="ts" data-t="8:37"></a></td></tr>
+</table>
+<aside class="uncertain"><p>The other chat values that were read aloud ("3 volts and 3 milliamps", "7.5 volts") <a class="ts" data-t="6:56"></a> come without context. It is not clear which quantity each one refers to, so they are not used here. The lab circuit itself (and its load resistor) is not shown in this video. See the <a class="xref" data-lesson="tn1">Thévenin &amp; Norton</a> lessons.</p></aside>
+<div class="example" id="st1-ex3">
+<h3>Example 3 — Is the lab's Norton current consistent with its Thévenin values? <a class="ts" data-t="8:54"></a></h3>
+<figure class="circuit" id="st1-fig-lab">
+<script type="application/json">{"parts":[
+ {"t":"BAT","a":[0,4],"b":[0,1],"label":"5 V","side":-1},
+ {"t":"W","pts":[[0,1],[1,1]]},
+ {"t":"R","a":[1,1],"b":[4,1],"label":"666.66… Ω"},
+ {"t":"W","pts":[[4,1],[5,1]]},
+ {"t":"N","at":[5,1],"open":true},
+ {"t":"W","pts":[[0,4],[5,4]]},
+ {"t":"N","at":[5,4],"open":true},
+ {"t":"ARROW","a":[6,2.2],"b":[8.4,2.2]},
+ {"t":"ARROW","a":[8.4,2.8],"b":[6,2.8]},
+ {"t":"I","a":[10.5,4],"b":[10.5,1],"label":"7.5 mA","side":-1},
+ {"t":"W","pts":[[10.5,1],[12.5,1]]},
+ {"t":"W","pts":[[10.5,4],[12.5,4]]},
+ {"t":"R","a":[12.5,1],"b":[12.5,4],"label":"666.66… Ω"},
+ {"t":"W","pts":[[12.5,1],[15.5,1]]},
+ {"t":"W","pts":[[12.5,4],[15.5,4]]},
+ {"t":"N","at":[15.5,1],"open":true},
+ {"t":"N","at":[15.5,4],"open":true},
+ {"t":"T","at":[2.5,5.4],"text":"Thévenin (lab)","anchor":"middle","cls":"muted"},
+ {"t":"T","at":[12.5,5.4],"text":"Norton (lab)","anchor":"middle","cls":"muted"}
+],"alt":"Lab Thévenin equivalent: 5 volt battery in series with 666.66 repeating ohms. Lab Norton equivalent: 7.5 milliampere current source, arrow up, in parallel with 666.66 repeating ohms."}</script>
+<figcaption>The "Lab" page (<a class="ts" data-t="7:50"></a>–<a class="ts" data-t="9:58"></a>): Thévenin 5 V + 666.66… Ω and Norton 7.5 mA ∥ 666.66… Ω, with \(I = 5\ \text{V} / 666.66\ \Omega\) written above.</figcaption>
+</figure>
+<p class="step">1. If the two equivalents describe the same circuit, a source transformation of the Thévenin form must give the Norton form. Same \(R\), and \(I = V/R\) <a class="ts" data-t="8:54"></a>.</p>
+<p class="step">2. \(R_N = R_{TH} = 666.6\bar{6}\ \Omega\). ✔ (the student had the same resistance)</p>
+<p class="step">3. \(I_N = \dfrac{V_{TH}}{R_{TH}} = \dfrac{5\ \text{V}}{666.66\ \Omega}\). On the calculator (<a class="ts" data-t="9:22"></a>): \(5 \div 666.66 = 0.0075000750\ldots\ \text{A}\).</p>
+<p class="step">4. Exactly: \(666.6\bar{6}\ \Omega = \tfrac{2000}{3}\ \Omega\), so \(I_N = 5 \cdot \tfrac{3}{2000} = 0.0075\ \text{A} = 7.5\ \text{mA} = 7500\ \mu\text{A}\) <a class="ts" data-t="9:41"></a>. (The tiny extra digits on the calculator come from typing 666.66 instead of the repeating decimal.)</p>
+<p class="answer">\(5\ \text{V} / 666.6\bar{6}\ \Omega = 7.5\ \text{mA}\), the same as the measured Norton current. "Source transformation works" <a class="ts" data-t="9:41"></a>.</p>
+</div>
+<aside class="instructor"><p>This gives "multiple verifications" for the lab <a class="ts" data-t="9:41"></a>. With the Thévenin equivalent and with the Norton equivalent you should have measured the same current through the load resistor and the same voltage across it <a class="ts" data-t="10:06"></a>. Now you also know the name of the conversion that links them: <b>source transformation</b>. It "will become more useful … next class when we go over Millman's theorem" <a class="ts" data-t="10:06"></a> (see <a class="xref" data-lesson="mt1">Millman's theorem</a>).</p></aside>
+<aside class="extra"><p><b>Reverse check.</b> Going the other way, \(V = I_N R_N = 7.5\ \text{mA} \times 666.6\bar{6}\ \Omega = 5\ \text{V}\). The general relation \(V_{TH} = I_N R_{TH}\) (equivalently \(R_{TH} = V_{TH}/I_N\)) is just this source transformation applied to the two equivalents.</p></aside>
+<h3>Wrap-up of the topic <a class="ts" data-t="10:29"></a></h3>
+<p>The instructor sums up: this is "a pretty easy quick thing to cover". What you need is to know that you <em>can</em> do this, that you can "jump back and forth between these whenever it suits you best", and that the name is <b>source transformation</b> <a class="ts" data-t="10:29"></a>. Then the class moves on to the next topic <a class="ts" data-t="10:53"></a>.</p>
+</section>
+
+<section class="g-sec" id="st1-other" data-kind="lesson" data-ts="678-4908">
+<h2>4. Other content in this video (outside this topic)</h2>
+<p>The rest of the lecture covers the Wheatstone bridge, variable resistors and a lab demo. Below is a timestamped outline taken from the transcript only.</p>
+<ul>
+<li><a class="ts" data-t="11:18"></a> Introduction: a "simple but useful" circuit, important for sensors.</li>
+<li><a class="ts" data-t="11:34"></a> Wheatstone bridge drawn: two parallel branches between nodes a and b, with a voltmeter bridging their midpoints. This continues the idea of a "bridge" from the Δ–Y lecture (<a class="xref" data-lesson="dw1">Δ–Y</a>). Labels: \(V_S\), \(R_1\), \(R_2\), unknown \(R_x\), and a variable resistor standard \(R_S\) (an adjustable resistor whose value you know).</li>
+<li><a class="ts" data-t="15:31"></a> Variable resistors: potentiometers ("pots") and multi-turn trimmers. Demo with a 5 kΩ pot and two ohmmeters: wiper to each end reads about 4.7 Ω / 4.7 kΩ at one extreme and about 2.3 kΩ / 2.3 kΩ near the centre. The outer pins read a fixed 4.87 kΩ <a class="ts" data-t="24:18"></a>.</li>
+<li><a class="ts" data-t="27:02"></a> Decade resistance substitution box: switches short out series resistors. Readings of 0.2 Ω (lead/measurement error), 1.2 Ω, 11 Ω, 111 Ω; building 5 Ω, 9 Ω, 10 Ω and about 666 kΩ.</li>
+<li><a class="ts" data-t="37:22"></a> Back to the bridge: \(R_x\) is the resistance to measure; \(R_1, R_2\) form the "ratio arm".</li>
+<li><a class="ts" data-t="39:11"></a> Voltage-divider review: \(V_{out} = V_{in} R_2/(R_1+R_2)\). Example: 10 V with 100 Ω and 100 Ω gives 5 V.</li>
+<li><a class="ts" data-t="42:04"></a> The bridge as two dividers: \(V_D = V_S R_2/(R_1+R_2)\) and \(V_C = V_S R_S/(R_x+R_S)\).</li>
+<li><a class="ts" data-t="46:08"></a> Balanced bridge: \(V_D = V_C\), so the meter reads 0 V. Setting them equal cancels \(V_S\): \(R_2/(R_1+R_2) = R_S/(R_x+R_S)\) <a class="ts" data-t="49:02"></a>.</li>
+<li><a class="ts" data-t="52:08"></a> Demo: \(R_1 = R_2 = 12\ \text{k}\Omega\), 5 V supply, substitution box as \(R_S\). The meter starts at 2.28 V; the box is adjusted until it reads 0 V at 20k + 2k + 300 Ω = 22.3 kΩ <a class="ts" data-t="1:04:16"></a>.</li>
+<li><a class="ts" data-t="1:05:56"></a> Unknown resistor color code red-red-orange = 22 kΩ ±5 % (±1100 Ω), so the 300 Ω difference is within tolerance.</li>
+<li><a class="ts" data-t="1:08:18"></a> History: the bridge dates from the 1800s, when only needle (current) meters existed.</li>
+<li><a class="ts" data-t="1:10:07"></a> Modern use: sensor circuits. A sensor (thermistor, CdS light cell) replaces \(R_x\) and a fixed known resistor replaces \(R_S\). The bridge is run <em>unbalanced</em> and the voltage difference is measured.</li>
+<li><a class="ts" data-t="1:13:04"></a> Thermistor demo (about 0.2 V, changing as the sensor is warmed by fingers). Light-sensor demo <a class="ts" data-t="1:16:41"></a> (0.38 V → −1.58 V when covered). A potentiometer is used to "null" the baseline <a class="ts" data-t="1:17:37"></a>.</li>
+<li><a class="ts" data-t="1:20:05"></a> Summary: bridges are a good starting point for sensor circuits and help cancel temperature effects, because only ratios matter.</li>
+</ul>
+</section>
+
+<section class="g-sec" id="st1-assumptions" data-kind="assumptions">
+<h2>Assumptions &amp; limitations</h2>
+<ul>
+<li><b>The pair must really be a pair.</b> The resistor must be in <em>series</em> with the voltage source (same current, nothing branching off between them), or in <em>parallel</em> with the current source (across the same two nodes). Otherwise \(I = V/R\) does not apply.</li>
+<li><b>Same R both ways.</b> Only the source value changes. \(R\) is never inverted or rescaled (<a class="ts" data-t="4:09"></a>).</li>
+<li><b>Not a Thévenin/Norton analysis.</b> It swaps one local pair. It does not reduce a whole network unless you combine it with series/parallel steps or a Thévenin/Norton procedure (<a class="ts" data-t="1:28"></a>).</li>
+<li>Applies to linear resistive DC circuits as used in this course.</li>
+</ul>
+<aside class="extra">
+<p><b>Equivalent only at the terminals.</b> The two forms give the same voltage and current to whatever is connected outside. Inside, they differ. Example 1 with nothing connected: in the 10 V/2 Ω form no current flows and the resistor dissipates 0 W. In the 5 A/2 Ω form, 5 A flows through the resistor, which dissipates \(5^2 \cdot 2 = 50\ \text{W}\). Do not use the transformed circuit to find the current or power <em>in that resistor</em>.</p>
+<p><b>Ideal sources need a resistor.</b> A voltage source with no series resistance (\(R = 0\)) or a current source with no parallel resistance (\(R \to \infty\)) cannot be transformed. The formulas would give infinite current or infinite voltage.</p>
+</aside>
+</section>
+
+<section class="g-sec" id="st1-mistakes" data-kind="mistakes">
+<h2>Common mistakes</h2>
+<aside class="mistake"><p><b>Changing R.</b> Writing \(R_{new} = 1/R\) or computing a new resistance. <em>Fix:</em> the resistor value is identical in both forms. Only its connection changes: series ↔ parallel.</p></aside>
+<aside class="mistake"><p><b>Arrow pointing the wrong way.</b> The current-source arrow must point toward the terminal that the voltage source's + side faces (and the reverse when converting back). <em>Check:</em> find the open-circuit voltage of both forms. It must have the same sign.</p></aside>
+<aside class="mistake"><p><b>Multiplying when you should divide.</b> V→I uses \(I = V/R\) (10 V/2 Ω = 5 A), and I→V uses \(V = IR\) (2 A·3 Ω = 6 V). <em>Check the units:</em> V/Ω = A and A·Ω = V.</p></aside>
+<aside class="mistake"><p><b>Keeping the resistor in the wrong place.</b> After V→I the resistor goes in <em>parallel</em> with the current source, not in series. A current source with a resistor in series still delivers the same current, so that resistor would do nothing.</p></aside>
+<aside class="mistake"><p><b>Calling it a "Thévenin equivalent".</b> It has the same shape, but it is a different operation. The instructor explicitly warns about this (<a class="ts" data-t="1:28"></a>).</p></aside>
+<aside class="mistake"><p><b>Unit slips in the lab check.</b> 5 V / 666.67 Ω = 0.0075 A = 7.5 mA = 7500 μA. Writing "7.5 A" or "0.75 mA" is a factor-of-1000 or factor-of-10 error. Typing 666.66 instead of 666.666… gives 0.00750008 A, which is fine to round.</p></aside>
+</section>
+
+<section class="g-sec" id="st1-recap" data-kind="recap">
+<h2>Recap &amp; formula sheet</h2>
+<ul>
+<li>A voltage source in series with \(R\) ⇔ a current source in parallel with the <b>same</b> \(R\).</li>
+<li>Convert with Ohm's law: \(I = V/R\) one way, \(V = IR\) the other.</li>
+<li>Arrow of the current source → toward the + side of the voltage source.</li>
+<li>Examples: 10 V + 2 Ω ⇔ 5 A ∥ 2 Ω; 2 A ∥ 3 Ω ⇔ 6 V + 3 Ω; lab: 5 V + 666.6̄ Ω ⇔ 7.5 mA ∥ 666.6̄ Ω.</li>
+<li>Not a Thévenin/Norton equivalent of a whole circuit, only a local swap. It is the first step of <a class="xref" data-lesson="mt1">Millman's theorem</a>.</li>
+</ul>
+<div class="formula-sheet">
+<p><b>Series V–R → parallel I–R:</b> \(I = \dfrac{V}{R}\), \(R\) unchanged.</p>
+<p><b>Parallel I–R → series V–R:</b> \(V = I R\), \(R\) unchanged.</p>
+<p><b>Thévenin ↔ Norton link:</b> \(I_N = \dfrac{V_{TH}}{R_{TH}}\), \(R_N = R_{TH}\).</p>
+<p><b>Orientation:</b> the arrow of \(I\) points toward the terminal on the + side of \(V\).</p>
+<p>Variables: \(V\) in volts (V), \(I\) in amperes (A; 1 mA = \(10^{-3}\) A), \(R\) in ohms (Ω).</p>
+</div>
+</section>

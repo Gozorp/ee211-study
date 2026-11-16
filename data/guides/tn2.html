@@ -1,0 +1,497 @@
+<section class="g-sec" id="tn2-overview" data-kind="overview">
+<h2>Overview</h2>
+<p>This lecture finishes Thévenin equivalent circuits with one more worked example and then introduces <strong>Norton's theorem</strong>. The Thévenin example has a twist: one resistor carries <em>zero current</em> when terminals a–b are open, so it does not affect \(V_{TH}\), but it <em>does</em> affect \(R_{TH}\). The Norton part shows how to replace any linear circuit, as seen from terminals a–b, with a current source \(I_N\) in parallel with a resistor \(R_N\). It explains how to find \(I_N\) (short a–b and find the current in the short) and \(R_N\) (same method as \(R_{TH}\)), then works a complete Norton example.</p>
+<p><strong>Parts of the video</strong></p>
+<ul>
+<li><a class="ts" data-t="0:00"></a> Intro; drawing a new Thévenin problem (20 V source, 10/20/20/10 Ω)</li>
+<li><a class="ts" data-t="2:06"></a> Plan: find \(V_{TH}\) and \(R_{TH}\); \(V_{TH}\) is the voltage between a and b</li>
+<li><a class="ts" data-t="3:41"></a> Total resistance: why "30 Ω" is wrong and the answer is 40 Ω (no current flows in the resistor that leads to the open terminal)</li>
+<li><a class="ts" data-t="8:43"></a> \(I_T = 0.5\) A, the voltage drops, a KVL check, and \(V_{TH} = 15 - 5 = 10\) V</li>
+<li><a class="ts" data-t="13:15"></a> Finding \(R_{TH}\) as a separate problem: short the source, reduce, \(R_{TH} = 30\ \Omega\)</li>
+<li><a class="ts" data-t="17:42"></a> Using a "fake" test current to spot series and parallel parts; the final Thévenin equivalent (10 V, 30 Ω)</li>
+<li><a class="ts" data-t="19:21"></a> Norton's theorem: a current source with a parallel ("shunt") resistor</li>
+<li><a class="ts" data-t="23:02"></a> Procedure: \(I_N\) = current through a short across a–b; \(R_N\) found the same way as \(R_{TH}\)</li>
+<li><a class="ts" data-t="25:50"></a> Norton example (100 V, 25/100/100/25 Ω): \(I_N = 2\) A, \(R_N = 25\ \Omega\)</li>
+<li><a class="ts" data-t="33:10"></a> Wrap-up: Thévenin and Norton are "two sides of the same coin"</li>
+</ul>
+</section>
+
+<section class="g-sec" id="tn2-objectives" data-kind="objectives">
+<h2>Learning objectives</h2>
+<p>After this lesson you should be able to:</p>
+<ul>
+<li>Find \(V_{TH}\) as the open-circuit voltage \(V_{ab}\), using total resistance, Ohm's law, KCL and KVL.</li>
+<li>Recognise a resistor that carries zero current because it leads to an open terminal, and leave it out of the total-resistance calculation for \(V_{TH}\).</li>
+<li>Explain why a zero-current resistor has 0 V across it, so the terminal voltage equals the voltage at the node it hangs from.</li>
+<li>Find \(R_{TH}\) by starting again from the original circuit, replacing the voltage source with a short, and reducing the network as seen from a–b.</li>
+<li>Use a "fake" test current injected at a–b to decide which resistors are in series and which are in parallel.</li>
+<li>State Norton's theorem and draw the Norton equivalent: \(I_N\) in parallel (shunt) with \(R_N\).</li>
+<li>Find \(I_N\) by shorting a–b and calculating the current through the short, after noticing which resistors the short removes.</li>
+<li>Find \(R_N\) (\(= R_{TH}\)) and assemble the Norton equivalent with the correct arrow direction.</li>
+<li>Convert between the Thévenin and Norton equivalents using \(V_{TH} = I_N R_N\) (additional teaching).</li>
+</ul>
+</section>
+
+<section class="g-sec" id="tn2-prereqs" data-kind="prereqs">
+<h2>Prerequisites</h2>
+<dl>
+<dt>Ohm's law</dt><dd>\(V = IR\). If a resistor carries zero current, the voltage across it is zero, whatever its resistance.</dd>
+<dt>KCL and KVL</dt><dd>The currents entering a node equal the currents leaving it. The voltage rises and drops around any closed loop add to zero. The instructor uses both to find and check every voltage in Example 1.</dd>
+<dt>Series and parallel resistors</dt><dd>Series: \(R_1 + R_2\) (same current). Parallel: \(R_1 \parallel R_2 = \frac{R_1 R_2}{R_1 + R_2}\) (same two nodes, same voltage). Two equal resistors in parallel give half of one: \(20 \parallel 20 = 10\ \Omega\).</dd>
+<dt>Open circuit and short circuit</dt><dd>An open circuit (no connection) carries 0 A but can have a voltage across it. A short circuit (ideal wire) has 0 V across it but can carry current.</dd>
+<dt>Thévenin equivalent basics</dt><dd>Any linear circuit, seen from two terminals, acts like a voltage source \(V_{TH}\) in series with a resistor \(R_{TH}\). This was introduced in <a class="xref" data-lesson="tn1">the previous lecture on Thévenin equivalents</a>.</dd>
+<dt>Node voltages</dt><dd>Choose a reference (0 V) node, here the source's negative terminal. Then every node has one voltage, and the voltage between two points is the difference of their node voltages.</dd>
+</dl>
+</section>
+
+<section class="g-sec" id="tn2-definitions" data-kind="definitions">
+<h2>Definitions &amp; symbols</h2>
+<table>
+<tr><th>Term / symbol</th><th>Meaning</th><th>Unit</th></tr>
+<tr><td>Terminals a, b</td><td>The two points from which we "look into" the circuit. The equivalent circuit only has to behave identically at these two points.</td><td>—</td></tr>
+<tr><td>\(V_{TH}\)</td><td>Thévenin voltage: the open-circuit voltage between a and b, \(V_{ab} = V_a - V_b\), with nothing connected to the terminals.</td><td>V</td></tr>
+<tr><td>\(R_{TH}\)</td><td>Thévenin resistance: the resistance seen between a and b with the independent sources deactivated (a voltage source is replaced by a short).</td><td>Ω</td></tr>
+<tr><td>Thévenin equivalent circuit</td><td>A voltage source \(V_{TH}\) in <strong>series</strong> with \(R_{TH}\). This is the "voltage approach".</td><td>—</td></tr>
+<tr><td>\(I_N\)</td><td>Norton current: the current through a short circuit placed across a and b.</td><td>A</td></tr>
+<tr><td>\(R_N\)</td><td>Norton resistance. Found exactly like \(R_{TH}\), and equal to it.</td><td>Ω</td></tr>
+<tr><td>Norton equivalent circuit</td><td>A constant current source \(I_N\) in <strong>parallel</strong> with \(R_N\). This is the "current approach".</td><td>—</td></tr>
+<tr><td>Shunt resistor</td><td>A resistor connected in parallel. The instructor calls it a fancy word for parallel (<a class="ts" data-t="20:55"></a>).</td><td>Ω</td></tr>
+<tr><td>\(R_T\), \(I_T\)</td><td>Total (equivalent) resistance the source sees, and the total current leaving the source.</td><td>Ω, A</td></tr>
+<tr><td>Deactivating (shorting out) a voltage source</td><td>Setting the source to 0 V by replacing it with a wire. This is the first step in finding \(R_{TH}\) or \(R_N\).</td><td>—</td></tr>
+<tr><td>"Fake" (test) current</td><td>An imaginary current fed in at a and taken out at b. Where it splits and rejoins shows you which resistors are in parallel. It is only a bookkeeping aid; no source is actually there.</td><td>—</td></tr>
+<tr><td>Linear circuit</td><td>A circuit made of resistors and sources (no diodes or other nonlinear parts). Thévenin's and Norton's theorems apply to these.</td><td>—</td></tr>
+</table>
+</section>
+
+<section class="g-sec" id="tn2-thev-vth" data-kind="lesson" data-ts="0-795">
+<h2>1. Another Thévenin example: finding V<sub>TH</sub> when a resistor carries no current</h2>
+<p>The lecture opens with a new Thévenin problem <a class="ts" data-t="0:18"></a>. The circuit is a 20 V source, a 10 Ω resistor in the top rail, a 20 Ω resistor from the middle node down to the bottom rail, a second 20 Ω resistor from that middle node out to terminal a, and a 10 Ω resistor in the bottom rail, which leads to terminal b <a class="ts" data-t="0:45"></a>. The battery's long plate (+) is at the top.</p>
+<figure class="circuit" id="tn2-fig-ex1">
+<script type="application/json">{"parts":[
+ {"t":"BAT","a":[0,4],"b":[0,0],"label":"V_s","value":"20 V","plus":"b"},
+ {"t":"W","pts":[[0,0],[1,0]]},
+ {"t":"R","a":[1,0],"b":[4,0],"label":"R_1","value":"10 Ω"},
+ {"t":"W","pts":[[4,0],[6,0]]},
+ {"t":"R","a":[5,0],"b":[5,4],"label":"R_2","value":"20 Ω"},
+ {"t":"R","a":[6,0],"b":[9,0],"label":"R_3","value":"20 Ω"},
+ {"t":"W","pts":[[9,0],[10,0]]},
+ {"t":"N","at":[10,0],"label":"a","pos":"e","open":true},
+ {"t":"W","pts":[[0,4],[1,4]]},
+ {"t":"R","a":[1,4],"b":[4,4],"label":"R_4","value":"10 Ω","side":-1},
+ {"t":"W","pts":[[4,4],[10,4]]},
+ {"t":"N","at":[10,4],"label":"b","pos":"e","open":true},
+ {"t":"N","at":[5,0]},
+ {"t":"N","at":[5,4]}
+],"pad":1.4,"alt":"20 V battery, positive at top. Top rail: 10 ohm R1 to a middle node. From the middle node a 20 ohm R2 goes down to the bottom rail, and a 20 ohm R3 continues right to open terminal a. Bottom rail: 10 ohm R4 from the battery's negative side to the bottom node, continuing to open terminal b."}</script>
+<figcaption>Example 1 circuit as drawn at <a class="ts" data-t="2:05"></a>. The names \(R_1\)–\(R_4\) are added for reference; the paper shows only the values.</figcaption>
+</figure>
+<p>The goal is a circuit that behaves in every way like this one <em>from the perspective of terminals a and b</em> <a class="ts" data-t="1:52"></a>. To get it we only need two numbers, \(V_{TH}\) and \(R_{TH}\) <a class="ts" data-t="2:06"></a>, and \(V_{TH}\) is simply the voltage between a and b <a class="ts" data-t="2:30"></a>.</p>
+
+<div class="example" id="tn2-ex1a">
+<h3>Example 1 (part A): find V<sub>TH</sub> <a class="ts" data-t="2:54"></a></h3>
+<p><strong>Given:</strong> \(V_s = 20\) V, \(R_1 = 10\ \Omega\) (top), \(R_2 = 20\ \Omega\) (shunt), \(R_3 = 20\ \Omega\) (to terminal a), \(R_4 = 10\ \Omega\) (bottom). Terminals a–b are open. <strong>Goal:</strong> \(V_{TH} = V_{ab}\).</p>
+<p class="step"><strong>1. Strategy</strong> <a class="ts" data-t="3:18"></a>. Find the total current \(I_T\) leaving the source (the same current returns to it). To get it, find the total resistance \(R_T\).</p>
+<p class="step"><strong>2. Which resistors carry current?</strong> <a class="ts" data-t="3:41"></a> A student answered 30 Ω, treating the two 20 Ω resistors as parallel (\(20 \parallel 20 = 10\), then \(10 + 10 + 10 = 30\)). The instructor asks whether they really are in parallel <a class="ts" data-t="4:28"></a>. The key question is whether a and b are connected to each other. They are not; a–b is an open circuit, and current cannot flow through an open circuit <a class="ts" data-t="5:19"></a>. So \(R_3\), the 20 Ω leading to terminal a, carries <strong>0 A</strong>, and so does the wire from b back to the bottom node <a class="ts" data-t="5:48"></a>.</p>
+<p class="step"><strong>3. Total resistance</strong> <a class="ts" data-t="6:12"></a>. The only current path is \(R_1 \to R_2 \to R_4\), all in series:
+\[ R_T = R_1 + R_2 + R_4 = 10 + 20 + 10 = 40\ \Omega \]
+\(R_3\) is left out because it has no effect on the current <a class="ts" data-t="6:53"></a>.</p>
+<p class="step"><strong>4. Voltage across the zero-current resistor</strong> <a class="ts" data-t="7:37"></a>. Ohm's law gives \(V_{R_3} = I R_3 = 0 \times 20 = 0\) V. Keep this in mind for step 8.</p>
+<p class="step"><strong>5. Total current</strong> <a class="ts" data-t="8:17"></a>. The instructor redraws the circuit as a single loop (20 V across 40 Ω) <a class="ts" data-t="8:43"></a>:
+\[ I_T = \frac{V_s}{R_T} = \frac{20\ \text{V}}{40\ \Omega} = 0.5\ \text{A} \]</p>
+<p class="step"><strong>6. KCL at the middle node</strong> <a class="ts" data-t="9:39"></a>. 0.5 A enters and 0 A leaves toward a, so all 0.5 A goes down through \(R_2\).</p>
+<p class="step"><strong>7. Voltage drops (Ohm's law)</strong> <a class="ts" data-t="9:55"></a>:
+\(V_{R_1} = 0.5 \times 10 = 5\) V, \(V_{R_4} = 0.5 \times 10 = 5\) V, \(V_{R_2} = 0.5 \times 20 = 10\) V, \(V_{R_3} = 0\) V.<br>
+<em>KVL sanity check</em> <a class="ts" data-t="10:20"></a>: start at 20 V, lose 5 V across \(R_1\) (15 V), lose 10 V across \(R_2\) (5 V), lose 5 V across \(R_4\) (0 V). Every volt of the source is used up: \(20 - 5 - 10 - 5 = 0\). ✓</p>
+<p class="step"><strong>8. Node voltages at the terminals</strong> <a class="ts" data-t="11:23"></a>. Take the source's negative terminal as 0 V. The middle top node is at 15 V. \(R_3\) drops 0 V, so terminal a is also at \(15 - 0 = 15\) V. On the bottom, everything right of \(R_4\) is one wire at 5 V, so terminal b is at 5 V <a class="ts" data-t="11:41"></a>.</p>
+<p class="answer">\(V_{TH} = V_a - V_b = 15\ \text{V} - 5\ \text{V} = 10\ \text{V}\) <a class="ts" data-t="11:41"></a></p>
+</div>
+
+<figure class="circuit" id="tn2-fig-ex1-flow">
+<script type="application/json">{"parts":[
+ {"t":"BAT","a":[0,4],"b":[0,0],"label":"20 V","plus":"b"},
+ {"t":"W","pts":[[0,0],[1,0]]},
+ {"t":"R","a":[1,0],"b":[4,0],"label":"10 Ω","value":"drop 5 V"},
+ {"t":"W","pts":[[4,0],[6,0]]},
+ {"t":"R","a":[5,0],"b":[5,4],"label":"20 Ω","value":"drop 10 V"},
+ {"t":"R","a":[6,0],"b":[9,0],"label":"20 Ω","value":"drop 0 V"},
+ {"t":"W","pts":[[9,0],[10,0]]},
+ {"t":"N","at":[10,0],"label":"a","pos":"e","open":true},
+ {"t":"W","pts":[[0,4],[1,4]]},
+ {"t":"R","a":[1,4],"b":[4,4],"label":"10 Ω","value":"drop 5 V","side":-1},
+ {"t":"W","pts":[[4,4],[10,4]]},
+ {"t":"N","at":[10,4],"label":"b","pos":"e","open":true},
+ {"t":"N","at":[5,0]},
+ {"t":"N","at":[5,4]},
+ {"t":"ARROW","a":[1.5,0.7],"b":[3.5,0.7],"label":"0.5 A","lat":[2.5,1.3]},
+ {"t":"ARROW","a":[4.4,1.2],"b":[4.4,2.8],"label":"0.5 A","lat":[4.1,2.1],"anchor":"end"},
+ {"t":"ARROW","a":[3.5,3.3],"b":[1.5,3.3],"label":"0.5 A","lat":[2.5,2.8]},
+ {"t":"ARROW","a":[6.5,0.7],"b":[8.5,0.7],"label":"0 A","lat":[7.5,1.3]},
+ {"t":"ARROW","a":[8.5,3.3],"b":[6.5,3.3],"label":"0 A","lat":[7.5,2.8]},
+ {"t":"T","at":[-0.3,-0.4],"text":"20 V","anchor":"end","cls":"accent"},
+ {"t":"T","at":[5,-0.5],"text":"15 V","anchor":"middle","cls":"accent"},
+ {"t":"T","at":[10.2,-0.6],"text":"15 V","anchor":"middle","cls":"accent"},
+ {"t":"T","at":[-0.3,4.6],"text":"0 V","anchor":"end","cls":"accent"},
+ {"t":"T","at":[5,4.8],"text":"5 V","anchor":"middle","cls":"accent"},
+ {"t":"T","at":[10.2,4.8],"text":"5 V","anchor":"middle","cls":"accent"},
+ {"t":"VM","a":[11.4,0.3],"b":[11.4,3.7],"label":"V_{TH} = 10 V","lat":[11.8,2]}
+],"pad":1.4,"alt":"Example 1 with currents and node voltages: 0.5 A flows through the top 10 ohm, down the 20 ohm shunt and back through the bottom 10 ohm. 0 A flows in the 20 ohm to terminal a and in the wire to terminal b. Node voltages relative to the battery's negative side: 20 V at the battery top, 15 V at the middle node and at a, 5 V on the bottom-right wire and at b, 0 V at the battery bottom. V_TH = 15 - 5 = 10 V."}</script>
+<figcaption>Currents (red on the paper) and node voltages (blue on the paper) as annotated by <a class="ts" data-t="12:50"></a>. Voltages are measured from the battery's negative terminal.</figcaption>
+</figure>
+
+<figure class="circuit" id="tn2-fig-ex1-loop">
+<script type="application/json">{"parts":[
+ {"t":"BAT","a":[0,3],"b":[0,0],"label":"20 V","plus":"b"},
+ {"t":"W","pts":[[0,0],[3,0]]},
+ {"t":"R","a":[3,0],"b":[3,3],"label":"R_T","value":"40 Ω"},
+ {"t":"W","pts":[[3,3],[0,3]]},
+ {"t":"IARR","a":[0.5,0],"b":[2.5,0],"label":"I_T = 0.5 A"}
+],"pad":1.4,"alt":"Simplified loop: 20 V battery across a single 40 ohm total resistance, with total current I_T = 0.5 A."}</script>
+<figcaption>The redrawn "visual aid": 20 V across \(R_T = 40\ \Omega\), drawn at <a class="ts" data-t="8:43"></a> (complete by <a class="ts" data-t="10:55"></a>).</figcaption>
+</figure>
+
+<aside class="instructor"><p>The instructor's main point <a class="ts" data-t="10:58"></a>: a resistor with zero current has zero volts across it. Terminal a is therefore at the same voltage as the node \(R_3\) hangs from (15 V), even though there is a 20 Ω resistor in between. Because that resistor does not affect the current, it cannot be included in the total resistance <a class="ts" data-t="8:17"></a>. He also repeats that he is "always a fan of redrawing" a circuit as a visual aid <a class="ts" data-t="8:43"></a>.</p></aside>
+
+<p>Before finding \(R_{TH}\), the instructor sketches the empty Thévenin template (a source labelled "\(V_{TH} =\)" in series with a resistor labelled "\(R_{TH} =\)") and fills in \(V_{TH} = 10\) V <a class="ts" data-t="12:04"></a>.</p>
+
+<aside class="extra"><p><strong>Why the student's 30 Ω was tempting.</strong> If a and b <em>were</em> shorted together, \(R_3\) really would be in parallel with \(R_2\), and \(R_1 + (R_2 \parallel R_3) + R_4 = 10 + 10 + 10 = 30\ \Omega\) would be correct. That is exactly the situation used to find the Norton current (section 4). With a–b <em>open</em>, as here for \(V_{TH}\), \(R_3\) carries no current and the source sees 40 Ω. Always ask whether the terminals are open or shorted before combining resistors.</p></aside>
+</section>
+
+<section class="g-sec" id="tn2-thev-rth" data-kind="lesson" data-ts="795-1161">
+<h2>2. Same example: finding R<sub>TH</sub> and the Thévenin equivalent</h2>
+<p>The instructor warns that finding \(R_{TH}\) is a completely different problem: go back to the original circuit and start again, without reusing the \(V_{TH}\) work <a class="ts" data-t="13:15"></a>. He redraws the original circuit first <a class="ts" data-t="13:40"></a>.</p>
+
+<div class="example" id="tn2-ex1b">
+<h3>Example 1 (part B): find R<sub>TH</sub> <a class="ts" data-t="14:06"></a></h3>
+<p class="step"><strong>1. Deactivate the source</strong> <a class="ts" data-t="14:21"></a>. Short out the 20 V source by replacing it with a wire. The resistors stay as they are: 10, 10, 20, 20 Ω <a class="ts" data-t="14:48"></a>.</p>
+<figure class="circuit" id="tn2-fig-ex1-rth">
+<script type="application/json">{"parts":[
+ {"t":"W","pts":[[0,0],[0,4]]},
+ {"t":"T","at":[0.3,2.1],"text":"short (was 20 V)","anchor":"start","cls":"muted"},
+ {"t":"W","pts":[[0,0],[1,0]]},
+ {"t":"R","a":[1,0],"b":[4,0],"label":"R_1","value":"10 Ω"},
+ {"t":"W","pts":[[4,0],[6,0]]},
+ {"t":"R","a":[5,0],"b":[5,4],"label":"R_2","value":"20 Ω"},
+ {"t":"R","a":[6,0],"b":[9,0],"label":"R_3","value":"20 Ω"},
+ {"t":"W","pts":[[9,0],[10,0]]},
+ {"t":"N","at":[10,0],"label":"a","pos":"e","open":true},
+ {"t":"W","pts":[[0,4],[1,4]]},
+ {"t":"R","a":[1,4],"b":[4,4],"label":"R_4","value":"10 Ω","side":-1},
+ {"t":"W","pts":[[4,4],[10,4]]},
+ {"t":"N","at":[10,4],"label":"b","pos":"e","open":true},
+ {"t":"N","at":[5,0]},
+ {"t":"N","at":[5,4]},
+ {"t":"ARROW","a":[9.6,0.7],"b":[6.4,0.7],"label":"test i","lat":[8,1.3]},
+ {"t":"ARROW","a":[4.4,1.2],"b":[4.4,2.8]},
+ {"t":"ARROW","a":[3.5,0.7],"b":[1.5,0.7]},
+ {"t":"ARROW","a":[1.5,3.3],"b":[3.5,3.3]},
+ {"t":"ARROW","a":[6.4,3.3],"b":[9.6,3.3],"label":"test i","lat":[8,2.8]}
+],"pad":1.4,"alt":"Example 1 with the 20 V source replaced by a wire. A test current enters at a through the 20 ohm R3 and splits at the middle node: part goes down R2 (20 ohm), part goes left through R1, down the short and right through R4. Both parts rejoin at the bottom node and leave at b."}</script>
+<figcaption>Source shorted for \(R_{TH}\) (<a class="ts" data-t="14:58"></a>), with the "fake" test current the instructor draws in green at <a class="ts" data-t="18:05"></a>. It splits at the top node of \(R_2\) and rejoins at its bottom node.</figcaption>
+</figure>
+<p class="step"><strong>2. Series: \(R_1\) and \(R_4\)</strong> <a class="ts" data-t="15:03"></a>. Working from the point farthest from a–b back toward the terminals: the short puts \(R_1\) and \(R_4\) in series (one path, same current) <a class="ts" data-t="15:31"></a>: \(R_1 + R_4 = 10 + 10 = 20\ \Omega\).</p>
+<p class="step"><strong>3. Parallel: with \(R_2\)</strong> <a class="ts" data-t="15:50"></a>. That 20 Ω and \(R_2 = 20\ \Omega\) share the same two nodes: \(20 \parallel 20 = \frac{20 \cdot 20}{20 + 20} = 10\ \Omega\).</p>
+<p class="step"><strong>4. Series: with \(R_3\)</strong>. \(10 + 20 = 30\ \Omega\) between a and b <a class="ts" data-t="15:50"></a>.</p>
+<figure class="circuit" id="tn2-fig-ex1-reduce">
+<script type="application/json">{"parts":[
+ {"t":"R","a":[0,0],"b":[0,3],"label":"R_1+R_4","value":"20 Ω","side":-1},
+ {"t":"W","pts":[[0,0],[3,0]]},
+ {"t":"R","a":[2,0],"b":[2,3],"label":"R_2","value":"20 Ω"},
+ {"t":"R","a":[3,0],"b":[5,0],"label":"R_3","value":"20 Ω"},
+ {"t":"N","at":[5,0],"label":"a","pos":"e","open":true},
+ {"t":"W","pts":[[0,3],[5,3]]},
+ {"t":"N","at":[5,3],"label":"b","pos":"e","open":true},
+ {"t":"ARROW","a":[6,1.5],"b":[7.2,1.5]},
+ {"t":"R","a":[8,0],"b":[8,3],"label":"20 ∥ 20","value":"10 Ω"},
+ {"t":"W","pts":[[8,0],[9,0]]},
+ {"t":"R","a":[9,0],"b":[11,0],"label":"R_3","value":"20 Ω"},
+ {"t":"W","pts":[[11,0],[12,0]]},
+ {"t":"N","at":[12,0],"label":"a","pos":"e","open":true},
+ {"t":"W","pts":[[8,3],[12,3]]},
+ {"t":"N","at":[12,3],"label":"b","pos":"e","open":true},
+ {"t":"ARROW","a":[13,1.5],"b":[14.2,1.5]},
+ {"t":"R","a":[15,0],"b":[15,3],"label":"R_{TH}","value":"30 Ω"},
+ {"t":"W","pts":[[15,0],[18,0]]},
+ {"t":"W","pts":[[15,3],[18,3]]},
+ {"t":"N","at":[18,0],"label":"a","pos":"e","open":true},
+ {"t":"N","at":[18,3],"label":"b","pos":"e","open":true}
+],"pad":1.4,"alt":"Reduction steps. Step 1: R1+R4 = 20 ohm in parallel with R2 = 20 ohm, then R3 = 20 ohm in series to terminal a. Step 2: 20 parallel 20 = 10 ohm in series with R3 = 20 ohm. Step 3: R_TH = 30 ohm between a and b."}</script>
+<figcaption>The reduction drawn on the paper at <a class="ts" data-t="16:15"></a>, ending in \(R_{TH} = 30\ \Omega\) at <a class="ts" data-t="18:30"></a>.</figcaption>
+</figure>
+<p class="answer">\(R_{TH} = R_3 + \big[R_2 \parallel (R_1 + R_4)\big] = 20 + (20 \parallel 20) = 20 + 10 = 30\ \Omega\) <a class="ts" data-t="18:08"></a></p>
+</div>
+
+<aside class="instructor"><p>Don't reuse the solution you used for \(V_{TH}\); redraw the problem <a class="ts" data-t="16:22"></a>. The 20 Ω resistor \(R_3\) had <em>no</em> effect on \(V_{TH}\), but it <em>does</em> affect \(R_{TH}\) <a class="ts" data-t="16:48"></a>. Treat \(R_{TH}\) as a separate problem. After the source is shorted, \(R_1\) and \(R_4\) end up in series <a class="ts" data-t="17:15"></a>.</p></aside>
+
+<h3>The "fake current" trick for series/parallel <a class="ts" data-t="17:42"></a></h3>
+<p>There is no source between a and b, so any current you imagine there is "fake". It is still a useful way to see the structure:</p>
+<ol>
+<li>Imagine a current entering at terminal a and leaving at b.</li>
+<li>Follow it. Where it <strong>divides</strong> and where it <strong>sums</strong> back together are the two nodes of a parallel combination. Here it splits at the top of the shunt 20 Ω and rejoins at its bottom, so that 20 Ω is in parallel with the path through the two 10 Ω resistors <a class="ts" data-t="18:08"></a>.</li>
+<li>Elements the current passes through one after another without splitting are in series (\(R_1\) and \(R_4\) through the short, then \(R_3\)).</li>
+</ol>
+
+<h3>Result: the Thévenin equivalent <a class="ts" data-t="18:31"></a></h3>
+<figure class="circuit" id="tn2-fig-ex1-thev">
+<script type="application/json">{"parts":[
+ {"t":"BAT","a":[0,3],"b":[0,0],"label":"V_{TH}","value":"10 V","plus":"b"},
+ {"t":"W","pts":[[0,0],[1,0]]},
+ {"t":"R","a":[1,0],"b":[4,0],"label":"R_{TH}","value":"30 Ω"},
+ {"t":"W","pts":[[4,0],[5,0]]},
+ {"t":"N","at":[5,0],"label":"a","pos":"e","open":true},
+ {"t":"W","pts":[[0,3],[5,3]]},
+ {"t":"N","at":[5,3],"label":"b","pos":"e","open":true}
+],"pad":1.4,"alt":"Thevenin equivalent of Example 1: 10 V battery, positive at top, in series with 30 ohm R_TH to terminal a; bottom wire to terminal b."}</script>
+<figcaption>Thévenin equivalent of Example 1 as drawn at <a class="ts" data-t="19:00"></a>: \(V_{TH} = 10\) V (+ at the top) in series with \(R_{TH} = 30\ \Omega\). The paper does not label the terminals; a (top) and b (bottom) are added to match the original circuit.</figcaption>
+</figure>
+<p>Any load connected to a–b of this two-element circuit behaves exactly as it would on the original four-resistor circuit.</p>
+<aside class="extra"><p><strong>Check with a load (computed for this guide).</strong> Connect \(R_L = 30\ \Omega\) across a–b. The Thévenin model gives \(V_{ab} = 10 \cdot \frac{30}{30 + 30} = 5\) V. Solving the original circuit with nodal analysis and the same 30 Ω load also gives 5 V. In general the original circuit gives \(V_{ab} = \frac{10 R_L}{R_L + 30}\) for every \(R_L\), the same as the model.</p></aside>
+</section>
+
+<section class="g-sec" id="tn2-norton-theorem" data-kind="lesson" data-ts="1161-1382">
+<h2>3. Norton's theorem and the Norton equivalent circuit</h2>
+<p>After a short pause for questions <a class="ts" data-t="18:55"></a>, the lecture moves on to Norton equivalent circuits <a class="ts" data-t="19:21"></a>.</p>
+<p>Thévenin takes a voltage approach; Norton takes a current approach <a class="ts" data-t="19:43"></a>. It is the same kind of circuit reduction: take any linear circuit, which may contain several sources, and from the perspective of terminals a and b replace it with <strong>a constant current source in parallel with a resistance</strong> <a class="ts" data-t="20:07"></a>.</p>
+<figure class="circuit" id="tn2-fig-norton-general">
+<script type="application/json">{"parts":[
+ {"t":"BOX","a":[0,0],"b":[4,3],"label":"Circuit"},
+ {"t":"W","pts":[[4,0.5],[5,0.5]]},
+ {"t":"N","at":[5,0.5],"label":"a","pos":"e","open":true},
+ {"t":"W","pts":[[4,2.5],[5,2.5]]},
+ {"t":"N","at":[5,2.5],"label":"b","pos":"e","open":true},
+ {"t":"ARROW","a":[6.3,1.5],"b":[7.7,1.5]},
+ {"t":"I","a":[9,3],"b":[9,0],"label":"I_N"},
+ {"t":"W","pts":[[9,0],[14,0]]},
+ {"t":"W","pts":[[9,3],[14,3]]},
+ {"t":"R","a":[12,0],"b":[12,3],"label":"R_N","value":"(shunt)"},
+ {"t":"N","at":[14,0],"label":"a","pos":"e","open":true},
+ {"t":"N","at":[14,3],"label":"b","pos":"e","open":true},
+ {"t":"T","at":[11.5,4.1],"text":"Norton equivalent circuit","anchor":"middle","cls":"accent"}
+],"pad":1.4,"alt":"Any linear circuit with terminals a and b is equivalent to a current source I_N, arrow pointing up toward a, in parallel with a shunt resistor R_N, connected to terminals a (top) and b (bottom)."}</script>
+<figcaption>Norton's theorem as drawn at <a class="ts" data-t="21:35"></a>–<a class="ts" data-t="23:20"></a>: the circuit seen from a–b becomes \(I_N\) (arrow pointing up, toward a) in parallel with \(R_N\).</figcaption>
+</figure>
+<ul>
+<li><strong>\(I_N\)</strong> is the Norton current and <strong>\(R_N\)</strong> is the Norton resistance <a class="ts" data-t="20:55"></a>.</li>
+<li>The resistor in parallel with the current source is called a <strong>shunt resistor</strong>. For now, think of it as a fancy word for parallel <a class="ts" data-t="21:16"></a>. He introduces the word because "shunt" does come up, so it is worth knowing <a class="ts" data-t="21:38"></a>.</li>
+<li>The Norton circuit behaves in every way like the original circuit from the perspective of a and b. Anything you attach to one behaves exactly the same when attached to the other <a class="ts" data-t="22:13"></a>.</li>
+</ul>
+<aside class="instructor"><p><strong>Why bother?</strong> <a class="ts" data-t="22:38"></a> Nobody at work will hand you a large circuit and ask for its Thévenin equivalent to put in a product. Thévenin and Norton equivalents are circuit-analysis tools that greatly simplify more advanced problems later; an example appears in EE 311 <a class="ts" data-t="23:02"></a>.</p></aside>
+</section>
+
+<section class="g-sec" id="tn2-norton-procedure" data-kind="lesson" data-ts="1382-1550">
+<h2>4. Procedure: finding I<sub>N</sub> and R<sub>N</sub></h2>
+<p>To get the Norton equivalent from the original circuit we need two numbers, \(I_N\) and \(R_N\) <a class="ts" data-t="23:25"></a>.</p>
+<h3>Finding I<sub>N</sub>: short a and b <a class="ts" data-t="23:45"></a></h3>
+<ol>
+<li>Take the original circuit and draw a wire (a short) between a and b <a class="ts" data-t="24:27"></a>.</li>
+<li>Find the current going through that short. That current is \(I_N\) <a class="ts" data-t="24:09"></a>.</li>
+</ol>
+<figure class="circuit" id="tn2-fig-norton-short">
+<script type="application/json">{"parts":[
+ {"t":"BOX","a":[0,0],"b":[4,3],"label":"Circuit"},
+ {"t":"W","pts":[[4,0.5],[6,0.5]]},
+ {"t":"W","pts":[[4,2.5],[6,2.5]]},
+ {"t":"W","pts":[[6,0.5],[6,2.5]]},
+ {"t":"N","at":[6,0.5],"label":"a","pos":"e"},
+ {"t":"N","at":[6,2.5],"label":"b","pos":"e"},
+ {"t":"IARR","a":[6,0.5],"b":[6,2.5],"label":"I_N"}
+],"pad":1.4,"alt":"The circuit's terminals a and b joined by a short-circuit wire; the current I_N flows down through the short from a to b."}</script>
+<figcaption>"To find \(I_N\): short A &amp; B and find I going through the short", with the red \(I_N\) arrow pointing from a down to b through the short (<a class="ts" data-t="25:45"></a>).</figcaption>
+</figure>
+<h3>Finding R<sub>N</sub>: same as Thévenin <a class="ts" data-t="25:11"></a></h3>
+<p>Find \(R_N\) exactly as you find \(R_{TH}\): deactivate the source (short out a voltage source) and reduce the network to one resistance as seen from a–b. Half of the job is already familiar, and finding \(I_N\) just means drawing a wire across a–b and finding its current <a class="ts" data-t="25:11"></a>. So \(R_N = R_{TH}\).</p>
+<div class="formula">\[ I_N = I_{ab}\big|_{\text{a–b shorted}}, \qquad R_N = R_{TH} = R_{ab}\big|_{\text{sources deactivated}} \]</div>
+<dl class="vardefs"><dt>\(I_N\)</dt><dd>Norton current, A: the short-circuit current flowing from a to b through the external short</dd><dt>\(R_N\)</dt><dd>Norton (shunt) resistance, Ω</dd><dt>\(R_{TH}\)</dt><dd>Thévenin resistance, Ω, seen from a–b with the sources deactivated</dd></dl>
+<p>This applies to any linear circuit with independent sources. In this video the only source type deactivated is a voltage source, which is replaced by a short.</p>
+<aside class="note"><p><strong>Arrow direction.</strong> In the Norton circuit the source arrow points <em>up toward a</em>. In the shorted original circuit, \(I_N\) flows from a to b through the external short. These two statements agree: the source pushes current out of terminal a, through whatever is connected, and back into b. If your short-circuit current came out flowing from b to a, the Norton arrow would point toward b instead (or \(I_N\) is negative).</p></aside>
+</section>
+
+<section class="g-sec" id="tn2-norton-ex" data-kind="lesson" data-ts="1550-1990">
+<h2>5. Norton example: 100 V source with 25/100/100/25 Ω</h2>
+<p>The instructor reuses the circuit from his first Thévenin example <a class="ts" data-t="25:50"></a> (see <a class="xref" data-lesson="tn1">Thévenin intro</a>).</p>
+<figure class="circuit" id="tn2-fig-ex2">
+<script type="application/json">{"parts":[
+ {"t":"BAT","a":[0,4],"b":[0,0],"label":"V_s","value":"100 V","plus":"b"},
+ {"t":"W","pts":[[0,0],[1,0]]},
+ {"t":"R","a":[1,0],"b":[4,0],"label":"R_1","value":"25 Ω"},
+ {"t":"W","pts":[[4,0],[11,0]]},
+ {"t":"R","a":[5,0],"b":[5,4],"label":"R_2","value":"100 Ω"},
+ {"t":"R","a":[8,0],"b":[8,4],"label":"R_3","value":"100 Ω"},
+ {"t":"N","at":[11,0],"label":"a","pos":"e","open":true},
+ {"t":"W","pts":[[0,4],[1,4]]},
+ {"t":"R","a":[1,4],"b":[4,4],"label":"R_4","value":"25 Ω","side":-1},
+ {"t":"W","pts":[[4,4],[11,4]]},
+ {"t":"N","at":[11,4],"label":"b","pos":"e","open":true},
+ {"t":"N","at":[5,0]},{"t":"N","at":[8,0]},{"t":"N","at":[5,4]},{"t":"N","at":[8,4]}
+],"pad":1.4,"alt":"100 V battery, positive at top. Top rail: 25 ohm R1 to a node; two 100 ohm resistors R2 and R3 each go from the top rail to the bottom rail; the top rail continues to terminal a. Bottom rail: 25 ohm R4 from the battery's negative side, continuing to terminal b."}</script>
+<figcaption>Example 2 as drawn at <a class="ts" data-t="26:45"></a>: 100 V (+ at top), 25 Ω top, two 100 Ω resistors directly across a–b, 25 Ω bottom. The names \(R_1\)–\(R_4\) are added for reference.</figcaption>
+</figure>
+
+<div class="example" id="tn2-ex2">
+<h3>Example 2: Norton equivalent of the 100 V circuit <a class="ts" data-t="26:40"></a></h3>
+<p><strong>Given:</strong> \(V_s = 100\) V, \(R_1 = R_4 = 25\ \Omega\), \(R_2 = R_3 = 100\ \Omega\). <strong>Goal:</strong> \(I_N\), \(R_N\), and the Norton equivalent at a–b.</p>
+<p><strong>Part 1: \(I_N\)</strong></p>
+<p class="step"><strong>1. Short a and b</strong> <a class="ts" data-t="26:40"></a>, then find the current through the short. The instructor draws \(I_N\) pointing down from a to b.</p>
+<p class="step"><strong>2. Ask how the circuit changed</strong> <a class="ts" data-t="27:06"></a>. The short lies directly in parallel with both 100 Ω resistors. With 0 V across them they carry no current, so all 200 Ω of them drop out of the problem <a class="ts" data-t="27:34"></a>. The redrawn circuit is just 100 V, 25 Ω, 25 Ω and the short <a class="ts" data-t="28:13"></a>.</p>
+<figure class="circuit" id="tn2-fig-ex2-short">
+<script type="application/json">{"parts":[
+ {"t":"BAT","a":[0,4],"b":[0,0],"label":"100 V","plus":"b"},
+ {"t":"W","pts":[[0,0],[1,0]]},
+ {"t":"R","a":[1,0],"b":[4,0],"label":"25 Ω"},
+ {"t":"W","pts":[[4,0],[6,0]]},
+ {"t":"N","at":[6,0],"label":"a","pos":"ne"},
+ {"t":"W","pts":[[6,0],[6,4]]},
+ {"t":"IARR","a":[6,0],"b":[6,4],"label":"I_N = 2 A"},
+ {"t":"N","at":[6,4],"label":"b","pos":"se"},
+ {"t":"W","pts":[[0,4],[1,4]]},
+ {"t":"R","a":[1,4],"b":[4,4],"label":"25 Ω","side":-1},
+ {"t":"W","pts":[[4,4],[6,4]]},
+ {"t":"ARROW","a":[1.5,0.7],"b":[3.5,0.7],"label":"2 A","lat":[2.5,1.3]},
+ {"t":"ARROW","a":[3.5,3.3],"b":[1.5,3.3],"label":"2 A","lat":[2.5,2.8]},
+ {"t":"BAT","a":[11,4],"b":[11,0],"label":"100 V","plus":"b"},
+ {"t":"W","pts":[[11,0],[14,0]]},
+ {"t":"R","a":[14,0],"b":[14,4],"label":"R_T","value":"50 Ω"},
+ {"t":"W","pts":[[14,4],[11,4]]},
+ {"t":"IARR","a":[11.5,0],"b":[13.5,0],"label":"2 A"}
+],"pad":1.4,"alt":"Left: with a and b shorted, the two 100 ohm resistors disappear; 100 V drives 2 A through the top 25 ohm, down through the short from a to b (I_N = 2 A), and back through the bottom 25 ohm. Right: the same loop redrawn as 100 V across R_T = 50 ohm with 2 A."}</script>
+<figcaption>With a–b shorted (redrawn at <a class="ts" data-t="28:13"></a>) and the 100 V / 50 Ω loop the instructor draws below it (<a class="ts" data-t="29:42"></a>).</figcaption>
+</figure>
+<p class="step"><strong>3. Total resistance</strong> <a class="ts" data-t="28:39"></a>. The short puts the two 25 Ω resistors in series: \(R_T = 25 + 25 = 50\ \Omega\).</p>
+<p class="step"><strong>4. Ohm's law</strong> <a class="ts" data-t="29:18"></a>: \(I_T = \dfrac{100\ \text{V}}{50\ \Omega} = 2\ \text{A}\).</p>
+<p class="step"><strong>5. Work backwards</strong>. The 2 A leaving the source goes through the top 25 Ω, through the short, and back through the bottom 25 Ω. There is only one path, so the short carries all of it <a class="ts" data-t="29:44"></a>: \(I_N = 2\) A, flowing from a to b.</p>
+<p class="step"><strong>6. Start the Norton circuit</strong> <a class="ts" data-t="29:44"></a>. Draw \(I_N = 2\) A (arrow up) in parallel with a shunt resistance \(R_N\), still unknown <a class="ts" data-t="30:09"></a>.</p>
+<p><strong>Part 2: \(R_N\)</strong></p>
+<p class="step"><strong>7. Same as \(R_{TH}\)</strong> <a class="ts" data-t="30:30"></a>. Redraw the original circuit (100 V, 25, 100, 100, 25 Ω) and short out the voltage source <a class="ts" data-t="31:14"></a>.</p>
+<figure class="circuit" id="tn2-fig-ex2-rn">
+<script type="application/json">{"parts":[
+ {"t":"W","pts":[[0,0],[0,4]]},
+ {"t":"T","at":[0.3,2.1],"text":"short (was 100 V)","anchor":"start","cls":"muted"},
+ {"t":"W","pts":[[0,0],[1,0]]},
+ {"t":"R","a":[1,0],"b":[4,0],"label":"25 Ω"},
+ {"t":"W","pts":[[4,0],[11,0]]},
+ {"t":"R","a":[5,0],"b":[5,4],"label":"100 Ω"},
+ {"t":"R","a":[8,0],"b":[8,4],"label":"100 Ω"},
+ {"t":"N","at":[11,0],"label":"a","pos":"e","open":true},
+ {"t":"W","pts":[[0,4],[1,4]]},
+ {"t":"R","a":[1,4],"b":[4,4],"label":"25 Ω","side":-1},
+ {"t":"W","pts":[[4,4],[11,4]]},
+ {"t":"N","at":[11,4],"label":"b","pos":"e","open":true},
+ {"t":"N","at":[5,0]},{"t":"N","at":[8,0]},{"t":"N","at":[5,4]},{"t":"N","at":[8,4]},
+ {"t":"ARROW","a":[12.4,2],"b":[13.6,2]},
+ {"t":"R","a":[15,0.5],"b":[15,3.5],"label":"R_N","value":"25 Ω"},
+ {"t":"W","pts":[[15,0.5],[17,0.5]]},
+ {"t":"W","pts":[[15,3.5],[17,3.5]]},
+ {"t":"N","at":[17,0.5],"label":"a","pos":"e","open":true},
+ {"t":"N","at":[17,3.5],"label":"b","pos":"e","open":true}
+],"pad":1.4,"alt":"Example 2 with the 100 V source replaced by a wire: the two 25 ohm resistors are in series (50 ohm), and that path is in parallel with both 100 ohm resistors across a and b. The result is R_N = 25 ohm."}</script>
+<figcaption>Source shorted for \(R_N\) (<a class="ts" data-t="32:25"></a>), reducing to 25 Ω at <a class="ts" data-t="32:31"></a>.</figcaption>
+</figure>
+<p class="step"><strong>8. Reduce</strong> <a class="ts" data-t="32:01"></a>. The two 25 Ω resistors are in series: \(25 + 25 = 50\ \Omega\). That 50 Ω is in parallel with both 100 Ω resistors. The two 100 Ω in parallel give \(100 \parallel 100 = 50\ \Omega\), and then \(50 \parallel 50 = 25\ \Omega\):
+\[ R_N = (R_1 + R_4) \parallel R_2 \parallel R_3 = 50 \parallel 100 \parallel 100 = 50 \parallel 50 = 25\ \Omega \]
+This matches \(R_{TH}\) for the same circuit, found in the previous lecture <a class="ts" data-t="32:30"></a>.</p>
+<p class="answer">Norton equivalent: \(I_N = 2\ \text{A}\) (arrow toward a) in parallel with \(R_N = 25\ \Omega\) <a class="ts" data-t="32:52"></a></p>
+</div>
+
+<figure class="circuit" id="tn2-fig-ex2-norton">
+<script type="application/json">{"parts":[
+ {"t":"I","a":[0,3],"b":[0,0],"label":"I_N","value":"2 A"},
+ {"t":"W","pts":[[0,0],[5,0]]},
+ {"t":"W","pts":[[0,3],[5,3]]},
+ {"t":"R","a":[3,0],"b":[3,3],"label":"R_N","value":"25 Ω"},
+ {"t":"N","at":[5,0],"label":"a","pos":"e","open":true},
+ {"t":"N","at":[5,3],"label":"b","pos":"e","open":true}
+],"pad":1.4,"alt":"Norton equivalent of Example 2: a 2 A current source, arrow pointing up toward terminal a, in parallel with a 25 ohm resistor R_N, connected to terminals a (top) and b (bottom)."}</script>
+<figcaption>Final Norton equivalent of Example 2 as drawn at <a class="ts" data-t="32:52"></a>: \(I_N = 2\) A ↑ in parallel with \(R_N = 25\ \Omega\).</figcaption>
+</figure>
+<aside class="instructor"><p>Whenever you draw a short somewhere, be cautious and ask yourself how the circuit changes <a class="ts" data-t="27:06"></a>. Shorting a–b here removes two resistors completely. Missing that is the most common way to get \(I_N\) wrong.</p></aside>
+</section>
+
+<section class="g-sec" id="tn2-thev-norton" data-kind="lesson" data-ts="1990-2063">
+<h2>6. Thévenin vs. Norton: two sides of the same coin</h2>
+<p>In the wrap-up <a class="ts" data-t="33:10"></a> the instructor recaps the day: another Thévenin example with a quirk (a resistor with zero current that had to be left out), and the Norton equivalent. The two are "kind of two sides of the same coin" <a class="ts" data-t="33:10"></a>:</p>
+<table>
+<tr><th></th><th>Thévenin</th><th>Norton</th></tr>
+<tr><td>Approach</td><td>Voltage approach</td><td>Current approach</td></tr>
+<tr><td>Source</td><td>Voltage source \(V_{TH}\)</td><td>Current source \(I_N\)</td></tr>
+<tr><td>Resistor</td><td>\(R_{TH}\) in <strong>series</strong></td><td>\(R_N\) in <strong>parallel</strong> (shunt)</td></tr>
+<tr><td>How to find the source value</td><td>Open-circuit voltage \(V_{ab}\)</td><td>Short-circuit current through a wire across a–b</td></tr>
+<tr><td>How to find the resistor</td><td colspan="2">The same in both: deactivate the sources (short a voltage source) and reduce, so \(R_N = R_{TH}\)</td></tr>
+</table>
+<p>If you take an unknown circuit and derive both its Thévenin and its Norton equivalent, all three circuits behave exactly the same at a–b <a class="ts" data-t="33:34"></a>. More Norton examples follow after the first exam <a class="ts" data-t="33:59"></a> (see <a class="xref" data-lesson="tn3">Norton continued</a>).</p>
+
+<aside class="extra">
+<p><strong>The link between the two equivalents (not stated in this video).</strong> Short a–b on the Thévenin circuit and the current in the short is \(V_{TH}/R_{TH}\); that must equal \(I_N\). Leave a–b open on the Norton circuit and all of \(I_N\) flows through \(R_N\), giving \(V_{ab} = I_N R_N\); that must equal \(V_{TH}\). So:</p>
+<div class="formula">\[ V_{TH} = I_N R_N, \qquad I_N = \frac{V_{TH}}{R_{TH}}, \qquad R_N = R_{TH} = \frac{V_{TH}}{I_N} \]</div>
+<dl class="vardefs"><dt>\(V_{TH}\)</dt><dd>open-circuit voltage at a–b, V</dd><dt>\(I_N\)</dt><dd>short-circuit current from a to b, A</dd><dt>\(R_N = R_{TH}\)</dt><dd>equivalent resistance, Ω</dd></dl>
+<p>These hold whenever \(R_{TH}\) is finite and non-zero. Converting between the two forms is the same move as a <a class="xref" data-lesson="st1">source transformation</a>.</p>
+<p><strong>Keep the polarity consistent.</strong> The Thévenin "+" terminal is the terminal the Norton arrow points toward. Here both are terminal a: \(V_{TH}\) has + toward a, and \(I_N\) points up toward a.</p>
+<p><strong>Example 2 check.</strong> \(V_{TH} = I_N R_N = 2 \times 25 = 50\) V. Directly, with a–b open: \(100 \parallel 100 = 50\ \Omega\), and the voltage divider gives \(V_{ab} = 100 \cdot \frac{50}{25 + 50 + 25} = 50\) V. ✓ With a 25 Ω load, the original circuit, the Thévenin model (\(50/(25+25) = 1\) A) and the Norton model (\(2 \cdot \frac{25}{25+25} = 1\) A) all give 1 A.</p>
+<p><strong>Example 1 in Norton form.</strong> \(I_N = V_{TH}/R_{TH} = 10/30 = \tfrac{1}{3}\ \text{A} \approx 0.333\) A, in parallel with 30 Ω. You can confirm this by shorting a–b in the original Example 1 circuit. \(R_3\) (20 Ω) is now in parallel with \(R_2\) (20 Ω), so \(R_T = 10 + 10 + 10 = 30\ \Omega\) and \(I_T = 20/30 = \tfrac{2}{3}\) A. That current splits equally between the two 20 Ω resistors, so \(\tfrac{1}{3}\) A flows through \(R_3\) and the short. ✓</p>
+</aside>
+<figure class="circuit" id="tn2-fig-ex2-compare">
+<script type="application/json">{"parts":[
+ {"t":"BAT","a":[0,3],"b":[0,0],"label":"V_{TH}","value":"50 V","plus":"b"},
+ {"t":"W","pts":[[0,0],[1,0]]},
+ {"t":"R","a":[1,0],"b":[4,0],"label":"R_{TH}","value":"25 Ω"},
+ {"t":"W","pts":[[4,0],[5,0]]},
+ {"t":"N","at":[5,0],"label":"a","pos":"e","open":true},
+ {"t":"W","pts":[[0,3],[5,3]]},
+ {"t":"N","at":[5,3],"label":"b","pos":"e","open":true},
+ {"t":"ARROW","a":[6.6,1.2],"b":[8.4,1.2]},
+ {"t":"ARROW","a":[8.4,1.9],"b":[6.6,1.9]},
+ {"t":"I","a":[10,3],"b":[10,0],"label":"I_N","value":"2 A"},
+ {"t":"W","pts":[[10,0],[15,0]]},
+ {"t":"W","pts":[[10,3],[15,3]]},
+ {"t":"R","a":[13,0],"b":[13,3],"label":"R_N","value":"25 Ω"},
+ {"t":"N","at":[15,0],"label":"a","pos":"e","open":true},
+ {"t":"N","at":[15,3],"label":"b","pos":"e","open":true}
+],"pad":1.4,"alt":"Example 2 equivalents side by side: Thevenin 50 V (positive toward a) in series with 25 ohm, and Norton 2 A (arrow toward a) in parallel with 25 ohm. 50 V = 2 A times 25 ohm."}</script>
+<figcaption>Example 2's Thévenin and Norton equivalents side by side (added for clarity; the 50 V value is computed here, not on the paper). \(+\) of \(V_{TH}\) and the \(I_N\) arrow both point toward a.</figcaption>
+</figure>
+</section>
+
+<section class="g-sec" id="tn2-assumptions" data-kind="assumptions">
+<h2>Assumptions &amp; limitations</h2>
+<ul>
+<li><strong>Linear circuits only.</strong> Both theorems apply to linear circuits (resistors and sources) <a class="ts" data-t="20:07"></a>. They do not apply to circuits with nonlinear parts such as diodes.</li>
+<li><strong>Equivalent only at a–b.</strong> The equivalent behaves identically to the original only from the perspective of the two terminals <a class="ts" data-t="22:13"></a>. Currents and voltages inside the original circuit are not represented.</li>
+<li><strong>V_TH is an open-circuit quantity.</strong> Nothing may be connected across a–b when you compute it. That is why a resistor leading only to an open terminal carries no current and drops no voltage.</li>
+<li><strong>I_N is a short-circuit quantity.</strong> Compute it with an ideal wire across a–b, and remove anything that the wire shorts out.</li>
+<li><strong>Deactivating sources.</strong> This video only deactivates independent voltage sources, by replacing them with a short.</li>
+<li><strong>Ideal elements.</strong> Wires have zero resistance, the voltage source is ideal, and the equivalent current source is ideal (constant current).</li>
+</ul>
+<aside class="extra"><p>An independent <em>current</em> source is deactivated by replacing it with an open circuit. Circuits that contain dependent sources need a different method for \(R_{TH}\); this video does not cover them. If \(R_{TH} = 0\), a Norton equivalent does not exist (it would need an infinite current). If \(R_N\) is infinite, a Thévenin equivalent does not exist.</p></aside>
+</section>
+
+<section class="g-sec" id="tn2-mistakes" data-kind="mistakes">
+<h2>Common mistakes</h2>
+<aside class="mistake"><p><strong>Combining resistors that carry no current.</strong> In Example 1 it is tempting to put the two 20 Ω resistors in parallel and get \(R_T = 30\ \Omega\) <a class="ts" data-t="4:06"></a>. With a–b open, the 20 Ω leading to terminal a carries 0 A, so the correct total is 40 Ω. <em>How to spot it:</em> trace the current. If a branch ends at an open terminal, no current flows in it. <em>Fix:</em> leave it out of \(R_T\), and remember it drops 0 V.</p></aside>
+<aside class="mistake"><p><strong>Reusing the V_TH solution for R_TH.</strong> \(R_{TH}\) is a separate problem <a class="ts" data-t="16:22"></a>. A resistor that had no effect on \(V_{TH}\) (the 20 Ω to a) adds directly to \(R_{TH}\). <em>Fix:</em> redraw the original circuit, short the voltage source, then reduce.</p></aside>
+<aside class="mistake"><p><strong>Forgetting to short the voltage source</strong> (or opening it instead) when finding \(R_{TH}\) or \(R_N\) <a class="ts" data-t="14:21"></a>. Leaving the source path open in Example 1 would leave \(R_1\) and \(R_4\) dangling and give \(R_{TH} = 20 + 20 = 40\ \Omega\) instead of 30 Ω.</p></aside>
+<aside class="mistake"><p><strong>Not noticing what a short removes.</strong> When a–b is shorted in Example 2, the two 100 Ω resistors are shorted out <a class="ts" data-t="27:34"></a>. Including them in parallel with "something" gives the wrong total resistance. <em>Fix:</em> after drawing any short, ask what is now directly across it.</p></aside>
+<aside class="mistake"><p><strong>Mixing up series and parallel between the two equivalents.</strong> Thévenin is a source with a <em>series</em> resistor; Norton is a source with a <em>parallel</em> (shunt) resistor <a class="ts" data-t="33:34"></a>. A current source with a series resistor is not a Norton equivalent.</p></aside>
+<aside class="mistake"><p><strong>Getting the I_N arrow backwards.</strong> The Norton source arrow must point toward the terminal where the short-circuit current leaves the circuit (here a, since \(I_N\) flows a→b through the short <a class="ts" data-t="25:45"></a>). It should agree with the "+" of \(V_{TH}\).</p></aside>
+<aside class="mistake"><p><strong>Subtracting node voltages from different references.</strong> \(V_{TH} = V_a - V_b\) only works if both node voltages are measured from the same reference node, here the source's negative terminal (\(V_a = 15\) V, \(V_b = 5\) V) <a class="ts" data-t="11:41"></a>. Reading the 10 V across \(R_2\) also works here, because a and b sit at the two ends of \(R_2\) (through zero-drop paths). That is a special case; don't assume it in general.</p></aside>
+</section>
+
+<section class="g-sec" id="tn2-recap" data-kind="recap">
+<h2>Recap &amp; formula sheet</h2>
+<ul>
+<li><strong>Thévenin:</strong> \(V_{TH}\) = open-circuit \(V_{ab}\). \(R_{TH}\) = resistance at a–b with the sources deactivated (voltage source → short). Equivalent: \(V_{TH}\) in series with \(R_{TH}\).</li>
+<li>A resistor that leads only to an open terminal carries 0 A and drops 0 V. Leave it out of \(R_T\) when finding \(V_{TH}\), but include it when finding \(R_{TH}\).</li>
+<li>Use a "fake" test current from a to b to see where current splits (parallel) and where it does not (series).</li>
+<li><strong>Norton:</strong> \(I_N\) = current through a short across a–b. \(R_N = R_{TH}\). Equivalent: \(I_N\) in parallel (shunt) with \(R_N\).</li>
+<li>Example 1: \(V_{TH} = 10\) V, \(R_{TH} = 30\ \Omega\). Example 2: \(I_N = 2\) A, \(R_N = 25\ \Omega\).</li>
+</ul>
+<div class="formula-sheet">
+<p><strong>Total resistance and current (series loop):</strong> \(R_T = \sum R_{\text{carrying current}}\), \(\; I_T = \dfrac{V_s}{R_T}\) (Ω, A)</p>
+<p><strong>Ohm's law:</strong> \(V = IR\). If \(I = 0\) then \(V = 0\).</p>
+<p><strong>Parallel:</strong> \(R_1 \parallel R_2 = \dfrac{R_1 R_2}{R_1 + R_2}\); equal resistors: \(R \parallel R = R/2\)</p>
+<p><strong>Thévenin voltage:</strong> \(V_{TH} = V_{ab} = V_a - V_b\) (a–b open), V</p>
+<p><strong>Thévenin resistance:</strong> \(R_{TH} = R_{ab}\) with the sources deactivated (short each voltage source), Ω</p>
+<p><strong>Norton current:</strong> \(I_N\) = current from a to b through a short across a–b, A</p>
+<p><strong>Norton resistance:</strong> \(R_N = R_{TH}\), Ω</p>
+<p><strong>Conversion (additional teaching):</strong> \(V_{TH} = I_N R_N\), \(\; I_N = V_{TH}/R_{TH}\)</p>
+<p><strong>Example 1:</strong> \(R_T = 10+20+10 = 40\ \Omega\), \(I_T = 0.5\) A, \(V_a = 15\) V, \(V_b = 5\) V, \(V_{TH} = 10\) V; \(R_{TH} = 20 + (20 \parallel (10+10)) = 30\ \Omega\)</p>
+<p><strong>Example 2:</strong> a–b shorted: \(R_T = 25+25 = 50\ \Omega\), \(I_N = 100/50 = 2\) A; \(R_N = 50 \parallel 100 \parallel 100 = 25\ \Omega\)</p>
+</div>
+</section>

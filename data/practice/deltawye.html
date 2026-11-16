@@ -1,0 +1,304 @@
+<article class="q" id="deltawye-q1" data-level="1" data-kind="conceptual" data-title="Bridge labels: why series–parallel fails, and which Δ resistors build R₂">
+  <div class="q-prompt">
+    <p>The five-resistor network below sits between terminals T and C. The lower three resistors form a Δ (dashed box) between nodes A, B and C and use the lecture's labels: \(R_A\) is the bridge from A to B, \(R_B\) runs from B to C, and \(R_C\) runs from A to C. The upper resistors \(R_4\) (T to A) and \(R_5\) (T to B) are not part of that Δ. The values are arbitrary, with no special relationship between them.</p>
+    <p><strong>(a)</strong> Why can't the resistance between T and C be found with series and parallel rules alone?</p>
+    <p><strong>(b)</strong> You will replace the Δ with a Y that connects to the same three nodes A, B, C through a new centre node N. With the lecture's labels, \(R_1\) goes from N to C, \(R_2\) from N to A, and \(R_3\) from N to B. Which formula gives \(R_2\)?</p>
+    <p>Choose one option in each part.</p>
+  </div>
+  <figure class="circuit" id="deltawye-q1-fig">
+    <script type="application/json">{"parts":[
+ {"t":"W","pts":[[5,-1.2],[5,0]]},
+ {"t":"W","pts":[[3,0],[7,0]]},
+ {"t":"R","a":[3,0],"b":[3,4],"label":"R_4"},
+ {"t":"R","a":[7,0],"b":[7,4],"label":"R_5"},
+ {"t":"R","a":[3,4],"b":[7,4],"label":"R_A"},
+ {"t":"R","a":[3,4],"b":[3,8],"label":"R_C"},
+ {"t":"R","a":[7,4],"b":[7,8],"label":"R_B"},
+ {"t":"W","pts":[[3,8],[7,8]]},
+ {"t":"W","pts":[[5,8],[5,9.2]]},
+ {"t":"BOX","a":[2.2,2.9],"b":[8.6,8.6],"label":"Δ"},
+ {"t":"N","at":[5,-1.2],"label":"T","pos":"e","open":true},
+ {"t":"N","at":[5,0]},
+ {"t":"N","at":[3,4],"label":"A","pos":"w"},
+ {"t":"N","at":[7,4],"label":"B","pos":"e"},
+ {"t":"N","at":[5,8]},
+ {"t":"N","at":[5,9.2],"label":"C","pos":"e","open":true}
+],"alt":"Bridge between terminal T (top) and terminal C (bottom wire). R_4 from T to node A, R_5 from T to node B, R_A between A and B, R_C from A down to the bottom wire C, R_B from B down to C. A dashed box marks the lower delta R_A, R_B, R_C."}</script>
+    <figcaption>The bridge. The dashed box is the lower Δ, labelled as in the lecture (\(R_A\): A–B, \(R_B\): B–C, \(R_C\): A–C). The bottom wire is node C.</figcaption>
+  </figure>
+  <div class="q-answers">
+    <div class="ans" data-type="mc" data-name="why" data-label="(a) Why does series–parallel reduction fail?" data-correct="c">
+      <div class="opt" data-v="a">\(R_4\) and \(R_C\) are in series, because the current through \(R_4\) continues into \(R_C\).<span class="opt-fb">Not series. Two resistors are in series only if the node they share connects nothing else. Node A also connects \(R_A\), so part of the current in \(R_4\) can leave through the bridge, and the currents in \(R_4\) and \(R_C\) are generally different.</span></div>
+      <div class="opt" data-v="b">\(R_4\) and \(R_5\) are in parallel, because both connect to T.<span class="opt-fb">Parallel needs <em>both</em> ends shared. \(R_4\) and \(R_5\) share T, but their other ends are A and B. Those are different nodes, joined only through \(R_A\), so the two resistors don't have the same voltage across them.</span></div>
+      <div class="opt" data-v="c">No two resistors connect the same pair of nodes, and nodes A and B each join three resistors. So there is no series pair or parallel pair to start with.<span class="opt-fb">Correct. Every reduction step needs a series pair (a node with exactly two resistors and nothing else) or a parallel pair (two resistors on the same two nodes). The bridge has neither, so reduction stalls at the first step. The instructor makes the same point with currents: the direction of the current in the bridge depends on the voltages at its two ends, and those voltages depend on that same current.</span></div>
+      <div class="opt" data-v="d">\(R_A\) carries no current, so you can delete it and reduce the rest.<span class="opt-fb">That is only true for a <em>balanced</em> bridge, where \(V_A = V_B\) (this needs \(R_4/R_C = R_5/R_B\)). Nothing here says that. In general \(V_A \ne V_B\), so \(R_A\) carries current and cannot be removed. (The balanced-bridge condition is extra teaching, not from the video.)</span></div>
+    </div>
+    <div class="ans" data-type="mc" data-name="r2" data-label="(b) Which formula gives \(R_2\), the Y arm from N to node A?" data-correct="b">
+      <div class="opt" data-v="a">\(R_2=\dfrac{R_AR_B}{R_A+R_B+R_C}\)<span class="opt-fb">\(R_A\) and \(R_B\) meet at node B, so this product belongs to \(R_3\), the arm at B. It also contains \(R_B\), which is the Δ resistor <em>opposite</em> \(R_2\) (it doesn't touch node A).</span></div>
+      <div class="opt" data-v="b">\(R_2=\dfrac{R_CR_A}{R_A+R_B+R_C}\)<span class="opt-fb">Correct. \(R_2\) lands on node A, and the two Δ resistors that touch A are \(R_C\) and \(R_A\). The one left out, \(R_B\), is opposite \(R_2\). This is the instructor's rule: think of \(R_2\) as "like" \(R_B\), then multiply the other two.</span></div>
+      <div class="opt" data-v="c">\(R_2=\dfrac{R_BR_C}{R_A+R_B+R_C}\)<span class="opt-fb">This is the formula for \(R_1\), the arm at node C, where \(R_B\) and \(R_C\) meet. To choose the product, look at which node the Y arm attaches to, not at its subscript.</span></div>
+      <div class="opt" data-v="d">\(R_2=\dfrac{R_AR_B+R_BR_C+R_CR_A}{R_B}\)<span class="opt-fb">This is the Y→Δ formula. Given a Y, it would produce the Δ resistor \(R_B\). Here you are going Δ→Y, so the denominator is the sum of the three Δ resistors and the numerator is a single product. Sanity check: this expression equals \(R_A + R_C + R_CR_A/R_B\), more than the two Δ resistors at node A combined, but a Y arm must be <em>smaller</em> than each of them.</span></div>
+    </div>
+  </div>
+  <div class="q-hint">(a) Test every pair. A series pair shares a node that connects nothing else. A parallel pair connects the same two nodes at both ends.</div>
+  <div class="q-hint">(b) Find node A in the figure and list the Δ resistors that touch it. The Δ resistor that does <em>not</em> touch A is the one "opposite" \(R_2\).</div>
+  <div class="q-hint">(b) Δ→Y: the denominator is always \(R_A+R_B+R_C\). The numerator is the product of the two Δ resistors that meet at the node the Y arm goes to.</div>
+  <div class="q-solution">
+    <p class="step">(a) <strong>Look for a parallel pair.</strong> \(R_4\) (T–A) and \(R_5\) (T–B) share only T. \(R_C\) (A–C) and \(R_B\) (B–C) share only C. \(R_A\) (A–B) shares one node with each of the other four. No two resistors connect the same pair of nodes.</p>
+    <p class="step"><strong>Look for a series pair.</strong> Node A joins \(R_4\), \(R_A\) and \(R_C\). Node B joins \(R_5\), \(R_A\) and \(R_B\). T and C are the terminals, where the source or meter connects. No node has exactly two resistors and nothing else.</p>
+    <p class="step">So there is no first step to take. This matches the instructor's argument: you can't tell which way current flows in the bridge until you know \(V_A\) and \(V_B\), and they depend on that same current. A Δ–Y conversion changes the node structure so that series and parallel groups appear.</p>
+    <p class="step">(b) <strong>Labelling.</strong> \(R_2\) connects N to node A. The Δ resistors touching A are \(R_C\) (A–C) and \(R_A\) (A–B). \(R_B\) (B–C) does not touch A, so it is the resistor opposite \(R_2\).</p>
+    <p class="step"><strong>Formula.</strong> The numerator is the product of the two adjacent Δ resistors, \(R_CR_A\). The denominator is the sum of all three, the same for every Y arm:
+    \[ R_2=\frac{R_CR_A}{R_A+R_B+R_C} \]</p>
+    <p class="answer">(a) Option c: the bridge has no series pair and no parallel pair. (b) Option b: \(R_2 = \dfrac{R_CR_A}{R_A+R_B+R_C}\).</p>
+  </div>
+  <div class="q-check">
+    <p>Try (b) with numbers. Take \(R_A = 2\,\Omega\), \(R_B = 3\,\Omega\), \(R_C = 5\,\Omega\), so the sum is \(10\,\Omega\). Then \(R_1 = 15/10 = 1.5\,\Omega\), \(R_2 = 10/10 = 1.0\,\Omega\) and \(R_3 = 6/10 = 0.6\,\Omega\).</p>
+    <p>Measure A–B with C open. The Y gives \(R_2+R_3 = 1.6\,\Omega\). The Δ gives \(R_A\parallel(R_B+R_C) = 2\parallel 8 = 1.6\,\Omega\) ✓. If you had used option a for \(R_2\) (0.6 Ω), the Y would read 1.2 Ω, and the two networks would not be equivalent.</p>
+    <p>For (a), a quick count also works. A network reduces by series–parallel only if some step is available. Here every internal node has three resistors, and no pair shares both of its nodes.</p>
+  </div>
+  <div class="q-links">Links back: <a class="xref" data-lesson="dw1" data-sec="dw1-bridge">Why series–parallel rules fail</a> · <a class="xref" data-lesson="dw1" data-sec="dw1-overlay">labelling convention</a> · <a class="xref" data-lesson="dw1" data-sec="dw1-d2y">Δ → Y formulas</a> · <a class="ts" data-lesson="dw1" data-t="1:38"></a> (which way does current flow in the bridge?) · <a class="ts" data-lesson="dw1" data-t="27:37"></a> (\(R_1\) opposite \(R_A\), \(R_2\) opposite \(R_B\)) · <a class="ts" data-lesson="dw1" data-t="30:08"></a> ("the other two resistors")</div>
+</article>
+
+<article class="q" id="deltawye-q2" data-level="2" data-kind="calculation" data-title="Δ (drawn as a π) to an equivalent Y">
+  <div class="q-prompt">
+    <p>A Δ network is drawn as a π (the same circuit with its legs pulled apart). Its resistors use the lecture's labels:</p>
+    <ul>
+      <li>\(R_A = 1.5\,\text{k}\Omega\) across the top, between nodes A and B;</li>
+      <li>\(R_C = 3.3\,\text{k}\Omega\) from A down to the bottom wire (node C);</li>
+      <li>\(R_B = 2.2\,\text{k}\Omega\) from B down to node C.</li>
+    </ul>
+    <p>Find the equivalent Y, with centre node N, that connects to the same three nodes: \(R_1\) from N to C, \(R_2\) from N to A and \(R_3\) from N to B. Give each value in kΩ or Ω, to at least three significant figures.</p>
+  </div>
+  <figure class="circuit" id="deltawye-q2-fig">
+    <script type="application/json">{"parts":[
+ {"t":"R","a":[0,0],"b":[4,0],"label":"R_A","value":"1.5 kΩ"},
+ {"t":"R","a":[0,0],"b":[0,3.4],"label":"R_C","value":"3.3 kΩ","side":-1},
+ {"t":"R","a":[4,0],"b":[4,3.4],"label":"R_B","value":"2.2 kΩ"},
+ {"t":"W","pts":[[0,3.4],[4,3.4]]},
+ {"t":"N","at":[0,0],"label":"A","pos":"nw"},
+ {"t":"N","at":[4,0],"label":"B","pos":"ne"},
+ {"t":"N","at":[2,3.4],"label":"C","pos":"s"},
+ {"t":"ARROW","a":[6,1.7],"b":[7.6,1.7],"label":"Δ → Y"},
+ {"t":"R","a":[9,0],"b":[11,1.8],"label":"R_2 = ?","lpos":[-1.25,0.55]},
+ {"t":"R","a":[11,1.8],"b":[13,0],"label":"R_3 = ?","lpos":[1.25,0.55]},
+ {"t":"R","a":[11,1.8],"b":[11,4.4],"label":"R_1 = ?"},
+ {"t":"N","at":[9,0],"label":"A","pos":"nw"},
+ {"t":"N","at":[13,0],"label":"B","pos":"ne"},
+ {"t":"N","at":[11,4.4],"label":"C","pos":"s"},
+ {"t":"N","at":[11,1.8],"label":"N","pos":"n"}
+],"pad":1.2,"alt":"Left: pi network with R_A = 1.5 kilohm across the top from node A to node B, R_C = 3.3 kilohm from A down to the bottom wire C, R_B = 2.2 kilohm from B down to C. Arrow to the right: the unknown wye with centre N, R_2 from N to A, R_3 from N to B, R_1 from N down to C."}</script>
+    <figcaption>The given Δ, drawn as a π (left), and the Y to find (right). The bottom wire of the π is node C.</figcaption>
+  </figure>
+  <div class="q-answers">
+    <div class="ans" data-type="num" data-name="r1" data-label="\(R_1\) (N to C)" data-value="1037.14" data-unit="Ω" data-tol="0.02"></div>
+    <div class="ans" data-type="num" data-name="r2" data-label="\(R_2\) (N to A)" data-value="707.143" data-unit="Ω" data-tol="0.02"></div>
+    <div class="ans" data-type="num" data-name="r3" data-label="\(R_3\) (N to B)" data-value="471.429" data-unit="Ω" data-tol="0.02"></div>
+  </div>
+  <div class="fb" data-for="r1" data-match="471.429" data-tol="0.02">That is \(R_AR_B/(R_A+R_B+R_C)\). \(R_A\) and \(R_B\) meet at node B, so this is \(R_3\). \(R_1\) attaches to node C. Use the two Δ resistors that touch C, \(R_B\) and \(R_C\), and leave out \(R_A\), the resistor opposite \(R_1\).</div>
+  <div class="fb" data-for="r1" data-match="7260" data-tol="0.02">You found the right product, \(R_BR_C = 7.26\ \text{k}\Omega^2\), but stopped there. Δ→Y always divides by the sum of all three Δ resistors, \(R_A+R_B+R_C\). (Ω² over Ω gives Ω again.)</div>
+  <div class="fb" data-for="r1" data-match="10340" data-tol="0.02">This comes from the Y→Δ formula (sum of pairwise products divided by one resistor). That formula runs in the other direction: it builds a Δ from a Y. For Δ→Y the denominator is \(R_A+R_B+R_C\) and the numerator is one product. A Y arm must come out <em>smaller</em> than the Δ resistors, not larger.</div>
+  <div class="fb" data-for="r1" data-match="1320" data-tol="0.02">That is \(R_B\parallel R_C\): you divided by \(R_B + R_C\) only. The denominator is the sum of <em>all three</em> Δ resistors, \(R_A + R_B + R_C\), and it is the same for every Y arm.</div>
+  <div class="fb" data-for="r2" data-match="1037.14" data-tol="0.02">That is \(R_BR_C/(R_A+R_B+R_C)\), the formula for \(R_1\). \(R_2\) attaches to node A, so its numerator is the product of the Δ resistors that touch A: \(R_C\) and \(R_A\). \(R_B\) doesn't touch A; it is the resistor opposite \(R_2\).</div>
+  <div class="fb" data-for="r3" data-match="707.143" data-tol="0.02">That is \(R_CR_A/(R_A+R_B+R_C)\). \(R_C\) and \(R_A\) meet at node A, so this is \(R_2\). \(R_3\) attaches to node B. Use \(R_A\) and \(R_B\), the two that touch B.</div>
+  <div class="q-hint">Δ→Y uses one denominator for all three Y arms: the sum of the three Δ resistors.</div>
+  <div class="q-hint">Each Y arm's numerator is the product of the two Δ resistors that touch its node. For example, \(R_1\) goes to C, where \(R_B\) and \(R_C\) meet. This is the instructor's "the other two" rule: \(R_1\) is like \(R_A\), so use \(R_B R_C\).</div>
+  <div class="q-hint">Check your setup: \(R_A+R_B+R_C = 7.0\,\text{k}\Omega\), and the numerator of \(R_1\) is \(R_BR_C = 7.26\ \text{k}\Omega^2\).</div>
+  <div class="q-solution">
+    <p class="step">1. <strong>Common denominator.</strong> Compute it once and reuse it:
+    \[ R_A+R_B+R_C = 1.5+2.2+3.3 = 7.0\,\text{k}\Omega \]</p>
+    <p class="step">2. <strong>\(R_1\)</strong> goes to node C. The adjacent Δ resistors are \(R_B\) and \(R_C\); the opposite one is \(R_A\):
+    \[ R_1=\frac{R_BR_C}{R_A+R_B+R_C}=\frac{(2.2)(3.3)}{7.0}=\frac{7.26\ \text{k}\Omega^2}{7.0\,\text{k}\Omega}=1.037\,\text{k}\Omega \]</p>
+    <p class="step">3. <strong>\(R_2\)</strong> goes to node A. The adjacent Δ resistors are \(R_C\) and \(R_A\); the opposite one is \(R_B\):
+    \[ R_2=\frac{R_CR_A}{R_A+R_B+R_C}=\frac{(3.3)(1.5)}{7.0}=\frac{4.95}{7.0}=0.7071\,\text{k}\Omega = 707.1\,\Omega \]</p>
+    <p class="step">4. <strong>\(R_3\)</strong> goes to node B. The adjacent Δ resistors are \(R_A\) and \(R_B\); the opposite one is \(R_C\):
+    \[ R_3=\frac{R_AR_B}{R_A+R_B+R_C}=\frac{(1.5)(2.2)}{7.0}=\frac{3.30}{7.0}=0.4714\,\text{k}\Omega = 471.4\,\Omega \]</p>
+    <p class="answer">\(R_1 \approx 1.037\,\text{k}\Omega\) (N–C), \(R_2 \approx 707\,\Omega\) (N–A), \(R_3 \approx 471\,\Omega\) (N–B).</p>
+  </div>
+  <div class="q-check">
+    <p><strong>Size test.</strong> Each Y arm must be smaller than both Δ resistors in its numerator: \(1.037 \lt 2.2, 3.3\); \(0.707 \lt 1.5, 3.3\); \(0.471 \lt 1.5, 2.2\) ✓. The largest arm, \(R_1\), sits at node C, where the two largest Δ resistors meet.</p>
+    <p><strong>Open-terminal test</strong> (third terminal open). Each pair should read the same on both networks:</p>
+    <ul>
+      <li>A–B: \(R_2+R_3 = 1.179\,\text{k}\Omega\), and \(R_A\parallel(R_B+R_C) = 1.5\parallel 5.5 = 1.179\,\text{k}\Omega\) ✓</li>
+      <li>A–C: \(R_2+R_1 = 1.744\,\text{k}\Omega\), and \(R_C\parallel(R_A+R_B) = 3.3\parallel 3.7 = 1.744\,\text{k}\Omega\) ✓</li>
+      <li>B–C: \(R_3+R_1 = 1.509\,\text{k}\Omega\), and \(R_B\parallel(R_A+R_C) = 2.2\parallel 4.8 = 1.509\,\text{k}\Omega\) ✓</li>
+    </ul>
+    <p><strong>Round trip.</strong> Convert back with Y→Δ: \(R_1R_2+R_2R_3+R_3R_1 = 1.556\ \text{k}\Omega^2\), and \(1.556/R_1 = 1.5\,\text{k}\Omega = R_A\) ✓.</p>
+  </div>
+  <div class="q-links">Links back: <a class="xref" data-lesson="dw1" data-sec="dw1-d2y">Converting Δ → Y</a> · <a class="xref" data-lesson="dw1" data-sec="dw1-d2y-example">Example 2 (Δ → Y)</a> · <a class="xref" data-lesson="dw1" data-sec="dw1-networks">Δ = π</a> · <a class="ts" data-lesson="dw1" data-t="29:43"></a> (same denominator) · <a class="ts" data-lesson="dw1" data-t="30:08"></a> ("the other two resistors") · <a class="ts" data-lesson="dw1" data-t="5:08"></a> (Δ pulled apart into a π)</div>
+</article>
+
+<article class="q" id="deltawye-q3" data-level="3" data-kind="multistep" data-title="Unbalanced bridge: equivalent resistance, source current and bridge current">
+  <div class="q-prompt">
+    <p>A 25 V source drives the bridge below. Its + terminal connects to the top node T and its − terminal to the bottom node C. The upper resistors are 16 kΩ (T to A) and 2 kΩ (T to B). The lower three form a Δ with the lecture's labels: \(R_A = 7\,\text{k}\Omega\) (the bridge, A to B), \(R_B = 28\,\text{k}\Omega\) (B to C) and \(R_C = 14\,\text{k}\Omega\) (A to C).</p>
+    <p>Find:</p>
+    <ol>
+      <li>the equivalent resistance \(R_{eq}\) seen by the source;</li>
+      <li>the source current \(I_s\), leaving the + terminal;</li>
+      <li>the current \(I_{AB}\) through the bridge resistor \(R_A\) in the <em>original</em> circuit, using the reference direction shown (from A to B). Enter a negative value if the current actually flows from B to A.</li>
+    </ol>
+  </div>
+  <figure class="circuit" id="deltawye-q3-fig">
+    <script type="application/json">{"parts":[
+ {"t":"V","a":[0,6],"b":[0,2],"label":"V_s","value":"25 V","plus":"b","side":-1},
+ {"t":"W","pts":[[0,2],[0,0],[7,0]]},
+ {"t":"IARR","a":[0.6,0],"b":[2.4,0],"label":"I_s"},
+ {"t":"R","a":[3,0],"b":[3,4],"value":"16 kΩ"},
+ {"t":"R","a":[7,0],"b":[7,4],"value":"2 kΩ"},
+ {"t":"R","a":[3,4],"b":[7,4],"label":"R_A","value":"7 kΩ"},
+ {"t":"ARROW","a":[4.3,4.75],"b":[5.7,4.75],"label":"I_{AB}","lat":[5,5.35]},
+ {"t":"R","a":[3,4],"b":[3,8],"label":"R_C","value":"14 kΩ"},
+ {"t":"R","a":[7,4],"b":[7,8],"label":"R_B","value":"28 kΩ"},
+ {"t":"W","pts":[[0,6],[0,8],[7,8]]},
+ {"t":"N","at":[3,0],"label":"T","pos":"n"},
+ {"t":"N","at":[3,4],"label":"A","pos":"w"},
+ {"t":"N","at":[7,4],"label":"B","pos":"e"},
+ {"t":"N","at":[3,8]},
+ {"t":"N","at":[5,8],"label":"C","pos":"s"}
+],"alt":"25 V source, positive terminal at the top node T, negative at the bottom node C. 16 kilohm from T to node A, 2 kilohm from T to node B, R_A = 7 kilohm between A and B with a reference arrow I_AB pointing from A to B, R_C = 14 kilohm from A to C, R_B = 28 kilohm from B to C. Source current I_s leaves the positive terminal."}</script>
+    <figcaption>The unbalanced bridge. The arrow under \(R_A\) is the reference direction for \(I_{AB}\). The bottom wire is node C.</figcaption>
+  </figure>
+  <div class="q-answers">
+    <div class="ans" data-type="num" data-name="req" data-label="\(R_{eq}\)" data-value="12500" data-unit="Ω" data-tol="0.02"></div>
+    <div class="ans" data-type="num" data-name="is" data-label="\(I_s\)" data-value="0.002" data-unit="A" data-tol="0.02"></div>
+    <div class="ans" data-type="num" data-name="iab" data-label="\(I_{AB}\) (positive A → B)" data-value="-0.000714286" data-unit="A" data-tol="0.02"></div>
+  </div>
+  <div class="fb" data-for="req" data-match="15000" data-tol="0.02">That is \((16+14)\parallel(2+28) = 15\,\text{k}\Omega\), the result if the bridge \(R_A\) is simply left out. It carries current here (\(V_A \ne V_B\)), so it can't be ignored. Convert the lower Δ to a Y and reduce that circuit instead.</div>
+  <div class="fb" data-for="req" data-match="11333.3" data-tol="0.02">You likely put the Y arms on the wrong nodes, with \(R_2\) under the 2 kΩ and \(R_3\) under the 16 kΩ. \(R_2\) attaches to node A (below the 16 kΩ), where \(R_C\) and \(R_A\) meet. \(R_3\) attaches to node B (below the 2 kΩ), where \(R_A\) and \(R_B\) meet.</div>
+  <div class="fb" data-for="req" data-match="4500" data-tol="0.02">That is just the two parallel branches. You still need \(R_1\), the Y arm from the centre N to node C, in series with them. It carries the whole source current back to the − terminal.</div>
+  <div class="fb" data-for="is" data-match="0.00166667" data-tol="0.02">This is \(25\,\text{V}/15\,\text{k}\Omega\), from leaving the bridge resistor out. Find \(R_{eq}\) with the Δ→Y conversion first, then use \(I_s = V_s/R_{eq}\).</div>
+  <div class="fb" data-for="is" data-match="0.00220588" data-tol="0.02">This matches \(R_{eq} = 11.33\,\text{k}\Omega\), the value you get with the Y arms on the wrong nodes. \(R_2\) belongs under the 16 kΩ (node A) and \(R_3\) under the 2 kΩ (node B).</div>
+  <div class="fb" data-for="iab" data-match="0.0005" data-tol="0.02">That is the current in the Y arm \(R_2\) (or in the 16 kΩ) in the converted circuit, not the bridge current. \(R_A\) no longer exists in the converted circuit. Use it to find \(V_A\) and \(V_B\), then return to the original circuit: \(I_{AB} = (V_A - V_B)/R_A\).</div>
+  <div class="fb" data-for="iab" data-match="-0.000833333" data-tol="0.02">You divided \(V_A - V_B\) by \(R_2 + R_3\), the Y path between A and B. The Y is equivalent only at its three terminals: its arm currents are not the currents in the original resistors. In the original circuit the current from A to B flows through \(R_A = 7\,\text{k}\Omega\).</div>
+  <div class="q-hint">The lower three resistors \(R_A\), \(R_B\), \(R_C\) form a Δ (drawn as a π, just like question 2) between A, B and C, already labelled as in the lecture. Replace it with a Y on the same three nodes, plus a new centre node N.</div>
+  <div class="q-hint">With \(R_A+R_B+R_C = 49\,\text{k}\Omega\): \(R_1\) (N to C) \(= R_BR_C/49\), \(R_2\) (N to A) \(= R_CR_A/49\), \(R_3\) (N to B) \(= R_AR_B/49\). Then 16 kΩ is in series with \(R_2\) and 2 kΩ with \(R_3\). Those two branches are in parallel, and the pair is in series with \(R_1\).</div>
+  <div class="q-hint">You should get \(R_1 = 8\,\text{k}\Omega\), \(R_2 = 2\,\text{k}\Omega\), \(R_3 = 4\,\text{k}\Omega\), and branches of 18 kΩ and 6 kΩ. For \(I_{AB}\), take C = 0 V, find \(V_A\) and \(V_B\) from the reduced circuit, then use the original circuit: \(I_{AB} = (V_A - V_B)/R_A\).</div>
+  <div class="q-solution">
+    <p class="step">1. <strong>Identify and label the Δ.</strong> \(R_A = 7\,\text{k}\Omega\) (A–B), \(R_B = 28\,\text{k}\Omega\) (B–C), \(R_C = 14\,\text{k}\Omega\) (A–C), and \(R_A+R_B+R_C = 49\,\text{k}\Omega\).</p>
+    <p class="step">2. <strong>Δ → Y.</strong> Each arm is the product of the two Δ resistors at its node, divided by 49 kΩ:
+    \[ R_1=\frac{R_BR_C}{49}=\frac{(28)(14)}{49}=8\,\text{k}\Omega\quad(\text{N to C}) \]
+    \[ R_2=\frac{R_CR_A}{49}=\frac{(14)(7)}{49}=2\,\text{k}\Omega\quad(\text{N to A}) \]
+    \[ R_3=\frac{R_AR_B}{49}=\frac{(7)(28)}{49}=4\,\text{k}\Omega\quad(\text{N to B}) \]</p>
+    <figure class="circuit" id="deltawye-q3-sol-fig">
+      <script type="application/json">{"parts":[
+ {"t":"V","a":[0,6],"b":[0,2],"label":"V_s","value":"25 V","plus":"b","side":-1},
+ {"t":"W","pts":[[0,2],[0,0],[7,0]]},
+ {"t":"IARR","a":[0.6,0],"b":[2.4,0],"label":"I_s"},
+ {"t":"R","a":[3,0],"b":[3,2.5],"value":"16 kΩ","side":-1},
+ {"t":"R","a":[3,2.5],"b":[3,5],"label":"R_2","value":"2 kΩ","side":-1},
+ {"t":"R","a":[7,0],"b":[7,2.5],"value":"2 kΩ"},
+ {"t":"R","a":[7,2.5],"b":[7,5],"label":"R_3","value":"4 kΩ"},
+ {"t":"W","pts":[[3,5],[7,5]]},
+ {"t":"R","a":[5,5],"b":[5,8],"label":"R_1","value":"8 kΩ"},
+ {"t":"W","pts":[[5,8],[0,8],[0,6]]},
+ {"t":"N","at":[3,0],"label":"T","pos":"n"},
+ {"t":"N","at":[3,2.5],"label":"A","pos":"e"},
+ {"t":"N","at":[7,2.5],"label":"B","pos":"w"},
+ {"t":"N","at":[5,5],"label":"N","pos":"n"},
+ {"t":"N","at":[5,8],"label":"C","pos":"s"}
+],"alt":"Reduced circuit: 25 V source; left branch 16 kilohm then R_2 = 2 kilohm from T through node A to the centre node N; right branch 2 kilohm then R_3 = 4 kilohm from T through node B to N; R_1 = 8 kilohm from N to node C, which returns to the source negative terminal."}</script>
+      <figcaption>After the conversion: two series branches in parallel, then \(R_1\) in series (added for this solution).</figcaption>
+    </figure>
+    <p class="step">3. <strong>Series–parallel.</strong> The left branch is \(16+2 = 18\,\text{k}\Omega\) and the right branch is \(2+4 = 6\,\text{k}\Omega\). In parallel: \(\dfrac{18(6)}{18+6} = 4.5\,\text{k}\Omega\). Add \(R_1\) in series: \(R_{eq} = 4.5 + 8 = 12.5\,\text{k}\Omega\).</p>
+    <p class="step">4. <strong>Ohm's law.</strong> \(I_s = \dfrac{25\,\text{V}}{12.5\,\text{k}\Omega} = 2.0\,\text{mA}\).</p>
+    <p class="step">5. <strong>Voltages in the reduced circuit</strong> (C = 0 V). \(V_N = I_sR_1 = (2.0\,\text{mA})(8\,\text{k}\Omega) = 16\,\text{V}\), so each branch has \(25 - 16 = 9\,\text{V}\) across it (KVL). The branch currents are \(I_{left} = 9/18 = 0.5\,\text{mA}\) and \(I_{right} = 9/6 = 1.5\,\text{mA}\). KCL: \(0.5 + 1.5 = 2.0\,\text{mA}\) ✓.</p>
+    <p class="step">6. <strong>Node voltages A and B.</strong> These are preserved by the conversion. \(V_A = 25 - (16\,\text{k}\Omega)(0.5\,\text{mA}) = 17\,\text{V}\) and \(V_B = 25 - (2\,\text{k}\Omega)(1.5\,\text{mA}) = 22\,\text{V}\). Going up from N gives the same result: \(16 + (0.5)(2) = 17\,\text{V}\) and \(16 + (1.5)(4) = 22\,\text{V}\).</p>
+    <p class="step">7. <strong>Back to the original circuit.</strong> \(I_{AB} = \dfrac{V_A - V_B}{R_A} = \dfrac{17 - 22}{7\,\text{k}\Omega} = -0.714\,\text{mA}\). The negative sign means 0.714 mA actually flows from B to A, right to left.</p>
+    <p class="answer">\(R_{eq} = 12.5\,\text{k}\Omega\), \(I_s = 2.0\,\text{mA}\), \(I_{AB} \approx -0.714\,\text{mA}\) (0.714 mA flowing from B to A).</p>
+  </div>
+  <div class="q-check">
+    <p><strong>KCL in the original circuit.</strong> \(I_{R_C} = 17/14 = 1.214\,\text{mA}\) and \(I_{R_B} = 22/28 = 0.786\,\text{mA}\).</p>
+    <ul>
+      <li>At A: \(0.5\) (from T) \(+\ 0.714\) (from B) \(= 1.214\,\text{mA}\) out through \(R_C\) ✓.</li>
+      <li>At B: \(1.5\) (from T) \(= 0.714\) (to A) \(+\ 0.786\) (to C) ✓.</li>
+      <li>Into C: \(1.214 + 0.786 = 2.0\,\text{mA} = I_s\) ✓.</li>
+    </ul>
+    <p><strong>Bounds</strong> (extra teaching). Making any resistor larger can only raise \(R_{eq}\). So \(R_{eq}\) must lie between the value with the bridge shorted, \(16\parallel 2 + 14\parallel 28 = 11.1\,\text{k}\Omega\), and the value with the bridge removed, \(30\parallel 30 = 15\,\text{k}\Omega\). 12.5 kΩ is in that range ✓.</p>
+    <p><strong>Another route.</strong> Convert the <em>upper</em> Δ (16, 2, 7 kΩ between T, A, B) instead. Its sum is 25 kΩ, giving arms of 1.28 kΩ (at T), 4.48 kΩ (at A) and 0.56 kΩ (at B). Then \(R_{eq} = 1.28 + (4.48+14)\parallel(0.56+28) = 12.5\,\text{k}\Omega\) ✓.</p>
+    <p><strong>Direction.</strong> The current flows B → A because the small 2 kΩ drops only 3 V, keeping B at 22 V, while the 16 kΩ drops 8 V and leaves A at 17 V. This is the instructor's point at the start of the lecture: the direction in the bridge depends on the voltages at its two ends, which you only know after solving.</p>
+  </div>
+  <div class="q-links">Links back: <a class="xref" data-lesson="dw1" data-sec="dw1-bridge-delta">Spotting the Δ in a bridge</a> · <a class="xref" data-lesson="dw1" data-sec="dw1-solve">Solving the reduced circuit</a> · <a class="xref" data-lesson="dw1" data-sec="dw1-d2y">Δ → Y formulas</a> · <a class="ts" data-lesson="dw1" data-t="25:32"></a> (remove the Δ, insert the Y) · <a class="ts" data-lesson="dw1" data-t="36:38"></a> (finishing the reduced circuit) · <a class="ts" data-lesson="dw1" data-t="1:38"></a> (direction of the bridge current)</div>
+</article>
+
+<article class="q" id="deltawye-q4" data-level="4" data-kind="troubleshooting" data-title="Troubleshooting a Y→Δ conversion: right numbers, wrong places">
+  <div class="q-prompt">
+    <p>A student needs to replace a Y (centre node N) with an equivalent Δ on a breadboard. The Y uses the lecture's labels: \(R_1 = 1\,\text{k}\Omega\) (N to C), \(R_2 = 2\,\text{k}\Omega\) (N to A) and \(R_3 = 4\,\text{k}\Omega\) (N to B). The Δ is to have \(R_A\) between A and B, \(R_B\) between B and C, and \(R_C\) between A and C.</p>
+    <p>The student's work:</p>
+    \[ R_1R_2+R_2R_3+R_3R_1 = 2+8+4 = 14\ \text{k}\Omega^2 \]
+    <p>"\(R_A\) is at node A, and the Y arm at node A is \(R_2\), so \(R_A = 14/R_2 = 7\,\text{k}\Omega\). In the same way \(R_B = 14/R_3 = 3.5\,\text{k}\Omega\) (\(R_3\) is at B) and \(R_C = 14/R_1 = 14\,\text{k}\Omega\) (\(R_1\) is at C)."</p>
+    <p>Before swapping the networks, the student measures each one between A and B, with C left unconnected. The original Y reads 6.0 kΩ, but the student's Δ reads 5.0 kΩ.</p>
+    <p><strong>(a)</strong> What is the correct \(R_A\)? <strong>(b)</strong> What is the correct \(R_C\)? <strong>(c)</strong> Which statement explains the error? <strong>(d)</strong> Last week the same student used the same habit on a <em>balanced</em> Y, with all three arms 2.2 kΩ, and got full marks. What is each Δ resistor for that Y?</p>
+  </div>
+  <figure class="circuit" id="deltawye-q4-fig">
+    <script type="application/json">{"parts":[
+ {"t":"R","a":[0,0],"b":[2,1.8],"label":"R_2","value":"2 kΩ","lpos":[-1.0,0.6]},
+ {"t":"R","a":[2,1.8],"b":[4,0],"label":"R_3","value":"4 kΩ","lpos":[1.0,0.6]},
+ {"t":"R","a":[2,1.8],"b":[2,4.4],"label":"R_1","value":"1 kΩ"},
+ {"t":"N","at":[0,0],"label":"A","pos":"w"},
+ {"t":"N","at":[4,0],"label":"B","pos":"e"},
+ {"t":"N","at":[2,4.4],"label":"C","pos":"s","open":true},
+ {"t":"N","at":[2,1.8],"label":"N","pos":"n"},
+ {"t":"W","pts":[[0,0],[0,-2],[1,-2]]},
+ {"t":"M","a":[1,-2],"b":[3,-2],"sym":"Ω","label":"reads 6.0 kΩ"},
+ {"t":"W","pts":[[3,-2],[4,-2],[4,0]]},
+ {"t":"T","at":[2,6],"text":"Original Y"},
+ {"t":"R","a":[8,0],"b":[12,0],"label":"R_A","value":"7 kΩ"},
+ {"t":"R","a":[8,0],"b":[10,3.4],"label":"R_C","value":"14 kΩ","side":-1},
+ {"t":"R","a":[12,0],"b":[10,3.4],"label":"R_B","value":"3.5 kΩ","side":-1},
+ {"t":"N","at":[8,0],"label":"A","pos":"w"},
+ {"t":"N","at":[12,0],"label":"B","pos":"e"},
+ {"t":"N","at":[10,3.4],"label":"C","pos":"s","open":true},
+ {"t":"W","pts":[[8,0],[8,-2],[9,-2]]},
+ {"t":"M","a":[9,-2],"b":[11,-2],"sym":"Ω","label":"reads 5.0 kΩ"},
+ {"t":"W","pts":[[11,-2],[12,-2],[12,0]]},
+ {"t":"T","at":[10,6],"text":"Student's Δ (as built)"}
+],"pad":1.3,"alt":"Left: the original wye with R_2 = 2 kilohm from centre N to node A, R_3 = 4 kilohm from N to node B, R_1 = 1 kilohm from N to node C; an ohmmeter across A and B reads 6.0 kilohm, terminal C is open. Right: the student's delta with R_A = 7 kilohm between A and B, R_C = 14 kilohm between A and C, R_B = 3.5 kilohm between B and C; an ohmmeter across A and B reads 5.0 kilohm, terminal C is open."}</script>
+    <figcaption>The original Y (left) and the student's Δ (right), each measured between A and B with C open (hollow terminal).</figcaption>
+  </figure>
+  <div class="q-answers">
+    <div class="ans" data-type="num" data-name="ra" data-label="(a) correct \(R_A\) (A–B)" data-value="14000" data-unit="Ω" data-tol="0.02"></div>
+    <div class="ans" data-type="num" data-name="rc" data-label="(b) correct \(R_C\) (A–C)" data-value="3500" data-unit="Ω" data-tol="0.02"></div>
+    <div class="ans" data-type="mc" data-name="diag" data-label="(c) What went wrong in the student's work?" data-correct="d">
+      <div class="opt" data-v="a">The numerator is wrong. It should be \(R_1R_2R_3 = 8\ \text{k}\Omega^3\).<span class="opt-fb">No. The numerator \(2+8+4 = 14\ \text{k}\Omega^2\) is right: it is the sum of the three pairwise products, the same for all three Δ resistors. A triple product would even give the wrong unit (Ω³ ÷ Ω = Ω²).</span></div>
+      <div class="opt" data-v="b">The student used the wrong formula set. Going Y→Δ you multiply two Y arms and divide by the sum of all three, e.g. \(R_A = R_2R_3/(R_1+R_2+R_3)\).<span class="opt-fb">That is the Δ→Y pattern used in the wrong direction. It would give \(R_A = 8/7 \approx 1.14\,\text{k}\Omega\). That is smaller than \(R_2+R_3 = 6\,\text{k}\Omega\), which a Δ resistor can never be. The student's formula set (pairwise-product sum over one arm) was the right one. Only the divisor was wrong.</span></div>
+      <div class="opt" data-v="c">The values are fine. The meter test is invalid, because a three-terminal network can't be checked with one terminal left open.<span class="opt-fb">The open-terminal test is exactly what equivalence means. With C open, no current flows in \(R_1\), so the Y reads \(R_2+R_3\). An equivalent Δ must read the same, \(R_A\parallel(R_B+R_C)\). Matching all three pairs this way is how the formulas are derived.</span></div>
+      <div class="opt" data-v="d">The student matched each resistor's letter to a node letter and divided by the Y arm at that node. \(R_A\) runs between nodes A and B. It must be divided by the arm opposite it, \(R_1\), which sits at C, the node \(R_A\) doesn't touch.<span class="opt-fb">Correct. Node letters and resistor letters are different things: \(R_A\) is not "at" node A. Dividing by an adjacent arm instead of the opposite one moves each correct value to the wrong pair of nodes. The student's 7, 3.5 and 14 kΩ are exactly the right numbers, each shifted one place.</span></div>
+    </div>
+    <div class="ans" data-type="num" data-name="rd" data-label="(d) each Δ resistor for the balanced Y (2.2 kΩ arms)" data-value="6600" data-unit="Ω" data-tol="0.02"></div>
+  </div>
+  <div class="fb" data-for="ra" data-match="7000" data-tol="0.02">That is the student's value, \(14/R_2\). \(R_2\) touches node A, one end of \(R_A\), so it is an <em>adjacent</em> arm. Divide by the arm opposite \(R_A\): the one at the node \(R_A\) does not touch, which is C.</div>
+  <div class="fb" data-for="ra" data-match="6000" data-tol="0.02">6 kΩ is \(R_2+R_3\), the A–B reading of the Y. A Δ resistor between A and B has the other two Δ resistors in parallel with it, so it must be <em>larger</em> than that reading. In shortcut form, \(R_A = R_2+R_3+R_2R_3/R_1\).</div>
+  <div class="fb" data-for="ra" data-match="1142.86" data-tol="0.02">That is \(R_2R_3/(R_1+R_2+R_3)\), the Δ→Y pattern ("multiply the other two, divide by the sum") applied in the wrong direction. Going Y→Δ, the numerator is the sum of the three pairwise products and you divide by one Y arm.</div>
+  <div class="fb" data-for="rc" data-match="14000" data-tol="0.02">That is the student's \(14/R_1\). \(R_C\) runs from A to C, so \(R_1\) (at C) is adjacent to it. The arm opposite \(R_C\) is at B, the node \(R_C\) doesn't touch.</div>
+  <div class="fb" data-for="rc" data-match="7000" data-tol="0.02">You divided by \(R_2\), the arm at node A. \(R_C\) touches A (it runs from A to C), so \(R_2\) is adjacent. Divide by the arm at the node \(R_C\) doesn't touch, which is B.</div>
+  <div class="fb" data-for="rd" data-match="733.333" data-tol="0.02">\(2.2/3\) is the balanced rule for the other direction, Δ→Y (\(R_Y = R_\Delta/3\)). Going Y→Δ the resistors get bigger: \(R_\Delta = 3R_Y\).</div>
+  <div class="fb" data-for="rd" data-match="4400" data-tol="0.02">\(2 \times 2.2\) is the series sum of the two arms between a pair of nodes. That is the open-terminal <em>reading</em>, not the Δ resistor. The Δ resistor also includes the term \(R_2R_3/R_1\), so it is \(R_Y + R_Y + R_Y = 3R_Y\).</div>
+  <div class="q-hint">For each Δ resistor, find the node it does <em>not</em> touch. The Y arm at that node is the "opposite" arm you divide by.</div>
+  <div class="q-hint">\(R_A\) (A–B) is opposite \(R_1\) (at C). \(R_B\) (B–C) is opposite \(R_2\) (at A). \(R_C\) (A–C) is opposite \(R_3\) (at B). Keep the student's numerator, 14 kΩ²: it is correct.</div>
+  <div class="q-hint">Check with the meter: your Δ must give \(R_A\parallel(R_B+R_C) = R_2+R_3 = 6.0\,\text{k}\Omega\). For the balanced Y, the numerator is \(3R_Y^2\) and every divisor is \(R_Y\).</div>
+  <div class="q-solution">
+    <p class="step">1. <strong>Numerator.</strong> The student's sum of pairwise products is right:
+    \[ R_1R_2+R_2R_3+R_3R_1 = (1)(2)+(2)(4)+(4)(1) = 14\ \text{k}\Omega^2 \]</p>
+    <p class="step">2. <strong>Opposite pairs.</strong> \(R_A\) connects A and B, so it doesn't touch C. The arm at C, \(R_1\), is opposite it. Likewise \(R_B\) (B–C) is opposite \(R_2\) (at A), and \(R_C\) (A–C) is opposite \(R_3\) (at B).</p>
+    <p class="step">3. <strong>Correct Δ.</strong>
+    \[ R_A=\frac{14}{R_1}=\frac{14}{1}=14\,\text{k}\Omega,\qquad R_B=\frac{14}{R_2}=\frac{14}{2}=7\,\text{k}\Omega,\qquad R_C=\frac{14}{R_3}=\frac{14}{4}=3.5\,\text{k}\Omega \]
+    The shortcut form agrees: \(R_A = R_2+R_3+\dfrac{R_2R_3}{R_1} = 2+4+8 = 14\,\text{k}\Omega\).</p>
+    <p class="step">4. <strong>Diagnosis.</strong> The student treated "\(R_A\)" as if it lived at node A and divided by the adjacent arm \(R_2\). They did the same for \(R_B\) and \(R_C\). Their three numbers, 7, 3.5 and 14 kΩ, are the correct values, each placed on the wrong pair of nodes: the correct \(R_B\) went into the A–B position, and so on.</p>
+    <p class="step">5. <strong>Explaining the meter readings</strong> (A–B, C open). Correct Δ: \(R_A\parallel(R_B+R_C) = 14\parallel 10.5 = \dfrac{147}{24.5} = 6.0\,\text{k}\Omega\), equal to \(R_2+R_3\) ✓. Student's Δ: \(7\parallel(3.5+14) = \dfrac{122.5}{24.5} = 5.0\,\text{k}\Omega\), which is the reading they saw.</p>
+    <p class="step">6. <strong>Balanced special case.</strong> With all arms \(R_Y = 2.2\,\text{k}\Omega\), the numerator is \(3R_Y^2 = 14.52\ \text{k}\Omega^2\) and every divisor is \(R_Y\):
+    \[ R_\Delta = \frac{3R_Y^2}{R_Y} = 3R_Y = 6.6\,\text{k}\Omega \]
+    Because all three divisors are equal, dividing by the "wrong" arm gives the same answer. That is why the habit went unnoticed last week.</p>
+    <p class="answer">(a) \(R_A = 14\,\text{k}\Omega\). (b) \(R_C = 3.5\,\text{k}\Omega\), and \(R_B = 7\,\text{k}\Omega\). (c) Option d: the student divided by an adjacent arm instead of the opposite one. (d) \(R_\Delta = 6.6\,\text{k}\Omega\) each.</p>
+  </div>
+  <div class="q-check">
+    <p><strong>All three meter pairs</strong> on the corrected Δ (third terminal open) match the Y:</p>
+    <ul>
+      <li>A–B: \(14\parallel 10.5 = 6.0\,\text{k}\Omega = R_2+R_3\) ✓</li>
+      <li>A–C: \(3.5\parallel 21 = 3.0\,\text{k}\Omega = R_2+R_1\) ✓</li>
+      <li>B–C: \(7\parallel 17.5 = 5.0\,\text{k}\Omega = R_3+R_1\) ✓</li>
+    </ul>
+    <p><strong>Round trip.</strong> Convert the corrected Δ back with Δ→Y. The sum is 24.5 kΩ. \(R_1 = (7)(3.5)/24.5 = 1\,\text{k}\Omega\), \(R_2 = (3.5)(14)/24.5 = 2\,\text{k}\Omega\) and \(R_3 = (14)(7)/24.5 = 4\,\text{k}\Omega\): the original Y ✓.</p>
+    <p><strong>Quick size test.</strong> Each Δ resistor must exceed the series sum of the two Y arms it spans. The student's \(R_B = 3.5\,\text{k}\Omega\) fails this, since \(R_3+R_1 = 5\,\text{k}\Omega\), so the slip could have been caught on paper.</p>
+  </div>
+  <div class="q-links">Links back: <a class="xref" data-lesson="dw1" data-sec="dw1-y2d">Converting Y → Δ</a> · <a class="xref" data-lesson="dw1" data-sec="dw1-overlay">labelling convention</a> · <a class="xref" data-lesson="dw1" data-sec="dw1-mistakes">Common mistakes (node letters vs resistor letters)</a> · <a class="xref" data-lesson="dw1" data-sec="dw1-derivation">balanced case</a> · <a class="ts" data-lesson="dw1" data-t="13:00"></a> (divide by the opposite Y resistor) · <a class="ts" data-lesson="dw1" data-t="15:33"></a> (label to match the equations) · <a class="ts" data-lesson="dw1" data-t="21:00"></a> (naming the nodes A, B, C)</div>
+</article>
