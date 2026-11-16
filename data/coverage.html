@@ -583,8 +583,9 @@
 <h3>4.1 Video access and playback</h3>
 <ul>
 <li><b>No downloads.</b> The videos are on YouTube, which offers no authorised download for them, so every lesson uses the official embedded YouTube player plus a direct link. You need an internet connection to watch.</li>
-<li><b>Must be served, not opened as a file.</b> YouTube refuses to play embeds on <code>file://</code> pages (“Error 153”). Use <code>Start-Study-Site.bat</code> (http://localhost:8211). Clickable timestamps, live transcript highlighting and the remembered playback position all rely on the YouTube player API and work on that address. Playback was tested on localhost; embedding is allowed for all 13 videos.</li>
-<li>YouTube may show ads before or during playback; that is controlled by YouTube.</li>
+<li><b>Where it runs.</b> The site is published at https://gozorp.github.io/ee211-study/ (GitHub Pages) and can still be run locally with <code>Start-Study-Site.bat</code> (http://localhost:8211). Opening <code>index.html</code> directly as a file does not work: YouTube refuses to play embeds on <code>file://</code> pages (“Error 153”). Embedded playback, clickable timestamps and the transcript that follows the video were tested on both addresses; embedding is allowed for all 13 videos.</li>
+<li>The player uses YouTube’s privacy-enhanced host (youtube-nocookie.com) and falls back to youtube.com if that fails. YouTube may show ads; that is controlled by YouTube.</li>
+<li>The mini player keeps a video playing while you switch between Watch, Understand, Practice, Review and My Notes. A full page reload stops playback; the position is saved and offered again.</li>
 </ul>
 
 <h3>4.2 Transcripts</h3>
@@ -639,5 +640,14 @@
 
 <h3>4.7 Your data</h3>
 <ul>
-<li>Notes and progress live in this browser’s localStorage for <code>http://localhost:8211</code>. They don’t sync across browsers or devices, are lost if site data is cleared or a private window is used, and are tied to the exact address and port. Use Notes → “Download full backup” regularly.</li>
+<li>Notes, progress, practice answers in progress and lab settings live in your browser’s localStorage for the address you use. Nothing is sent to the website or to GitHub. They don’t sync across browsers or devices, are lost if site data is cleared or a private window is used, and the public site and the local <code>localhost:8211</code> copy keep separate data. To move or protect your work use All notes → “Download backup” (or “Copy backup text”) and “Restore” on the other device or address.</li>
+<li>The only outside services the page contacts are YouTube (the player) and Google Fonts (typefaces). There are no analytics or trackers, and the page asks search engines not to index it.</li>
+</ul>
+
+<h3>4.8 Interactive labs and progress figures</h3>
+<ul>
+<li>The labs are idealised models: ideal sources and wires, linear resistors, ideal capacitors and inductors, DC steady state or a single switching event (RC/RL), and an idealised oscilloscope. Each lab lists its assumptions under “Assumptions behind this model”. Real parts (tolerance, source and probe loading, noise, scope bandwidth) make bench readings differ, as the lectures point out.</li>
+<li>Lab presets reproduce the lessons’ worked examples. Presets marked as added in the guide, or listed under “Also try (not from the videos)”, are not from the lectures. Every lab’s numbers were checked against an independent Python calculation (<code>build/tests/test_lab_*.py</code>), then re-checked by a separate verifier.</li>
+<li>“Studied” counts lessons you mark complete (with % watched shown alongside); “Understood” counts core practice scenarios you solved without opening the solution first. Neither is a grade: watched % only knows which parts of the video played in this browser.</li>
+<li>Worked examples in Understand open step by step by default; “Show all” (remembered) restores the full guide layout. Nothing in the guides is removed.</li>
 </ul>

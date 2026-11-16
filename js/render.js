@@ -48,7 +48,7 @@
       if (isNaN(t)) { problems.push('bad data-t "' + a.getAttribute('data-t') + '"'); return; }
       if (duration && t > duration + 1) problems.push('timestamp ' + fmtTime(t) + ' beyond video length ' + fmtTime(duration));
       a.setAttribute('data-t', String(t));
-      if (!a.textContent.trim()) a.textContent = fmtTime(t);
+      if (!a.textContent.trim()) { a.textContent = fmtTime(t); a.setAttribute('aria-label', 'Play video from ' + fmtTime(t)); }
       if (lessonId && !a.getAttribute('data-lesson')) a.setAttribute('data-lesson', lessonId);
       a.setAttribute('href', '#');
       a.setAttribute('role', 'button');
@@ -57,14 +57,44 @@
     return problems;
   }
 
+  /* Make <a class="xref" data-lesson data-sec> links focusable: give them an href (the app sets EERender.xrefHref
+     to build a real route; clicks are intercepted globally) and an accessible title. */
+  function decorateXrefs(root) {
+    Array.prototype.forEach.call(root.querySelectorAll('a.xref[data-lesson]'), function (a) {
+      if (!a.getAttribute('href')) {
+        var href = '#';
+        try { if (api.xrefHref) href = api.xrefHref(a.getAttribute('data-lesson'), a.getAttribute('data-sec'), a.getAttribute('data-t')) || '#'; } catch (e) {}
+        a.setAttribute('href', href);
+      }
+    });
+    return [];
+  }
+
+  /* Tables keep display:table (so screen readers keep their row/column semantics); a wrapper scrolls wide ones. */
+  function wrapTables(root) {
+    Array.prototype.forEach.call(root.querySelectorAll('table'), function (t) {
+      var p = t.parentNode;
+      if (!p || (p.classList && (p.classList.contains('table-wrap') || p.classList.contains('lab-table-wrap'))) || t.closest('.lab')) return;
+      var w = document.createElement('div');
+      w.className = 'table-wrap';
+      p.insertBefore(w, t);
+      w.appendChild(t);
+    });
+    return [];
+  }
+
   function renderContent(root, opts) {
     opts = opts || {};
     var errs = [];
+    errs = errs.concat(wrapTables(root));
     if (global.EEDiagrams) errs = errs.concat(global.EEDiagrams.renderDiagrams(root));
     errs = errs.concat(decorateTimestamps(root, opts.lessonId, opts.duration));
+    errs = errs.concat(decorateXrefs(root));
     errs = errs.concat(renderMath(root));
     return errs;
   }
 
-  global.EERender = { renderContent: renderContent, renderMath: renderMath, fmtTime: fmtTime, parseTime: parseTime };
+  var api = { renderContent: renderContent, renderMath: renderMath, decorateTimestamps: decorateTimestamps, decorateXrefs: decorateXrefs, wrapTables: wrapTables,
+    fmtTime: fmtTime, parseTime: parseTime, xrefHref: null };
+  global.EERender = api;
 })(window);
