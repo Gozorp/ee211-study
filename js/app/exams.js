@@ -66,6 +66,8 @@
   }
   function range(n) { var a = []; for (var i = 1; i <= n; i++) a.push(i); return a; }
   function plain(s) { return A.text.plain(s || ''); }
+  /* the quantity a part asks for, for checker messages: its first inline TeX (rendered later), else "this part" */
+  function shortLabel(label) { var m = /\\\([\s\S]*?\\\)/.exec(label || ''); return m ? m[0] : 'this part'; }
   function topicsUsed(questions) {
     var used = {};
     questions.forEach(function (q) { (q.topics || []).forEach(function (t) { used[t] = 1; }); });
@@ -125,11 +127,30 @@
     ctx.el.innerHTML = '<div class="page narrow xm-page">' + crumbs([{ label: 'Past Exam Examples', href: BASE }, { label: title }]) +
       '<h1>' + esc(title) + '</h1><p class="diagram-error">' + esc(msg) + '</p>' + U.btn('Back to Past Exam Examples', { href: BASE, icon: 'back' }) + '</div>';
   }
-  /* readable diagrams on phones: never shrink a circuit below 78 % of its natural size; its holder scrolls instead */
+  /* readable diagrams on phones: never shrink a circuit below 78 % of its natural size; its holder scrolls instead.
+     (Fitting a 3-branch circuit into a 290 px phone column would put its labels near 6 px.) When a holder does
+     scroll, a cue under it says so; a ResizeObserver keeps the cue right as panels open and the window resizes. */
+  var cueRO = global.ResizeObserver ? new global.ResizeObserver(function (es) { es.forEach(function (e) { scrollCue(e.target); }); }) : null;
+  function scrollCue(h) {
+    var cue = h.nextElementSibling && h.nextElementSibling.classList.contains('xm-scroll-cue') ? h.nextElementSibling : null;
+    var over = h.clientWidth > 0 && h.scrollWidth > h.clientWidth + 4;
+    if (over && !cue) {
+      cue = U.h('<p class="xm-scroll-cue" aria-hidden="true">Scroll sideways to see the whole ' + (h.classList.contains('katex-display') ? 'equation' : 'diagram') + '<span class="xm-scroll-arr">→</span></p>');
+      h.insertAdjacentElement('afterend', cue);
+      h.addEventListener('scroll', function () { var c = h.nextElementSibling; if (c && c.classList.contains('xm-scroll-cue')) c.classList.toggle('is-end', h.scrollLeft + h.clientWidth >= h.scrollWidth - 4); }, { passive: true });
+    }
+    if (cue) { cue.hidden = !over; h.classList.toggle('xm-scrolls', over); }
+  }
   function sizeDiagrams(root) {
     $$('svg.ckt, svg.scope', root).forEach(function (s) {
       var w = parseFloat(s.getAttribute('width'));
       if (w > 0) s.style.minWidth = Math.round(Math.min(w, 520) * 0.78) + 'px';
+      var h = s.closest('.diagram-holder');
+      if (h && cueRO && !h.hasAttribute('data-cue')) { h.setAttribute('data-cue', ''); cueRO.observe(h); }
+    });
+    /* wide display equations scroll inside their own box on phones: give them the same cue */
+    $$('.katex-display', root).forEach(function (h) {
+      if (cueRO && !h.hasAttribute('data-cue')) { h.setAttribute('data-cue', ''); cueRO.observe(h); }
     });
   }
   function render(root) { A.renderContent(root, null); sizeDiagrams(root); }
@@ -280,12 +301,21 @@
     if (used.length > 1) $('.xm-filter-slot', ctx.el).appendChild(topicFilter(used, topic, function (v) { ctx.setQuery({ topic: v || null }); applyFilter(v); }));
     applyFilter(topic);
 
-    // flag summaries: the bold lead sentence of each question's source note (aside.xq-flag)
-    $$('.xm-flagtxt', ctx.el).forEach(function (sp) {
-      var q = qMeta(ex, +sp.getAttribute('data-n')); if (!q) return;
-      questionText(q.file).then(function (html) {
-        var t = flagSummary(html); if (t && ctx.alive()) { sp.textContent = t; A.renderContent(sp, null); }
-      }).catch(function () {});
+    // source notes: every question whose file has an aside.xq-flag is listed under Flags (lead sentence as summary);
+    // notes on questions that are not flagged get a quiet marker on their card
+    Promise.all(ex.questions.map(function (q) {
+      return questionText(q.file).then(function (html) { return { q: q, t: flagSummary(html), has: hasFlag(html) }; }, function () { return { q: q, t: '', has: false }; });
+    })).then(function (rows) {
+      if (!ctx.alive()) return;
+      var notes = rows.filter(function (r) { return r.has || isFlagged(r.q); }).sort(function (a, b) { return a.q.num - b.q.num; });
+      var box = $('.xm-flags', ctx.el); if (!box) return;
+      box.innerHTML = flagList(ex, notes);
+      $$('.xm-flagtxt', box).forEach(function (sp) { A.renderContent(sp, null); });
+      notes.forEach(function (r) {
+        if (isFlagged(r.q)) return;
+        var side = ctx.el.querySelector('.xm-card[href="' + qHref(ex.id, r.q.num) + '"] .xm-card-side');
+        if (side && !$('.xm-noteb', side)) side.insertAdjacentHTML('beforeend', noteBadge());
+      });
     });
     // PDFs + local originals
     return originals(ex).then(function (orig) {
@@ -325,11 +355,16 @@
           }).join('') + '</tr>';
       }).join('') + '</tbody></table></div>';
   }
+  function isFlagged(q) { return !!q && q.status === 'flagged'; }
+  function hasFlag(html) { var tpl = doc.createElement('template'); tpl.innerHTML = html; return !!tpl.content.querySelector('aside.xq-flag'); }
+  function noteBadge() {
+    return '<span class="xm-noteb" title="The question page has a short note on how the printed exam was read; it does not change the answers">' + icon('info') + 'Source note</span>';
+  }
   function flagSummary(html) {
     var tpl = doc.createElement('template'); tpl.innerHTML = html;
     var f = tpl.content.querySelector('aside.xq-flag'); if (!f) return '';
     var lead = f.querySelector('p strong, p b') || f.querySelector('p') || f;
-    var t = lead.textContent.replace(/\s+/g, ' ').replace(/^Source note:\s*/i, '').trim();   // TeX kept; rendered by KaTeX
+    var t = lead.textContent.replace(/\s+/g, ' ').replace(/^(?:minor\s+)?source notes?:\s*/i, '').trim();   // TeX kept; rendered by KaTeX
     if (t.length > 240) t = t.slice(0, 237).replace(/\s+\S*$/, '') + '…';
     return t ? t.charAt(0).toUpperCase() + t.slice(1) : '';
   }
@@ -337,18 +372,24 @@
     var tr = ex.transcription || {};
     var LBL = { ocr: 'Text recognition (OCR)', visual: 'Visual verification', scope: 'Oscilloscope trace' };
     var rows = Object.keys(tr).map(function (k) { return '<dt>' + esc(LBL[k] || (k.charAt(0).toUpperCase() + k.slice(1))) + '</dt><dd>' + esc(tr[k]) + '</dd>'; }).join('');
-    var flags = ex.questions.filter(function (q) { return q.flag || q.status === 'flagged'; });
+    var flags = ex.questions.filter(isFlagged).map(function (q) { return { q: q, t: '' }; });   // notes on other questions are added once their files load
     return '<details class="xm-panel xm-transcribed"><summary><span class="xm-sum-title">How this exam was transcribed</span><span class="xm-sum-sub">Source, text recognition, visual checks and anything unclear</span></summary><div class="xm-panel-body">' +
       (ex.source ? '<p>' + esc(ex.source) + '</p>' : '') +
       (rows ? '<dl class="xm-dl">' + rows + '</dl>' : '') +
-      '<h3 class="xm-h3">Flags</h3>' +
-      (flags.length ? '<ul>' + flags.map(function (q) {
-        return '<li><a href="' + qHref(ex.id, q.num) + '">Question ' + q.num + '</a>' + (q.status === 'flagged' ? ' <span class="xm-flagb">' + icon('flag') + 'can change the answer</span>' : '') +
-          ': <span class="xm-flagtxt" data-n="' + q.num + '">Part of the source is unclear; the question page explains how the solution handles it.</span></li>';
-      }).join('') + '</ul>' : '<p class="small muted">No question has an open source problem.</p>') +
+      '<h3 class="xm-h3">Flags</h3><div class="xm-flags">' + flagList(ex, flags) + '</div>' +
       (missing.length ? '<p class="small"><b>Not available yet:</b> ' + missing.map(function (n) { return 'question ' + n; }).join(', ') + '. They are still being prepared.</p>' : '') +
       '<p class="small muted">Question numbers, wording, values and units follow the printed exam. Diagrams are redrawn from it. Answers on this site come from our own worked solutions.</p>' +
       '</div></details>';
+  }
+
+  /* rows: [{q, t}]; t is the note's lead sentence (TeX source, rendered after insertion) */
+  function flagList(ex, rows) {
+    if (!rows.length) return '<p class="small muted">No question has a source note.</p>';
+    return '<ul>' + rows.map(function (r) {
+      var q = r.q;
+      return '<li><a href="' + qHref(ex.id, q.num) + '">Question ' + q.num + '</a>' + (isFlagged(q) ? ' <span class="xm-flagb">' + icon('flag') + 'can change the answer</span>' : '') +
+        ': <span class="xm-flagtxt" data-n="' + q.num + '">' + (r.t ? esc(r.t) : isFlagged(q) ? 'Part of the source is unclear; the question page explains how the solution handles it.' : 'The question page has a short note on the printed source.') + '</span></li>';
+    }).join('') + '</ul>';
   }
 
   /* ---------------- embedded PDF viewer ---------------- */
@@ -604,7 +645,10 @@
     }
     form.addEventListener('input', function (e) {
       var part = e.target.closest('.xm-part');
-      if (part) { part.classList.remove('is-ok', 'is-no'); var fbx = $('.xm-pfb', part); if (fbx && part.getAttribute('data-type') !== 'draw') { fbx.hidden = true; } $$('.mc-opt', part).forEach(function (o) { o.classList.remove('ok', 'no'); }); }
+      if (part) {
+        var pr1 = peekP(pid), pid1 = part.getAttribute('data-part');
+        if (pr1 && pr1.last && pid1 && pr1.last[pid1] != null) delete pr1.last[pid1];   // saved with the draft below
+        part.classList.remove('is-ok', 'is-no'); var fbx = $('.xm-pfb', part); if (fbx && part.getAttribute('data-type') !== 'draw') { fbx.hidden = true; } $$('.mc-opt', part).forEach(function (o) { o.classList.remove('ok', 'no'); }); }
       clearTimeout(draftTimer); draftTimer = setTimeout(flushDraft, 300);
     });
     form.addEventListener('change', function () { clearTimeout(draftTimer); draftTimer = setTimeout(flushDraft, 300); });
@@ -629,7 +673,7 @@
     function checkPart(p) {
       var v = value(p);
       if (p.type === 'num') {
-        var spec = { labelText: plain(p.label), unit: p.unit, value: p.value, tol: p.tol, abs: p.abs };
+        var spec = { labelText: shortLabel(p.label), unit: p.unit, value: p.value, tol: p.tol, abs: p.abs };
         if (!global.EEPractice) return { state: String(v).trim() ? 'self' : 'empty', msg: 'The answer checker did not load. Compare with the final answer.' };
         var r = global.EEPractice.checkNumeric(spec, v, p.fb);
         return { state: r.state, msg: r.state === 'ok' ? 'Correct' + (r.value != null && p.unit ? ': ' + esc(global.EEPractice.fmtNum(r.value)) + ' ' + esc(p.unit) : '') + '.' : (r.html ? r.msg : esc(r.msg)) };

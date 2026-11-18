@@ -44,6 +44,9 @@ a.xm-tchip:hover { border-color: var(--topic); background: color-mix(in srgb, va
 .xm-st.s-own::before { background: var(--on-solid); }
 .xm-flagb { display: inline-flex; align-items: center; gap: 4px; padding: 2px 9px; border: 1px solid var(--warn); border-radius: var(--r-pill); background: var(--warn-soft); color: var(--warn); font-size: var(--fs-xs); font-weight: 600; line-height: 1.5; white-space: nowrap; }
 .xm-flagb .ic { width: 13px; height: 13px; }
+/* a minor source note (does not change the answer): quieter than the flag badge */
+.xm-noteb { display: inline-flex; align-items: center; gap: 4px; padding: 2px 9px; border: 1px solid var(--line); border-radius: var(--r-pill); background: var(--surface-2); color: var(--ink-2); font-size: var(--fs-xs); font-weight: 600; line-height: 1.5; white-space: nowrap; }
+.xm-noteb .ic { width: 13px; height: 13px; }
 
 /* collapsible panels */
 .xm-panel { margin: 0 0 14px; border: 1px solid var(--line); border-radius: var(--r-lg); background: var(--surface); }
@@ -175,7 +178,8 @@ a.xm-card:hover { border-color: var(--topic); box-shadow: var(--sh-2); transform
 .xm-navcard > summary::after { content: ""; width: 8px; height: 8px; border-right: 2px solid var(--ink-2); border-bottom: 2px solid var(--ink-2); transform: rotate(45deg); margin: 0 4px 4px 0; }
 .xm-navcard[open] > summary::after { transform: rotate(-135deg); margin: 4px 4px 0 0; }
 .xm-navcard > summary .card-title { margin: 0; }
-.xm-qnav { list-style: none; margin: 10px 0 0; padding: 0; display: grid; gap: 2px; }
+.xm-qnav { list-style: none; margin: 10px 0 0; padding: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: 2px; }
+.xm-qnav > li { min-width: 0; }
 .xm-qnav-it { display: flex; align-items: center; gap: 10px; padding: 5px 8px; border-radius: var(--r-sm); color: var(--ink-2); font-size: var(--fs-sm); text-decoration: none; line-height: 1.3; }
 a.xm-qnav-it:hover { background: var(--surface-2); color: var(--ink); }
 .xm-qnav-it[aria-current="page"] { background: var(--topic-tint); color: var(--ink); font-weight: 600; }
@@ -195,6 +199,11 @@ a.xm-qnav-it:hover { background: var(--surface-2); color: var(--ink); }
 .xm-prompt .xq-verbatim { font-size: 1.06rem; line-height: 1.65; margin-top: 0; padding: 10px 14px; border-left: 3px solid var(--topic); background: var(--surface-2); border-radius: 0 var(--r-md) var(--r-md) 0; }
 .xm-prompt figure.circuit, .xm-prompt figure.scope { background: var(--bg); }
 .xm-content .diagram-holder { overflow-x: auto; overscroll-behavior-x: contain; }
+/* shown by exams.js only while a diagram is wider than its column (phones) */
+.xm-scroll-cue { display: flex; align-items: center; justify-content: flex-end; gap: 6px; margin: 4px 0 0; color: var(--ink-3); font-size: var(--fs-xs); }
+.xm-scroll-cue.is-end { opacity: 0.45; }
+.xm-scroll-arr { font-size: 1rem; line-height: 1; }
+@media print { .xm-scroll-cue { display: none; } }
 .xm-content .diagram-holder > svg { display: block; margin: 0 auto; }   /* wider than the box: starts at the left edge and scrolls (centred inline SVG would be cut off on the left) */
 .xm-content .xq-given { width: auto; min-width: min(100%, 420px); }
 .xm-content .xq-given td:nth-child(2) { font-family: var(--font-mono); white-space: nowrap; }

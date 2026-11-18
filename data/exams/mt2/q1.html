@@ -88,7 +88,7 @@
 <p>Node names used below: A = the top wire (terminal A), M = the left-middle node, B = the right-middle node (terminal B), G = the bottom rail. Values are shown to 4 significant figures; the calculator keeps full precision.</p>
 </li>
 
-<li class="xq-step" data-title="R_N: deactivate the source and find the Δ">
+<li class="xq-step" data-title="\(R_N\): deactivate the source and find the Δ">
 <p>Replace \(V_1\) with a wire. \(R_1\) now runs from A to G. The bottom three resistors form a Δ between M, B and G:</p>
 <ul>
 <li>\(R_4 = 10\ \Omega\) between M and B,</li>
@@ -129,7 +129,7 @@
 <p>In the course's lettering (dw1), \(R_A = R_4\), \(R_B = R_6\), \(R_C = R_5\), and the arms are \(R_2 = 3.846\ \Omega\) (to M), \(R_3 = 4.615\ \Omega\) (to B) and \(R_1 = 11.54\ \Omega\) (to G). The letter names clash with this exam's \(R_1\)–\(R_6\), which is why this solution names the arms by their nodes.</p>
 </li>
 
-<li class="xq-step" data-title="R_N: reduce the Y circuit">
+<li class="xq-step" data-title="\(R_N\): reduce the Y circuit">
 <p>Remove the Δ and put the Y on the same three nodes M, B, G. Nothing outside the Δ changes.</p>
 <figure class="circuit">
 <script type="application/json">{"parts":[
@@ -190,7 +190,7 @@
 <div class="formula">\[ R_N = 15.93 \parallel 20 = \frac{15.93 \times 20}{15.93 + 20} = \frac{318.6}{35.93} = 8.868\ \Omega \]</div>
 </li>
 
-<li class="xq-step" data-title="I_N: short A–B and simplify">
+<li class="xq-step" data-title="\(I_N\): short A–B and simplify">
 <p>Go back to the original circuit with \(V_1\) in place and put a wire from A to B. The current in that wire, from A to B, is \(I_N\).</p>
 <figure class="circuit">
 <script type="application/json">{"parts":[
@@ -254,7 +254,7 @@
 <div class="formula">\[ I_T = \frac{V_1}{R_T} = \frac{30\ \text{V}}{25.41\ \Omega} = 1.181\ \text{A} \]</div>
 </li>
 
-<li class="xq-step" data-title="I_N: work back to the branch currents">
+<li class="xq-step" data-title="\(I_N\): work back to the branch currents">
 <p>Voltage at the A = B node (G = 0 V). \(R_1\) drops \(V_{R1} = I_T R_1 = 1.181 \times 10 = 11.81\) V:</p>
 <div class="formula">\[ V_{A} = V_1 - V_{R1} = 30 - 11.81 = 18.19\ \text{V} \]</div>
 <p>This 18.19 V sits across both branches to G:</p>

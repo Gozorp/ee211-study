@@ -64,7 +64,7 @@
 </ul>
 <p>For the solution, call the source's + node <strong>N</strong> and the node where \(R_2\), \(R_3\) and \(R_4\) meet <strong>M</strong>. Take B (the bottom wire, the source's − side) as the 0 V reference, so \(V_{TH} = V_A - V_B = V_A\).</p>
 </li>
-<li class="xq-step" data-title="Why series–parallel reduction works for V_TH">
+<li class="xq-step" data-title="Why series–parallel reduction works for \(V_{TH}\)">
 <p>At first glance this circuit does not look like a simple series–parallel network, because \(R_1\) jumps from N over to A. The key is KCL at A with A open:</p>
 <div class="formula">\[ I_{R_1}\ (\text{into A}) = I_{R_3}\ (\text{out of A, toward M}) \quad\text{because nothing else is connected to A.} \]</div>
 <p>So \(R_1\) and \(R_3\) carry the same current: they are <strong>in series</strong>, one path from N to M that passes through A. That path and \(R_2\) both run from N to M, so they are <strong>in parallel</strong>. The parallel group then sits in series with \(R_4\) (M to B) across the 20 V source. Now the circuit is an ordinary voltage divider.</p>
@@ -78,7 +78,7 @@
 <li>Thévenin definitions: \(V_{TH} = V_A - V_B\big|_{\text{A–B open}}\), \(\;R_{TH} = R_{AB}\big|_{V_1\ \text{shorted}}\).</li>
 </ul>
 </li>
-<li class="xq-step" data-title="V_TH, part 1: reduce to a single loop">
+<li class="xq-step" data-title="\(V_{TH}\), part 1: reduce to a single loop">
 <figure class="circuit">
 <script type="application/json">{"parts":[
  {"t":"BAT","a":[0,6],"b":[0,2],"label":"V_1","value":"20 V","side":-1},
@@ -113,7 +113,7 @@
 <div class="formula">\[ I_T = \frac{V_1}{R_T} = \frac{20\ \text{V}}{22.14\ \Omega} = 0.9032\ \text{A} \]</div>
 <p>(Exact fractions: \(R_T = 155/7\ \Omega\), \(I_T = 28/31\ \text{A}\). Values are rounded to 4 significant figures only for display; the calculator keeps full precision.)</p>
 </li>
-<li class="xq-step" data-title="V_TH, part 2: node voltages and the voltage at A">
+<li class="xq-step" data-title="\(V_{TH}\), part 2: node voltages and the voltage at A">
 <p><strong>Middle node M</strong> (voltage divider, or \(I_T R_4\)):</p>
 <div class="formula">\[ V_M = V_1 \frac{R_4}{R_T} = 20 \times \frac{15}{22.14} = 13.55\ \text{V} \qquad (\text{check: } 0.9032\ \text{A} \times 15\ \Omega = 13.55\ \text{V}) \]</div>
 <p>The parallel group (N to M) has the rest of the source voltage:</p>
@@ -156,7 +156,7 @@
 <div class="formula">\[ V_{TH} = V_A - V_B = 14.84\ \text{V} - 0\ \text{V} = 14.84\ \text{V} \quad (\text{exactly } 460/31\ \text{V}), \]</div>
 <p>positive, so A is the + terminal of the equivalent.</p>
 </li>
-<li class="xq-step" data-title="R_TH: short the source and redraw">
+<li class="xq-step" data-title="\(R_{TH}\): short the source and redraw">
 <p>Start again from the original circuit (do not reuse the voltages and currents from \(V_{TH}\)). Replace \(V_1\) by a wire. That wire joins node N to the bottom wire, so <strong>N and B become one node</strong>.</p>
 <figure class="circuit">
 <script type="application/json">{"parts":[
