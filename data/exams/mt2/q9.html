@@ -1,0 +1,303 @@
+<article class="xq" id="mt2-q9" data-exam="mt2" data-num="9" data-points="12" data-page="4" data-topics="thevenin srcxform" data-title="Thévenin equivalent with a zero-current resistor" data-status="ok">
+
+<section class="xq-prompt">
+<p class="xq-verbatim">9) (12pt) For the following circuit, derive the Thevenin equivalent circuit.<br>R1 = 10Ω, R2 = 20Ω, R3 = 20Ω, R4 = 10Ω, V1 = 20v<br>(3pt) R<sub>th</sub>: ________<br>(6pt) V<sub>th</sub>: ________<br>(3pt) Draw the Thevenin Equivalent Circuit (include values for all components).</p>
+<figure class="circuit">
+<script type="application/json">{"parts":[
+ {"t":"BAT","a":[0,4],"b":[0,0],"label":"V_1","value":"20 V","side":-1},
+ {"t":"W","pts":[[0,0],[1,0]]},
+ {"t":"R","a":[1,0],"b":[4,0],"label":"R_1","value":"10 Ω"},
+ {"t":"W","pts":[[4,0],[6,0]]},
+ {"t":"R","a":[5,0],"b":[5,4],"label":"R_2","value":"20 Ω"},
+ {"t":"R","a":[6,0],"b":[9,0],"label":"R_3","value":"20 Ω"},
+ {"t":"W","pts":[[9,0],[10,0]]},
+ {"t":"N","at":[10,0],"label":"A","pos":"e","open":true},
+ {"t":"W","pts":[[0,4],[1,4]]},
+ {"t":"R","a":[1,4],"b":[4,4],"label":"R_4","value":"10 Ω","side":-1},
+ {"t":"W","pts":[[4,4],[10,4]]},
+ {"t":"N","at":[10,4],"label":"B","pos":"e","open":true},
+ {"t":"N","at":[5,0]},{"t":"N","at":[5,4]}
+],"pad":1.2,"alt":"A 20 volt battery V1 on the left, positive (long) plate on top. Top wire: R1 = 10 ohms to a junction, then R3 = 20 ohms to open terminal A. R2 = 20 ohms goes down from that junction to a junction on the bottom wire. Bottom wire: from the battery's negative side through R4 = 10 ohms to the lower junction, then on to open terminal B."}</script>
+<figcaption>Question 9 redrawn. The battery's long plate (+) is on top, as on the exam. \(R_4\) sits in the bottom wire between the source and the foot of \(R_2\). Terminals A and B are open.</figcaption>
+</figure>
+<table class="xq-given">
+<tr><th>Quantity</th><th>Value</th><th>Note</th></tr>
+<tr><td>\(V_1\)</td><td>20 V</td><td>printed "20v"; + on the top terminal (long plate)</td></tr>
+<tr><td>\(R_1\)</td><td>10 Ω</td><td>top wire, source to the junction</td></tr>
+<tr><td>\(R_2\)</td><td>20 Ω</td><td>from the top junction down to the bottom junction</td></tr>
+<tr><td>\(R_3\)</td><td>20 Ω</td><td>top wire, from the junction to terminal A</td></tr>
+<tr><td>\(R_4\)</td><td>10 Ω</td><td>bottom wire, source − side to the bottom junction (which continues to B)</td></tr>
+</table>
+</section>
+
+<section class="xq-find">
+<div class="xq-part" data-part="a" data-points="3" data-type="num" data-label="\(R_{th}\)" data-value="30" data-unit="Ω" data-tol="0.01"></div>
+<div class="xq-part" data-part="b" data-points="6" data-type="num" data-label="\(V_{th}\) (A relative to B)" data-value="10" data-unit="V" data-tol="0.01"></div>
+<div class="xq-part" data-part="c" data-points="3" data-type="draw" data-label="Draw the Thévenin equivalent circuit (include values for all components)"></div>
+<p class="fb" data-part="a" data-match="10" data-tol="0.01">10 Ω is \(R_2 \parallel (R_1 + R_4)\). You stopped one step early: \(R_3\) is still in series between that combination and terminal A.</p>
+<p class="fb" data-part="a" data-match="26.667" data-tol="0.01">You used \(R_3 + R_2 \parallel R_1\) and left out \(R_4\). After the source is shorted, \(R_1\) and \(R_4\) are joined by the short into one series path (20 Ω), and that path is in parallel with \(R_2\).</p>
+<p class="fb" data-part="a" data-match="60" data-tol="0.01">Adding all four resistors treats them as one series chain. With the source shorted, \(R_1 + R_4\) and \(R_2\) are two paths between the same two nodes, so they combine in parallel first.</p>
+<p class="fb" data-part="a" data-match="40" data-tol="0.01">\(R_3 + R_2 = 40\ \Omega\) is what you get if you remove the source (open) instead of replacing it with a wire. Then \(R_1\) and \(R_4\) dangle and drop out. To kill a voltage source, short it.</p>
+<p class="fb" data-part="b" data-match="20" data-tol="0.01">The full source voltage would appear at A–B only if no current flowed anywhere. Current does flow around the loop \(V_1\), \(R_1\), \(R_2\), \(R_4\); only \(R_3\), which leads to the open terminal, carries none.</p>
+<p class="fb" data-part="b" data-match="15" data-tol="0.01">15 V is the voltage of A measured from the source's − terminal. B is not at that point: \(R_4\) sits between them, and its 5 V drop puts B at 5 V. \(V_{th} = V_A - V_B\).</p>
+<p class="fb" data-part="b" data-match="5" data-tol="0.01">5 V is the drop across \(R_4\) (or across \(R_1\)). A and B sit at the two ends of \(R_2\), so \(V_{th}\) is the voltage across \(R_2\).</p>
+<p class="fb" data-part="b" data-match="13.333" data-tol="0.01">That divider (\(20 \times 20/30\)) leaves out \(R_4\). \(R_4\) is in the same loop and carries the same current, so the loop resistance is \(10 + 20 + 10 = 40\ \Omega\).</p>
+<p class="fb" data-part="b" data-match="6.667" data-tol="0.01">You treated \(R_3\) as being in parallel with \(R_2\). That would be true only if A and B were shorted together. With A–B open, \(R_3\) carries no current and does not affect the loop.</p>
+</section>
+
+<div class="xq-hints">
+<p class="xq-hint">Look at \(R_3\). Its right end goes only to the open terminal A. Can any current flow through it? What does that tell you about the voltage at A compared with the junction above \(R_2\)?</p>
+<p class="xq-hint">Without \(R_3\), what is left is one loop: \(V_1\), \(R_1\), \(R_2\), \(R_4\). A sits at the top of \(R_2\) and B at its bottom, so \(V_{th}\) is the voltage across \(R_2\).</p>
+<p class="xq-hint">For \(R_{th}\), redraw with \(V_1\) replaced by a wire. Which two resistors does that wire connect end to end? Combine them, then with \(R_2\), then add \(R_3\).</p>
+<p class="xq-hint">Alternative: \(V_1\), \(R_1\) and \(R_4\) form one series branch between the two junctions, a 20 V source with 20 Ω. Try source transformations from there.</p>
+</div>
+
+<ol class="xq-steps">
+<li class="xq-step" data-title="Identify the concept">
+<p>"Derive the Thévenin equivalent" means: replace the whole circuit, as seen from A and B, by one source \(V_{th}\) in series with one resistor \(R_{th}\) (the exam writes the subscripts in lowercase; they mean the same as \(V_{TH}\), \(R_{TH}\)). Two separate procedures:</p>
+<ul>
+<li>\(V_{th}\) = the open-circuit voltage \(V_{AB}\) with nothing connected to A–B.</li>
+<li>\(R_{th}\) = the resistance seen from A–B with \(V_1\) replaced by a short.</li>
+</ul>
+<p>Name the top junction (where \(R_1\), \(R_2\), \(R_3\) meet) <strong>X</strong> and the bottom junction (where \(R_4\), \(R_2\) and the wire to B meet) <strong>Y</strong>.</p>
+</li>
+<li class="xq-step" data-title="Why the method applies: R3 is a dead end">
+<p>With A–B open, \(R_3\) connects X to terminal A and nothing else. Current needs a closed loop, and there is none through \(R_3\), so</p>
+<div class="formula">\[ I_{R_3} = 0\ \text{A} \;\Rightarrow\; V_{R_3} = I_{R_3} R_3 = 0\ \text{V} \;\Rightarrow\; V_A = V_X . \]</div>
+<p>Likewise B is wired straight to Y, so \(V_B = V_Y\). Therefore \(V_{th} = V_X - V_Y\), the voltage across \(R_2\).</p>
+<p>The remaining circuit is a <strong>single loop</strong>: \(V_1 \to R_1 \to R_2 \to R_4 \to V_1\). One loop means one current through three series resistors, so a voltage divider gives \(V_{R_2}\) directly.</p>
+</li>
+<li class="xq-step" data-title="Formulas you need">
+<ul>
+<li>Series: \(R_T = R_1 + R_2 + R_4\) (Ω). Ohm's law: \(I = V_1/R_T\) (A), \(V_R = IR\) (V).</li>
+<li>Voltage divider: \(V_{R_2} = V_1 \dfrac{R_2}{R_1 + R_2 + R_4}\).</li>
+<li>Parallel: \(R_a \parallel R_b = \dfrac{R_a R_b}{R_a + R_b}\).</li>
+<li>Source transformation (alternative route): a source \(V\) in series with \(R\) equals a current source \(I = V/R\) in parallel with the same \(R\), arrow pointing toward the + side. Back again: \(V = IR\).</li>
+</ul>
+</li>
+<li class="xq-step" data-title="V_th: loop current, drops and node voltages">
+<p>Loop resistance and current (clockwise: out of the + terminal, through \(R_1\) to the right, down \(R_2\), left through \(R_4\) back to the − terminal):</p>
+<div class="formula">\[ R_T = 10 + 20 + 10 = 40\ \Omega, \qquad I = \frac{20\ \text{V}}{40\ \Omega} = 0.5\ \text{A} \]</div>
+<p>Drops (Ohm's law):</p>
+<div class="formula">\[ V_{R_1} = 0.5 \times 10 = 5\ \text{V}, \quad V_{R_2} = 0.5 \times 20 = 10\ \text{V}, \quad V_{R_4} = 0.5 \times 10 = 5\ \text{V}, \quad V_{R_3} = 0 \times 20 = 0\ \text{V} \]</div>
+<p>KVL check around the loop: \(20 - 5 - 10 - 5 = 0\) ✓.</p>
+<p>Node voltages, taking the source's − terminal as 0 V: X is at \(20 - 5 = 15\ \text{V}\), so A is also at 15 V (no drop in \(R_3\)). Y is at \(0 + 5 = 5\ \text{V}\) (the current flows from Y back through \(R_4\) to the 0 V terminal, so Y is 5 V higher), and B is also at 5 V.</p>
+<figure class="circuit">
+<script type="application/json">{"parts":[
+ {"t":"BAT","a":[0,4],"b":[0,0],"label":"V_1","value":"20 V","side":-1},
+ {"t":"W","pts":[[0,0],[1,0]]},
+ {"t":"R","a":[1,0],"b":[4,0],"label":"R_1","value":"drop 5 V"},
+ {"t":"W","pts":[[4,0],[6,0]]},
+ {"t":"R","a":[5,0],"b":[5,4],"label":"R_2","value":"drop 10 V"},
+ {"t":"R","a":[6,0],"b":[9,0],"label":"R_3","value":"drop 0 V"},
+ {"t":"W","pts":[[9,0],[10,0]]},
+ {"t":"N","at":[10,0],"label":"A","pos":"e","open":true},
+ {"t":"W","pts":[[0,4],[1,4]]},
+ {"t":"R","a":[1,4],"b":[4,4],"label":"R_4","value":"drop 5 V","side":-1},
+ {"t":"W","pts":[[4,4],[10,4]]},
+ {"t":"N","at":[10,4],"label":"B","pos":"e","open":true},
+ {"t":"N","at":[5,0]},{"t":"N","at":[5,4]},
+ {"t":"ARROW","a":[1.5,0.7],"b":[3.5,0.7],"label":"0.5 A","lat":[2.5,1.3]},
+ {"t":"ARROW","a":[4.4,1.2],"b":[4.4,2.8],"label":"0.5 A","lat":[4.1,2.1],"anchor":"end"},
+ {"t":"ARROW","a":[3.5,3.3],"b":[1.5,3.3],"label":"0.5 A","lat":[2.5,2.8]},
+ {"t":"ARROW","a":[6.5,0.7],"b":[8.5,0.7],"label":"0 A","lat":[7.5,1.3]},
+ {"t":"T","at":[-0.3,-0.4],"text":"20 V","anchor":"end","cls":"accent"},
+ {"t":"T","at":[5,-0.55],"text":"X: 15 V","anchor":"middle","cls":"accent"},
+ {"t":"T","at":[10.2,-0.6],"text":"15 V","anchor":"middle","cls":"accent"},
+ {"t":"T","at":[-0.3,4.6],"text":"0 V","anchor":"end","cls":"accent"},
+ {"t":"T","at":[5,4.85],"text":"Y: 5 V","anchor":"middle","cls":"accent"},
+ {"t":"T","at":[10.2,4.85],"text":"5 V","anchor":"middle","cls":"accent"},
+ {"t":"VM","a":[11.4,0.3],"b":[11.4,3.7],"label":"V_{th} = 10 V","lat":[11.8,2],"anchor":"start"},
+ {"t":"T","at":[14.6,2],"text":" "}
+],"pad":1.3,"alt":"Question 9 with currents and node voltages. 0.5 A flows clockwise: right through R1 (drop 5 V), down through R2 (drop 10 V), left through R4 (drop 5 V). 0 A flows in R3. Relative to the battery's negative terminal: 20 V at the battery top, 15 V at junction X and at A, 5 V at junction Y and at B, 0 V at the battery bottom. V_th = 15 minus 5 = 10 V."}</script>
+<figcaption>Loop current and node voltages with A–B open (added for clarity). Voltages are measured from the source's − terminal.</figcaption>
+</figure>
+<p><strong>Result and polarity:</strong></p>
+<div class="formula">\[ V_{th} = V_A - V_B = 15\ \text{V} - 5\ \text{V} = 10\ \text{V} \qquad \left(= 20 \times \frac{20}{10 + 20 + 10}\right) \]</div>
+<p>Positive, so A is the + terminal of the equivalent.</p>
+</li>
+<li class="xq-step" data-title="R_th: short the source, then series–parallel">
+<p>Start again from the original circuit and replace \(V_1\) by a wire.</p>
+<figure class="circuit">
+<script type="application/json">{"parts":[
+ {"t":"W","pts":[[0,0],[0,4]]},
+ {"t":"T","at":[-0.3,2.1],"text":"short\n(was V_1)","anchor":"end","cls":"muted"},
+ {"t":"W","pts":[[0,0],[1,0]]},
+ {"t":"R","a":[1,0],"b":[4,0],"label":"R_1","value":"10 Ω"},
+ {"t":"W","pts":[[4,0],[6,0]]},
+ {"t":"R","a":[5,0],"b":[5,4],"label":"R_2","value":"20 Ω"},
+ {"t":"R","a":[6,0],"b":[9,0],"label":"R_3","value":"20 Ω"},
+ {"t":"W","pts":[[9,0],[10,0]]},
+ {"t":"N","at":[10,0],"label":"A","pos":"e","open":true},
+ {"t":"W","pts":[[0,4],[1,4]]},
+ {"t":"R","a":[1,4],"b":[4,4],"label":"R_4","value":"10 Ω","side":-1},
+ {"t":"W","pts":[[4,4],[10,4]]},
+ {"t":"N","at":[10,4],"label":"B","pos":"e","open":true},
+ {"t":"N","at":[5,0]},{"t":"N","at":[5,4]},
+ {"t":"T","at":[5.3,-0.5],"text":"X","anchor":"start","cls":"muted"},
+ {"t":"T","at":[5.3,4.7],"text":"Y","anchor":"start","cls":"muted"},
+ {"t":"T","at":[-2.4,0],"text":" "}
+],"pad":1.2,"alt":"Question 9 with the battery replaced by a wire. R1 (top) and R4 (bottom) are now joined end to end through that wire, forming one 20 ohm path from X to Y, in parallel with R2. R3 leads from X to terminal A."}</script>
+<figcaption>\(V_1\) replaced by a wire (added for clarity). The wire joins the left end of \(R_1\) to the left end of \(R_4\).</figcaption>
+</figure>
+<p>Follow a test current entering at A: it passes through \(R_3\) to X without splitting, so \(R_3\) is in series with everything behind it. At X it splits: one part goes down \(R_2\) to Y; the other goes left through \(R_1\), down the short and right through \(R_4\) to Y. It rejoins at Y and leaves at B.</p>
+<div class="formula">\[ R_1 + R_4 = 10 + 10 = 20\ \Omega \quad (\text{series: same current, joined by the short}) \]</div>
+<div class="formula">\[ R_2 \parallel (R_1 + R_4) = \frac{20 \times 20}{20 + 20} = 10\ \Omega \quad (\text{both run from X to Y}) \]</div>
+<div class="formula">\[ R_{th} = R_3 + 10\ \Omega = 20 + 10 = 30\ \Omega \]</div>
+<figure class="circuit">
+<script type="application/json">{"parts":[
+ {"t":"R","a":[0,0],"b":[0,3],"label":"R_1 + R_4","value":"20 Ω","side":-1},
+ {"t":"W","pts":[[0,0],[3,0]]},
+ {"t":"R","a":[2.5,0],"b":[2.5,3],"label":"R_2","value":"20 Ω"},
+ {"t":"R","a":[3,0],"b":[6,0],"label":"R_3","value":"20 Ω"},
+ {"t":"W","pts":[[6,0],[7,0]]},
+ {"t":"N","at":[7,0],"label":"A","pos":"e","open":true},
+ {"t":"W","pts":[[0,3],[7,3]]},
+ {"t":"N","at":[7,3],"label":"B","pos":"e","open":true},
+ {"t":"N","at":[2.5,0]},{"t":"N","at":[2.5,3]},
+ {"t":"T","at":[3.5,4.2],"text":"R_{th} = 20 + (20 ∥ 20) = 20 + 10 = 30 Ω","cls":"accent"},
+ {"t":"T","at":[-3,0],"text":" "}
+],"pad":1.2,"alt":"Reduced network for R_th: R1 + R4 = 20 ohms and R2 = 20 ohms both connected between X and Y (in parallel, 10 ohms), then R3 = 20 ohms in series from X to terminal A. R_th = 30 ohms."}</script>
+<figcaption>The reduced network (added for clarity): \((R_1 + R_4) \parallel R_2\) then \(R_3\) in series to A.</figcaption>
+</figure>
+</li>
+<li class="xq-step" data-title="Alternative route: source transformations">
+<p>This route gives both numbers at once. It works because, after each swap, the next element (first \(R_2\), then \(R_3\)) is in parallel or in series with the source you just created, so the network keeps collapsing into one source–resistor pair.</p>
+<p><strong>(1) Combine the source branch.</strong> \(V_1\), \(R_1\) and \(R_4\) carry the same current, so they are one series branch from Y to X. The order of elements in a series branch does not change what the branch does at its ends, so slide \(R_4\) around next to \(R_1\): a 20 V source (+ toward X) in series with \(R_1 + R_4 = 20\ \Omega\).</p>
+<figure class="circuit">
+<script type="application/json">{"parts":[
+ {"t":"BAT","a":[0,4],"b":[0,1],"label":"20 V","side":-1},
+ {"t":"W","pts":[[0,1],[0,0],[1,0]]},
+ {"t":"R","a":[1,0],"b":[4,0],"label":"R_1 + R_4","value":"20 Ω"},
+ {"t":"W","pts":[[4,0],[6,0]]},
+ {"t":"R","a":[5,0],"b":[5,4],"label":"R_2","value":"20 Ω"},
+ {"t":"R","a":[6,0],"b":[9,0],"label":"R_3","value":"20 Ω"},
+ {"t":"W","pts":[[9,0],[10,0]]},
+ {"t":"N","at":[10,0],"label":"A","pos":"e","open":true},
+ {"t":"W","pts":[[0,4],[10,4]]},
+ {"t":"N","at":[10,4],"label":"B","pos":"e","open":true},
+ {"t":"N","at":[5,0],"label":"X","pos":"n"},{"t":"N","at":[5,4],"label":"Y","pos":"s"},
+ {"t":"T","at":[-2.2,0],"text":" "}
+],"pad":1.2,"alt":"Step 1: a 20 volt source, positive on top, in series with a single 20 ohm resistor (R1 + R4) feeding node X. R2 = 20 ohms from X to Y, R3 = 20 ohms from X to A, and Y connects to B."}</script>
+<figcaption>Step (1): \(R_4\) moved next to \(R_1\) inside the series branch (added for clarity).</figcaption>
+</figure>
+<p><strong>(2) Transform to a current source.</strong> \(I = V/R = 20\ \text{V} / 20\ \Omega = 1\ \text{A}\), in parallel with the same 20 Ω. The arrow points toward X, the side the + plate faced.</p>
+<p><strong>(3) Combine the parallel resistors.</strong> Now the 1 A source, the 20 Ω and \(R_2 = 20\ \Omega\) all sit between X and Y: \(20 \parallel 20 = 10\ \Omega\).</p>
+<figure class="circuit">
+<script type="application/json">{"parts":[
+ {"t":"I","a":[0,4],"b":[0,0],"label":"1 A","side":-1},
+ {"t":"W","pts":[[0,0],[6.5,0]]},
+ {"t":"R","a":[2.5,0],"b":[2.5,4],"label":"R_1 + R_4","value":"20 Ω"},
+ {"t":"R","a":[5.5,0],"b":[5.5,4],"label":"R_2","value":"20 Ω"},
+ {"t":"R","a":[6.5,0],"b":[9.5,0],"label":"R_3","value":"20 Ω"},
+ {"t":"W","pts":[[9.5,0],[10.5,0]]},
+ {"t":"N","at":[10.5,0],"label":"A","pos":"e","open":true},
+ {"t":"W","pts":[[0,4],[10.5,4]]},
+ {"t":"N","at":[10.5,4],"label":"B","pos":"e","open":true},
+ {"t":"N","at":[2.5,0]},{"t":"N","at":[5.5,0]},{"t":"N","at":[2.5,4]},{"t":"N","at":[5.5,4]},
+ {"t":"T","at":[4,-0.5],"text":"X","cls":"muted"},
+ {"t":"T","at":[4,4.75],"text":"Y","cls":"muted"},
+ {"t":"T","at":[4,5.6],"text":"1 A ∥ 20 Ω ∥ 20 Ω = 1 A ∥ 10 Ω","cls":"accent"},
+ {"t":"T","at":[-1.6,0],"text":" "}
+],"pad":1.2,"alt":"Steps 2 and 3: a 1 ampere current source with its arrow pointing up toward X, in parallel with 20 ohms and with R2 = 20 ohms, all between X and Y. R3 = 20 ohms leads from X to A. The two 20 ohm resistors combine to 10 ohms."}</script>
+<figcaption>Steps (2)–(3): 20 V with 20 Ω becomes 1 A ∥ 20 Ω (arrow toward X), which sits in parallel with \(R_2\) (added for clarity).</figcaption>
+</figure>
+<p><strong>(4) Transform back.</strong> \(V = IR = 1\ \text{A} \times 10\ \Omega = 10\ \text{V}\), + toward X, in series with 10 Ω.</p>
+<p><strong>(5) Add \(R_3\).</strong> It is in series with that 10 Ω on the way to A: \(10 + 20 = 30\ \Omega\). The circuit is now one 10 V source in series with 30 Ω between A and B. That is the Thévenin form, so \(V_{th} = 10\ \text{V}\) and \(R_{th} = 30\ \Omega\), matching steps 4 and 5.</p>
+<figure class="circuit">
+<script type="application/json">{"parts":[
+ {"t":"I","a":[0,4],"b":[0,0],"label":"1 A","side":-1},
+ {"t":"W","pts":[[0,0],[3,0]]},
+ {"t":"R","a":[2,0],"b":[2,4],"label":"10 Ω"},
+ {"t":"R","a":[3,0],"b":[5.5,0],"label":"R_3","value":"20 Ω"},
+ {"t":"W","pts":[[5.5,0],[6,0]]},
+ {"t":"N","at":[6,0],"label":"A","pos":"e","open":true},
+ {"t":"W","pts":[[0,4],[6,4]]},
+ {"t":"N","at":[6,4],"label":"B","pos":"e","open":true},
+ {"t":"N","at":[2,0]},{"t":"N","at":[2,4]},
+ {"t":"ARROW","a":[7.3,2],"b":[8.7,2]},
+ {"t":"BAT","a":[10.5,4],"b":[10.5,1],"label":"10 V","side":-1},
+ {"t":"W","pts":[[10.5,1],[10.5,0],[11,0]]},
+ {"t":"R","a":[11,0],"b":[13.5,0],"label":"10 Ω"},
+ {"t":"R","a":[13.5,0],"b":[16,0],"label":"R_3","value":"20 Ω"},
+ {"t":"W","pts":[[16,0],[16.5,0]]},
+ {"t":"N","at":[16.5,0],"label":"A","pos":"e","open":true},
+ {"t":"W","pts":[[10.5,4],[16.5,4]]},
+ {"t":"N","at":[16.5,4],"label":"B","pos":"e","open":true},
+ {"t":"T","at":[13.5,5.2],"text":"10 V in series with 10 + 20 = 30 Ω","cls":"accent"},
+ {"t":"T","at":[-1.6,0],"text":" "}
+],"pad":1.2,"alt":"Steps 4 and 5: on the left, a 1 ampere source with its arrow up, in parallel with 10 ohms, then R3 = 20 ohms to A. An arrow points to the right-hand circuit: a 10 volt battery, positive on top, in series with 10 ohms and R3 = 20 ohms to A, with the negative side to B: 10 V in series with 30 ohms."}</script>
+<figcaption>Steps (4)–(5): 1 A ∥ 10 Ω becomes 10 V + 10 Ω (+ on the side the arrow pointed to), and \(R_3\) adds in series (added for clarity).</figcaption>
+</figure>
+<p>Each transformation is a local swap of one source–resistor pair, not a Thévenin step by itself. The result is the Thévenin equivalent only because, at the end, everything between A and B has been absorbed into one source and one resistor.</p>
+</li>
+<li class="xq-step" data-title="Draw the Thévenin equivalent">
+<p>Put \(V_{th} = 10\ \text{V}\) in series with \(R_{th} = 30\ \Omega\) between A and B, with the source's + side toward A (because \(V_A - V_B = +10\ \text{V}\)). The drawing is in the answer below.</p>
+</li>
+</ol>
+
+<section class="xq-answer">
+<p>\(R_{th} = R_3 + R_2 \parallel (R_1 + R_4) = 20 + 10 = 30\ \Omega\).</p>
+<p>\(V_{th} = 10\ \text{V}\) (A positive with respect to B).</p>
+<figure class="circuit">
+<script type="application/json">{"parts":[
+ {"t":"BAT","a":[0,4],"b":[0,1],"label":"V_{th}","value":"10 V","side":-1},
+ {"t":"W","pts":[[0,1],[0,0],[1,0]]},
+ {"t":"R","a":[1,0],"b":[4,0],"label":"R_{th}","value":"30 Ω"},
+ {"t":"W","pts":[[4,0],[5,0]]},
+ {"t":"N","at":[5,0],"open":true,"label":"A","pos":"e"},
+ {"t":"W","pts":[[0,4],[5,4]]},
+ {"t":"N","at":[5,4],"open":true,"label":"B","pos":"e"},
+ {"t":"T","at":[-2.2,0],"text":" "}
+],"pad":1.2,"alt":"Thévenin equivalent: a 10 volt battery, positive plate on top, in series with a 30 ohm resistor leading to terminal A. The battery's negative side connects to terminal B."}</script>
+<figcaption>Thévenin equivalent of Question 9: 10 V (+ toward A) in series with 30 Ω.</figcaption>
+</figure>
+</section>
+
+<section class="xq-check">
+<ul>
+<li><strong>Two methods agree.</strong> The divider/series–parallel route and the source-transformation route both give 10 V and 30 Ω.</li>
+<li><strong>Short-circuit check</strong> (\(R_{th} = V_{OC}/I_{SC}\)). Short A to B: now \(R_3\) is in parallel with \(R_2\), \(20 \parallel 20 = 10\ \Omega\), and the source sees \(10 + 10 + 10 = 30\ \Omega\), so it supplies \(20/30 = 0.6667\ \text{A}\). Half of that goes through \(R_3\) (equal 20 Ω branches): \(I_{SC} = 0.3333\ \text{A}\) from A to B. \(V_{OC}/I_{SC} = 10/0.3333 = 30\ \Omega\) ✓.</li>
+<li><strong>Range check.</strong> \(V_{th}\) is less than the 20 V source, as it must be for a passive divider, and \(R_{th}\) is more than \(R_3\) alone, since \(R_3\) is in series with a positive resistance.</li>
+<li><strong>Load check.</strong> With \(R_L = 30\ \Omega\) across A–B the equivalent gives \(10 \times 30/(30 + 30) = 5\ \text{V}\). Nodal analysis of the full circuit with that load also gives 5 V.</li>
+</ul>
+</section>
+
+<section class="xq-mistakes">
+<ul>
+<li>Including \(R_3\) in the loop when finding \(V_{th}\) (treating it as parallel with \(R_2\)). With A–B open, \(R_3\) carries no current and has no effect on \(V_{th}\). It does matter for \(R_{th}\).</li>
+<li>Reporting 15 V: the voltage of A measured from the source's − terminal. B is not at 0 V; \(R_4\) lifts it to 5 V.</li>
+<li>Forgetting \(R_4\) because it is drawn in the bottom wire. Resistors in the return wire are in series with the source just like those in the top wire.</li>
+<li>Removing the source (open) instead of shorting it when finding \(R_{th}\): that gives 40 Ω.</li>
+<li>Reusing the \(V_{th}\) drawing (with its currents) to find \(R_{th}\). Redraw with the source shorted.</li>
+<li>In the source transformation, pointing the current arrow away from the + side, or changing the resistor value. The resistor stays the same; only the source changes.</li>
+</ul>
+</section>
+
+<section class="xq-similar">
+<p><strong>Approach for a similar problem.</strong></p>
+<ul>
+<li><strong>Different values, same layout:</strong> \(V_{th} = V_1 \dfrac{R_2}{R_1 + R_2 + R_4}\) and \(R_{th} = R_3 + R_2 \parallel (R_1 + R_4)\).</li>
+<li><strong>A–B moved across \(R_2\) directly</strong> (no \(R_3\)): \(V_{th}\) is unchanged and \(R_{th} = R_2 \parallel (R_1 + R_4)\).</li>
+<li><strong>More resistors in the source branch</strong>: add every resistor in series with the source (top or bottom wire) before transforming or dividing.</li>
+<li><strong>Several sources or branches:</strong> transform each source–series-resistor pair into a current source in parallel; add parallel current sources (with their directions) and combine the parallel resistors; transform back at the end. This is the idea behind Millman's theorem.</li>
+<li><strong>Check first:</strong> mark any resistor that leads only to an open terminal. It carries no current, so drop it for \(V_{th}\) and put it back for \(R_{th}\).</li>
+</ul>
+</section>
+
+<section class="xq-connect">
+<p><strong>Topics tested:</strong> <a href="#/t/thevenin/understand">Thévenin &amp; Norton equivalents</a> (main) and <a href="#/t/srcxform/understand">Source Transformations</a> (an alternative method).</p>
+<p><strong>Clues:</strong> "derive the Thevenin equivalent circuit", open terminals A and B, and blanks for \(R_{th}\) and \(V_{th}\). \(R_3\) leads only to the open terminal A, which tells you it carries no current. The source has resistors in series with it (\(R_1\) and \(R_4\)), which is the pattern a source transformation needs.</p>
+<p><strong>Where it is taught:</strong> this is the same circuit, with the same values (20 V, 10 Ω, 20 Ω, 20 Ω, 10 Ω), that opens the Thévenin (continued) lecture <a class="ts" data-lesson="tn2" data-t="0:18"></a>. The guide names the resistors \(R_1\)–\(R_4\) the same way as the exam; the lecture labels the terminals a and b.</p>
+<ul>
+<li><a class="xref" data-lesson="tn2" data-sec="tn2-thev-vth">Thévenin (continued), §1: finding \(V_{TH}\) when a resistor carries no current</a>. At <a class="ts" data-lesson="tn2" data-t="5:19"></a> the instructor explains that no current flows through the open circuit, so the 20 Ω to terminal a carries 0 A. At <a class="ts" data-lesson="tn2" data-t="11:41"></a> he reads off \(V_{TH} = 15 - 5 = 10\ \text{V}\).</li>
+<li><a class="xref" data-lesson="tn2" data-sec="tn2-thev-rth">Thévenin (continued), §2: finding \(R_{TH}\)</a>. He tells the class to redraw and start again at <a class="ts" data-lesson="tn2" data-t="13:15"></a>. The short puts \(R_1\) and \(R_4\) in series at <a class="ts" data-lesson="tn2" data-t="15:31"></a>, the reduction is written out at <a class="ts" data-lesson="tn2" data-t="18:08"></a> and ends in 30 Ω at <a class="ts" data-lesson="tn2" data-t="18:30"></a>, and the equivalent is drawn at <a class="ts" data-lesson="tn2" data-t="19:00"></a>.</li>
+<li><a class="xref" data-lesson="tn1" data-sec="tn1-vth">Thévenin lesson, §3: the open-terminal voltage</a> (definition at <a class="ts" data-lesson="tn1" data-t="17:40"></a>).</li>
+<li><a class="xref" data-lesson="st1" data-sec="st1-idea">Source transformation, §1: the idea and the rule</a>. The rule \(I = V/R\), same \(R\), is written at <a class="ts" data-lesson="st1" data-t="3:07"></a>. At <a class="ts" data-lesson="st1" data-t="1:28"></a> the instructor warns that a transformed pair is not by itself a Thévenin or Norton equivalent. <a class="xref" data-lesson="st1" data-sec="st1-examples">§2: worked conversions</a> (10 V with 2 Ω becomes 5 A with 2 Ω at <a class="ts" data-lesson="st1" data-t="4:31"></a>).</li>
+</ul>
+<p><strong>Formulas:</strong> \(V_{TH} = V_A - V_B\big|_{\text{open}}\), \(R_{TH} = R_{AB}\big|_{\text{sources shorted}}\), voltage divider, \(I = V/R\) and \(V = IR\) for source transformations. See the <a href="#/t/thevenin/review">Thévenin &amp; Norton formula sheet</a> and the <a href="#/t/srcxform/review">Source Transformations formula sheet</a>.</p>
+<p><strong>Try it in the lab:</strong> the <a href="#/t/thevenin/understand/lab/thevenin?preset=tn2-ex1">Thévenin/Norton lab, preset "tn2 Ex. 1"</a> loads this exact circuit; compare its open-circuit and sources-off views with steps 4 and 5. In the <a href="#/t/srcxform/understand/lab/srcxform">source transformation lab</a>, enter 20 V and 20 Ω to see step (2) with the arrow direction.</p>
+<p><strong>How the concepts combine:</strong> Thévenin's theorem defines the two numbers you need. The direct route finds them separately (a divider for \(V_{th}\), series–parallel reduction with the source shorted for \(R_{th}\)). Source transformation is a second route: repeated local swaps shrink the whole network into one source and one resistor, which gives \(V_{th}\) and \(R_{th}\) together and checks the first route.</p>
+</section>
+
+</article>

@@ -1,0 +1,219 @@
+<article class="xq" id="mt2-q3" data-exam="mt2" data-num="3" data-points="8" data-page="2" data-topics="lc" data-title="RL circuit energizing: resistor and inductor voltages at 30 ms and 60 ms" data-status="ok">
+
+<section class="xq-prompt">
+<p class="xq-verbatim">3) (8pts) Inductors: V1 = 10v, R = 200, L1 = 5H</p>
+<figure class="circuit">
+<script type="application/json">{"parts":[
+ {"t":"BAT","a":[0,5],"b":[0,2],"plus":"b","label":"V_1","value":"10 V","side":-1},
+ {"t":"W","pts":[[0,2],[0,0],[3.5,0]]},
+ {"t":"N","at":[3.5,0],"label":"A","pos":"n","open":true},
+ {"t":"W","pts":[[3.5,0],[4.8,1]]},
+ {"t":"N","at":[4.8,1],"open":true},
+ {"t":"T","at":[4.7,-0.35],"text":"S_1"},
+ {"t":"W","pts":[[2.2,6.5],[2.2,1],[3.5,1]]},
+ {"t":"N","at":[3.5,1],"label":"B","pos":"s","open":true},
+ {"t":"W","pts":[[4.8,1],[7,1]]},
+ {"t":"R","a":[7,1],"b":[7,3.5],"label":"R_1","value":"200 Ω"},
+ {"t":"L","a":[7,3.5],"b":[7,6.5],"label":"L_1","value":"5 H"},
+ {"t":"W","pts":[[7,6.5],[0,6.5],[0,5]]},
+ {"t":"N","at":[2.2,6.5]}
+],"pad":1.0,"alt":"Battery V1 = 10 V on the left with its positive (long) plate on top. The top wire runs to contact A of switch S1. The switch's common terminal feeds R1 = 200 ohms and then L1 = 5 H in series down to the bottom wire, which returns to the battery's negative terminal. Contact B is a stub on a wire that drops straight to the bottom wire. As printed, the switch blade is drawn touching contact A."}</script>
+<figcaption>Question 3 redrawn. The battery's long plate (+) is on top, as on the exam. The exam diagram prints only the names V1, S1, A, B, R1 and L1; the values shown here come from the header line. The blade is drawn touching A, as printed, but the text says the switch <em>starts</em> at B.</figcaption>
+</figure>
+<p class="xq-verbatim">For the above circuit, assume the switch starts in the B position with I<sub>L1</sub> = 0A.<br>
+a) What is V<sub>r</sub> and V<sub>L</sub> after 0.03sec from the moment the switch is moved to position A?<br>
+(2pts) V<sub>r</sub> = ______ &nbsp;&nbsp; (2pts) V<sub>L</sub> = ______<br>
+b) What is V<sub>r</sub> and V<sub>L</sub> after 60ms from the moment the switch is moved to position A?<br>
+(2pts) V<sub>r</sub> = ______ &nbsp;&nbsp; (2pts) V<sub>L</sub> = ______</p>
+<table class="xq-given">
+<tr><th>Quantity</th><th>Value</th><th>Note</th></tr>
+<tr><td>\(V_1\)</td><td>10 V</td><td>printed "10v"; + on the top terminal (long plate)</td></tr>
+<tr><td>\(R_1\)</td><td>200 Ω</td><td>The header calls it "R = 200" and the diagram labels it R1: same resistor. No unit is printed; ohms is the only sensible unit (see the check below).</td></tr>
+<tr><td>\(L_1\)</td><td>5 H</td><td>in series with \(R_1\)</td></tr>
+<tr><td>\(I_{L1}\) at the start</td><td>0 A</td><td>switch at B before \(t = 0\)</td></tr>
+<tr><td>times</td><td>a) 0.03 s = 30 ms; b) 60 ms</td><td>measured from the moment the switch moves to A</td></tr>
+</table>
+</section>
+
+<section class="xq-find">
+<div class="xq-part" data-part="a1" data-points="2" data-type="num" data-label="a) \(V_R\) at 30 ms" data-value="6.988" data-unit="V" data-tol="0.01"></div>
+<div class="xq-part" data-part="a2" data-points="2" data-type="num" data-label="a) \(V_L\) at 30 ms" data-value="3.012" data-unit="V" data-tol="0.015"></div>
+<div class="xq-part" data-part="b1" data-points="2" data-type="num" data-label="b) \(V_R\) at 60 ms" data-value="9.093" data-unit="V" data-tol="0.01"></div>
+<div class="xq-part" data-part="b2" data-points="2" data-type="num" data-label="b) \(V_L\) at 60 ms" data-value="0.9072" data-unit="V" data-tol="0.02"></div>
+
+<p class="fb" data-part="a1" data-match="6.321" data-tol="0.005">That is the chart's 63.2 % value, which belongs to exactly one time constant (25 ms). 30 ms is \(1.2\tau\), a bit later, so the current has risen further. Use \(V_R = V_1\left(1 - \mathrm{e}^{-t/\tau}\right)\) with \(t/\tau = 1.2\).</p>
+<p class="fb" data-part="a1" data-match="6.786" data-tol="0.005">It looks like you interpolated in a straight line between the chart's 1τ (63.2 %) and 2τ (86.5 %) points. The curve is an exponential, not a straight line, so this underestimates. Put \(t/\tau = 1.2\) into \(1 - \mathrm{e}^{-t/\tau}\) instead.</p>
+<p class="fb" data-part="a1" data-match="3.012" data-tol="0.01">That is \(V_L\), not \(V_R\). The resistor voltage <em>grows</em> as the current builds up: \(V_R = V_1\left(1 - \mathrm{e}^{-t/\tau}\right)\). The inductor voltage is the one that decays: \(V_L = V_1\,\mathrm{e}^{-t/\tau}\).</p>
+<p class="fb" data-part="a1" data-match="10" data-tol="0.005">10 V is the final (steady-state) value, reached only after about \(5\tau = 125\) ms. Check your time units: \(t\) and \(\tau\) must both be in seconds (0.03 s and 0.025 s), or both in ms.</p>
+<p class="fb" data-part="a1" data-match="1.131" data-tol="0.01">You used \(R = 20\ \Omega\) (\(\tau = 250\) ms). The header prints "R = 200", so \(R_1 = 200\ \Omega\) and \(\tau = 5/200 = 25\) ms.</p>
+<p class="fb" data-part="a2" data-match="3.679" data-tol="0.005">That is the chart's 36.8 % value, which belongs to exactly 1τ (25 ms). At 30 ms you are at \(1.2\tau\): \(V_L = 10\ \text{V} \times \mathrm{e}^{-1.2}\).</p>
+<p class="fb" data-part="a2" data-match="3.214" data-tol="0.01">Straight-line interpolation between the chart points gives this, but the curve is exponential. Use \(V_L = V_1\,\mathrm{e}^{-t/\tau}\) with \(t/\tau = 1.2\).</p>
+<p class="fb" data-part="a2" data-match="6.988" data-tol="0.01">That is \(V_R\). The inductor takes the whole 10 V at the first instant and its voltage then <em>decays</em>: \(V_L = V_1\,\mathrm{e}^{-t/\tau}\), or \(V_L = V_1 - V_R\) by KVL.</p>
+<p class="fb" data-part="a2" data-match="8.869" data-tol="0.01">You used \(R = 20\ \Omega\). With \(R_1 = 200\ \Omega\) the time constant is 25 ms, not 250 ms.</p>
+<p class="fb" data-part="b1" data-match="8.647" data-tol="0.004">That is the chart's 86.5 % value for exactly 2τ (50 ms). 60 ms is \(2.4\tau\), so use \(1 - \mathrm{e}^{-2.4}\).</p>
+<p class="fb" data-part="b1" data-match="9.502" data-tol="0.003">That is the 3τ (95 %) value, for 75 ms. 60 ms is \(60/25 = 2.4\) time constants.</p>
+<p class="fb" data-part="b1" data-match="0.9072" data-tol="0.02">That is \(V_L\). By 60 ms most of the 10 V has moved onto the resistor: \(V_R = V_1\left(1 - \mathrm{e}^{-t/\tau}\right)\).</p>
+<p class="fb" data-part="b1" data-match="2.134" data-tol="0.01">You used \(R = 20\ \Omega\). With \(R_1 = 200\ \Omega\), \(\tau = 25\) ms and 60 ms is \(2.4\tau\).</p>
+<p class="fb" data-part="b2" data-match="1.353" data-tol="0.01">That is the chart's 13.5 % value for exactly 2τ (50 ms). At 60 ms (\(2.4\tau\)): \(V_L = 10\ \text{V} \times \mathrm{e}^{-2.4}\).</p>
+<p class="fb" data-part="b2" data-match="1.011" data-tol="0.01">Straight-line interpolation between the 2τ and 3τ chart points gives this. The exponential bends more: use \(\mathrm{e}^{-2.4}\).</p>
+<p class="fb" data-part="b2" data-match="9.093" data-tol="0.01">That is \(V_R\). The inductor's voltage has almost died away by 60 ms; it is the small one.</p>
+<p class="fb" data-part="b2" data-match="0" data-tol="0.01">Close to zero, but not zero yet: the inductor only acts like a plain wire after about \(5\tau = 125\) ms. At 60 ms it still has \(10\,\mathrm{e}^{-2.4}\) volts across it.</p>
+</section>
+
+<aside class="xq-flag">Minor source notes: the exam prints "R = 200" without a unit, so this solution uses \(R_1 = 200\ \Omega\). That gives \(\tau = 25\) ms, which makes the asked times exactly \(1.2\tau\) and \(2.4\tau\). The diagram draws the switch blade touching A, but the text says the switch starts at B; the solution follows the text. Neither note changes the answers.</aside>
+
+<div class="xq-hints">
+<p class="xq-hint">Before \(t = 0\) the current is 0. After the switch moves to A, what single loop does the current flow around? Is the current increasing or decreasing?</p>
+<p class="xq-hint">Find the time constant \(\tau = L/R\) and express each time as a number of time constants (\(t/\tau\)). Are they whole numbers?</p>
+<p class="xq-hint">They are not whole numbers, so the chart's 63.2 % / 86.5 % values do not apply directly. Use the exact build-up equations: \(V_R = V_1\left(1 - \mathrm{e}^{-t/\tau}\right)\) and \(V_L = V_1\,\mathrm{e}^{-t/\tau}\).</p>
+<p class="xq-hint">Check your pair of answers with KVL: \(V_R + V_L\) must equal 10 V at every instant.</p>
+</div>
+
+<ol class="xq-steps">
+<li class="xq-step" data-title="Identify the concept">
+<p>This is a <strong>series RL circuit energizing</strong> (current build-up). The inductor starts with no current (\(I_{L1} = 0\) A). When the switch moves to A, the battery is connected and the current rises from 0 toward a final value. The inductor opposes the change in current, so the rise is gradual and follows the universal time-constant curve.</p>
+<p>The question asks for the two voltages in the loop, \(V_R\) across \(R_1\) and \(V_L\) across \(L_1\), at two moments after the switch moves.</p>
+</li>
+<li class="xq-step" data-title="Before and after the switch moves">
+<p><strong>Before (\(t &lt; 0\), switch at B):</strong> the common terminal of S1 connects to contact B, which is wired straight to the bottom wire. \(R_1\) and \(L_1\) form a closed loop with <em>no source</em>, and the battery is disconnected. The question tells you the inductor current is 0 A.</p>
+<figure class="circuit">
+<script type="application/json">{"parts":[
+ {"t":"BAT","a":[0,5],"b":[0,2],"plus":"b","label":"V_1","value":"10 V","side":-1},
+ {"t":"W","pts":[[0,2],[0,0],[3.5,0]]},
+ {"t":"N","at":[3.5,0],"label":"A","pos":"n","open":true},
+ {"t":"W","pts":[[4.8,1],[3.5,1]]},
+ {"t":"N","at":[4.8,1],"open":true},
+ {"t":"T","at":[4.7,-0.35],"text":"S_1 at B"},
+ {"t":"W","pts":[[2.2,6.5],[2.2,1],[3.5,1]]},
+ {"t":"N","at":[3.5,1],"label":"B","pos":"s","open":true},
+ {"t":"W","pts":[[4.8,1],[7,1]]},
+ {"t":"R","a":[7,1],"b":[7,3.5],"label":"R_1","value":"200 Ω"},
+ {"t":"L","a":[7,3.5],"b":[7,6.5],"label":"L_1","value":"i = 0 A"},
+ {"t":"W","pts":[[7,6.5],[0,6.5],[0,5]]},
+ {"t":"N","at":[2.2,6.5]}
+],"pad":1.0,"alt":"The same circuit with the switch at B: the R1 and L1 branch is closed through contact B and the bottom wire, with no source in that loop. The battery connects only to the open contact A. The inductor current is 0 A."}</script>
+<figcaption>\(t &lt; 0\): switch at B. The battery only reaches the open contact A, so nothing drives a current through \(R_1\) and \(L_1\). \(i_L = 0\) A.</figcaption>
+</figure>
+<p><strong>After (\(t \ge 0\), switch at A):</strong> the battery's + terminal connects through A and S1 to \(R_1\), then \(L_1\), then back along the bottom wire to the − terminal. That is one series loop. Contact B is now open, so the B wire carries nothing and can be ignored.</p>
+<figure class="circuit">
+<script type="application/json">{"parts":[
+ {"t":"BAT","a":[0,5],"b":[0,1.5],"plus":"b","label":"V_1","value":"10 V","side":-1},
+ {"t":"W","pts":[[0,1.5],[0,0],[6,0]]},
+ {"t":"T","at":[2.6,-0.45],"text":"S_1 at A"},
+ {"t":"IARR","a":[3.6,0],"b":[5,0],"label":"i","side":-1},
+ {"t":"R","a":[6,0],"b":[6,2.5],"label":"R_1","value":"200 Ω","side":-1},
+ {"t":"L","a":[6,2.5],"b":[6,5.5],"label":"L_1","value":"5 H","side":-1},
+ {"t":"W","pts":[[6,5.5],[0,5.5],[0,5]]},
+ {"t":"VM","a":[7,0.35],"b":[7,2.15],"label":"V_R","lat":[7.8,1.25]},
+ {"t":"VM","a":[7,2.85],"b":[7,5.15],"label":"V_L","lat":[7.8,4]}
+],"pad":1.0,"alt":"Equivalent circuit for t at or after 0: a single series loop. The 10 V battery, positive on top, drives current i clockwise: along the top wire, down through R1 = 200 ohms and L1 = 5 H, and back along the bottom wire. V_R and V_L are marked plus at the top of each part and minus at the bottom."}</script>
+<figcaption>\(t \ge 0\): switch at A, redrawn as one series loop. Current \(i\) flows clockwise, down through \(R_1\) and \(L_1\). Polarity convention (passive sign convention): + at the top of each part, where the current enters.</figcaption>
+</figure>
+<p>The inductor's current cannot jump, so at \(t = 0^+\) it is still 0 A. The current then rises.</p>
+</li>
+<li class="xq-step" data-title="Why the exact equations, not the chart">
+<p>In a series RL loop the current follows the universal time-constant curve. The chart lists its values at <strong>whole</strong> time constants: 63.2 % at 1τ, 86.5 % at 2τ, 95 % at 3τ, and so on. You can read the chart directly only when \(t\) is exactly 1τ, 2τ, 3τ…</p>
+<p>So first find \(\tau\) and convert each time into time constants. If the result is not a whole number, use the exact exponential equations. They are the same curve, valid at every instant. Straight-line interpolation between chart points is not accurate, because the curve is not a straight line.</p>
+</li>
+<li class="xq-step" data-title="Formulas you need">
+<p><strong>Time constant</strong> of a series RL circuit:</p>
+<div class="formula">\[ \tau = \frac{L}{R} \]</div>
+<p>\(\tau\) in seconds (s), \(L\) in henries (H), \(R\) in ohms (Ω).</p>
+<p><strong>Final (maximum) current</strong>: once the current stops changing, the inductor acts like a wire, so only \(R\) limits it: \(I_{max} = V_1/R\), in amperes.</p>
+<p><strong>Current build-up</strong> (starts at 0, rises toward \(I_{max}\)):</p>
+<div class="formula">\[ i(t) = \frac{V_1}{R}\left(1 - \mathrm{e}^{-t/\tau}\right) \]</div>
+<p><strong>Voltages</strong> (Ohm's law for the resistor, KVL for the inductor):</p>
+<div class="formula">\[ V_R(t) = i\,R = V_1\left(1 - \mathrm{e}^{-t/\tau}\right), \qquad V_L(t) = V_1 - V_R = V_1\,\mathrm{e}^{-t/\tau} \]</div>
+<p>Here \(t\) is the time since the switch moved to A, in seconds, and \(\mathrm{e} \approx 2.71828\).</p>
+</li>
+<li class="xq-step" data-title="Time constant and time in time constants">
+<div class="formula">\[ \tau = \frac{L_1}{R_1} = \frac{5\ \text{H}}{200\ \Omega} = 0.025\ \text{s} = 25\ \text{ms} \]</div>
+<div class="formula">\[ I_{max} = \frac{V_1}{R_1} = \frac{10\ \text{V}}{200\ \Omega} = 0.05\ \text{A} = 50\ \text{mA} \]</div>
+<p>Convert the asked times:</p>
+<div class="formula">\[ \text{a) } \frac{t}{\tau} = \frac{0.03\ \text{s}}{0.025\ \text{s}} = 1.2, \qquad \text{b) } \frac{t}{\tau} = \frac{0.06\ \text{s}}{0.025\ \text{s}} = 2.4 \]</div>
+<p>Neither is a whole number. 30 ms is between 1τ (25 ms) and 2τ (50 ms), and 60 ms is between 2τ (50 ms) and 3τ (75 ms). So the chart's 63.2 % and 86.5 % do not apply directly, and we use the equations.</p>
+</li>
+<li class="xq-step" data-title="Part a: t = 30 ms (1.2τ)">
+<p>Exponential factor (keep 4 significant figures; round only the final answers):</p>
+<div class="formula">\[ \mathrm{e}^{-1.2} = 0.3012, \qquad 1 - \mathrm{e}^{-1.2} = 0.6988 \]</div>
+<p>So the current has reached 69.88 % of its final value: \(i = 0.05\ \text{A} \times 0.6988 = 0.03494\ \text{A} = 34.94\ \text{mA}\).</p>
+<div class="formula">\[ V_R = i\,R_1 = 0.03494\ \text{A} \times 200\ \Omega = 6.988\ \text{V} \quad\big(= 10\ \text{V} \times 0.6988\big) \]</div>
+<div class="formula">\[ V_L = V_1\,\mathrm{e}^{-1.2} = 10\ \text{V} \times 0.3012 = 3.012\ \text{V} \]</div>
+<p>KVL: \(6.988 + 3.012 = 10.00\) V ✓</p>
+</li>
+<li class="xq-step" data-title="Part b: t = 60 ms (2.4τ)">
+<div class="formula">\[ \mathrm{e}^{-2.4} = 0.09072, \qquad 1 - \mathrm{e}^{-2.4} = 0.9093 \]</div>
+<p>The current is at 90.93 % of its final value: \(i = 0.05\ \text{A} \times 0.9093 = 0.04546\ \text{A} = 45.46\ \text{mA}\).</p>
+<div class="formula">\[ V_R = i\,R_1 = 0.04546\ \text{A} \times 200\ \Omega = 9.093\ \text{V} \]</div>
+<div class="formula">\[ V_L = V_1\,\mathrm{e}^{-2.4} = 10\ \text{V} \times 0.09072 = 0.9072\ \text{V} \]</div>
+<p>KVL: \(9.093 + 0.9072 = 10.00\) V ✓</p>
+</li>
+<li class="xq-step" data-title="Polarity and current direction">
+<p>The current flows clockwise: out of the battery's + terminal, through A and S1, <strong>down</strong> through \(R_1\) and \(L_1\), and back along the bottom wire. Both voltages are positive with + at the top of each part (where the current enters):</p>
+<ul>
+<li>\(V_R\): top of \(R_1\) is + (the current enters there).</li>
+<li>\(V_L\): top of \(L_1\) is +. This is the back EMF: it pushes against the battery and slows the rise of the current. It shrinks as the current approaches its final value.</li>
+</ul>
+<p>Rounding: every intermediate value is carried with 4 significant figures; the answers are rounded only at the end.</p>
+</li>
+</ol>
+
+<section class="xq-answer">
+<p><strong>a) \(t = 30\) ms (1.2τ):</strong> \(V_R = 6.988\ \text{V} \approx 6.99\ \text{V}\), \(V_L = 3.012\ \text{V} \approx 3.01\ \text{V}\) (current 34.94 mA).</p>
+<p><strong>b) \(t = 60\) ms (2.4τ):</strong> \(V_R = 9.093\ \text{V} \approx 9.09\ \text{V}\), \(V_L = 0.9072\ \text{V} \approx 0.907\ \text{V}\) (current 45.46 mA).</p>
+<p>Both voltages are + at the top of the part (current flows down through \(R_1\) and \(L_1\)). \(\tau = 25\) ms.</p>
+<figure class="circuit">
+<script type="application/json">{"parts": [{"t": "W", "pts": [[0, 0.4], [0, 6.0], [11.2, 6.0]]}, {"t": "T", "at": [0, 0.05], "text": "voltage (top line = V_1 = 10 V)", "anchor": "start"}, {"t": "T", "at": [11.4, 6.1], "text": "t", "anchor": "start"}, {"t": "T", "at": [-0.2, 6.1], "text": "0", "anchor": "end"}, {"t": "W", "pts": [[0, 1.0], [11.0, 1.0]], "dashed": true}, {"t": "T", "at": [-0.2, 1.12], "text": "10 V", "anchor": "end"}, {"t": "W", "pts": [[0.0, 6.0], [0.196, 5.532], [0.393, 5.108], [0.589, 4.724], [0.786, 4.376], [0.982, 4.06], [1.179, 3.774], [1.375, 3.514], [1.571, 3.279], [1.768, 3.066], [1.964, 2.873], [2.161, 2.697], [2.357, 2.539], [2.554, 2.395], [2.75, 2.264], [2.946, 2.146], [3.143, 2.039], [3.339, 1.942], [3.536, 1.853], [3.732, 1.774], [3.929, 1.701], [4.125, 1.636], [4.321, 1.576], [4.518, 1.522], [4.714, 1.473], [4.911, 1.429], [5.107, 1.389], [5.304, 1.353], [5.5, 1.32], [5.696, 1.29], [5.893, 1.263], [6.089, 1.238], [6.286, 1.216], [6.482, 1.196], [6.679, 1.177], [6.875, 1.161], [7.071, 1.146], [7.268, 1.132], [7.464, 1.12], [7.661, 1.109], [7.857, 1.098], [8.054, 1.089], [8.25, 1.081], [8.446, 1.073], [8.643, 1.066], [8.839, 1.06], [9.036, 1.055], [9.232, 1.049], [9.429, 1.045], [9.625, 1.041], [9.821, 1.037], [10.018, 1.033], [10.214, 1.03], [10.411, 1.027], [10.607, 1.025], [10.804, 1.023], [11.0, 1.02]]}, {"t": "W", "pts": [[0.0, 1.0], [0.196, 1.468], [0.393, 1.892], [0.589, 2.276], [0.786, 2.624], [0.982, 2.94], [1.179, 3.226], [1.375, 3.486], [1.571, 3.721], [1.768, 3.934], [1.964, 4.127], [2.161, 4.303], [2.357, 4.461], [2.554, 4.605], [2.75, 4.736], [2.946, 4.854], [3.143, 4.961], [3.339, 5.058], [3.536, 5.147], [3.732, 5.226], [3.929, 5.299], [4.125, 5.364], [4.321, 5.424], [4.518, 5.478], [4.714, 5.527], [4.911, 5.571], [5.107, 5.611], [5.304, 5.647], [5.5, 5.68], [5.696, 5.71], [5.893, 5.737], [6.089, 5.762], [6.286, 5.784], [6.482, 5.804], [6.679, 5.823], [6.875, 5.839], [7.071, 5.854], [7.268, 5.868], [7.464, 5.88], [7.661, 5.891], [7.857, 5.902], [8.054, 5.911], [8.25, 5.919], [8.446, 5.927], [8.643, 5.934], [8.839, 5.94], [9.036, 5.945], [9.232, 5.951], [9.429, 5.955], [9.625, 5.959], [9.821, 5.963], [10.018, 5.967], [10.214, 5.97], [10.411, 5.973], [10.607, 5.975], [10.804, 5.977], [11.0, 5.98]]}, {"t": "W", "pts": [[2, 5.88], [2, 6.12]]}, {"t": "T", "at": [2, 6.6], "text": "1τ"}, {"t": "T", "at": [2, 7.05], "text": "25 ms", "cls": "muted"}, {"t": "W", "pts": [[4, 5.88], [4, 6.12]]}, {"t": "T", "at": [4, 6.6], "text": "2τ"}, {"t": "T", "at": [4, 7.05], "text": "50 ms", "cls": "muted"}, {"t": "W", "pts": [[6, 5.88], [6, 6.12]]}, {"t": "T", "at": [6, 6.6], "text": "3τ"}, {"t": "T", "at": [6, 7.05], "text": "75 ms", "cls": "muted"}, {"t": "W", "pts": [[8, 5.88], [8, 6.12]]}, {"t": "T", "at": [8, 6.6], "text": "4τ"}, {"t": "T", "at": [8, 7.05], "text": "100 ms", "cls": "muted"}, {"t": "W", "pts": [[10, 5.88], [10, 6.12]]}, {"t": "T", "at": [10, 6.6], "text": "5τ"}, {"t": "T", "at": [10, 7.05], "text": "125 ms", "cls": "muted"}, {"t": "W", "pts": [[2.4, 6.0], [2.4, 2.506]], "dashed": true}, {"t": "N", "at": [2.4, 2.506]}, {"t": "N", "at": [2.4, 4.494]}, {"t": "T", "at": [2.6, 3.006], "text": "6.99 V", "anchor": "start", "cls": "accent"}, {"t": "T", "at": [2.55, 4.194], "text": "3.01 V", "anchor": "start", "cls": "accent"}, {"t": "T", "at": [2.4, 7.5], "text": "30 ms", "cls": "accent"}, {"t": "W", "pts": [[4.8, 6.0], [4.8, 1.454]], "dashed": true}, {"t": "N", "at": [4.8, 1.454]}, {"t": "N", "at": [4.8, 5.546]}, {"t": "T", "at": [5.0, 1.954], "text": "9.09 V", "anchor": "start", "cls": "accent"}, {"t": "T", "at": [4.95, 5.246], "text": "0.91 V", "anchor": "start", "cls": "accent"}, {"t": "T", "at": [4.8, 7.5], "text": "60 ms", "cls": "accent"}, {"t": "T", "at": [8.6, 0.65], "text": "v_R → 10 V", "anchor": "start"}, {"t": "T", "at": [8.6, 5.55], "text": "v_L → 0 V", "anchor": "start"}], "pad": 0.6, "alt": "Question 3 after the switch moves to A: v_R rises from 0 toward 10 V and v_L falls from 10 V toward 0. Time axis marked at 1 to 5 time constants (25, 50, 75, 100, 125 ms). At 30 ms (1.2 tau) v_R = 6.99 V and v_L = 3.01 V; at 60 ms (2.4 tau) v_R = 9.09 V and v_L = 0.91 V."}</script>
+<figcaption>\(v_R\) and \(v_L\) after the switch moves to A, drawn to scale with τ = 25 ms. The dots mark the answers at 30 ms (1.2τ) and 60 ms (2.4τ). They sit just past the 1τ and 2τ ticks, which is why the answers are a little beyond the chart's 63.2 % / 36.8 % and 86.5 % / 13.5 % values.</figcaption>
+</figure>
+</section>
+
+<section class="xq-check">
+<ul>
+<li><strong>KVL:</strong> \(V_R + V_L = 10\) V at both times (6.988 + 3.012, and 9.093 + 0.907).</li>
+<li><strong>Compare with the chart:</strong> at 1τ the chart gives \(V_R = 6.32\) V. At 1.2τ, a little later, the answer should be a little more: 6.99 V ✓. At 2τ the chart gives 8.65 V, and at 3τ 9.50 V. 2.4τ lies between them: 9.09 V ✓.</li>
+<li><strong>Trend:</strong> \(V_R\) grows toward 10 V and \(V_L\) shrinks toward 0 as time goes on. Between 30 ms and 60 ms \(V_L\) dropped from 3.01 V to 0.91 V, as expected for an inductor that is turning into "just a wire".</li>
+<li><strong>Units and the R value:</strong> H/Ω = s, so \(\tau = 0.025\) s. With 200 Ω the asked times are 1.2τ and 2.4τ, both inside the interesting part of the curve (before 5τ = 125 ms). That supports reading the unprinted unit as ohms. A 20 Ω reading would make τ = 250 ms, and both times would be tiny fractions of τ.</li>
+</ul>
+</section>
+
+<section class="xq-mistakes">
+<ul>
+<li>Using the chart's 63.2 % (or 86.5 %) at 30 ms and 60 ms. Those values belong to 25 ms and 50 ms exactly. First compute \(t/\tau\).</li>
+<li>Interpolating in a straight line between chart points. The curve is exponential, so this is off by several percent.</li>
+<li>Swapping the formulas. During build-up \(V_R\) rises (\(1 - \mathrm{e}^{-t/\tau}\)) and \(V_L\) falls (\(\mathrm{e}^{-t/\tau}\)).</li>
+<li>Mixing units in the exponent, e.g. \(t = 30\) (ms) with \(\tau = 0.025\) (s). This gives the steady-state answer (10 V and 0 V).</li>
+<li>Writing \(\tau = R/L\) or \(\tau = RL\). For an inductor it is \(L/R\); for a capacitor it is \(RC\).</li>
+<li>Thinking the "B" position matters after the switch moves. Once the switch is at A, contact B is open and its wire carries no current.</li>
+</ul>
+</section>
+
+<section class="xq-similar">
+<p><strong>Approach for a similar problem.</strong></p>
+<ol>
+<li>Draw the circuit for each switch position. Find the initial current (here 0 A; an inductor's current cannot jump) and the final current \(I_{max} = V/R\) for the new position.</li>
+<li>Find \(\tau = L/R\), where \(R\) is the resistance in the loop the inductor is in <em>after</em> the switch moves.</li>
+<li>Convert every asked time to \(t/\tau\). If it is a whole number, the chart value is exact; otherwise use the equations.</li>
+<li><strong>Build-up</strong> (current rising from 0, like here): \(V_R = V(1 - \mathrm{e}^{-t/\tau})\), \(V_L = V\mathrm{e}^{-t/\tau}\).</li>
+<li><strong>Decay</strong> (switch moved from A to B after the current had built up): the source is gone. \(i = I_0\,\mathrm{e}^{-t/\tau}\), \(V_R = I_0 R\,\mathrm{e}^{-t/\tau}\), and \(V_L\) has the same size as \(V_R\) but opposite polarity, because the inductor is now the source in the loop.</li>
+<li><strong>Different numbers:</strong> a larger L or smaller R makes τ longer and everything slower. If the decay loop has a different resistance than the build-up loop, it has its own τ.</li>
+<li>Check: \(V_R + V_L = V\) during build-up, and \(V_R = -V_L\) during decay.</li>
+</ol>
+</section>
+
+<section class="xq-connect">
+<p><strong>Topic tested:</strong> <a href="#/t/lc/understand">Capacitors, Inductors &amp; RC/RL circuits</a>: the L/R time constant and the current build-up in a series RL circuit (inductor energizing).</p>
+<p><strong>Clues:</strong> an inductor in series with a resistor, a switch, an initial current of 0 A, and voltages asked at specific times after the switch moves. "Starts in B with \(I_{L1} = 0\)" then "moved to position A" means the current builds up from zero. Times in milliseconds that are close to \(L/R\) say "time constant".</p>
+<p><strong>Where it is taught:</strong></p>
+<ul>
+<li><a class="xref" data-lesson="cl1" data-sec="cl1-fields">Introduction to Inductors, §4: the selector switch, positions A and B</a>. The same A/B switch is drawn at <a class="ts" data-lesson="cl1" data-t="13:39"></a>; flipping to A with zero current starts at <a class="ts" data-lesson="cl1" data-t="14:15"></a>.</li>
+<li><a class="xref" data-lesson="cl2" data-sec="cl2-tau">L/R Time Constant, §3: \(\tau = L/R\) and \(I_{max} = V_s/R\)</a>, defined at <a class="ts" data-lesson="cl2" data-t="6:52"></a> and <a class="ts" data-lesson="cl2" data-t="9:09"></a>.</li>
+<li><a class="xref" data-lesson="cl2" data-sec="cl2-chart-rise">§4: the universal time-constant chart</a>: 63.2 % at 1τ (<a class="ts" data-lesson="cl2" data-t="14:41"></a>) and 86.5 % at 2τ (<a class="ts" data-lesson="cl2" data-t="15:10"></a>).</li>
+<li><a class="xref" data-lesson="cl2" data-sec="cl2-ex-12ohm">§6: Example 3, \(V_R\) and \(V_L\) after 1τ and 2τ</a> (<a class="ts" data-lesson="cl2" data-t="28:19"></a>). It is the closest match to this question; the only difference is that its times are whole time constants. KVL holds at every instant (<a class="ts" data-lesson="cl2" data-t="35:57"></a>).</li>
+<li><a class="xref" data-lesson="cl2" data-sec="cl2-equations">§7: exact equations</a>. At <a class="ts" data-lesson="cl2" data-t="39:11"></a> the instructor explains why the chart is clumsy between whole time constants; the build-up equation is at <a class="ts" data-lesson="cl2" data-t="40:27"></a>. The \(v_R\) and \(v_L\) versions are in <a class="xref" data-lesson="cl2" data-sec="cl2-vgeneral">§10</a> (<a class="ts" data-lesson="cl2" data-t="48:31"></a>).</li>
+</ul>
+<p><strong>Formulas:</strong> \(\tau = L/R\), \(I_{max} = V/R\), \(i = I_{max}(1 - \mathrm{e}^{-t/\tau})\), \(V_R = V(1 - \mathrm{e}^{-t/\tau})\), \(V_L = V\mathrm{e}^{-t/\tau}\). See the <a href="#/t/lc/review">formula sheet for this topic</a>.</p>
+<p><strong>Try it in the lab:</strong> open the <a href="#/t/lc/understand/lab/rl">RL lab</a> in Energize mode, set \(V_s = 10\) V, \(R = 200\ \Omega\), \(L = 5\) H, and move the time cursor to 30 ms and 60 ms. The readout should match \(V_R\) and \(V_L\) above.</p>
+</section>
+
+</article>

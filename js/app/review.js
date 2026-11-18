@@ -108,6 +108,7 @@
       var sections = [
         { id: 'rv-standing', title: 'Your standing' },
         { id: 'rv-revisit', title: 'Revisit these' },
+        { id: 'rv-exams', title: 'From past exams' },
         { id: 'rv-recap', title: 'Key concepts' },
         { id: 'rv-formulas', title: 'Formula sheet' },
         { id: 'rv-mistakes', title: 'Common mistakes' },
@@ -131,6 +132,7 @@
             '<td class="mono">' + (fl || '<span class="muted">0</span>') + '</td><td class="mono">' + (lessonNotesCount(l) || '<span class="muted">0</span>') + '</td></tr>';
         }).join('') + '</tbody></table></div></details></section>' +
         '<section class="rv-sec" id="rv-revisit" aria-labelledby="rv-revisit-h"><h2 id="rv-revisit-h" class="sec-title">Revisit these</h2><div class="rv-revisit"><p class="muted small">Checking…</p></div></section>' +
+        '<section class="rv-sec" id="rv-exams" aria-label="From past exams" hidden><div class="xm-from-slot"></div></section>' +
         '<section class="rv-sec" id="rv-recap" aria-labelledby="rv-recap-h"><div class="sec-head"><h2 id="rv-recap-h" class="sec-title">Key concepts</h2><span class="rv-oc"></span></div><p class="small muted rv-intro">The recap of each lesson, as written in its study guide.</p><div class="rv-recap"><p class="muted small">Loading…</p></div></section>' +
         '<section class="rv-sec" id="rv-formulas" aria-labelledby="rv-formulas-h"><h2 id="rv-formulas-h" class="sec-title">Formula sheet</h2><p class="small muted rv-intro">Every formula sheet from this topic\'s guides, with variables and units.</p><div class="rv-formulas"><p class="muted small">Loading…</p></div></section>' +
         '<section class="rv-sec" id="rv-mistakes" aria-labelledby="rv-mistakes-h"><div class="sec-head"><h2 id="rv-mistakes-h" class="sec-title">Common mistakes</h2><span class="rv-oc"></span></div><div class="rv-mistakes"><p class="muted small">Loading…</p></div></section>' +
@@ -148,6 +150,15 @@
         global.scrollTo({ top: global.scrollY + t.getBoundingClientRect().top - off, behavior: U.reducedMotion() ? 'auto' : 'smooth' });
         var h = t.querySelector('h2'); if (h) { h.setAttribute('tabindex', '-1'); try { h.focus({ preventScroll: true }); } catch (x) {} }
       };
+
+      /* ---- past exam questions on this topic (js/app/exams.js); the section and its jump chip stay hidden when there are none ---- */
+      var xmSec = doc.getElementById('rv-exams'), xmJump = $('.rv-jump [data-target="rv-exams"]', ctx.el);
+      if (xmJump) xmJump.hidden = true;
+      if (A.exams && xmSec) A.exams.topicCard(tid, $('.xm-from-slot', xmSec), ctx).then(function () {
+        if (!ctx.alive() || my !== gen) return;
+        var on = !$('.xm-from-slot', xmSec).hidden;
+        xmSec.hidden = !on; if (xmJump) xmJump.hidden = !on;
+      });
 
       /* ---- 2. revisit ---- */
       var lessonIds = ls.map(function (l) { return l.id; });

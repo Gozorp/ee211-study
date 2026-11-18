@@ -91,10 +91,29 @@
         });
         list.appendChild(sec);
       });
+      /* past-exam question notes (ids xm-<exam>-q<N>, written on the question pages of js/app/exams.js) */
+      var xs = A.exams ? A.exams.noteIds().filter(function (id) {
+        if (!f) return true;
+        var n = store.state.notes.lessons[id], info = A.exams.noteInfo(id);
+        return (n.free || '').toLowerCase().indexOf(f) >= 0 || (n.items || []).some(function (it) { return (it.text || '').toLowerCase().indexOf(f) >= 0; }) || info.label.toLowerCase().indexOf(f) >= 0;
+      }) : [];
+      if (xs.length) {
+        any = true;
+        var xsec = U.h('<section class="an-topic an-exams"><h2 class="an-topic-title"><span class="an-glyph">' + A.exams.icon() + '</span><a href="#/exams">Past exam questions</a></h2></section>');
+        xs.forEach(function (id) {
+          var info = A.exams.noteInfo(id);
+          var lw = U.h('<div class="an-lesson"><h3 class="an-lesson-title"><a href="' + esc(info.href) + '">' + esc(info.label) + '</a></h3><div class="an-lesson-notes"></div></div>');
+          xsec.appendChild(lw);
+          apis.push(A.notesUI.lesson($('.an-lesson-notes', lw), id, { composer: false, free: true, noTime: true, freeLabel: 'Question notes', filter: f, showEmpty: false }));
+        });
+        list.appendChild(xsec);
+      }
       if (!any) list.innerHTML = f ? U.empty({ icon: 'search', title: 'No notes match “' + esc(filter) + '”' }) :
         U.empty({ icon: 'notes', title: 'No notes yet', text: 'Open a lesson in Watch and press <b>Note</b> (or <kbd>n</kbd>) to pin a note to the current video moment. Notes from every topic collect here.', actions: U.btn('Go to the topics', { kind: 'primary', href: '#/' }) });
     }
     build('');
+    /* exam question titles come from the exam index: rebuild once it is loaded (only when there are exam notes) */
+    if (A.exams && A.exams.noteIds().length) A.exams.index().then(function () { if (ctx.alive()) build($('.an-search', ctx.el).value); }, function () {});
     ctx.onCleanup(function () { apis.forEach(function (a) { a.destroy(); }); });
     var stt; $('.an-search', ctx.el).addEventListener('input', function (e) { clearTimeout(stt); var v = e.target.value; stt = setTimeout(function () { build(v); }, 200); });
 

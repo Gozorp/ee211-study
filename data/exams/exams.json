@@ -1,0 +1,435 @@
+{
+ "generated": "build/build_exams.py",
+ "exams": [
+  {
+   "id": "mt2",
+   "title": "Midterm 2",
+   "course": "Principles of Computer Engineering I (EE 211)",
+   "totalPoints": 90,
+   "questionCount": 9,
+   "pages": 4,
+   "source": "Four phone photos of a printed, graded exam (pages 1–4). Only the questions were transcribed; handwritten answers, grading marks and the score are not part of this site.",
+   "pageMap": [
+    {
+     "page": 1,
+     "questions": [
+      1,
+      2
+     ]
+    },
+    {
+     "page": 2,
+     "questions": [
+      3,
+      4
+     ]
+    },
+    {
+     "page": 3,
+     "questions": [
+      5,
+      6
+     ]
+    },
+    {
+     "page": 4,
+     "questions": [
+      7,
+      8,
+      9
+     ]
+    }
+   ],
+   "transcription": {
+    "ocr": "Windows built-in OCR (en-US) on contrast-enhanced, 2× upscaled photos. It recovered only fragments of the angled photos (for example “R3=5 ohm, R4=15 ohm”, “5.6uF”, “8.2uF”, “2 ms”, “= 4v, = 10v, 6v”), all consistent with the transcription.",
+    "visual": "Every statement, value, unit, polarity mark and circuit connection was then verified visually on zoomed crops of each question, and checked again by an independent reviewer.",
+    "scope": "The oscilloscope trace in question 5 was measured by pixel analysis against perspective-corrected grid lines (peaks +2.43 div, trough −2.64 div, period 4.98 div)."
+   },
+   "pdfs": {
+    "questions": "data/exams/mt2/mt2-questions.pdf",
+    "solutions": "data/exams/mt2/mt2-solutions.pdf"
+   },
+   "questions": [
+    {
+     "id": "mt2-q1",
+     "num": 1,
+     "points": 12,
+     "page": 1,
+     "title": "Norton equivalent of a bridge network",
+     "topics": [
+      "thevenin",
+      "deltawye"
+     ],
+     "status": "ok",
+     "file": "data/exams/mt2/q1.html",
+     "parts": [
+      {
+       "part": "a",
+       "type": "num",
+       "label": "\\(R_N\\), the Norton resistance seen from A–B",
+       "points": 4
+      },
+      {
+       "part": "b",
+       "type": "num",
+       "label": "\\(I_N\\), the current through a short from A to B (positive if it flows from A to B)",
+       "points": 6
+      },
+      {
+       "part": "c",
+       "type": "draw",
+       "label": "Draw the Norton equivalent circuit (values and arrow direction)",
+       "points": 2
+      }
+     ],
+     "steps": 8,
+     "hints": 4,
+     "flag": null
+    },
+    {
+     "id": "mt2-q2",
+     "num": 2,
+     "points": 8,
+     "page": 1,
+     "title": "Equivalent capacitance of a series–parallel network",
+     "topics": [
+      "lc"
+     ],
+     "status": "ok",
+     "file": "data/exams/mt2/q2.html",
+     "parts": [
+      {
+       "part": "a",
+       "type": "num",
+       "label": "\\(C_T\\), the equivalent capacitance seen by \\(V_2\\)",
+       "points": 6
+      },
+      {
+       "part": "b",
+       "type": "text",
+       "label": "Capacitance is a property that…",
+       "points": 2
+      }
+     ],
+     "steps": 8,
+     "hints": 4,
+     "flag": null
+    },
+    {
+     "id": "mt2-q3",
+     "num": 3,
+     "points": 8,
+     "page": 2,
+     "title": "RL circuit energizing: resistor and inductor voltages at 30 ms and 60 ms",
+     "topics": [
+      "lc"
+     ],
+     "status": "ok",
+     "file": "data/exams/mt2/q3.html",
+     "parts": [
+      {
+       "part": "a1",
+       "type": "num",
+       "label": "a) \\(V_R\\) at 30 ms",
+       "points": 2
+      },
+      {
+       "part": "a2",
+       "type": "num",
+       "label": "a) \\(V_L\\) at 30 ms",
+       "points": 2
+      },
+      {
+       "part": "b1",
+       "type": "num",
+       "label": "b) \\(V_R\\) at 60 ms",
+       "points": 2
+      },
+      {
+       "part": "b2",
+       "type": "num",
+       "label": "b) \\(V_L\\) at 60 ms",
+       "points": 2
+      }
+     ],
+     "steps": 8,
+     "hints": 4,
+     "flag": null
+    },
+    {
+     "id": "mt2-q4",
+     "num": 4,
+     "points": 10,
+     "page": 2,
+     "title": "Thévenin equivalent with a resistor bridging to A",
+     "topics": [
+      "thevenin"
+     ],
+     "status": "ok",
+     "file": "data/exams/mt2/q4.html",
+     "parts": [
+      {
+       "part": "a",
+       "type": "num",
+       "label": "\\(V_{TH}\\) (A relative to B)",
+       "points": 4
+      },
+      {
+       "part": "b",
+       "type": "num",
+       "label": "\\(R_{TH}\\)",
+       "points": 4
+      },
+      {
+       "part": "c",
+       "type": "draw",
+       "label": "Draw the Thévenin equivalent circuit (include values for all components)",
+       "points": 2
+      }
+     ],
+     "steps": 7,
+     "hints": 4,
+     "flag": null
+    },
+    {
+     "id": "mt2-q5",
+     "num": 5,
+     "points": 12,
+     "page": 3,
+     "title": "Reading period, frequency and amplitude off a scope screen",
+     "topics": [
+      "scope"
+     ],
+     "status": "ok",
+     "file": "data/exams/mt2/q5.html",
+     "parts": [
+      {
+       "part": "a",
+       "type": "num",
+       "label": "a) Period \\(T\\): the exam asks for ms, so type the unit (a bare number counts as seconds)",
+       "points": 2
+      },
+      {
+       "part": "b",
+       "type": "num",
+       "label": "b) Period \\(T\\): the exam asks for μs, so type the unit (a bare number counts as seconds)",
+       "points": 2
+      },
+      {
+       "part": "c",
+       "type": "num",
+       "label": "c) Frequency \\(f\\): the exam asks for kHz, so type the unit (a bare number counts as Hz)",
+       "points": 2
+      },
+      {
+       "part": "d",
+       "type": "num",
+       "label": "d) Frequency \\(f\\), in Hz",
+       "points": 2
+      },
+      {
+       "part": "e",
+       "type": "num",
+       "label": "e) Voltage \\(V_{pk}\\) (peak)",
+       "points": 2
+      },
+      {
+       "part": "f",
+       "type": "num",
+       "label": "f) Voltage \\(V_{pp}\\) (peak-to-peak)",
+       "points": 2
+      }
+     ],
+     "steps": 8,
+     "hints": 4,
+     "flag": null
+    },
+    {
+     "id": "mt2-q6",
+     "num": 6,
+     "points": 12,
+     "page": 3,
+     "title": "Millman’s theorem: three parallel source branches",
+     "topics": [
+      "millman"
+     ],
+     "status": "flagged",
+     "file": "data/exams/mt2/q6.html",
+     "parts": [
+      {
+       "part": "a",
+       "type": "num",
+       "label": "\\(V_{R1}\\), voltage across \\(R_1\\) (magnitude)",
+       "points": 2
+      },
+      {
+       "part": "b",
+       "type": "num",
+       "label": "\\(V_{R2}\\), voltage across \\(R_2\\) (magnitude)",
+       "points": 2
+      },
+      {
+       "part": "c",
+       "type": "num",
+       "label": "\\(V_{R3}\\), voltage across \\(R_3\\) (magnitude)",
+       "points": 2
+      },
+      {
+       "part": "d",
+       "type": "num",
+       "label": "\\(I_{R1}\\), current in \\(R_1\\) (magnitude; the direction is asked below)",
+       "points": 1
+      },
+      {
+       "part": "e",
+       "type": "num",
+       "label": "\\(I_{R2}\\), current in \\(R_2\\) (magnitude)",
+       "points": 1
+      },
+      {
+       "part": "f",
+       "type": "num",
+       "label": "\\(I_{R3}\\), current in \\(R_3\\) (magnitude)",
+       "points": 1
+      },
+      {
+       "part": "g",
+       "type": "mc",
+       "label": "Current arrow next to \\(R_1\\) (the 3-pt arrow item, 1 of 3)",
+       "points": 1
+      },
+      {
+       "part": "h",
+       "type": "mc",
+       "label": "Current arrow next to \\(R_2\\) (2 of 3)",
+       "points": 1
+      },
+      {
+       "part": "i",
+       "type": "mc",
+       "label": "Current arrow next to \\(R_3\\) (3 of 3)",
+       "points": 1
+      }
+     ],
+     "steps": 11,
+     "hints": 3,
+     "flag": "Millman lab"
+    },
+    {
+     "id": "mt2-q7",
+     "num": 7,
+     "points": 12,
+     "page": 4,
+     "title": "RC charging: capacitor voltage, resistor voltage and current at 25 ms and 50 ms",
+     "topics": [
+      "lc"
+     ],
+     "status": "ok",
+     "file": "data/exams/mt2/q7.html",
+     "parts": [
+      {
+       "part": "a",
+       "type": "num",
+       "label": "a) \\(V_C\\) at 25 ms",
+       "points": 2
+      },
+      {
+       "part": "b",
+       "type": "num",
+       "label": "b) \\(V_R\\) at 25 ms",
+       "points": 2
+      },
+      {
+       "part": "c",
+       "type": "num",
+       "label": "c) \\(I_R\\) at 25 ms",
+       "points": 2
+      },
+      {
+       "part": "d",
+       "type": "num",
+       "label": "d) \\(V_C\\) at 50 ms",
+       "points": 2
+      },
+      {
+       "part": "e",
+       "type": "num",
+       "label": "e) \\(V_R\\) at 50 ms",
+       "points": 2
+      },
+      {
+       "part": "f",
+       "type": "num",
+       "label": "f) \\(I_C\\) at 50 ms",
+       "points": 2
+      }
+     ],
+     "steps": 8,
+     "hints": 4,
+     "flag": null
+    },
+    {
+     "id": "mt2-q8",
+     "num": 8,
+     "points": 4,
+     "page": 4,
+     "title": "Voltage between two open terminals",
+     "topics": [
+      "thevenin"
+     ],
+     "status": "ok",
+     "file": "data/exams/mt2/q8.html",
+     "parts": [
+      {
+       "part": "a",
+       "type": "num",
+       "label": "\\(V_{AB}\\), the voltage between A and B (A relative to B)",
+       "points": 4
+      }
+     ],
+     "steps": 5,
+     "hints": 3,
+     "flag": null
+    },
+    {
+     "id": "mt2-q9",
+     "num": 9,
+     "points": 12,
+     "page": 4,
+     "title": "Thévenin equivalent with a zero-current resistor",
+     "topics": [
+      "thevenin",
+      "srcxform"
+     ],
+     "status": "ok",
+     "file": "data/exams/mt2/q9.html",
+     "parts": [
+      {
+       "part": "a",
+       "type": "num",
+       "label": "\\(R_{th}\\)",
+       "points": 3
+      },
+      {
+       "part": "b",
+       "type": "num",
+       "label": "\\(V_{th}\\) (A relative to B)",
+       "points": 6
+      },
+      {
+       "part": "c",
+       "type": "draw",
+       "label": "Draw the Thévenin equivalent circuit (include values for all components)",
+       "points": 3
+      }
+     ],
+     "steps": 7,
+     "hints": 4,
+     "flag": null
+    }
+   ],
+   "missing": [],
+   "hasOriginalsLocally": true
+  }
+ ]
+}

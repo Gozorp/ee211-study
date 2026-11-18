@@ -1,0 +1,203 @@
+<article class="xq" id="mt2-q7" data-exam="mt2" data-num="7" data-points="12" data-page="4" data-topics="lc" data-title="RC charging: capacitor voltage, resistor voltage and current at 25 ms and 50 ms" data-status="ok">
+
+<section class="xq-prompt">
+<p class="xq-verbatim">7) (12pts) For the following Circuit: V=5v, R1=200Ω, C1=100uF and assuming the capacitor has no charge previously built up, calculate the following from the time after the switch is closed:</p>
+<figure class="circuit">
+<script type="application/json">{"parts":[
+ {"t":"BAT","a":[0,6],"b":[0,3],"plus":"b","label":"V_1","value":"5 V"},
+ {"t":"T","at":[1.0,6.7],"text":"V_s"},
+ {"t":"W","pts":[[0,3],[0,0],[2,0]]},
+ {"t":"SW","a":[2,0],"b":[4,0],"state":"open"},
+ {"t":"W","pts":[[4,0],[6,0]]},
+ {"t":"R","a":[6,0],"b":[6,3],"label":"R_1","value":"200 Ω"},
+ {"t":"W","pts":[[6,3],[6,4.5]]},
+ {"t":"C","a":[6,4.5],"b":[6,7.5],"label":"C_1","value":"100 μF"},
+ {"t":"W","pts":[[6,7.5],[0,7.5],[0,6]]}
+],"pad":1.6,"alt":"A battery on the left, labelled V1 and Vs, with its positive (long) plate on top: 5 V. An open switch in the top wire leads to R1 = 200 ohms and then C1 = 100 microfarads in series down the right side, and the bottom wire returns to the battery's negative terminal."}</script>
+<figcaption>Question 7 redrawn. The exam labels the battery both "V1" (above) and "V<sub>s</sub>" (below); the header calls its value V = 5 V. The long plate (+) is on top. The switch is drawn open. The diagram prints only the names; the values come from the header.</figcaption>
+</figure>
+<p class="xq-verbatim">a) (2pts) V<sub>C</sub> at 25ms = ______<br>
+b) (2pts) V<sub>R</sub> at 25ms = ______<br>
+c) (2pts) I<sub>R</sub> at 25ms = ______<br>
+d) (2pts) V<sub>C</sub> at 50ms = ______<br>
+e) (2pts) V<sub>R</sub> at 50ms = ______<br>
+f) (2pts) I<sub>C</sub> at 50ms = ______</p>
+<table class="xq-given">
+<tr><th>Quantity</th><th>Value</th><th>Note</th></tr>
+<tr><td>\(V\) (\(V_1\), \(V_s\))</td><td>5 V</td><td>printed "V=5v"; + on the top terminal (long plate)</td></tr>
+<tr><td>\(R_1\)</td><td>200 Ω</td><td>in series with \(C_1\)</td></tr>
+<tr><td>\(C_1\)</td><td>100 μF = \(100\times10^{-6}\) F</td><td>printed "100uF"</td></tr>
+<tr><td>\(v_C\) before the switch closes</td><td>0 V</td><td>"no charge previously built up"</td></tr>
+<tr><td>times</td><td>25 ms and 50 ms</td><td>measured from the moment the switch closes</td></tr>
+<tr><td>currents in c) and f)</td><td>\(I_R\), \(I_C\)</td><td>The subscripts in parts c) and f) are very small and blurry in the photo; they read \(I_R\) and \(I_C\). Either way it is the single loop current, so the answers do not depend on the reading.</td></tr>
+</table>
+</section>
+
+<section class="xq-find">
+<div class="xq-part" data-part="a" data-points="2" data-type="num" data-label="a) \(V_C\) at 25 ms" data-value="3.567" data-unit="V" data-tol="0.01"></div>
+<div class="xq-part" data-part="b" data-points="2" data-type="num" data-label="b) \(V_R\) at 25 ms" data-value="1.433" data-unit="V" data-tol="0.01"></div>
+<div class="xq-part" data-part="c" data-points="2" data-type="num" data-label="c) \(I_R\) at 25 ms" data-value="0.007163" data-unit="A" data-tol="0.01"></div>
+<div class="xq-part" data-part="d" data-points="2" data-type="num" data-label="d) \(V_C\) at 50 ms" data-value="4.590" data-unit="V" data-tol="0.01"></div>
+<div class="xq-part" data-part="e" data-points="2" data-type="num" data-label="e) \(V_R\) at 50 ms" data-value="0.4104" data-unit="V" data-tol="0.02"></div>
+<div class="xq-part" data-part="f" data-points="2" data-type="num" data-label="f) \(I_C\) at 50 ms" data-value="0.002052" data-unit="A" data-tol="0.02"></div>
+
+<p class="fb" data-part="a" data-match="3.161" data-tol="0.005">That is the chart's 63.2 % value, which applies at exactly one time constant (20 ms). 25 ms is \(1.25\tau\), so the capacitor has charged a bit more. Use \(v_C = V\left(1 - \mathrm{e}^{-t/\tau}\right)\) with \(t/\tau = 1.25\).</p>
+<p class="fb" data-part="a" data-match="3.451" data-tol="0.004">It looks like you interpolated in a straight line between the chart's 1τ and 2τ points. The charging curve is exponential, so use \(1 - \mathrm{e}^{-1.25}\) instead.</p>
+<p class="fb" data-part="a" data-match="1.433" data-tol="0.01">That is the resistor voltage. While charging, the <em>capacitor</em> voltage rises: \(v_C = V\left(1 - \mathrm{e}^{-t/\tau}\right)\). The resistor voltage is the one that decays.</p>
+<p class="fb" data-part="a" data-match="5" data-tol="0.005">5 V is the fully charged value, reached only after about \(5\tau = 100\) ms. Check that \(t\) and \(\tau = RC\) are in the same units (0.025 s and 0.02 s). Also check the capacitance prefix: \(100\ \mu\text{F} = 100\times10^{-6}\) F, not \(100\times10^{-9}\) F (nF) or \(100\times10^{-12}\) F (pF). Any of these slips makes \(\tau\) far too small, so the capacitor looks fully charged.</p>
+<p class="fb" data-part="a" data-match="0.00000625" data-tol="0.1">A few microvolts means your \(\tau\) is far too large. If you used \(C = 100\) F (the μ dropped), then \(\tau = 200 \times 100 = 20\,000\) s and almost nothing has happened after 25 ms. Use \(C = 100\times10^{-6}\) F, so \(\tau = 0.02\) s.</p>
+<p class="fb" data-part="b" data-match="1.839" data-tol="0.005">That is the chart's 36.8 % value for exactly 1τ (20 ms). At 25 ms (\(1.25\tau\)): \(v_R = 5\ \text{V} \times \mathrm{e}^{-1.25}\).</p>
+<p class="fb" data-part="b" data-match="1.549" data-tol="0.005">Straight-line interpolation between chart points gives this. Use the exact factor \(\mathrm{e}^{-1.25}\).</p>
+<p class="fb" data-part="b" data-match="3.567" data-tol="0.01">That is \(v_C\). By KVL the resistor gets what is left: \(v_R = V - v_C\).</p>
+<p class="fb" data-part="c" data-match="0.009197" data-tol="0.005">That current belongs to exactly 1τ (20 ms): \(5\,\mathrm{e}^{-1}/200\). At 25 ms use \(\mathrm{e}^{-1.25}\).</p>
+<p class="fb" data-part="c" data-match="0.01784" data-tol="0.01">You divided the <em>capacitor</em> voltage by \(R_1\). Ohm's law for the resistor uses the resistor's own voltage: \(I_R = V_R/R_1\).</p>
+<p class="fb" data-part="c" data-match="0.025" data-tol="0.005">25 mA is the current at the instant the switch closes (\(V/R\), capacitor acting like a short). It decays as the capacitor charges: \(i = (V/R)\,\mathrm{e}^{-t/\tau}\).</p>
+<p class="fb" data-part="d" data-match="4.323" data-tol="0.004">That is the chart's 86.5 % value, which applies at exactly 2τ (40 ms). 50 ms is \(2.5\tau\): use \(1 - \mathrm{e}^{-2.5}\).</p>
+<p class="fb" data-part="d" data-match="0.4104" data-tol="0.02">That is the resistor voltage at 50 ms. The capacitor voltage is the large one by now: \(v_C = V\left(1 - \mathrm{e}^{-2.5}\right)\).</p>
+<p class="fb" data-part="d" data-match="5" data-tol="0.005">Not fully charged yet: that takes about \(5\tau = 100\) ms. At 50 ms (\(2.5\tau\)) the capacitor is at about 92 % of 5 V.</p>
+<p class="fb" data-part="e" data-match="0.6767" data-tol="0.01">That is the chart's 13.5 % value for exactly 2τ (40 ms). At 50 ms (\(2.5\tau\)): \(v_R = 5\ \text{V} \times \mathrm{e}^{-2.5}\).</p>
+<p class="fb" data-part="e" data-match="0.4628" data-tol="0.015">Straight-line interpolation between the 2τ and 3τ chart points gives this. The exponential bends more: use \(\mathrm{e}^{-2.5}\).</p>
+<p class="fb" data-part="e" data-match="4.590" data-tol="0.01">That is \(v_C\). \(v_R = V - v_C\).</p>
+<p class="fb" data-part="f" data-match="0.003383" data-tol="0.01">That current belongs to exactly 2τ (40 ms). At 50 ms use \(\mathrm{e}^{-2.5}\).</p>
+<p class="fb" data-part="f" data-match="0.02295" data-tol="0.01">You divided the capacitor voltage by \(R_1\). The current is set by the resistor's voltage: \(I = V_R/R_1\). In a series circuit \(I_C = I_R\).</p>
+<p class="fb" data-part="f" data-match="0.025" data-tol="0.005">25 mA is the current only at \(t = 0\). By 50 ms it has decayed to \(\mathrm{e}^{-2.5}\) (about 8 %) of that.</p>
+<p class="fb" data-part="f" data-match="0" data-tol="0.01">The current reaches (almost) zero only when the capacitor is fully charged, after about \(5\tau = 100\) ms. At 50 ms some current still flows through \(C_1\).</p>
+</section>
+
+<div class="xq-hints">
+<p class="xq-hint">At the instant the switch closes, the uncharged capacitor has 0 V across it. Where does the 5 V appear at that instant, and what happens as the capacitor charges?</p>
+<p class="xq-hint">Find the time constant \(\tau = RC\) (convert μF to F) and express each time as a number of time constants (\(t/\tau\)). Are they whole numbers?</p>
+<p class="xq-hint">They are not, so use the exact charging equations: \(v_C = V\left(1 - \mathrm{e}^{-t/\tau}\right)\) and \(v_R = V\,\mathrm{e}^{-t/\tau}\). Then Ohm's law on the resistor gives the current.</p>
+<p class="xq-hint">\(I_R\) and \(I_C\) are the same current: \(R_1\) and \(C_1\) are in series.</p>
+</div>
+
+<ol class="xq-steps">
+<li class="xq-step" data-title="Identify the concept">
+<p>This is a <strong>series RC circuit charging</strong> from a DC source. The capacitor starts uncharged (\(v_C = 0\) V). When the switch closes, current flows and charge builds up on the capacitor, so \(v_C\) rises from 0 toward 5 V along the universal time-constant curve. The resistor voltage and the current do the opposite: they start at their maximum and decay toward 0.</p>
+</li>
+<li class="xq-step" data-title="The circuit after the switch closes">
+<figure class="circuit">
+<script type="application/json">{"parts":[
+ {"t":"BAT","a":[0,6],"b":[0,3],"plus":"b","label":"V","value":"5 V","side":-1},
+ {"t":"W","pts":[[0,3],[0,0],[2,0]]},
+ {"t":"SW","a":[2,0],"b":[4,0],"state":"closed","label":"closed at t = 0"},
+ {"t":"W","pts":[[4,0],[6,0]]},
+ {"t":"IARR","a":[4.4,0],"b":[5.6,0],"label":"i","side":-1},
+ {"t":"R","a":[6,0],"b":[6,3],"label":"R_1","value":"200 Ω","side":-1},
+ {"t":"W","pts":[[6,3],[6,4.5]]},
+ {"t":"C","a":[6,4.5],"b":[6,7.5],"label":"C_1","value":"100 μF","side":-1},
+ {"t":"W","pts":[[6,7.5],[0,7.5],[0,6]]},
+ {"t":"VM","a":[7,0.4],"b":[7,2.6],"label":"V_R","lat":[7.8,1.5]},
+ {"t":"VM","a":[7,4.9],"b":[7,7.1],"label":"V_C","lat":[7.8,6]}
+],"pad":1.4,"alt":"The circuit for t at or after 0: the switch is closed and current i flows clockwise from the battery's positive terminal through the switch, down through R1 and C1, and back. V_R and V_C are marked plus at the top of each part."}</script>
+<figcaption>\(t \ge 0\): one series loop. The current \(i\) flows clockwise, down through \(R_1\) and into the top plate of \(C_1\). Polarity convention: + at the top of each part. The top plate of \(C_1\) charges positive.</figcaption>
+</figure>
+<p>There is one loop, so the same current flows through the battery, \(R_1\) and \(C_1\). That is why \(I_R\) (part c) and \(I_C\) (part f) are the same quantity at any given time.</p>
+<p>At \(t = 0^+\) the capacitor still has 0 V (its voltage cannot jump), so it acts like a short. All 5 V is across \(R_1\), and the current is at its maximum: \(I_{max} = 5\ \text{V}/200\ \Omega = 0.025\ \text{A} = 25\ \text{mA}\).</p>
+</li>
+<li class="xq-step" data-title="Why the exact equations, not the chart">
+<p>The universal time-constant chart gives the percentages at <strong>whole</strong> time constants: 63.2 % at 1τ, 86.5 % at 2τ, 95 % at 3τ. You can read it directly only when \(t\) is exactly 1τ, 2τ, …. So find \(\tau\), convert the asked times into time constants, and if they are not whole numbers use the exact exponential equations. They describe the same curve at every instant. Straight-line interpolation between chart points is not accurate, because the curve is exponential.</p>
+</li>
+<li class="xq-step" data-title="Formulas you need">
+<p><strong>Time constant</strong> of a series RC circuit:</p>
+<div class="formula">\[ \tau = R\,C \]</div>
+<p>\(\tau\) in seconds (s), \(R\) in ohms (Ω), \(C\) in farads (F).</p>
+<p><strong>Charging equations</strong> (capacitor starting at 0 V, \(t\) = time since the switch closed, in s):</p>
+<div class="formula">\[ v_C(t) = V\left(1 - \mathrm{e}^{-t/\tau}\right), \qquad v_R(t) = V\,\mathrm{e}^{-t/\tau} \]</div>
+<p><strong>Current</strong>, from Ohm's law on the resistor (the same current flows through \(C_1\)):</p>
+<div class="formula">\[ i(t) = \frac{v_R(t)}{R} = \frac{V}{R}\,\mathrm{e}^{-t/\tau} \]</div>
+<p>KVL holds at every instant: \(v_R + v_C = V\).</p>
+</li>
+<li class="xq-step" data-title="Time constant and time in time constants">
+<div class="formula">\[ \tau = R_1 C_1 = 200\ \Omega \times 100\times10^{-6}\ \text{F} = 0.02\ \text{s} = 20\ \text{ms} \]</div>
+<div class="formula">\[ \frac{t}{\tau}\Big|_{25\ \text{ms}} = \frac{0.025\ \text{s}}{0.02\ \text{s}} = 1.25, \qquad \frac{t}{\tau}\Big|_{50\ \text{ms}} = \frac{0.05\ \text{s}}{0.02\ \text{s}} = 2.5 \]</div>
+<p>25 ms is between 1τ (20 ms) and 2τ (40 ms); 50 ms is between 2τ (40 ms) and 3τ (60 ms). Neither is a whole number of time constants, so the chart's 63.2 % and 86.5 % do not apply directly. The capacitor is "fully charged" after \(5\tau = 100\) ms.</p>
+</li>
+<li class="xq-step" data-title="Parts a–c: t = 25 ms (1.25τ)">
+<p>Exponential factor (4 significant figures; round only the final answers):</p>
+<div class="formula">\[ \mathrm{e}^{-1.25} = 0.2865, \qquad 1 - \mathrm{e}^{-1.25} = 0.7135 \]</div>
+<p><strong>a)</strong> \(V_C = 5\ \text{V} \times 0.7135 = 3.567\ \text{V}\) (the capacitor is at 71.35 % of 5 V).</p>
+<p><strong>b)</strong> \(V_R = 5\ \text{V} \times 0.2865 = 1.433\ \text{V}\). Check with KVL: \(5 - 3.567 = 1.433\) V ✓</p>
+<p><strong>c)</strong> Ohm's law on the resistor:</p>
+<div class="formula">\[ I_R = \frac{V_R}{R_1} = \frac{1.433\ \text{V}}{200\ \Omega} = 0.007163\ \text{A} = 7.163\ \text{mA} \]</div>
+<p>Same result from \(I_{max}\,\mathrm{e}^{-1.25} = 25\ \text{mA} \times 0.2865 = 7.163\) mA.</p>
+</li>
+<li class="xq-step" data-title="Parts d–f: t = 50 ms (2.5τ)">
+<div class="formula">\[ \mathrm{e}^{-2.5} = 0.08208, \qquad 1 - \mathrm{e}^{-2.5} = 0.9179 \]</div>
+<p><strong>d)</strong> \(V_C = 5\ \text{V} \times 0.9179 = 4.590\ \text{V}\) (91.79 % of 5 V).</p>
+<p><strong>e)</strong> \(V_R = 5\ \text{V} \times 0.08208 = 0.4104\ \text{V}\). KVL: \(5 - 4.590 = 0.410\) V ✓</p>
+<p><strong>f)</strong> The capacitor current is the loop current, so use the resistor's voltage:</p>
+<div class="formula">\[ I_C = I_R = \frac{V_R}{R_1} = \frac{0.4104\ \text{V}}{200\ \Omega} = 0.002052\ \text{A} = 2.052\ \text{mA} \]</div>
+</li>
+<li class="xq-step" data-title="Polarity and current direction">
+<p>The current flows clockwise: out of the battery's + terminal, through the switch, <strong>down</strong> through \(R_1\) and into the top plate of \(C_1\). So the top of \(R_1\) is + and the top plate of \(C_1\) is +. All six answers are positive with these conventions. The current flows in the same direction the whole time and only gets smaller.</p>
+</li>
+</ol>
+
+<section class="xq-answer">
+<p>\(\tau = R_1C_1 = 20\) ms.</p>
+<table>
+<tr><th>Part</th><th>Quantity</th><th>Value</th></tr>
+<tr><td>a</td><td>\(V_C\) at 25 ms</td><td>3.567 V (≈ 3.57 V)</td></tr>
+<tr><td>b</td><td>\(V_R\) at 25 ms</td><td>1.433 V (≈ 1.43 V)</td></tr>
+<tr><td>c</td><td>\(I_R\) at 25 ms</td><td>7.163 mA = 0.007163 A</td></tr>
+<tr><td>d</td><td>\(V_C\) at 50 ms</td><td>4.590 V (≈ 4.59 V)</td></tr>
+<tr><td>e</td><td>\(V_R\) at 50 ms</td><td>0.4104 V (≈ 0.410 V)</td></tr>
+<tr><td>f</td><td>\(I_C\) at 50 ms</td><td>2.052 mA = 0.002052 A</td></tr>
+</table>
+<p>Polarities: + at the top of \(R_1\) and on the top plate of \(C_1\); the current flows clockwise (down through \(R_1\) and \(C_1\)).</p>
+<figure class="circuit">
+<script type="application/json">{"parts": [{"t": "W", "pts": [[0, 0.4], [0, 6.0], [11.2, 6.0]]}, {"t": "T", "at": [0, 0.05], "text": "voltage (top line = V = 5 V; for i, top line = 25 mA)", "anchor": "start"}, {"t": "T", "at": [11.4, 6.1], "text": "t", "anchor": "start"}, {"t": "T", "at": [-0.2, 6.1], "text": "0", "anchor": "end"}, {"t": "W", "pts": [[0, 1.0], [11.0, 1.0]], "dashed": true}, {"t": "T", "at": [-0.2, 1.12], "text": "5 V", "anchor": "end"}, {"t": "W", "pts": [[0.0, 6.0], [0.196, 5.532], [0.393, 5.108], [0.589, 4.724], [0.786, 4.376], [0.982, 4.06], [1.179, 3.774], [1.375, 3.514], [1.571, 3.279], [1.768, 3.066], [1.964, 2.873], [2.161, 2.697], [2.357, 2.539], [2.554, 2.395], [2.75, 2.264], [2.946, 2.146], [3.143, 2.039], [3.339, 1.942], [3.536, 1.853], [3.732, 1.774], [3.929, 1.701], [4.125, 1.636], [4.321, 1.576], [4.518, 1.522], [4.714, 1.473], [4.911, 1.429], [5.107, 1.389], [5.304, 1.353], [5.5, 1.32], [5.696, 1.29], [5.893, 1.263], [6.089, 1.238], [6.286, 1.216], [6.482, 1.196], [6.679, 1.177], [6.875, 1.161], [7.071, 1.146], [7.268, 1.132], [7.464, 1.12], [7.661, 1.109], [7.857, 1.098], [8.054, 1.089], [8.25, 1.081], [8.446, 1.073], [8.643, 1.066], [8.839, 1.06], [9.036, 1.055], [9.232, 1.049], [9.429, 1.045], [9.625, 1.041], [9.821, 1.037], [10.018, 1.033], [10.214, 1.03], [10.411, 1.027], [10.607, 1.025], [10.804, 1.023], [11.0, 1.02]]}, {"t": "W", "pts": [[0.0, 1.0], [0.196, 1.468], [0.393, 1.892], [0.589, 2.276], [0.786, 2.624], [0.982, 2.94], [1.179, 3.226], [1.375, 3.486], [1.571, 3.721], [1.768, 3.934], [1.964, 4.127], [2.161, 4.303], [2.357, 4.461], [2.554, 4.605], [2.75, 4.736], [2.946, 4.854], [3.143, 4.961], [3.339, 5.058], [3.536, 5.147], [3.732, 5.226], [3.929, 5.299], [4.125, 5.364], [4.321, 5.424], [4.518, 5.478], [4.714, 5.527], [4.911, 5.571], [5.107, 5.611], [5.304, 5.647], [5.5, 5.68], [5.696, 5.71], [5.893, 5.737], [6.089, 5.762], [6.286, 5.784], [6.482, 5.804], [6.679, 5.823], [6.875, 5.839], [7.071, 5.854], [7.268, 5.868], [7.464, 5.88], [7.661, 5.891], [7.857, 5.902], [8.054, 5.911], [8.25, 5.919], [8.446, 5.927], [8.643, 5.934], [8.839, 5.94], [9.036, 5.945], [9.232, 5.951], [9.429, 5.955], [9.625, 5.959], [9.821, 5.963], [10.018, 5.967], [10.214, 5.97], [10.411, 5.973], [10.607, 5.975], [10.804, 5.977], [11.0, 5.98]]}, {"t": "W", "pts": [[2, 5.88], [2, 6.12]]}, {"t": "T", "at": [2, 6.6], "text": "1τ"}, {"t": "T", "at": [2, 7.05], "text": "20 ms", "cls": "muted"}, {"t": "W", "pts": [[4, 5.88], [4, 6.12]]}, {"t": "T", "at": [4, 6.6], "text": "2τ"}, {"t": "T", "at": [4, 7.05], "text": "40 ms", "cls": "muted"}, {"t": "W", "pts": [[6, 5.88], [6, 6.12]]}, {"t": "T", "at": [6, 6.6], "text": "3τ"}, {"t": "T", "at": [6, 7.05], "text": "60 ms", "cls": "muted"}, {"t": "W", "pts": [[8, 5.88], [8, 6.12]]}, {"t": "T", "at": [8, 6.6], "text": "4τ"}, {"t": "T", "at": [8, 7.05], "text": "80 ms", "cls": "muted"}, {"t": "W", "pts": [[10, 5.88], [10, 6.12]]}, {"t": "T", "at": [10, 6.6], "text": "5τ"}, {"t": "T", "at": [10, 7.05], "text": "100 ms", "cls": "muted"}, {"t": "W", "pts": [[2.5, 6.0], [2.5, 2.433]], "dashed": true}, {"t": "N", "at": [2.5, 2.433]}, {"t": "N", "at": [2.5, 4.567]}, {"t": "T", "at": [2.7, 2.933], "text": "3.57 V", "anchor": "start", "cls": "accent"}, {"t": "T", "at": [2.65, 4.267], "text": "1.43 V", "anchor": "start", "cls": "accent"}, {"t": "T", "at": [2.5, 7.5], "text": "25 ms", "cls": "accent"}, {"t": "W", "pts": [[5.0, 6.0], [5.0, 1.41]], "dashed": true}, {"t": "N", "at": [5.0, 1.41]}, {"t": "N", "at": [5.0, 5.59]}, {"t": "T", "at": [5.2, 1.91], "text": "4.59 V", "anchor": "start", "cls": "accent"}, {"t": "T", "at": [5.15, 5.29], "text": "0.41 V", "anchor": "start", "cls": "accent"}, {"t": "T", "at": [5.0, 7.5], "text": "50 ms", "cls": "accent"}, {"t": "T", "at": [8.6, 0.65], "text": "v_C → 5 V", "anchor": "start"}, {"t": "T", "at": [8.6, 5.55], "text": "v_R, i → 0", "anchor": "start"}], "pad": 0.6, "alt": "Question 7 after the switch closes: v_C rises from 0 toward 5 V while v_R and the current fall from 5 V and 25 mA toward 0. Time axis marked at 1 to 5 time constants (20, 40, 60, 80, 100 ms). At 25 ms (1.25 tau) v_C = 3.57 V and v_R = 1.43 V; at 50 ms (2.5 tau) v_C = 4.59 V and v_R = 0.41 V."}</script>
+<figcaption>\(v_C\) (rising) and \(v_R\) (falling; the current has the same shape, 25 mA at the top line) after the switch closes, drawn to scale with τ = 20 ms. The dots mark the answers at 25 ms (1.25τ) and 50 ms (2.5τ), just past the 1τ and 2τ ticks.</figcaption>
+</figure>
+</section>
+
+<section class="xq-check">
+<ul>
+<li><strong>KVL:</strong> \(V_C + V_R = 5\) V at both times (3.567 + 1.433, and 4.590 + 0.410).</li>
+<li><strong>Compare with the chart:</strong> at 1τ (20 ms) the chart gives \(v_C = 63.2\,\% \times 5 = 3.16\) V. At 25 ms, a little later, the answer should be a little more: 3.57 V ✓. At 2τ (40 ms) the chart gives 4.32 V and at 3τ (60 ms) 4.75 V. 50 ms lies between them: 4.59 V ✓.</li>
+<li><strong>Current ratio:</strong> \(7.163/25 = 28.65\,\%\) and \(2.052/25 = 8.208\,\%\). Those are \(\mathrm{e}^{-1.25}\) and \(\mathrm{e}^{-2.5}\), the decay curve ✓. Doubling the time squared the fraction left: \(0.2865^2 = 0.08208\) ✓.</li>
+<li><strong>Units:</strong> Ω × F = s. With \(C = 100\times10^{-6}\) F, \(\tau = 0.02\) s. A τ in the thousands of seconds means the μ was dropped.</li>
+</ul>
+</section>
+
+<section class="xq-mistakes">
+<ul>
+<li>Using the chart's 63.2 % at 25 ms or 86.5 % at 50 ms. Those belong to 20 ms and 40 ms exactly. First compute \(t/\tau\).</li>
+<li>Interpolating in a straight line between chart points. The curve is exponential.</li>
+<li>Forgetting the micro prefix: \(100\ \mu\text{F} = 100\times10^{-6}\ \text{F} = 0.0001\) F.</li>
+<li>Swapping the curves. While charging, \(v_C\) rises (\(1 - \mathrm{e}^{-t/\tau}\)); \(v_R\) and the current fall (\(\mathrm{e}^{-t/\tau}\)).</li>
+<li>Computing the current as \(V_C/R\). Ohm's law applies to the resistor with the resistor's voltage: \(I = V_R/R\).</li>
+<li>Treating \(I_R\) and \(I_C\) as different currents, or setting \(I_C = 0\) because "a capacitor blocks DC". It only blocks DC once fully charged (after about 5τ).</li>
+</ul>
+</section>
+
+<section class="xq-similar">
+<p><strong>Approach for a similar problem.</strong></p>
+<ol>
+<li>Find the starting and final capacitor voltages. Uncharged start: \(v_C(0) = 0\). Final: the source voltage (the capacitor ends up acting like an open circuit).</li>
+<li>Find \(\tau = RC\), with \(R\) the resistance in series with the capacitor in the switch position you are analysing. Convert prefixes (μF, kΩ) to base units first.</li>
+<li>Convert every asked time to \(t/\tau\). Whole numbers: the chart value is exact (63.2 %, 86.5 %, 95 %, 98.2 %, 99.3 %). Otherwise use the equations.</li>
+<li>Get \(v_C\), then \(v_R = V - v_C\) by KVL, then \(i = v_R/R\). The same current flows through every series part.</li>
+<li><strong>Discharging</strong> (a charged capacitor connected across a resistor, no source): \(v_C = V_0\,\mathrm{e}^{-t/\tau}\), the current has the same shape but flows the other way, and \(v_R\) has the size of \(v_C\).</li>
+<li><strong>Asked for a time instead</strong> (e.g. "when does \(v_C\) reach 4 V?"): solve \(t = -\tau\ln(1 - v_C/V)\).</li>
+<li>The inductor version is <a href="#/exams/mt2/q3">Question 3</a> on this exam: same chart, but \(\tau = L/R\), and the inductor's <em>current</em> builds up while its voltage decays.</li>
+</ol>
+</section>
+
+<section class="xq-connect">
+<p><strong>Topic tested:</strong> <a href="#/t/lc/understand">Capacitors, Inductors &amp; RC/RL circuits</a>: the RC time constant and the charging equations for a capacitor.</p>
+<p><strong>Clues:</strong> a battery, a switch, a resistor and a capacitor in one series loop; "no charge previously built up" (start at 0 V); and quantities asked at specific times "after the switch is closed". Times in milliseconds close to \(RC\) point to the time constant. Asking for \(V_C\), \(V_R\) and the current together means: capacitor formula, then KVL, then Ohm's law.</p>
+<p><strong>Where it is taught:</strong></p>
+<ul>
+<li><a class="xref" data-lesson="cl4" data-sec="cl4-charging">RC Time Constant, §1: the charging "storybook"</a>. At \(t = 0\) the uncharged capacitor acts like a short (<a class="ts" data-lesson="cl4" data-t="1:46"></a>), and the time constant \(\tau = RC\) is introduced at <a class="ts" data-lesson="cl4" data-t="9:11"></a>.</li>
+<li><a class="xref" data-lesson="cl4" data-sec="cl4-utc">§2: the universal time constant chart for RC</a>, with 63.2 %, 86.5 % and 95 % read at <a class="ts" data-lesson="cl4" data-t="13:07"></a>. At <a class="ts" data-lesson="cl4" data-t="14:49"></a> the instructor says he remembers only 63.2 % and 13.5 % and otherwise uses the formulas, which is exactly what this question requires.</li>
+<li><a class="xref" data-lesson="cl4" data-sec="cl4-formulas">§3: the charging equations</a>: \(v_C\) at <a class="ts" data-lesson="cl4" data-t="15:39"></a>, \(v_R\) at <a class="ts" data-lesson="cl4" data-t="16:08"></a>, and the current from Ohm's law on the resistor at <a class="ts" data-lesson="cl4" data-t="16:59"></a>.</li>
+<li><a class="xref" data-lesson="cl4" data-sec="cl4-example">§4: worked example, \(v_C\), \(v_R\) and \(i\) at a given time</a> (<a class="ts" data-lesson="cl4" data-t="17:26"></a>). It follows the same order as this question: capacitor formula, then KVL for \(v_R\) (<a class="ts" data-lesson="cl4" data-t="26:19"></a>), then Ohm's law for the current, which is the same through R and C in a series circuit (<a class="ts" data-lesson="cl4" data-t="27:42"></a>).</li>
+<li><a class="xref" data-lesson="cl3" data-sec="cl3-rc">Capacitors: Introduction, §8: \(\tau = RC\) and the chart</a>, 63.2 % after one time constant at <a class="ts" data-lesson="cl3" data-t="45:37"></a>.</li>
+</ul>
+<p><strong>Formulas:</strong> \(\tau = RC\), \(v_C = V(1 - \mathrm{e}^{-t/\tau})\), \(v_R = V\mathrm{e}^{-t/\tau}\), \(i = v_R/R\), \(v_R + v_C = V\). See the <a href="#/t/lc/review">formula sheet for this topic</a>.</p>
+<p><strong>Try it in the lab:</strong> open the <a href="#/t/lc/understand/lab/rc">RC lab</a> in Charge mode, set \(V_s = 5\) V, \(R = 200\ \Omega\), \(C = 100\ \mu\text{F}\), and move the time cursor to 25 ms and 50 ms. The readout should match the table above.</p>
+</section>
+
+</article>

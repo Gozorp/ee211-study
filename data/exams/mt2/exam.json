@@ -1,0 +1,24 @@
+{
+  "id": "mt2",
+  "title": "Midterm 2",
+  "course": "Principles of Computer Engineering I (EE 211)",
+  "totalPoints": 90,
+  "questionCount": 9,
+  "pages": 4,
+  "source": "Four phone photos of a printed, graded exam (pages 1–4). Only the questions were transcribed; handwritten answers, grading marks and the score are not part of this site.",
+  "pageMap": [
+    {"page": 1, "questions": [1, 2]},
+    {"page": 2, "questions": [3, 4]},
+    {"page": 3, "questions": [5, 6]},
+    {"page": 4, "questions": [7, 8, 9]}
+  ],
+  "transcription": {
+    "ocr": "Windows built-in OCR (en-US) on contrast-enhanced, 2× upscaled photos. It recovered only fragments of the angled photos (for example “R3=5 ohm, R4=15 ohm”, “5.6uF”, “8.2uF”, “2 ms”, “= 4v, = 10v, 6v”), all consistent with the transcription.",
+    "visual": "Every statement, value, unit, polarity mark and circuit connection was then verified visually on zoomed crops of each question, and checked again by an independent reviewer.",
+    "scope": "The oscilloscope trace in question 5 was measured by pixel analysis against perspective-corrected grid lines (peaks +2.43 div, trough −2.64 div, period 4.98 div)."
+  },
+  "pdfs": {
+    "questions": "data/exams/mt2/mt2-questions.pdf",
+    "solutions": "data/exams/mt2/mt2-solutions.pdf"
+  }
+}

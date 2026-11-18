@@ -79,7 +79,8 @@
     clock: '<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/>',
     pill: '<path d="M5 12h14"/>',
     restore: '<rect x="4" y="6" width="16" height="12" rx="2"/>',
-    edit: '<path d="M4 20h4L19 9l-4-4L4 16z"/>'
+    edit: '<path d="M4 20h4L19 9l-4-4L4 16z"/>',
+    exam: '<path d="M6 3.5h9l4 4v13H6z"/><path d="M15 3.5v4h4"/><path d="M9 13.2l2.2 2.3 4.3-4.6"/>'
   };
   /* topic glyphs */
   var GLYPH = {
@@ -674,7 +675,7 @@
         '<span class="sheet-stats"><span class="mini-stat">' + ring(st.lessons ? st.done / st.lessons : 0, { size: 18, stroke: 3 }) + st.done + '/' + st.lessons + ' studied</span>' +
         '<span class="mini-stat">' + diamonds(st.core, st.help) + st.core + '/4 understood</span></span></span>' + icon('right', 'sheet-go') + '</a></li>';
     }).join('') + '</ul>' +
-      '<div class="sheet-foot"><a href="#/" class="btn small">Home</a><a href="#/notes" class="btn small">All notes</a><a href="#/about" class="btn small">About</a></div>';
+      '<div class="sheet-foot"><a href="#/" class="btn small">Home</a><a href="#/exams" class="btn small">' + icon('exam') + '<span>Past Exam Examples</span></a><a href="#/notes" class="btn small">All notes</a><a href="#/about" class="btn small">About</a></div>';
   }
 
   /* ================================================================== topic chrome: band + mode bar */
@@ -887,7 +888,7 @@
       if (!MODE[mode]) return { kind: 'page', name: 'notfound', params: [], query: r.query, hash: r.hash };
       return { kind: 'topic', tid: tid, mode: mode, params: p.slice(3), query: r.query, hash: r.hash };
     }
-    if (p[0] === 'notes' || p[0] === 'about') return { kind: 'page', name: p[0], params: p.slice(1), query: r.query, hash: r.hash };
+    if (p[0] === 'notes' || p[0] === 'about' || p[0] === 'exams') return { kind: 'page', name: p[0], params: p.slice(1), query: r.query, hash: r.hash };
     return { kind: 'page', name: 'notfound', params: [], query: r.query, hash: r.hash };
   }
 
@@ -1145,7 +1146,8 @@
   function banner(html) { var b = $('#banner'); b.hidden = false; b.innerHTML = '<div class="banner-inner">' + html + '</div>'; }
   function boot() {
     main = $('#main');
-    var nn = $('#navNotes'), na = $('#navAbout');
+    var nn = $('#navNotes'), na = $('#navAbout'), nx = $('#navExams');
+    if (nx) { nx.insertAdjacentHTML('afterbegin', icon('exam')); nx.setAttribute('aria-label', 'Past Exam Examples'); nx.title = 'Past Exam Examples: real exam questions with worked solutions'; }
     if (nn) { nn.insertAdjacentHTML('afterbegin', icon('notes')); nn.setAttribute('aria-label', 'All notes'); nn.title = 'All notes'; }
     if (na) { na.insertAdjacentHTML('afterbegin', icon('info')); na.setAttribute('aria-label', 'About this site'); na.title = 'About: how to use, coverage, privacy'; }
     buildTabs();

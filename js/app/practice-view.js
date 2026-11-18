@@ -33,8 +33,10 @@
       '  <li>“Solved on your own” means you got it right without opening the solution (hints are fine). It counts toward <b>Understood</b> in the topic header; viewing the solution counts as “solved with help”.</li>' +
       '  <li>Your typed answers are saved as drafts, so you can switch to Watch or Understand and come back.</li></ul></details>' +
       ' <div id="prBody" class="pr-body"><p class="muted">Loading the questions…</p></div>' +
+      ' <div class="xm-from-slot" hidden></div>' +
       '</div>';
     var body = $('#prBody', ctx.el), pills = $('#prPills', ctx.el), status = $('#prStatus', ctx.el);
+    if (A.exams) A.exams.topicCard(tid, $('.xm-from-slot', ctx.el), ctx);   // "From past exams" (js/app/exams.js)
     var qs = [];
 
     function stat() {

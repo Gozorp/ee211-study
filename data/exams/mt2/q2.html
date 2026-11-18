@@ -1,0 +1,229 @@
+<article class="xq" id="mt2-q2" data-exam="mt2" data-num="2" data-points="8" data-page="1" data-topics="lc" data-title="Equivalent capacitance of a series–parallel network" data-status="ok">
+
+<section class="xq-prompt">
+<p class="xq-verbatim">2) (8pts) Capacitance<br>
+a) (6pts) What is the equivalent capacitance for this circuit: CT = ______<br>
+b) (2pts) If Resistance is a property that “Opposes the Flow of Current”, Capacitance is a property that: ______</p>
+<figure class="circuit">
+<script type="application/json">{"parts":[
+ {"t":"BAT","a":[0,5.5],"b":[0,2.5],"label":"V_2","value":"12 V","side":-1},
+ {"t":"W","pts":[[0,2.5],[0,0],[2.5,0]]},
+ {"t":"W","pts":[[0,5.5],[0,8],[2.5,8]]},
+ {"t":"W","pts":[[2.5,0],[2.5,2.5]]},
+ {"t":"C","a":[2.5,2.5],"b":[2.5,5.5],"label":"C_1","value":"1.5 μF"},
+ {"t":"W","pts":[[2.5,5.5],[2.5,8]]},
+ {"t":"C","a":[2.5,0],"b":[7,0],"label":"C_2","value":"5.6 μF"},
+ {"t":"C","a":[2.5,8],"b":[7,8],"label":"C_6","value":"5.6 μF","side":-1},
+ {"t":"C","a":[7,0],"b":[7,4],"label":"C_3","value":"8.2 μF"},
+ {"t":"C","a":[7,4],"b":[7,8],"label":"C_4","value":"8.2 μF"},
+ {"t":"W","pts":[[7,0],[10,0],[10,2.5]]},
+ {"t":"C","a":[10,2.5],"b":[10,5.5],"label":"C_5","value":"1.5 μF"},
+ {"t":"W","pts":[[10,5.5],[10,8],[7,8]]},
+ {"t":"N","at":[2.5,0]},
+ {"t":"N","at":[2.5,8]},
+ {"t":"N","at":[7,0]},
+ {"t":"N","at":[7,8]}
+],"pad":1.7,"padX":2.5,"alt":"A 12 volt battery V2 on the left with its long plate (+) on top. C1 = 1.5 microfarads is connected directly across the battery, between the top-left and bottom-left nodes. C2 = 5.6 microfarads sits in the top wire and C6 = 5.6 microfarads in the bottom wire, leading to the top-right and bottom-right nodes. Between those two right-hand nodes there are two branches: C3 = 8.2 microfarads in series with C4 = 8.2 microfarads, and, at the far right, C5 = 1.5 microfarads."}</script>
+<figcaption>Question 2 redrawn. The battery's long plate (+) is on top, as on the exam. The dots mark the four junctions printed on the exam; the wire between \(C_3\) and \(C_4\) has no junction and nothing else connected to it.</figcaption>
+</figure>
+<table class="xq-given">
+<tr><th>Quantity</th><th>Value</th><th>Note</th></tr>
+<tr><td>\(V_2\)</td><td>12 V</td><td>+ on top (long plate). Not needed for \(C_T\).</td></tr>
+<tr><td>\(C_1\)</td><td>1.5 μF</td><td>directly across \(V_2\) (top-left to bottom-left node)</td></tr>
+<tr><td>\(C_2\)</td><td>5.6 μF</td><td>in the top wire</td></tr>
+<tr><td>\(C_3\)</td><td>8.2 μF</td><td>upper half of the middle-right branch</td></tr>
+<tr><td>\(C_4\)</td><td>8.2 μF</td><td>lower half of the middle-right branch, in series with \(C_3\)</td></tr>
+<tr><td>\(C_5\)</td><td>1.5 μF</td><td>far-right branch, between the same two right-hand nodes</td></tr>
+<tr><td>\(C_6\)</td><td>5.6 μF</td><td>in the bottom wire</td></tr>
+</table>
+<p>Printed as “uF” on the exam; u = μ = \(10^{-6}\). \(C_T\) is the total capacitance the source \(V_2\) sees.</p>
+</section>
+
+<section class="xq-find">
+<div class="xq-part" data-part="a" data-points="6" data-type="num" data-label="\(C_T\), the equivalent capacitance seen by \(V_2\)" data-value="3.367e-6" data-unit="F" data-tol="0.01"></div>
+<div class="xq-part" data-part="b" data-points="2" data-type="text" data-label="Capacitance is a property that…" data-accept="^(?![\s\S]*\bnot\b)(?![\s\S]*n't\b)(?![\s\S]*\bnever\b)(?![\s\S]*curr)[\s\S]*oppos\w*.{0,30}chang\w*.{0,30}volt|^(?![\s\S]*\bnot\b)(?![\s\S]*n't\b)(?![\s\S]*\bnever\b)(?![\s\S]*curr)[\s\S]*oppos\w*.{0,30}volt\w*.{0,15}chang|^(?![\s\S]*\bnot\b)(?![\s\S]*n't\b)(?![\s\S]*\bnever\b)(?![\s\S]*curr)[\s\S]*resist\w*.{0,30}chang\w*.{0,30}volt|^(?![\s\S]*\bnot\b)(?![\s\S]*n't\b)(?![\s\S]*\bnever\b)(?![\s\S]*curr)[\s\S]*resist\w*.{0,30}volt\w*.{0,15}chang|^(?![\s\S]*\bnot\b)(?![\s\S]*n't\b)(?![\s\S]*\bnever\b)(?![\s\S]*curr)[\s\S]*prevent\w*.{0,30}chang\w*.{0,30}volt|^(?![\s\S]*\bnot\b)(?![\s\S]*n't\b)(?![\s\S]*\bnever\b)(?![\s\S]*curr)[\s\S]*oppos\w*.{0,30}chang\w*.{0,30}potential"></div>
+<p class="fb" data-part="a" data-match="1.3401e-6" data-tol="0.01">You used the resistor rules (series adds, parallel uses reciprocals). Capacitors work the other way round: capacitors in <strong>parallel add</strong>, and capacitors in <strong>series</strong> combine with the reciprocal rule.</p>
+<p class="fb" data-part="a" data-match="3.921e-6" data-tol="0.01">You added \(C_3\) and \(C_4\). They are in <strong>series</strong>: they sit one after the other in the same branch, with nothing connected at the point between them. Two equal capacitors in series give half of one: \(8.2/2 = 4.1\ \mu\text{F}\).</p>
+<p class="fb" data-part="a" data-match="2.2888e-6" data-tol="0.01">You put \(C_5\) in series with \(C_3\)–\(C_4\). \(C_5\) connects to the same two right-hand nodes as the \(C_3\)–\(C_4\) branch, so it is in <strong>parallel</strong> with it, and parallel capacitances add: \(4.1 + 1.5 = 5.6\ \mu\text{F}\).</p>
+<p class="fb" data-part="a" data-match="1.8667e-6" data-tol="0.01">That is the series path \(C_2\)–(\(C_3\),\(C_4\),\(C_5\))–\(C_6\) alone. You left out \(C_1\). It is connected directly across the source, in parallel with that whole path, so add it.</p>
+<p class="fb" data-part="a" data-match="0.8317e-6" data-tol="0.01">You combined \(C_1\) in series with the rest. \(C_1\) connects to the same two nodes as the rest of the network (the source terminals), so it is in <strong>parallel</strong> and simply adds.</p>
+<p class="fb" data-part="a" data-match="4.3e-6" data-tol="0.01">It looks like only \(C_2\) was put in series with the right-hand block. \(C_6\) in the bottom wire is in the same series path: the charge that flows through \(C_2\) also has to pass through \(C_6\). Three capacitors are in series there.</p>
+<p class="fb" data-part="a" data-match="30.6e-6" data-tol="0.01">You added all six capacitors. That is only right if every capacitor is in parallel. Here \(C_2\), \(C_6\) and the \(C_3\)–\(C_4\) branch are in series and must use the reciprocal rule.</p>
+<p class="fb" data-part="a" data-match="18.3e-6" data-tol="0.01">You added \(C_2\), the right-hand block and \(C_6\). Those three are in <strong>series</strong>, so they combine with the reciprocal rule, which gives less than the smallest of them, not more.</p>
+</section>
+
+<div class="xq-hints">
+<p class="xq-hint">Start at the far right, the end farthest from the source, and work back toward \(V_2\). At each stage ask: which capacitors connect between the same two nodes (parallel), and which carry the same charge one after another with nothing branching off between them (series)? If you only need help with part b), keep pressing Show hint: the last hint is about b).</p>
+<p class="xq-hint">Capacitor rules are the reverse of the resistor rules: capacitors in parallel add; capacitors in series use \(1/C_T = 1/C_1 + 1/C_2 + \dots\). \(C_3\) and \(C_4\) are in series, and that branch is in parallel with \(C_5\).</p>
+<p class="xq-hint">The right-hand block (\(C_3\), \(C_4\), \(C_5\)) comes out equal to \(C_2\) and \(C_6\), so you then have three equal capacitors in series (\(C/n\)). \(C_1\) sits directly across the source.</p>
+<p class="xq-hint">For b), recall how the course states the three “opposition” properties: resistance opposes the flow of current, inductance opposes a <em>change</em> in current, and capacitance opposes a <em>change</em> in …?</p>
+</div>
+
+<ol class="xq-steps">
+<li class="xq-step" data-title="Identify the concept">
+<p>Part a) asks for the <strong>equivalent (total) capacitance</strong> \(C_T\): the single capacitor that, connected to \(V_2\), would store the same total charge as the whole network. You find it by reducing the network one series or parallel group at a time, using the <strong>capacitor</strong> combination rules.</p>
+<p>The source value (12 V) does not affect \(C_T\). Capacitance depends only on the capacitors and how they are connected, just as an equivalent resistance does not depend on the source.</p>
+<p>Part b) is a concept question about what capacitance does in a circuit.</p>
+</li>
+<li class="xq-step" data-title="Why series–parallel reduction applies here">
+<p>Name the nodes. The exam marks four junctions: top-left (TL) and bottom-left (BL), which are the source terminals, and top-right (TR) and bottom-right (BR). The wire between \(C_3\) and \(C_4\) is a fifth node, but nothing else connects to it.</p>
+<ul>
+<li><strong>\(C_3\) and \(C_4\): series.</strong> The point between them connects to nothing else, so every bit of charge that leaves \(C_3\)'s lower plate lands on \(C_4\)'s upper plate. Same charge, one after the other.</li>
+<li><strong>(\(C_3\)–\(C_4\)) and \(C_5\): parallel.</strong> Both branches connect TR to BR, so they have the same voltage across them.</li>
+<li><strong>\(C_2\), the right-hand block and \(C_6\): series.</strong> They form one path TL → \(C_2\) → TR → block → BR → \(C_6\) → BL. Nothing else branches off at TR or BR once the block is one capacitor.</li>
+<li><strong>\(C_1\) and that path: parallel.</strong> Both connect TL to BL, directly across \(V_2\).</li>
+</ul>
+<p>Every group is clearly series or parallel (there is no bridge), so you can reduce the network from the far end toward the source.</p>
+</li>
+<li class="xq-step" data-title="Formulas you need">
+<p>Capacitors combine the <em>opposite</em> way to resistors:</p>
+<div class="formula">\[ \text{Parallel: } C_T = C_1 + C_2 + \dots + C_n \]</div>
+<div class="formula">\[ \text{Series: } \frac{1}{C_T} = \frac{1}{C_1} + \frac{1}{C_2} + \dots + \frac{1}{C_n} \qquad \text{two in series: } C_T = \frac{C_1 C_2}{C_1 + C_2} \qquad n \text{ equal in series: } C_T = \frac{C}{n} \]</div>
+<p>\(C_T\) is the equivalent capacitance and \(C_1 \dots C_n\) are the individual capacitances, all in farads (F). Because every value here is in μF and the rules only add, multiply and divide capacitances, you can work in μF throughout and the answer comes out in μF.</p>
+<p>Two checks to keep in mind: a series result is <em>smaller</em> than the smallest capacitor in the group; a parallel result is <em>larger</em> than the largest.</p>
+</li>
+<li class="xq-step" data-title="Combine C3 and C4 (series)">
+<div class="formula">\[ C_{34} = \frac{C_3 C_4}{C_3 + C_4} = \frac{(8.2\ \mu\text{F})(8.2\ \mu\text{F})}{8.2\ \mu\text{F} + 8.2\ \mu\text{F}} = \frac{67.24\ \mu\text{F}^2}{16.4\ \mu\text{F}} = 4.100\ \mu\text{F} \]</div>
+<p>Shortcut: two equal capacitors in series give half of one, \(8.2/2 = 4.1\ \mu\text{F}\). Check: 4.1 μF is smaller than 8.2 μF, as a series result must be.</p>
+<figure class="circuit">
+<script type="application/json">{"parts":[
+ {"t":"BAT","a":[0,5.5],"b":[0,2.5],"label":"V_2","value":"12 V","side":-1},
+ {"t":"W","pts":[[0,2.5],[0,0],[2.5,0]]},
+ {"t":"W","pts":[[0,5.5],[0,8],[2.5,8]]},
+ {"t":"W","pts":[[2.5,0],[2.5,2.5]]},
+ {"t":"C","a":[2.5,2.5],"b":[2.5,5.5],"label":"C_1","value":"1.5 μF"},
+ {"t":"W","pts":[[2.5,5.5],[2.5,8]]},
+ {"t":"C","a":[2.5,0],"b":[7,0],"label":"C_2","value":"5.6 μF"},
+ {"t":"C","a":[2.5,8],"b":[7,8],"label":"C_6","value":"5.6 μF","side":-1},
+ {"t":"W","pts":[[7,0],[7,2.5]]},
+ {"t":"C","a":[7,2.5],"b":[7,5.5],"label":"C_{34}","value":"4.1 μF"},
+ {"t":"W","pts":[[7,5.5],[7,8]]},
+ {"t":"W","pts":[[7,0],[10,0],[10,2.5]]},
+ {"t":"C","a":[10,2.5],"b":[10,5.5],"label":"C_5","value":"1.5 μF"},
+ {"t":"W","pts":[[10,5.5],[10,8],[7,8]]},
+ {"t":"N","at":[2.5,0]},{"t":"N","at":[2.5,8]},{"t":"N","at":[7,0]},{"t":"N","at":[7,8]}
+],"pad":1.7,"padX":2.5,"alt":"The same circuit with C3 and C4 replaced by one capacitor C34 = 4.1 microfarads, still in parallel with C5 = 1.5 microfarads."}</script>
+<figcaption>After step 4: \(C_3\) and \(C_4\) replaced by \(C_{34} = 4.1\ \mu\text{F}\), which is still in parallel with \(C_5\).</figcaption>
+</figure>
+</li>
+<li class="xq-step" data-title="Combine C34 and C5 (parallel)">
+<div class="formula">\[ C_{345} = C_{34} + C_5 = 4.1\ \mu\text{F} + 1.5\ \mu\text{F} = 5.600\ \mu\text{F} \]</div>
+<p>Check: 5.6 μF is larger than both 4.1 μF and 1.5 μF, as a parallel result must be. Notice that \(C_{345}\) comes out exactly equal to \(C_2\) and \(C_6\); the exam was designed that way.</p>
+<figure class="circuit">
+<script type="application/json">{"parts":[
+ {"t":"BAT","a":[0,5.5],"b":[0,2.5],"label":"V_2","value":"12 V","side":-1},
+ {"t":"W","pts":[[0,2.5],[0,0],[2.5,0]]},
+ {"t":"W","pts":[[0,5.5],[0,8],[2.5,8]]},
+ {"t":"W","pts":[[2.5,0],[2.5,2.5]]},
+ {"t":"C","a":[2.5,2.5],"b":[2.5,5.5],"label":"C_1","value":"1.5 μF"},
+ {"t":"W","pts":[[2.5,5.5],[2.5,8]]},
+ {"t":"C","a":[2.5,0],"b":[7,0],"label":"C_2","value":"5.6 μF"},
+ {"t":"C","a":[2.5,8],"b":[7,8],"label":"C_6","value":"5.6 μF","side":-1},
+ {"t":"W","pts":[[7,0],[7,2.5]]},
+ {"t":"C","a":[7,2.5],"b":[7,5.5],"label":"C_{345}","value":"5.6 μF"},
+ {"t":"W","pts":[[7,5.5],[7,8]]},
+ {"t":"N","at":[2.5,0]},{"t":"N","at":[2.5,8]}
+],"pad":1.7,"padX":2.5,"alt":"C1 across the battery, and one series path made of C2 = 5.6, C345 = 5.6 and C6 = 5.6 microfarads."}</script>
+<figcaption>After step 5: one series path \(C_2\) → \(C_{345}\) → \(C_6\), three equal 5.6 μF capacitors, in parallel with \(C_1\).</figcaption>
+</figure>
+</li>
+<li class="xq-step" data-title="Combine C2, C345 and C6 (series)">
+<p>The three capacitors carry the same charge one after another, so use the series (reciprocal) rule:</p>
+<div class="formula">\[ \frac{1}{C_{S}} = \frac{1}{C_2} + \frac{1}{C_{345}} + \frac{1}{C_6} = \frac{1}{5.6\ \mu\text{F}} + \frac{1}{5.6\ \mu\text{F}} + \frac{1}{5.6\ \mu\text{F}} \]</div>
+<div class="formula">\[ \frac{1}{C_{S}} = 0.17857\ \mu\text{F}^{-1} \times 3 = 0.53571\ \mu\text{F}^{-1} \quad\Rightarrow\quad C_{S} = \frac{1}{0.53571\ \mu\text{F}^{-1}} = 1.867\ \mu\text{F} \]</div>
+<p>Shortcut: three equal capacitors in series give \(C/3 = 5.6/3 = 1.8667\ \mu\text{F}\). Check: 1.867 μF is smaller than 5.6 μF, as a series result must be. Keep 1.8667 (more digits) for the next step and round only at the end.</p>
+<figure class="circuit">
+<script type="application/json">{"parts":[
+ {"t":"BAT","a":[0,5.5],"b":[0,2.5],"label":"V_2","value":"12 V","side":-1},
+ {"t":"W","pts":[[0,2.5],[0,0],[6,0],[6,2.5]]},
+ {"t":"W","pts":[[0,5.5],[0,8],[6,8],[6,5.5]]},
+ {"t":"W","pts":[[2.5,0],[2.5,2.5]]},
+ {"t":"C","a":[2.5,2.5],"b":[2.5,5.5],"label":"C_1","value":"1.5 μF"},
+ {"t":"W","pts":[[2.5,5.5],[2.5,8]]},
+ {"t":"C","a":[6,2.5],"b":[6,5.5],"label":"C_S","value":"1.867 μF"},
+ {"t":"N","at":[2.5,0]},{"t":"N","at":[2.5,8]}
+],"pad":1.1,"padX":2.5,"alt":"C1 = 1.5 microfarads and CS = 1.867 microfarads, both connected directly across the battery, in parallel."}</script>
+<figcaption>After step 6: \(C_S = 1.867\ \mu\text{F}\) (the whole series path) and \(C_1\) both connect across \(V_2\): they are in parallel.</figcaption>
+</figure>
+</li>
+<li class="xq-step" data-title="Combine C1 and CS (parallel): the answer to a)">
+<div class="formula">\[ C_T = C_1 + C_S = 1.5\ \mu\text{F} + 1.8667\ \mu\text{F} = 3.3667\ \mu\text{F} \approx 3.367\ \mu\text{F} = 3.367 \times 10^{-6}\ \text{F} \]</div>
+<p>Exactly, \(C_T = 1.5 + 5.6/3 = 101/30\ \mu\text{F}\). Check: 3.367 μF is larger than both 1.5 μF and 1.867 μF, as a parallel result must be.</p>
+</li>
+<li class="xq-step" data-title="Part b): what capacitance opposes">
+<p>The course describes three passive properties by what each one opposes:</p>
+<table>
+<tr><th>Property</th><th>Opposes…</th></tr>
+<tr><td>Resistance \(R\)</td><td>the flow of current</td></tr>
+<tr><td>Inductance \(L\)</td><td>a <em>change</em> in current</td></tr>
+<tr><td>Capacitance \(C\)</td><td>a <em>change</em> in voltage</td></tr>
+</table>
+<p>Why: a capacitor's voltage is set by the charge on its plates, \(V = Q/C\). Charge has to flow onto the plates to change that voltage, and that takes time, so the capacitor's voltage cannot jump instantly. It builds up (or decays) gradually. So the answer is: capacitance is a property that <strong>opposes a change in voltage</strong>.</p>
+<p>The word <em>change</em> matters. A capacitor does not oppose a steady voltage; once charged it simply holds that voltage.</p>
+</li>
+</ol>
+
+<section class="xq-answer">
+<p><strong>a)</strong> \(C_T = 3.367\ \mu\text{F}\) (≈ 3.37 μF, that is \(3.367 \times 10^{-6}\) F). Reduction: \(C_3\) series \(C_4\) = 4.1 μF; parallel \(C_5\) → 5.6 μF; series with \(C_2\) and \(C_6\) → 1.867 μF; parallel \(C_1\) → 3.367 μF.</p>
+<p><strong>b)</strong> Capacitance is a property that <strong>opposes a change in voltage</strong>.</p>
+<figure class="circuit">
+<script type="application/json">{"parts":[
+ {"t":"BAT","a":[0,4],"b":[0,1],"label":"V_2","value":"12 V","side":-1},
+ {"t":"W","pts":[[0,1],[0,0],[3,0],[3,1]]},
+ {"t":"C","a":[3,1],"b":[3,4],"label":"C_T","value":"3.367 μF"},
+ {"t":"W","pts":[[3,4],[3,5],[0,5],[0,4]]}
+],"pad":1.1,"padX":2.5,"alt":"The 12 volt battery V2 connected across a single equivalent capacitor CT = 3.367 microfarads."}</script>
+<figcaption>The equivalent circuit: \(V_2\) sees a single capacitor \(C_T = 3.367\ \mu\text{F}\).</figcaption>
+</figure>
+</section>
+
+<section class="xq-check">
+<ul>
+<li><strong>Bounds.</strong> \(C_1\) is directly across the source, so \(C_T\) must be more than \(C_1 = 1.5\ \mu\text{F}\). The series path can add at most its smallest member, 5.6 μF, so \(C_T &lt; 1.5 + 5.6 = 7.1\ \mu\text{F}\). 3.367 μF lies between.</li>
+<li><strong>Charge check at 12 V</strong> (uses the source value the question gave). Total charge \(Q = C_T V_2 = 3.3667\ \mu\text{F} \times 12\ \text{V} = 40.40\ \mu\text{C}\). \(C_1\) has the full 12 V: \(Q_1 = 1.5 \times 12 = 18.00\ \mu\text{C}\). The series path stores \(Q_S = 1.8667 \times 12 = 22.40\ \mu\text{C}\). \(18.00 + 22.40 = 40.40\ \mu\text{C}\).</li>
+<li><strong>Voltage check (KVL).</strong> The three equal 5.6 μF capacitors in series split 12 V equally (\(V_{Cx} = V_s C_S/C_x = 12 \times 1.8667/5.6 = 4.000\ \text{V}\) each): \(4 + 4 + 4 = 12\ \text{V}\). Inside the block, \(C_5\) has 4 V and the equal \(C_3\), \(C_4\) have 2 V each. At node TR the charge balances: \(Q_2 = 5.6 \times 4 = 22.40\ \mu\text{C}\) equals \(Q_3 + Q_5 = 8.2 \times 2 + 1.5 \times 4 = 16.40 + 6.00 = 22.40\ \mu\text{C}\).</li>
+<li><strong>Independent check.</strong> Solving the network directly by charge conservation at its nodes (no series/parallel rules), and simulating the network charging from 12 V through a resistor, both give \(C_T = 3.3667\ \mu\text{F}\).</li>
+</ul>
+</section>
+
+<section class="xq-mistakes">
+<ul>
+<li><strong>Using the resistor rules.</strong> Adding series capacitors and taking reciprocals for parallel ones gives 1.340 μF. For capacitors it is the other way round: parallel adds, series uses reciprocals.</li>
+<li><strong>Adding \(C_3\) and \(C_4\)</strong> because they look like a “column” next to \(C_5\). They are in series with each other (nothing connects at the point between them); only their combination is in parallel with \(C_5\).</li>
+<li><strong>Forgetting \(C_1\)</strong> (1.867 μF) or treating it as in series with the rest (0.832 μF). It is connected straight across the source, so it is in parallel with everything to its right.</li>
+<li><strong>Leaving \(C_6\) out of the series path.</strong> A capacitor in the bottom (return) wire is just as much in series as one in the top wire.</li>
+<li><strong>Using the 12 V.</strong> \(C_T\) does not depend on the source voltage. You need \(V_2\) only if you are asked for charges or capacitor voltages.</li>
+<li><strong>Rounding early.</strong> Carry 1.8667 μF into the last step. Rounding it to 2 μF gives 3.5 μF, about 4 % high; even 1.9 μF gives 3.4 μF, right at the edge of a 1 % tolerance.</li>
+<li><strong>Part b): “opposes a change in current”.</strong> That is inductance. Capacitance opposes a change in <em>voltage</em>. Writing just “opposes voltage” also misses the key word <em>change</em>.</li>
+</ul>
+</section>
+
+<section class="xq-similar">
+<p><strong>Approach for a similar problem.</strong></p>
+<ul>
+<li><strong>Find the terminals first.</strong> \(C_T\) is always “as seen from” a pair of terminals, here the source terminals. If the question moves the source (or asks for the capacitance between two other points), the series/parallel groupings change, so redo the grouping for the new terminals.</li>
+<li><strong>Work from the far end toward the terminals.</strong> Mark every junction. Two capacitors are in <strong>parallel</strong> when they connect the same two nodes; they are in <strong>series</strong> when they are joined at a node that nothing else touches. Replace one group at a time and redraw.</li>
+<li><strong>Use the capacitor rules</strong> (parallel adds, series reciprocal) and the shortcuts: two in series \(C_1C_2/(C_1+C_2)\), \(n\) equal in series \(C/n\).</li>
+<li><strong>Check every step</strong> with the bounds: series result below the smallest, parallel result above the largest.</li>
+<li><strong>If the same network were made of inductors or resistors</strong>, the grouping would be identical but the rules swap: series adds, parallel uses reciprocals.</li>
+<li><strong>If asked for voltages or charges,</strong> work string by string. For a pure series string, find that string’s own equivalent \(C_S\) and the voltage \(V_S\) across the whole string. Every capacitor in the string carries the same charge \(Q_S = C_S V_S\), so \(V_{Cx} = Q_S / C_x = V_S C_S / C_x\): the voltage splits in inverse proportion to capacitance. \(Q = C_T V\) gives only the <em>total</em> charge drawn from the source. When a capacitor sits directly across the source, as \(C_1\) does here, that total is split between the branches (here 18.0 μC on \(C_1\) and 22.4 μC on the series path), so do not use \(C_T\) in the divider formula. Here \(C_S = 1.867\ \mu\text{F}\) and \(V_S = 12\ \text{V}\) give \(V_{C2} = 12 \times 1.867/5.6 = 4\ \text{V}\); using \(C_T\) instead would give a wrong 7.2 V. Capacitors in parallel share the same voltage.</li>
+</ul>
+</section>
+
+<section class="xq-connect">
+<p><strong>Topic tested:</strong> <a href="#/t/lc/understand/cl3">Capacitors, Inductors &amp; RC/RL</a> (Capacitors &amp; RC): combining capacitors in series and in parallel (part a), and the basic property of capacitance (part b).</p>
+<p><strong>Clues:</strong> the heading says “Capacitance”, every component is a capacitor (two parallel plates, values in μF), and the question asks for “the equivalent capacitance” and \(C_T\). A source is drawn, but there is no switch, resistor or time, so this is not an RC timing question. Part b) quotes the resistance definition, which signals the course's “opposes…” comparison.</p>
+<p><strong>Where it is taught:</strong></p>
+<ul>
+<li><a class="xref" data-lesson="cl3" data-sec="cl3-combine">Capacitors lesson, §6: capacitors in parallel and in series</a>. The combination rules are introduced as the opposite of the resistor rules at <a class="ts" data-lesson="cl3" data-t="30:45"></a>; parallel capacitances add at <a class="ts" data-lesson="cl3" data-t="31:26"></a>; series combines like resistors in parallel at <a class="ts" data-lesson="cl3" data-t="32:23"></a>, with the two-capacitor product-over-sum form at <a class="ts" data-lesson="cl3" data-t="32:48"></a> (Example 4, two 2 μF in series, at <a class="ts" data-lesson="cl3" data-t="33:15"></a>).</li>
+<li><a class="xref" data-lesson="cl3" data-sec="cl3-intro">Capacitors lesson, §1: capacitors oppose a change in voltage</a>, stated at <a class="ts" data-lesson="cl3" data-t="6:02"></a>; the resistance / inductance / capacitance trio is repeated in the lab at <a class="ts" data-lesson="cl3" data-t="55:15"></a>.</li>
+<li><a class="xref" data-lesson="cl1" data-sec="cl1-property">Inductors lesson, §2: inductance opposes a change in current</a>. “Resistance opposes the flow of current” at <a class="ts" data-lesson="cl1" data-t="1:19"></a> and “inductance opposes a change in current” at <a class="ts" data-lesson="cl1" data-t="2:10"></a>: the same sentence pattern as part b).</li>
+<li><a class="xref" data-lesson="cl1" data-sec="cl1-combine">Inductors lesson, §10: inductors in series and in parallel</a> combine like resistors, which is the contrast with capacitors.</li>
+<li><a class="xref" data-lesson="cl3" data-sec="cl3-vdist">Capacitors lesson, §7: voltage distribution across capacitors</a>, used in the charge and voltage check above.</li>
+</ul>
+<p><strong>Formulas:</strong> parallel \(C_T = C_1 + C_2 + \dots\); series \(1/C_T = 1/C_1 + 1/C_2 + \dots\) (two: \(C_1C_2/(C_1+C_2)\)); \(Q = CV\). See the <a href="#/t/lc/review">Capacitors, Inductors &amp; RC/RL formula sheet</a>.</p>
+<p><strong>Try it in the lab:</strong> no interactive lab combines capacitors. The <a href="#/t/lc/understand/lab/rc">RC lab</a> works with a single capacitor; once you have reduced a network to \(C_T\), that single value is the \(C\) that would set \(\tau = RC\) if the network charged through a resistor.</p>
+<p><strong>How the concepts combine:</strong> both parts come from the same lesson. The series rule is the “opposite” of the resistor rule because series capacitors all carry the same charge, while their voltages add (\(V = Q/C_1 + Q/C_2 + \dots\)). Part b) is the other half of the resistor/inductor/capacitor comparison the instructor uses throughout the inductor and capacitor lessons.</p>
+</section>
+
+</article>

@@ -3,7 +3,8 @@
  *
  *   EEApp.notesUI.lesson(el, lessonId, opts) -> { refresh(), focusNew(t), add(t, text, sec), setFilter(q), destroy() }
  *   opts: { composer: bool (new-note box), free: bool (free-form textarea), getTime(): seconds|null,
- *           compact: bool, showEmpty: bool, filter: string, onChange() }
+ *           compact: bool, showEmpty: bool, filter: string, onChange(),
+ *           noTime: bool (notes not tied to a video, e.g. past-exam questions 'xm-…'), freeLabel, placeholder, emptyText }
  */
 (function (global) {
   'use strict';
@@ -23,17 +24,17 @@
     el.innerHTML =
       (opts.composer ? '<form class="nu-new" novalidate>' +
         '<label class="nu-new-label" for="nuNew-' + lessonId + '">New note <span class="nu-at mono"></span></label>' +
-        '<textarea id="nuNew-' + lessonId + '" class="nu-new-ta" rows="2" placeholder="Type while you watch. The note is pinned to the video time shown."></textarea>' +
+        '<textarea id="nuNew-' + lessonId + '" class="nu-new-ta" rows="2" placeholder="' + esc(opts.placeholder || 'Type while you watch. The note is pinned to the video time shown.') + '"></textarea>' +
         '<div class="nu-new-row">' + U.btn('Add note', { kind: 'primary', small: true, icon: 'plus', cls: 'nu-add' }) +
-        U.btn('Use current time', { small: true, kind: 'ghost', icon: 'clock', cls: 'nu-now' }) +
-        U.btn('Add without time', { small: true, kind: 'ghost', cls: 'nu-notime' }) + '<span class="nu-hint muted small">Ctrl+Enter adds</span></div></form>' : '') +
-      '<ul class="nu-list" aria-label="Timestamped notes' + (L ? ' for ' + esc(L.title) : '') + '"></ul>' +
-      (opts.free ? '<div class="nu-free"><label class="nu-free-label" for="nuFree-' + lessonId + '">Lesson notes <span class="muted small">(free-form)</span></label>' +
+        (opts.noTime ? '' : U.btn('Use current time', { small: true, kind: 'ghost', icon: 'clock', cls: 'nu-now' }) +
+        U.btn('Add without time', { small: true, kind: 'ghost', cls: 'nu-notime' })) + '<span class="nu-hint muted small">Ctrl+Enter adds</span></div></form>' : '') +
+      '<ul class="nu-list" aria-label="' + (opts.noTime ? 'Notes' : 'Timestamped notes') + (L ? ' for ' + esc(L.title) : '') + '"></ul>' +
+      (opts.free ? '<div class="nu-free"><label class="nu-free-label" for="nuFree-' + lessonId + '">' + esc(opts.freeLabel || 'Lesson notes') + ' <span class="muted small">(free-form)</span></label>' +
         '<textarea id="nuFree-' + lessonId + '" class="nu-free-ta" rows="4" placeholder="Summaries, questions for office hours, formulas to memorise…"></textarea></div>' : '');
 
     var list = el.querySelector('.nu-list');
 
-    function timeNow() { var t = opts.getTime ? opts.getTime() : null; return t == null ? null : Math.floor(t); }
+    function timeNow() { var t = opts.getTime && !opts.noTime ? opts.getTime() : null; return t == null ? null : Math.floor(t); }
     function showCaptured() {
       var at = el.querySelector('.nu-at'); if (!at) return;
       var t = captured != null ? captured : timeNow();
@@ -44,7 +45,7 @@
     function itemEl(it) {
       var li = U.h('<li class="nu-item" data-id="' + esc(it.id) + '"></li>');
       var head = '<div class="nu-meta">' +
-        (it.t != null ? '<button type="button" class="nu-time mono" title="Play from ' + U.fmt(it.t) + '">' + icon('play') + U.fmt(it.t) + '</button>' : '<span class="chip">No time</span>') +
+        (it.t != null ? '<button type="button" class="nu-time mono" title="Play from ' + U.fmt(it.t) + '">' + icon('play') + U.fmt(it.t) + '</button>' : (opts.noTime ? '' : '<span class="chip">No time</span>')) +
         (it.sec ? '<button type="button" class="nu-sec" title="Open the guide section this note belongs to">' + icon('understand') + '<span>Guide section</span></button>' : '') +
         '<span class="nu-spacer"></span><button type="button" class="icon-btn nu-del" aria-label="Delete note' + (it.t != null ? ' at ' + U.fmt(it.t) : '') + '">' + icon('trash') + '</button></div>' +
         '<textarea class="nu-text" rows="1" aria-label="Note text' + (it.t != null ? ' at ' + U.fmt(it.t) : '') + '"></textarea>';
@@ -127,11 +128,13 @@
         add(t, txt);
         nta.value = ''; captured = null; showCaptured(); autoGrow(nta);
       }
-      el.querySelector('.nu-add').onclick = function () { submit(false); };
-      el.querySelector('.nu-notime').onclick = function () { submit(true); };
-      el.querySelector('.nu-now').onclick = function () { captured = timeNow(); showCaptured(); nta.focus(); };
-      nta.addEventListener('keydown', function (e) { if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) { e.preventDefault(); submit(false); } });
-      form.addEventListener('submit', function (e) { e.preventDefault(); submit(false); });
+      el.querySelector('.nu-add').onclick = function () { submit(!!opts.noTime); };
+      if (!opts.noTime) {
+        el.querySelector('.nu-notime').onclick = function () { submit(true); };
+        el.querySelector('.nu-now').onclick = function () { captured = timeNow(); showCaptured(); nta.focus(); };
+      }
+      nta.addEventListener('keydown', function (e) { if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) { e.preventDefault(); submit(!!opts.noTime); } });
+      form.addEventListener('submit', function (e) { e.preventDefault(); submit(!!opts.noTime); });
       showCaptured();
     }
     if (opts.free) {
@@ -178,7 +181,24 @@
       });
       if (parts.length) out += '\n## ' + t.title + '\n\n' + parts.join('\n');
     });
+    var xs = tids ? [] : examNotes();
+    if (xs.length) {
+      out += '\n## Past exam questions\n\n' + xs.map(function (x) {
+        var s = '### ' + x.label + '\n\n';
+        S.sortedNotes(x.id).forEach(function (it) { s += '- ' + (it.text || '').replace(/\n/g, '\n  ') + '\n'; });
+        if (x.free) s += '\n**Question notes**\n\n' + x.free + '\n';
+        return s;
+      }).join('\n');
+    }
     return out;
+  }
+  /* past-exam question notes (ids "xm-<exam>-q<N>", see js/app/exams.js) */
+  function examNotes() {
+    if (!A.exams) return [];
+    return A.exams.noteIds().map(function (id) {
+      var n = global.EEStore.state.notes.lessons[id] || {};
+      return { id: id, label: A.exams.noteInfo(id).label, free: (n.free || '').trim() };
+    });
   }
   function exportText(tids, title) { return exportMarkdown(tids, title).replace(/\[([^\]]+)\]\(([^)]+)\)/g, '$1 <$2>').replace(/\*\*/g, '').replace(/^#+ /gm, ''); }
   function exportHTML(tids, title) {
@@ -199,9 +219,16 @@
       });
       if (sec) body += '<h2>' + esc(t.title) + '</h2>' + sec;
     });
+    var xs = tids ? [] : examNotes();
+    if (xs.length) {
+      body += '<h2>Past exam questions</h2>' + xs.map(function (x) {
+        return '<h3>' + esc(x.label) + '</h3><ul>' + S.sortedNotes(x.id).map(function (it) { return '<li>' + esc(it.text || '').replace(/\n/g, '<br>') + '</li>'; }).join('') + '</ul>' +
+          (x.free ? '<h4>Question notes</h4><p>' + esc(x.free).replace(/\n/g, '<br>') + '</p>' : '');
+      }).join('');
+    }
     return '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>' + esc(title || 'EE 211 notes') + '</title>' +
       '<style>body{font:16px/1.6 system-ui,sans-serif;max-width:820px;margin:24px auto;padding:0 16px;color:#121821;background:#fff}h1{font-size:1.6rem}h2{border-bottom:2px solid #3a55d0;padding-bottom:4px;margin-top:2em}h3{margin-bottom:2px}.v{color:#5c687a;font-size:.9em;margin-top:0}a{color:#2457c5}li{margin:4px 0}</style></head><body><h1>' + esc(title || 'EE 211 study notes') + '</h1><p>Exported ' + esc(new Date().toLocaleString()) + '</p>' + (body || '<p>No notes yet.</p>') + '</body></html>';
   }
 
-  A.notesUI = { lesson: lesson, lessonHasNotes: lessonHasNotes, exportMarkdown: exportMarkdown, exportText: exportText, exportHTML: exportHTML, autoGrow: autoGrow };
+  A.notesUI = { lesson: lesson, lessonHasNotes: lessonHasNotes, exportMarkdown: exportMarkdown, exportText: exportText, exportHTML: exportHTML, autoGrow: autoGrow, examNotes: examNotes };
 })(window);

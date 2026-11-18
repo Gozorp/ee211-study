@@ -1,0 +1,280 @@
+<article class="xq" id="mt2-q4" data-exam="mt2" data-num="4" data-points="10" data-page="2" data-topics="thevenin" data-title="Thévenin equivalent with a resistor bridging to A" data-status="ok">
+
+<section class="xq-prompt">
+<p class="xq-verbatim">4) (10pts) For the following circuit, derive the Thevenin equivalent circuit.<br>V1 = 20 v, R1 = 20 ohm, R2 = 10 ohm, R3 = 5 ohm, R4 = 15 ohm<br>(4pts) V<sub>TH</sub>: ________ &nbsp; (4pts) R<sub>TH</sub>: ________<br>(2pts) Draw the Thevenin Equivalent Circuit (include values for all components).</p>
+<figure class="circuit">
+<script type="application/json">{"parts":[
+ {"t":"BAT","a":[0,6],"b":[0,3],"label":"V_1","value":"20 V","side":-1},
+ {"t":"W","pts":[[0,3],[0,0],[3,0]]},
+ {"t":"R","a":[3,0],"b":[6,0],"label":"R_1","value":"20 Ω"},
+ {"t":"W","pts":[[6,0],[9,0],[9,2]]},
+ {"t":"W","pts":[[0,2],[1,2]]},
+ {"t":"R","a":[1,2],"b":[4,2],"label":"R_2","value":"10 Ω"},
+ {"t":"W","pts":[[4,2],[5.5,2]]},
+ {"t":"R","a":[5.5,2],"b":[8,2],"label":"R_3","value":"5 Ω"},
+ {"t":"W","pts":[[8,2],[10.5,2]]},
+ {"t":"R","a":[5,2],"b":[5,6],"label":"R_4","value":"15 Ω"},
+ {"t":"W","pts":[[0,6],[10.5,6]]},
+ {"t":"N","at":[0,2]},{"t":"N","at":[5,2]},{"t":"N","at":[9,2]},{"t":"N","at":[5,6]},
+ {"t":"N","at":[10.5,2],"open":true,"label":"A","pos":"e"},
+ {"t":"N","at":[10.5,6],"open":true,"label":"B","pos":"e"}
+],"pad":1.1,"alt":"A 20 volt battery V1 on the left with its positive (long) plate on top. Its top wire splits at a junction: one branch goes up and along a top wire through R1 = 20 ohms, then down to a junction just left of terminal A. The other branch goes right through R2 = 10 ohms to a middle node. From the middle node, R3 = 5 ohms goes right to that same junction at terminal A, and R4 = 15 ohms goes down to the bottom wire. The bottom wire runs from the battery's negative side to terminal B."}</script>
+<figcaption>Question 4 redrawn. The battery's long plate (+) is on top, as on the exam. \(R_1\) runs along a separate top wire from the source's + node and comes down onto the \(R_3\) wire at terminal A. Terminals A and B are open.</figcaption>
+</figure>
+<table class="xq-given">
+<tr><th>Quantity</th><th>Value</th><th>Note</th></tr>
+<tr><td>\(V_1\)</td><td>20 V</td><td>printed "20 v"; + on the top terminal (long plate)</td></tr>
+<tr><td>\(R_1\)</td><td>20 Ω</td><td>top wire, from the source's + node to A</td></tr>
+<tr><td>\(R_2\)</td><td>10 Ω</td><td>from the source's + node to the middle node</td></tr>
+<tr><td>\(R_3\)</td><td>5 Ω</td><td>from the middle node to A</td></tr>
+<tr><td>\(R_4\)</td><td>15 Ω</td><td>from the middle node down to the bottom wire (B)</td></tr>
+</table>
+</section>
+
+<section class="xq-find">
+<div class="xq-part" data-part="a" data-points="4" data-type="num" data-label="\(V_{TH}\) (A relative to B)" data-value="14.839" data-unit="V" data-tol="0.01"></div>
+<div class="xq-part" data-part="b" data-points="4" data-type="num" data-label="\(R_{TH}\)" data-value="7.0968" data-unit="Ω" data-tol="0.01"></div>
+<div class="xq-part" data-part="c" data-points="2" data-type="draw" data-label="Draw the Thévenin equivalent circuit (include values for all components)"></div>
+<p class="fb" data-part="a" data-match="20" data-tol="0.01">20 V would be right only if no current flowed in \(R_1\). Here A is not a dead end: whatever enters A through \(R_1\) leaves through \(R_3\) toward the middle node, so \(R_1\) does carry current and drops some voltage.</p>
+<p class="fb" data-part="a" data-match="13.548" data-tol="0.01">That is the voltage of the middle node (the top of \(R_4\)), not of terminal A. A is one resistor further along: add the drop across \(R_3\), \(V_A = V_M + I\,R_3\).</p>
+<p class="fb" data-part="a" data-match="12" data-tol="0.01">You used a divider of \(R_2\) and \(R_4\) only (\(20 \times 15/25\)). That ignores the second path from the source to the middle node, through \(R_1\), A and \(R_3\). That 25 Ω path is in parallel with \(R_2\).</p>
+<p class="fb" data-part="a" data-match="13.846" data-tol="0.01">It looks like you put \(R_1\) in parallel with \(R_2\) because both start at the source's + node. Their other ends are different nodes (A and the middle node), so they are not in parallel. \(R_1\) is in series with \(R_3\) instead.</p>
+<p class="fb" data-part="a" data-match="5.161" data-tol="0.01">That is the drop across \(R_1\). \(V_{TH}\) is the voltage of A itself (relative to B): the source voltage minus that drop.</p>
+<p class="fb" data-part="b" data-match="11" data-tol="0.01">11 Ω is \(R_3 + R_2 \parallel R_4\), the path through the middle node. You left out \(R_1\): after shorting the source, \(R_1\) connects A straight to B, in parallel with that 11 Ω path.</p>
+<p class="fb" data-part="b" data-match="12" data-tol="0.01">You treated \(R_2\) and \(R_4\) as one series path (\(20 \parallel 30\)). After the source is shorted, the left end of \(R_2\) is connected to B, so \(R_2\) and \(R_4\) both run from the middle node to B: they are in parallel.</p>
+<p class="fb" data-part="b" data-match="10" data-tol="0.01">You combined \(R_1 \parallel R_3\) and \(R_2 \parallel R_4\) and added them. \(R_1\) and \(R_3\) do not share both nodes (\(R_3\) ends at the middle node, \(R_1\) ends at B once the source is shorted). Redraw with the source replaced by a wire and follow a test current from A.</p>
+<p class="fb" data-part="b" data-match="8.571" data-tol="0.01">You seem to have dropped \(R_4\). It still runs from the middle node to B and is in parallel with \(R_2\) (\(10 \parallel 15 = 6\ \Omega\)).</p>
+<p class="fb" data-part="b" data-match="19.286" data-tol="0.01">That comes from removing the voltage source (an open) instead of replacing it with a wire. To kill an independent voltage source, set its voltage to 0 V: a short.</p>
+<p class="fb" data-part="b" data-match="4" data-tol="0.01">\(R_1 \parallel R_3 = 4\ \Omega\) ignores \(R_2\) and \(R_4\), and \(R_1\), \(R_3\) are not in parallel: \(R_3\) ends at the middle node, not at B.</p>
+</section>
+
+<div class="xq-hints">
+<p class="xq-hint">This is two separate problems. For \(V_{TH}\), leave A–B open and keep the source. For \(R_{TH}\), redraw with the source replaced by a wire. Start with \(V_{TH}\): current enters A through \(R_1\). Where can it go, given that nothing is connected to A from outside?</p>
+<p class="xq-hint">KCL at A: the current in \(R_1\) must continue through \(R_3\) to the middle node. So \(R_1\) and \(R_3\) form one 25 Ω path from the source's + node to the middle node, side by side with \(R_2\).</p>
+<p class="xq-hint">Combine that path with \(R_2\) (parallel), then the result is in series with \(R_4\). A voltage divider gives the middle-node voltage. Then walk along the 25 Ω path to find the voltage at A.</p>
+<p class="xq-hint">For \(R_{TH}\): once \(V_1\) is a wire, the source's + node and the bottom wire are the same node, which is B. Where does that put \(R_1\)? And \(R_2\)?</p>
+</div>
+
+<ol class="xq-steps">
+<li class="xq-step" data-title="Identify the concept">
+<p>"Derive the Thévenin equivalent" means: replace everything as seen from terminals A and B by one source \(V_{TH}\) in series with one resistor \(R_{TH}\). You need two numbers, each with its own procedure:</p>
+<ul>
+<li>\(V_{TH}\) = the <strong>open-circuit voltage</strong> \(V_{AB}\), with nothing connected between A and B.</li>
+<li>\(R_{TH}\) = the <strong>resistance seen from A–B</strong> with the voltage source replaced by a short.</li>
+</ul>
+<p>For the solution, call the source's + node <strong>N</strong> and the node where \(R_2\), \(R_3\) and \(R_4\) meet <strong>M</strong>. Take B (the bottom wire, the source's − side) as the 0 V reference, so \(V_{TH} = V_A - V_B = V_A\).</p>
+</li>
+<li class="xq-step" data-title="Why series–parallel reduction works for V_TH">
+<p>At first glance this circuit does not look like a simple series–parallel network, because \(R_1\) jumps from N over to A. The key is KCL at A with A open:</p>
+<div class="formula">\[ I_{R_1}\ (\text{into A}) = I_{R_3}\ (\text{out of A, toward M}) \quad\text{because nothing else is connected to A.} \]</div>
+<p>So \(R_1\) and \(R_3\) carry the same current: they are <strong>in series</strong>, one path from N to M that passes through A. That path and \(R_2\) both run from N to M, so they are <strong>in parallel</strong>. The parallel group then sits in series with \(R_4\) (M to B) across the 20 V source. Now the circuit is an ordinary voltage divider.</p>
+<p>Unlike Question 8, A is not a dead end here: \(R_1\) and \(R_3\) close a loop with \(R_2\), so current does flow through \(R_1\) and \(R_3\), and they do drop voltage.</p>
+</li>
+<li class="xq-step" data-title="Formulas you need">
+<ul>
+<li>Series: \(R_s = R_a + R_b\). Parallel: \(R_a \parallel R_b = \dfrac{R_a R_b}{R_a + R_b}\). All resistances in ohms (Ω).</li>
+<li>Ohm's law: \(V = IR\) (V in volts, I in amperes, R in ohms). Total current: \(I_T = V_1 / R_T\).</li>
+<li>Voltage divider (series resistors carrying the same current): \(V_x = V_1 \dfrac{R_x}{R_T}\).</li>
+<li>Thévenin definitions: \(V_{TH} = V_A - V_B\big|_{\text{A–B open}}\), \(\;R_{TH} = R_{AB}\big|_{V_1\ \text{shorted}}\).</li>
+</ul>
+</li>
+<li class="xq-step" data-title="V_TH, part 1: reduce to a single loop">
+<figure class="circuit">
+<script type="application/json">{"parts":[
+ {"t":"BAT","a":[0,6],"b":[0,2],"label":"V_1","value":"20 V","side":-1},
+ {"t":"W","pts":[[0,2],[0,1.25],[1.5,1.25]]},
+ {"t":"W","pts":[[1.5,0],[1.5,2.5]]},
+ {"t":"R","a":[1.5,0],"b":[4.5,0],"label":"R_1","value":"20 Ω"},
+ {"t":"W","pts":[[4.5,0],[5.5,0]]},
+ {"t":"N","at":[5,0],"open":true,"label":"A","pos":"n"},
+ {"t":"R","a":[5.5,0],"b":[8.5,0],"label":"R_3","value":"5 Ω"},
+ {"t":"W","pts":[[1.5,2.5],[3.5,2.5]]},
+ {"t":"R","a":[3.5,2.5],"b":[6.5,2.5],"label":"R_2","value":"10 Ω","side":-1},
+ {"t":"W","pts":[[6.5,2.5],[8.5,2.5]]},
+ {"t":"W","pts":[[8.5,0],[8.5,2.5]]},
+ {"t":"W","pts":[[8.5,1.25],[10,1.25]]},
+ {"t":"R","a":[10,1.25],"b":[10,6],"label":"R_4","value":"15 Ω"},
+ {"t":"W","pts":[[0,6],[11.5,6]]},
+ {"t":"N","at":[1.5,1.25]},{"t":"N","at":[8.5,1.25]},{"t":"N","at":[10,6]},
+ {"t":"N","at":[11.5,6],"open":true,"label":"B","pos":"e"},
+ {"t":"T","at":[1.2,-0.35],"text":"N","anchor":"end","cls":"muted"},
+ {"t":"T","at":[8.8,-0.35],"text":"M","anchor":"start","cls":"muted"},
+ {"t":"T","at":[5,4.7],"text":"(R_1 + R_3) ∥ R_2 = 25 ∥ 10 = 7.143 Ω","cls":"accent"}
+],"pad":1.2,"alt":"The same circuit redrawn. From the source's positive node N, two branches go to node M: the upper branch is R1 = 20 ohms, then terminal A, then R3 = 5 ohms; the lower branch is R2 = 10 ohms. From M, R4 = 15 ohms goes down to the bottom wire, which returns to the battery and continues to terminal B. Note: the 25 ohm path in parallel with 10 ohms gives 7.143 ohms."}</script>
+<figcaption>Redrawn for \(V_{TH}\) (added for clarity): with A open, \(R_1\) and \(R_3\) form one path from N to M that passes through A. That path is in parallel with \(R_2\), and the pair is in series with \(R_4\).</figcaption>
+</figure>
+<p>Series path through A:</p>
+<div class="formula">\[ R_1 + R_3 = 20\ \Omega + 5\ \Omega = 25\ \Omega \]</div>
+<p>In parallel with \(R_2\):</p>
+<div class="formula">\[ (R_1 + R_3) \parallel R_2 = \frac{25 \times 10}{25 + 10} = \frac{250}{35} = 7.143\ \Omega \]</div>
+<p>In series with \(R_4\), this is the total resistance the source sees:</p>
+<div class="formula">\[ R_T = 7.143\ \Omega + 15\ \Omega = 22.14\ \Omega \]</div>
+<p>Total current out of the source's + terminal (it returns through \(R_4\) and the bottom wire):</p>
+<div class="formula">\[ I_T = \frac{V_1}{R_T} = \frac{20\ \text{V}}{22.14\ \Omega} = 0.9032\ \text{A} \]</div>
+<p>(Exact fractions: \(R_T = 155/7\ \Omega\), \(I_T = 28/31\ \text{A}\). Values are rounded to 4 significant figures only for display; the calculator keeps full precision.)</p>
+</li>
+<li class="xq-step" data-title="V_TH, part 2: node voltages and the voltage at A">
+<p><strong>Middle node M</strong> (voltage divider, or \(I_T R_4\)):</p>
+<div class="formula">\[ V_M = V_1 \frac{R_4}{R_T} = 20 \times \frac{15}{22.14} = 13.55\ \text{V} \qquad (\text{check: } 0.9032\ \text{A} \times 15\ \Omega = 13.55\ \text{V}) \]</div>
+<p>The parallel group (N to M) has the rest of the source voltage:</p>
+<div class="formula">\[ V_{NM} = 20 - 13.55 = 6.452\ \text{V} \]</div>
+<p><strong>Current in the path through A</strong> (Ohm's law on the 25 Ω path), and in \(R_2\):</p>
+<div class="formula">\[ I_{R_1} = I_{R_3} = \frac{6.452\ \text{V}}{25\ \Omega} = 0.2581\ \text{A}, \qquad I_{R_2} = \frac{6.452\ \text{V}}{10\ \Omega} = 0.6452\ \text{A} \]</div>
+<p>KCL at M: \(0.2581 + 0.6452 = 0.9032\ \text{A} = I_T\) ✓.</p>
+<p><strong>Voltage at A.</strong> Start at N (20 V) and walk through \(R_1\) in the direction of its current (N → A), so the voltage drops by \(I_{R_1} R_1\):</p>
+<div class="formula">\[ V_{R_1} = 0.2581\ \text{A} \times 20\ \Omega = 5.161\ \text{V}, \qquad V_A = 20 - 5.161 = 14.84\ \text{V} \]</div>
+<p>Same result from the other side: walk from M up to A against the current in \(R_3\) (which flows A → M), so the voltage rises by \(I_{R_3}R_3 = 0.2581 \times 5 = 1.290\ \text{V}\): \(V_A = 13.55 + 1.290 = 14.84\ \text{V}\) ✓.</p>
+<figure class="circuit">
+<script type="application/json">{"parts":[
+ {"t":"BAT","a":[0,6],"b":[0,3],"label":"V_1","value":"20 V","side":-1},
+ {"t":"W","pts":[[0,3],[0,0],[3,0]]},
+ {"t":"R","a":[3,0],"b":[6,0],"label":"R_1","value":"drop 5.161 V"},
+ {"t":"W","pts":[[6,0],[9,0],[9,2]]},
+ {"t":"IARR","a":[9,0.3],"b":[9,1.7]},
+ {"t":"W","pts":[[0,2],[1,2]]},
+ {"t":"R","a":[1,2],"b":[4,2],"label":"R_2","value":"10 Ω"},
+ {"t":"W","pts":[[4,2],[5.5,2]]},
+ {"t":"IARR","a":[4.1,2],"b":[4.9,2],"label":"0.6452 A"},
+ {"t":"R","a":[5.5,2],"b":[8,2],"label":"R_3","value":"5 Ω"},
+ {"t":"W","pts":[[8,2],[10.5,2]]},
+ {"t":"IARR","a":[9,2],"b":[8,2],"label":"0.2581 A","side":-1},
+ {"t":"R","a":[5,2],"b":[5,6],"label":"R_4","value":"15 Ω"},
+ {"t":"W","pts":[[0,6],[10.5,6]]},
+ {"t":"IARR","a":[4,6],"b":[2,6],"label":"0.9032 A","side":-1},
+ {"t":"N","at":[0,2]},{"t":"N","at":[5,2]},{"t":"N","at":[9,2]},{"t":"N","at":[5,6]},
+ {"t":"N","at":[10.5,2],"open":true,"label":"A","pos":"e"},
+ {"t":"N","at":[10.5,6],"open":true,"label":"B","pos":"e"},
+ {"t":"T","at":[-0.3,2.1],"text":"N: 20 V","anchor":"end","cls":"accent"},
+ {"t":"T","at":[5.25,3],"text":"M: 13.55 V","anchor":"start","cls":"accent"},
+ {"t":"T","at":[10.8,2.85],"text":"14.84 V","anchor":"middle","cls":"accent"},
+ {"t":"T","at":[8.5,6.75],"text":"0 V (reference)","cls":"accent"},
+ {"t":"T","at":[-3.2,0],"text":" "}
+],"pad":1.1,"alt":"The original circuit with currents and node voltages. Node N (source positive) is at 20 V. 0.2581 A flows from N along the top wire through R1, which drops 5.161 V, down to A at 14.84 V, then from A leftward through R3 to node M at 13.55 V. 0.6452 A flows from N through R2 to M. 0.9032 A flows down R4 and back along the bottom wire, which is the 0 V reference and terminal B."}</script>
+<figcaption>Currents and node voltages with A–B open (B = 0 V). The current through \(R_1\) comes down to A and continues leftward through \(R_3\) to M.</figcaption>
+</figure>
+<p><strong>Result and polarity.</strong> B is the bottom wire, 0 V. So</p>
+<div class="formula">\[ V_{TH} = V_A - V_B = 14.84\ \text{V} - 0\ \text{V} = 14.84\ \text{V} \quad (\text{exactly } 460/31\ \text{V}), \]</div>
+<p>positive, so A is the + terminal of the equivalent.</p>
+</li>
+<li class="xq-step" data-title="R_TH: short the source and redraw">
+<p>Start again from the original circuit (do not reuse the voltages and currents from \(V_{TH}\)). Replace \(V_1\) by a wire. That wire joins node N to the bottom wire, so <strong>N and B become one node</strong>.</p>
+<figure class="circuit">
+<script type="application/json">{"parts":[
+ {"t":"W","pts":[[0,6],[0,0],[3,0]]},
+ {"t":"T","at":[-0.3,4.4],"text":"short\n(was V_1)","anchor":"end","cls":"muted"},
+ {"t":"R","a":[3,0],"b":[6,0],"label":"R_1","value":"20 Ω"},
+ {"t":"W","pts":[[6,0],[9,0],[9,2]]},
+ {"t":"W","pts":[[0,2],[1,2]]},
+ {"t":"R","a":[1,2],"b":[4,2],"label":"R_2","value":"10 Ω"},
+ {"t":"W","pts":[[4,2],[5.5,2]]},
+ {"t":"R","a":[5.5,2],"b":[8,2],"label":"R_3","value":"5 Ω"},
+ {"t":"W","pts":[[8,2],[10.5,2]]},
+ {"t":"R","a":[5,2],"b":[5,6],"label":"R_4","value":"15 Ω"},
+ {"t":"W","pts":[[0,6],[10.5,6]]},
+ {"t":"N","at":[0,2]},{"t":"N","at":[5,2]},{"t":"N","at":[9,2]},{"t":"N","at":[5,6]},
+ {"t":"N","at":[10.5,2],"open":true,"label":"A","pos":"e"},
+ {"t":"N","at":[10.5,6],"open":true,"label":"B","pos":"e"},
+ {"t":"T","at":[-2.4,0],"text":" "}
+],"pad":1.1,"alt":"The Question 4 circuit with the battery replaced by a plain wire, so the left vertical wire (node N) is connected directly to the bottom wire (terminal B). R1, R2, R3 and R4 are unchanged."}</script>
+<figcaption>\(V_1\) replaced by a wire (added for clarity). The whole left wire, the bottom wire and terminal B are now one node.</figcaption>
+</figure>
+<p>Now see where each resistor lands, following a test current that enters at A and leaves at B:</p>
+<ul>
+<li>\(R_1\) runs from A to N, and N is now B. So \(R_1\) is connected <strong>directly across A–B</strong>.</li>
+<li>\(R_2\) runs from M to N = B, and \(R_4\) runs from M to B. Same two nodes: \(R_2 \parallel R_4\).</li>
+<li>\(R_3\) runs from A to M, so it is in series with \(R_2 \parallel R_4\). That series path also goes from A to B, in parallel with \(R_1\).</li>
+</ul>
+<figure class="circuit">
+<script type="application/json">{"parts":[
+ {"t":"W","pts":[[0,0],[9,0]]},
+ {"t":"R","a":[0,0],"b":[0,5],"label":"R_1","value":"20 Ω","side":-1},
+ {"t":"R","a":[5,0],"b":[5,2.5],"label":"R_3","value":"5 Ω"},
+ {"t":"W","pts":[[3,2.5],[7,2.5]]},
+ {"t":"R","a":[3,2.5],"b":[3,5],"label":"R_2","value":"10 Ω","side":-1},
+ {"t":"R","a":[7,2.5],"b":[7,5],"label":"R_4","value":"15 Ω"},
+ {"t":"W","pts":[[0,5],[9,5]]},
+ {"t":"N","at":[5,0]},{"t":"N","at":[5,2.5]},{"t":"N","at":[3,5]},{"t":"N","at":[7,5]},
+ {"t":"N","at":[9,0],"open":true,"label":"A","pos":"e"},
+ {"t":"N","at":[9,5],"open":true,"label":"B","pos":"e"},
+ {"t":"T","at":[5.3,3.1],"text":"M","anchor":"start","cls":"muted"},
+ {"t":"T","at":[4.5,6.2],"text":"R_{TH} = 20 ∥ (5 + 10 ∥ 15) = 20 ∥ 11 = 7.097 Ω","cls":"accent"}
+],"pad":1.2,"alt":"Redrawn for R_TH: R1 = 20 ohms connects directly from the A rail to the B rail. From the A rail, R3 = 5 ohms goes down to node M. From M, R2 = 10 ohms and R4 = 15 ohms both go down to the B rail, in parallel. Result: R_TH = 20 parallel (5 + 10 parallel 15) = 20 parallel 11 = 7.097 ohms."}</script>
+<figcaption>The same network redrawn between an A rail and a B rail (added for clarity): \(R_1\) straight across, and \(R_3\) in series with \(R_2 \parallel R_4\).</figcaption>
+</figure>
+<p>Calculate from the far end toward the terminals:</p>
+<div class="formula">\[ R_2 \parallel R_4 = \frac{10 \times 15}{10 + 15} = \frac{150}{25} = 6\ \Omega \]</div>
+<div class="formula">\[ R_3 + R_2 \parallel R_4 = 5 + 6 = 11\ \Omega \]</div>
+<div class="formula">\[ R_{TH} = R_1 \parallel 11\ \Omega = \frac{20 \times 11}{20 + 11} = \frac{220}{31} = 7.097\ \Omega \]</div>
+<p>Shorting the source did not remove any resistor here: the short is not connected across any single resistor. It only moved the left ends of \(R_1\) and \(R_2\) onto B.</p>
+</li>
+<li class="xq-step" data-title="Draw the Thévenin equivalent">
+<p>Put \(V_{TH} = 14.84\ \text{V}\) in series with \(R_{TH} = 7.097\ \Omega\) between A and B. Because \(V_{TH} = V_A - V_B\) came out positive, the source's + side faces A. The drawing is in the answer below.</p>
+</li>
+</ol>
+
+<section class="xq-answer">
+<p>\(V_{TH} = 14.84\ \text{V}\) (A positive with respect to B; exactly \(460/31\ \text{V}\)).</p>
+<p>\(R_{TH} = R_1 \parallel (R_3 + R_2 \parallel R_4) = 20 \parallel 11 = 7.097\ \Omega\) (exactly \(220/31\ \Omega\)).</p>
+<figure class="circuit">
+<script type="application/json">{"parts":[
+ {"t":"BAT","a":[0,4],"b":[0,1],"label":"V_{TH}","value":"14.84 V","side":-1},
+ {"t":"W","pts":[[0,1],[0,0],[1,0]]},
+ {"t":"R","a":[1,0],"b":[4,0],"label":"R_{TH}","value":"7.097 Ω"},
+ {"t":"W","pts":[[4,0],[5,0]]},
+ {"t":"N","at":[5,0],"open":true,"label":"A","pos":"e"},
+ {"t":"W","pts":[[0,4],[5,4]]},
+ {"t":"N","at":[5,4],"open":true,"label":"B","pos":"e"},
+ {"t":"T","at":[-2.6,0],"text":" "}
+],"pad":1.2,"alt":"Thévenin equivalent: a 14.84 volt battery, positive plate on top, in series with a 7.097 ohm resistor leading to terminal A. The battery's negative side connects to terminal B."}</script>
+<figcaption>Thévenin equivalent of Question 4: 14.84 V (+ toward A) in series with 7.097 Ω.</figcaption>
+</figure>
+</section>
+
+<section class="xq-check">
+<ul>
+<li><strong>Range check.</strong> A lies on the path from N (20 V) to M (13.55 V), so \(V_A\) must be between 13.55 V and 20 V. 14.84 V is. It is closer to M because \(R_3\) (5 Ω) is small compared with \(R_1\) (20 Ω).</li>
+<li><strong>Parallel check.</strong> A parallel combination is smaller than its smallest branch: \(7.097\ \Omega \lt 11\ \Omega \lt 20\ \Omega\) ✓.</li>
+<li><strong>Short-circuit check</strong> (\(R_{TH} = V_{OC}/I_{SC}\)). Put a wire from A to B. Then \(R_1\) has the full 20 V across it: \(20/20 = 1\ \text{A}\). At M, \(R_2\) (10 Ω) feeds \(R_3 \parallel R_4 = 5 \parallel 15 = 3.75\ \Omega\), so \(V_M = 20 \times 3.75/13.75 = 5.455\ \text{V}\) and \(I_{R_3} = 5.455/5 = 1.091\ \text{A}\). \(I_{SC} = 1 + 1.091 = 2.091\ \text{A}\) (from A to B through the wire). \(V_{OC}/I_{SC} = 14.84/2.091 = 7.097\ \Omega\) ✓.</li>
+<li><strong>Load check.</strong> Connect \(R_L = 15\ \Omega\) across A–B. The equivalent gives \(14.84 \times 15/(7.097 + 15) = 10.07\ \text{V}\). Nodal analysis of the full circuit with the same load also gives 10.07 V.</li>
+</ul>
+</section>
+
+<section class="xq-mistakes">
+<ul>
+<li>Assuming no current flows in \(R_1\) "because A is open" and answering 20 V. Current stops only at a dead end. Here A connects onward through \(R_3\), so \(R_1\) and \(R_3\) carry a loop current.</li>
+<li>Calling \(R_1\) and \(R_2\) parallel because they start at the same node. Parallel resistors must share <em>both</em> nodes. Check both ends.</li>
+<li>Reporting \(V_M\) (13.55 V) instead of \(V_A\). Mark A and B before you start and read the voltage at exactly those points.</li>
+<li>Finding \(R_{TH}\) on the same drawing as \(V_{TH}\), or opening the voltage source instead of shorting it (gives 19.29 Ω).</li>
+<li>After shorting the source, forgetting that N and B are now the same node, so \(R_1\) is left out (11 Ω) or \(R_2\) is put in series with \(R_4\) (12 Ω).</li>
+<li>Drawing the equivalent with the + side toward B, or with \(R_{TH}\) in parallel with the source. Thévenin is always source in series with \(R_{TH}\), + toward the higher terminal.</li>
+</ul>
+</section>
+
+<section class="xq-similar">
+<p><strong>Approach for a similar problem.</strong></p>
+<ul>
+<li><strong>Different values, same layout.</strong> The formulas carry over: \(V_M = V_1 \dfrac{R_4}{(R_1+R_3)\parallel R_2 + R_4}\), \(V_A = V_M + (V_1 - V_M)\dfrac{R_3}{R_1 + R_3}\), and \(R_{TH} = R_1 \parallel (R_3 + R_2 \parallel R_4)\).</li>
+<li><strong>A terminal in the middle of a path.</strong> Use KCL at the open terminal: if exactly two elements meet there, they carry the same current and are in series. Group, reduce, find node voltages, then \(V_{TH} = V_A - V_B\).</li>
+<li><strong>A terminal at a dead end</strong> (only one element touches it, as in Questions 8 and 9): that element carries no current and drops 0 V.</li>
+<li><strong>No series or parallel pair at all</strong> (a true bridge): use nodal analysis for \(V_{TH}\), or a Δ–Y conversion to create series–parallel structure.</li>
+<li><strong>For \(R_{TH}\)</strong>: after shorting the sources, give every node a letter and relabel nodes the short merges (here N became B). Then list each resistor by its two node letters; resistors with the same pair are in parallel. A test current from A to B shows what is in series.</li>
+</ul>
+</section>
+
+<section class="xq-connect">
+<p><strong>Topic tested:</strong> <a href="#/t/thevenin/understand">Thévenin &amp; Norton equivalents</a>: finding \(V_{TH}\) (open-circuit voltage) and \(R_{TH}\) (sources shorted), and drawing the equivalent. Inside it you use series–parallel reduction, KCL, Ohm's law and the voltage divider.</p>
+<p><strong>Clues:</strong> the wording "derive the Thevenin equivalent circuit", two open terminals labelled A and B, and blanks for \(V_{TH}\) and \(R_{TH}\). The extra twist is \(R_1\), which jumps from the source's + node straight to A. That tells you to check KCL at A before grouping resistors.</p>
+<p><strong>Where it is taught:</strong></p>
+<ul>
+<li><a class="xref" data-lesson="tn1" data-sec="tn1-vth">Thévenin lesson, §3: finding \(V_{TH}\), the open-terminal voltage</a>. The definition is written at <a class="ts" data-lesson="tn1" data-t="17:40"></a>. The procedure is to leave A–B open and solve the circuit with your usual tools.</li>
+<li><a class="xref" data-lesson="tn1" data-sec="tn1-rth">Thévenin lesson, §4: finding \(R_{TH}\) with the sources shorted</a>. The definition is at <a class="ts" data-lesson="tn1" data-t="25:05"></a>. At <a class="ts" data-lesson="tn1" data-t="27:24"></a> the instructor suggests imagining current entering at A and leaving at B to decide what is in series and what is in parallel.</li>
+<li><a class="xref" data-lesson="tn1" data-sec="tn1-ladder">Thévenin lesson, §5: the 100 V ladder</a>. At <a class="ts" data-lesson="tn1" data-t="38:03"></a> the instructor asks everyone to redraw the circuit for \(R_{TH}\) instead of reusing the \(V_{TH}\) drawing, as in step 6 here.</li>
+<li><a class="xref" data-lesson="tn1" data-sec="tn1-qa">Thévenin lesson, §6: why didn't the parallel resistors become zero?</a> From <a class="ts" data-lesson="tn1" data-t="42:40"></a>: a short removes a resistor only when it is in parallel with it. In this question the short removes nothing; it only merges N with B.</li>
+<li><a class="xref" data-lesson="tn2" data-sec="tn2-thev-rth">Thévenin (continued), §2: the "fake current" trick</a> at <a class="ts" data-lesson="tn2" data-t="17:42"></a>: where a test current divides and sums marks a parallel group.</li>
+</ul>
+<p><strong>Formulas:</strong> \(V_{TH} = V_A - V_B\big|_{\text{open}}\), \(R_{TH} = R_{AB}\big|_{\text{sources shorted}}\), series and parallel rules, \(V_x = V_s R_x/R_T\). See the <a href="#/t/thevenin/review">Thévenin &amp; Norton formula sheet</a>.</p>
+<p><strong>Try it in the lab:</strong> the <a href="#/t/thevenin/understand/lab/thevenin">Thévenin/Norton lab</a> shows the open-circuit view and the sources-off view of a network as separate drawings, the same two drawings this question needs. Its network templates do not include this exact circuit, so use it to practise the procedure.</p>
+<p><strong>How the concepts combine:</strong> Thévenin's theorem tells you <em>what</em> to compute (one open-circuit voltage, one resistance). Series–parallel reduction, KCL at A and the voltage divider are <em>how</em> you compute \(V_{TH}\). Series–parallel reduction again, on a new drawing with the source shorted, gives \(R_{TH}\).</p>
+</section>
+
+</article>

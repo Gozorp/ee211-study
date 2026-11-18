@@ -1,0 +1,157 @@
+<article class="xq" id="mt2-q8" data-exam="mt2" data-num="8" data-points="4" data-page="4" data-topics="thevenin" data-title="Voltage between two open terminals" data-status="ok">
+
+<section class="xq-prompt">
+<p class="xq-verbatim">8) (4 pts) Vs = 12v, R1 = 10 Ω, R2 = 10 Ω, R3 = 20 Ω. What is the voltage between points A and B?</p>
+<figure class="circuit">
+<script type="application/json">{"parts":[
+ {"t":"BAT","a":[0,4],"b":[0,1],"label":"V_s","value":"12 V","side":-1},
+ {"t":"R","a":[1,1],"b":[4,1],"label":"R_1","value":"10 Ω"},
+ {"t":"R","a":[4,1],"b":[7,1],"label":"R_2","value":"10 Ω"},
+ {"t":"W","pts":[[0,1],[1,1]]},
+ {"t":"W","pts":[[7,1],[8.5,1]]},
+ {"t":"N","at":[8.5,1],"label":"A","pos":"e","open":true},
+ {"t":"W","pts":[[0,4],[2.5,4]]},
+ {"t":"R","a":[2.5,4],"b":[5.5,4],"label":"R_3","value":"20 Ω","side":-1},
+ {"t":"W","pts":[[5.5,4],[8.5,4]]},
+ {"t":"N","at":[8.5,4],"label":"B","pos":"e","open":true}
+],"pad":1.3,"alt":"A 12 volt battery with its positive (long) plate on top. From the top terminal, R1 = 10 ohms and R2 = 10 ohms in series lead to open terminal A. From the bottom terminal, R3 = 20 ohms leads to open terminal B. Nothing is connected between A and B."}</script>
+<figcaption>Question 8 redrawn. The battery's long plate (+) is on top, as on the exam. Terminals A and B are open: nothing is connected between them. (The open circles at A and B are this site's symbol for a terminal; on the exam the wires just end at the letters.)</figcaption>
+</figure>
+<table class="xq-given">
+<tr><th>Quantity</th><th>Value</th><th>Note</th></tr>
+<tr><td>\(V_s\)</td><td>12 V</td><td>+ on the top terminal (long plate)</td></tr>
+<tr><td>\(R_1\)</td><td>10 Ω</td><td>top wire, toward A</td></tr>
+<tr><td>\(R_2\)</td><td>10 Ω</td><td>top wire, in series with \(R_1\)</td></tr>
+<tr><td>\(R_3\)</td><td>20 Ω</td><td>bottom wire, toward B</td></tr>
+</table>
+</section>
+
+<section class="xq-find">
+<div class="xq-part" data-part="a" data-points="4" data-type="num" data-label="\(V_{AB}\), the voltage between A and B (A relative to B)" data-value="12" data-unit="V" data-tol="0.01"></div>
+<p class="fb" data-part="a" data-match="6" data-tol="0.01">That is a voltage-divider result (\(12 \times 20/40\)). A divider needs a current flowing through the resistors in series. With A and B open there is no closed loop, so no current flows and none of the resistors has a voltage across it.</p>
+<p class="fb" data-part="a" data-match="3" data-tol="0.01">You divided 12 V among the resistors as if a current flowed through all three. Check first whether there is a closed path: with A–B open the loop is broken.</p>
+<p class="fb" data-part="a" data-match="0" data-tol="0.01">"No current" does not mean "no voltage". The current is zero, so the resistors drop nothing. The battery's full voltage then appears across the gap between A and B.</p>
+<p class="fb" data-part="a" data-match="9" data-tol="0.01">That is a divider across two of the resistors (\(12 \times 30/40\)). A divider needs a current through the series resistors. With A–B open no current flows, so no resistor has a voltage across it.</p>
+<p class="fb" data-part="a" data-match="4" data-tol="0.01">That splits 12 V equally among three resistors. Even with a current, the split would follow the resistor values, not be equal. Here A–B is open, so no current flows and every resistor drops 0 V.</p>
+<p class="fb" data-part="a" data-match="0.3" data-tol="0.01">0.3 A is \(12/40\): the current that would flow if A and B were shorted together, which is the Norton current \(I_N\). The question asks for a voltage, with A–B open. No current flows then.</p>
+<p class="fb" data-part="a" data-match="40" data-tol="0.01">40 Ω is \(R_1 + R_2 + R_3\), the Thévenin resistance seen from A–B. The question asks for the voltage between A and B, which is \(V_{TH}\).</p>
+<p class="fb" data-part="a" data-match="-12" data-tol="0.01">Right size, wrong sign. A is wired to the battery's + terminal (through R1 and R2), so A is 12 V above B.</p>
+</section>
+
+<div class="xq-hints">
+<p class="xq-hint">Before computing anything, trace a loop from the battery through the resistors and back. Is the loop closed?</p>
+<p class="xq-hint">If no current can flow, what is the voltage across a resistor? Use Ohm's law, \(V = IR\).</p>
+<p class="xq-hint">Walk from B to A along the circuit (B → R3 → battery → R1 → R2 → A) and add up the voltage changes. Only one element changes the voltage.</p>
+</div>
+
+<ol class="xq-steps">
+<li class="xq-step" data-title="Identify the concept">
+<p>A and B are <strong>open terminals</strong>: nothing is connected between them. The question asks for the <strong>open-circuit voltage</strong> \(V_{AB}\). This is exactly how the Thévenin voltage is defined: \(V_{TH} = V_{AB}\) with nothing connected to A–B.</p>
+</li>
+<li class="xq-step" data-title="Why this method applies: no closed path, so no current">
+<p>Current needs a closed loop. Follow the only possible path: + terminal → \(R_1\) → \(R_2\) → A → <em>gap</em> → B → \(R_3\) → − terminal. The gap between A and B is an open circuit, so the loop is broken and</p>
+<div class="formula">\[ I = 0\ \text{A} \quad\text{in } R_1,\ R_2 \text{ and } R_3 . \]</div>
+<p>The same current flows in every element of a single series path, so all three resistors carry zero current.</p>
+</li>
+<li class="xq-step" data-title="Formulas you need">
+<p><strong>Ohm's law</strong> for each resistor: \(V_R = I R\), with \(V_R\) in volts, \(I\) in amperes, \(R\) in ohms.</p>
+<p><strong>KVL</strong> (Kirchhoff's voltage law): going around any closed path, including one that crosses the gap from A to B, the voltage rises and drops add to zero. Walking from B to A:</p>
+<div class="formula">\[ V_{AB} = V_A - V_B \]</div>
+<div class="formula">\[ V_{AB} = V_s - V_{R1} - V_{R2} - V_{R3} \]</div>
+<p>The walk rises by \(V_s\) through the battery and passes through each resistor. Each resistor term is a drop in the direction its current would flow. Here every resistor term is zero anyway.</p>
+</li>
+<li class="xq-step" data-title="Substitute the values">
+<div class="formula">\[ V_{R1} = (0\ \text{A})(10\ \Omega) = 0\ \text{V} \]</div>
+<div class="formula">\[ V_{R2} = (0\ \text{A})(10\ \Omega) = 0\ \text{V} \]</div>
+<div class="formula">\[ V_{R3} = (0\ \text{A})(20\ \Omega) = 0\ \text{V} \]</div>
+<div class="formula">\[ V_{AB} = 12\ \text{V} - 0 - 0 - 0 = 12\ \text{V} \]</div>
+</li>
+<li class="xq-step" data-title="Node voltages and polarity">
+<p>Take the battery's − terminal as 0 V. Then its + terminal is at 12 V. A resistor with no current drops nothing, so both of its ends are at the same voltage:</p>
+<figure class="circuit">
+<script type="application/json">{"parts":[
+ {"t":"BAT","a":[0,5],"b":[0,1],"label":"V_s","value":"12 V","side":-1},
+ {"t":"W","pts":[[0,1],[1,1]]},
+ {"t":"R","a":[1,1],"b":[3.5,1],"label":"R_1 = 10 Ω","value":"V = 0"},
+ {"t":"W","pts":[[3.5,1],[4.5,1]]},
+ {"t":"R","a":[4.5,1],"b":[7,1],"label":"R_2 = 10 Ω","value":"V = 0"},
+ {"t":"W","pts":[[7,1],[8.5,1]]},
+ {"t":"N","at":[8.5,1],"label":"A","pos":"e","open":true},
+ {"t":"W","pts":[[0,5],[3,5]]},
+ {"t":"R","a":[3,5],"b":[5.5,5],"label":"R_3 = 20 Ω","value":"V = 0","side":-1},
+ {"t":"W","pts":[[5.5,5],[8.5,5]]},
+ {"t":"N","at":[8.5,5],"label":"B","pos":"e","open":true},
+ {"t":"T","at":[0.85,1.75],"text":"12 V","anchor":"middle","cls":"accent"},
+ {"t":"T","at":[4,1.75],"text":"12 V","anchor":"middle","cls":"accent"},
+ {"t":"T","at":[7.75,1.75],"text":"12 V","anchor":"middle","cls":"accent"},
+ {"t":"T","at":[1.5,4.6],"text":"0 V","anchor":"middle","cls":"accent"},
+ {"t":"T","at":[7,4.6],"text":"0 V","anchor":"middle","cls":"accent"},
+ {"t":"T","at":[4.25,3.1],"text":"I = 0 in every element","anchor":"middle","cls":"accent"},
+ {"t":"VM","a":[9.7,1.4],"b":[9.7,4.6],"label":"V_{AB}\n= 12 V","lat":[10.05,2.8],"anchor":"start"},
+ {"t":"T","at":[11,3],"text":" "}
+],"pad":1.2,"padX":1.5,"alt":"The Question 8 circuit with zero current everywhere. Each resistor has 0 volts across it. The battery's positive side, the node between R1 and R2, and terminal A are all at 12 volts. The battery's negative side and terminal B are at 0 volts. A voltmeter across A and B, plus on A, reads 12 volts."}</script>
+<figcaption>With A–B open, no current flows, so every resistor drops 0 V. The whole top wire is at 12 V and the whole bottom wire is at 0 V. A voltmeter (+ on A) reads 12 V.</figcaption>
+</figure>
+<p>Terminal A connects (through \(R_1\) and \(R_2\), with no voltage drop) to the battery's <strong>+</strong> terminal, the long plate on top. Terminal B connects (through \(R_3\)) to the <strong>−</strong> terminal. So A is the positive terminal: \(V_{AB} = +12\ \text{V}\). Measured with the red lead on A and the black lead on B, an ideal voltmeter reads +12 V.</p>
+</li>
+</ol>
+
+<section class="xq-answer">
+<p>\(V_{AB} = 12\ \text{V}\) (A positive with respect to B). The resistor values do not affect it.</p>
+</section>
+
+<section class="xq-check">
+<ul>
+<li>Every point of a wire or resistor that carries no current is at one voltage. So A is at the battery's + voltage and B is at its − voltage. Their difference must be the battery voltage.</li>
+<li>Limit check: connect a load \(R_L\) across A–B. Then a current \(I = 12/(10 + 10 + 20 + R_L)\) flows and \(V_{AB} = 12\,R_L/(40 + R_L)\). As \(R_L \to \infty\) (open circuit) this tends to 12 V, the same answer.</li>
+<li>Thévenin view: the whole circuit is a 12 V source in series with \(R_1 + R_2 + R_3 = 40\ \Omega\). The open-circuit voltage of a Thévenin equivalent is \(V_{TH}\) = 12 V.</li>
+</ul>
+<figure class="circuit">
+<script type="application/json">{"parts":[
+ {"t":"BAT","a":[0,3],"b":[0,0],"label":"V_{TH}","value":"12 V","side":-1},
+ {"t":"W","pts":[[0,0],[1,0]]},
+ {"t":"R","a":[1,0],"b":[4,0],"label":"R_{TH}","value":"40 Ω"},
+ {"t":"W","pts":[[4,0],[5.5,0]]},
+ {"t":"N","at":[5.5,0],"label":"A","pos":"e","open":true},
+ {"t":"W","pts":[[0,3],[5.5,3]]},
+ {"t":"N","at":[5.5,3],"label":"B","pos":"e","open":true}
+],"pad":1.3,"alt":"Thevenin equivalent of Question 8: a 12 volt source, positive on top, in series with a 40 ohm resistor leading to terminal A. The bottom wire goes to terminal B."}</script>
+<figcaption>The Thévenin equivalent seen from A–B: \(V_{TH} = 12\) V in series with \(R_{TH} = 40\ \Omega\). With nothing connected, \(V_{AB} = V_{TH}\).</figcaption>
+</figure>
+</section>
+
+<section class="xq-mistakes">
+<ul>
+<li>Using a voltage divider (6 V or 3 V) when no current flows. A divider only works when the same current flows through the resistors in series.</li>
+<li>Answering 0 V because "there is no current". Zero current makes the resistor voltages zero, not the source voltage.</li>
+<li>Getting the sign backwards. Check which battery plate (long = +) each terminal is wired to.</li>
+<li>Thinking the resistors' values matter. Here they are distractors; with A–B open they only matter for \(R_{TH}\).</li>
+</ul>
+</section>
+
+<section class="xq-similar">
+<p><strong>Approach for a similar problem.</strong> First ask: is there a closed loop that includes the terminals?</p>
+<ul>
+<li><strong>Terminals open, single series path</strong> (this question): no current. Every resistor in that path drops 0 V, and \(V_{AB}\) is the sum of the source voltages along the path, with their polarities.</li>
+<li><strong>A resistor connected directly across A–B inside the network:</strong> now a loop exists. Find the loop current with Ohm's law (\(I = V_s/R_{total}\)) and \(V_{AB}\) is that resistor's voltage, a divider.</li>
+<li><strong>Both cases together:</strong> Question 9 on this exam. \(R_2\) closes a loop with the source, so it is part of a divider (\(V_{R2} = 10\) V). \(R_3\) leads to the open terminal A and drops nothing, so \(V_{AB} = V_{R2}\).</li>
+<li><strong>Several branches:</strong> reduce series and parallel parts (or use KVL/nodal analysis). Remember that a resistor leading to an open terminal still carries no current, so it drops nothing.</li>
+<li><strong>Asked for the whole Thévenin equivalent:</strong> \(V_{TH}\) is the open-circuit voltage you just found. For \(R_{TH}\), replace the source with a short and combine the resistors as seen from A–B. Here \(R_{TH} = 10 + 10 + 20 = 40\ \Omega\).</li>
+</ul>
+</section>
+
+<section class="xq-connect">
+<p><strong>Topic tested:</strong> <a href="#/t/thevenin/understand">Thévenin &amp; Norton equivalents</a>: the open-circuit (Thévenin) voltage, which rests on KVL and Ohm's law.</p>
+<p><strong>Clues:</strong> the wires end at the letters A and B with nothing connected between them. The question asks for "the voltage between points A and B". Whenever terminals are open, first check whether any current can flow.</p>
+<p><strong>Where it is taught:</strong></p>
+<ul>
+<li><a class="xref" data-lesson="tn1" data-sec="tn1-vth">Thévenin lesson, §3: finding \(V_{TH}\), the open-terminal voltage</a>. The definition "the open-terminal voltage felt across the load terminals" is written at <a class="ts" data-lesson="tn1" data-t="17:40"></a>.</li>
+<li><a class="xref" data-lesson="tn1" data-sec="tn1-ex1">Thévenin lesson, Example 1: source directly across the terminals</a> at <a class="ts" data-lesson="tn1" data-t="19:25"></a>. With A and B on the source's two nodes, \(V_{TH}\) equals the source voltage.</li>
+<li><a class="xref" data-lesson="tn2" data-sec="tn2-thev-vth">Thévenin (continued), §1: a resistor with no current drops no voltage</a>. At <a class="ts" data-lesson="tn2" data-t="10:58"></a> the instructor points out that a resistor carrying zero current has zero volts across it. At <a class="ts" data-lesson="tn2" data-t="11:23"></a> he concludes that terminal a is at the same voltage as the node its 20 Ω resistor hangs from. In Question 8 every resistor is like that.</li>
+<li><a class="xref" data-lesson="tn3" data-sec="tn3-qa-terminals">Norton lesson, §8: is there current in the open terminals?</a> At <a class="ts" data-lesson="tn3" data-t="41:24"></a> the instructor says there is no current through A or B. At <a class="ts" data-lesson="tn3" data-t="41:49"></a> he says there is still a voltage between them, because current would flow if a path were added.</li>
+</ul>
+<p><strong>Formulas:</strong> \(V_{TH} = V_{AB}\big|_{\text{open}}\), \(V = IR\), KVL. See the <a href="#/t/thevenin/review">Thévenin &amp; Norton formula sheet</a>.</p>
+<p><strong>Try it in the lab:</strong> open the <a href="#/t/thevenin/understand/lab/thevenin">Thévenin/Norton lab</a> and pick the Ladder template. Set \(V = 12\) V. On the top rail set the lab's \(R_1 = 10\ \Omega\) and \(R_5 = 10\ \Omega\); on the bottom rail set \(R_2 = 20\ \Omega\). Switch out both shunts (\(R_3\) and \(R_4\)) and \(R_6\). The lab names its resistors differently from the exam, but the circuit is the same. The "Terminals open" view shows 0 A and 0 V on every resistor and \(V_{TH} = 12\) V (with \(R_{TH} = 40\ \Omega\) and \(I_N = 300\) mA). In the load view, raise \(R_L\) and watch \(V_L\) approach 12 V.</p>
+</section>
+
+</article>

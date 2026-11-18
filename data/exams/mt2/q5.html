@@ -1,0 +1,230 @@
+<article class="xq" id="mt2-q5" data-exam="mt2" data-num="5" data-points="12" data-page="3" data-topics="scope" data-title="Reading period, frequency and amplitude off a scope screen" data-status="ok">
+
+<section class="xq-prompt">
+<p class="xq-verbatim">5) (12pts) Given the following oscilloscope waveform, find the quantities listed below:<br>
+a) (2pts) Period T= ______ mS<br>
+b) (2pts) Period T= ______ uS<br>
+c) (2pts) Frequency f= ______ kHz<br>
+d) (2pts) Frequency f= ______ Hz<br>
+e) (2pts) Voltage V = ______ Vpk<br>
+f) (2pts) Voltage V = ______ Vpkpk</p>
+<figure class="scope">
+<script type="application/json">{"type":"scope","cols":10,"rows":8,"vdiv":"5 V/div","tdiv":"2 ms/div",
+"traces":[{"shape":"sine","amp":2.5,"period":5,"x0":1,"offset":0}],
+"marks":[{"type":"text","x":-0.04,"y":-0.12,"text":"■","anchor":"end"},{"type":"text","x":0.15,"y":0.18,"text":"0 V","anchor":"start"}],
+"alt":"Oscilloscope screen, 10 divisions wide and 8 divisions tall, set to 5 volts per division and 2 milliseconds per division. A filled marker on the left edge sits on the centre line, which is 0 volts. A sine wave starts low at the left edge, rises to a crest, falls to a trough, and repeats: about two full cycles fit across the screen."}</script>
+<figcaption>Question 5 redrawn. The exam prints “5v” at the top-left of the screen (volts per division) and “2ms” at the top-right (time per division); here both appear in the readout line under the screen. The filled marker on the left edge marks the 0 V centre line. A tiny status word after “2ms” (it looks like “Trig'd”) is not needed. The small tick marks on the centre axes are added in the redraw; the exam screen is a plain grid without them. Source note: the exam trace is a printed drawing, photographed at an angle, so any position on it can be read to about ±0.1 division.</figcaption>
+</figure>
+<table class="xq-given">
+<tr><th>Quantity</th><th>Value</th><th>Note</th></tr>
+<tr><td>Vertical scale</td><td>5 V/div</td><td>printed “5v” at the top-left of the screen</td></tr>
+<tr><td>Time base</td><td>2 ms/div</td><td>printed “2ms” at the top-right of the screen</td></tr>
+<tr><td>Screen</td><td>10 × 8 divisions</td><td>10 across (time), 8 up and down (voltage): 4 above and 4 below the centre line</td></tr>
+<tr><td>0 V reference</td><td>centre line</td><td>the filled marker on the left edge sits on it</td></tr>
+<tr><td>Waveform</td><td>sine wave</td><td>read its crests, troughs and period from the grid</td></tr>
+</table>
+<p>Units: the exam writes “mS” and “uS”. They mean milliseconds (ms) and microseconds (μs); a capital S is the unit siemens. In the answer boxes, type the unit with the number, for example <code>ms</code>, <code>us</code> or <code>μs</code>, <code>kHz</code>, <code>Hz</code>, <code>V</code>.</p>
+</section>
+
+<section class="xq-find">
+<div class="xq-part" data-part="a" data-points="2" data-type="num" data-label="a) Period \(T\): the exam asks for ms, so type the unit (a bare number counts as seconds)"data-value="0.01" data-unit="s" data-tol="0.03"></div>
+<div class="xq-part" data-part="b" data-points="2" data-type="num" data-label="b) Period \(T\): the exam asks for μs, so type the unit (a bare number counts as seconds)"data-value="0.01" data-unit="s" data-tol="0.03"></div>
+<div class="xq-part" data-part="c" data-points="2" data-type="num" data-label="c) Frequency \(f\): the exam asks for kHz, so type the unit (a bare number counts as Hz)"data-value="100" data-unit="Hz" data-tol="0.03"></div>
+<div class="xq-part" data-part="d" data-points="2" data-type="num" data-label="d) Frequency \(f\), in Hz" data-value="100" data-unit="Hz" data-tol="0.03"></div>
+<div class="xq-part" data-part="e" data-points="2" data-type="num" data-label="e) Voltage \(V_{pk}\) (peak)" data-value="12.5" data-unit="V" data-tol="0.03"></div>
+<div class="xq-part" data-part="f" data-points="2" data-type="num" data-label="f) Voltage \(V_{pp}\) (peak-to-peak)" data-value="25" data-unit="V" data-tol="0.03"></div>
+
+<p class="fb" data-part="a" data-match="10" data-tol="0.001">The number is right, but without a unit the checker reads it as 10 seconds. Type it with the unit: <code>10 ms</code>.</p>
+<p class="fb" data-part="a" data-match="5" data-tol="0.001">5 is a count of divisions, not a time. Multiply the divisions by the time base (2 ms per division), and type the unit.</p>
+<p class="fb" data-part="a" data-match="0.005" data-tol="0.01">That is half a period: crest to the next trough is only half a cycle. Measure between two points that look the same, for example crest to the next crest.</p>
+<p class="fb" data-part="a" data-match="0.02" data-tol="0.01">That is the width of the whole screen (10 div × 2 ms/div). The screen holds about two cycles. The period is the time for one cycle.</p>
+<p class="fb" data-part="a" data-match="0.025" data-tol="0.01">You multiplied the divisions by the volts-per-division setting (5). Horizontal distances use the time base, 2 ms per division.</p>
+
+<p class="fb" data-part="b" data-match="10000" data-tol="0.001">The number is right, but without a unit the checker reads it as seconds. Type it with the unit: <code>10000 us</code> (or μs).</p>
+<p class="fb" data-part="b" data-match="10" data-tol="0.001">10 is the period in milliseconds. This part asks for microseconds: 1 ms = 1000 μs.</p>
+<p class="fb" data-part="b" data-match="0.00001" data-tol="0.01">You kept the number from part a and only changed the unit. 10 μs is a thousand times shorter than 10 ms. Convert: 1 ms = 1000 μs.</p>
+<p class="fb" data-part="b" data-match="0.005" data-tol="0.01">That is half a period (crest to trough). Measure crest to the next crest.</p>
+<p class="fb" data-part="b" data-match="0.02" data-tol="0.01">That is the width of the whole screen, about two cycles. The period is one cycle.</p>
+
+<p class="fb" data-part="c" data-match="0.1" data-tol="0.01">0.1 is the right number in kilohertz, but it was read as 0.1 Hz (one cycle every 10 s). Type the unit: <code>0.1 kHz</code>.</p>
+<p class="fb" data-part="c" data-match="200" data-tol="0.01">This comes from a half period (5 ms). Take the period from crest to the next crest, then \(f = 1/T\).</p>
+<p class="fb" data-part="c" data-match="50" data-tol="0.01">This comes from the whole screen width (20 ms), which holds two cycles. Use the time of one cycle.</p>
+<p class="fb" data-part="c" data-match="40" data-tol="0.01">This comes from a 25 ms period, which uses the volts-per-division setting on the time axis. Horizontal distances use 2 ms/div.</p>
+<p class="fb" data-part="c" data-match="628.3" data-tol="0.01">That is the angular frequency \(\omega = 2\pi f\) in rad/s. The question asks for \(f = 1/T\), in cycles per second.</p>
+
+<p class="fb" data-part="d" data-match="0.1" data-tol="0.01">0.1 is the frequency in kilohertz. This part asks for hertz: 1 kHz = 1000 Hz.</p>
+<p class="fb" data-part="d" data-match="200" data-tol="0.01">This comes from a half period (5 ms). Take the period from crest to the next crest, then \(f = 1/T\).</p>
+<p class="fb" data-part="d" data-match="50" data-tol="0.01">This comes from the whole screen width (20 ms), which holds two cycles. Use the time of one cycle.</p>
+<p class="fb" data-part="d" data-match="40" data-tol="0.01">This comes from a 25 ms period, which uses the volts-per-division setting on the time axis. Horizontal distances use 2 ms/div.</p>
+<p class="fb" data-part="d" data-match="628.3" data-tol="0.01">That is the angular frequency \(\omega = 2\pi f\) in rad/s. The question asks for \(f = 1/T\), in cycles per second (Hz).</p>
+
+<p class="fb" data-part="e" data-match="25" data-tol="0.01">That is the peak-to-peak value (bottom to top). The peak is measured from the 0 V centre line up to a crest, which is half of it.</p>
+<p class="fb" data-part="e" data-match="2.5" data-tol="0.01">2.5 is the number of divisions from the centre line to the crest. Multiply by the vertical scale, 5 V per division.</p>
+<p class="fb" data-part="e" data-match="8.839" data-tol="0.01">That is the RMS value (\(0.707\,V_{pk}\)). The question asks for the peak, which you read straight off the screen.</p>
+<p class="fb" data-part="e" data-match="12" data-tol="0.02">That is a crest reading of about 2.4 divisions, which is what the original exam drawing shows: its crests are drawn slightly low (about 2.4 div) and its trough slightly deep (about 2.65 div). Use the more reliable count instead: trough to crest is 5 divisions, and the peak of a sine centred on 0 V is half of that.</p>
+<p class="fb" data-part="e" data-match="13.2" data-tol="0.03">That is a trough reading of about 2.6 divisions, which is what the original exam drawing shows: its trough is drawn slightly deep (about 2.65 div) and its crests slightly low (about 2.4 div). Use the more reliable count instead: trough to crest is 5 divisions, and the peak of a sine centred on 0 V is half of that.</p>
+
+<p class="fb" data-part="f" data-match="12.5" data-tol="0.01">That is the peak (centre line to crest). Peak-to-peak runs from the bottom of a trough to the top of a crest: twice as far for a sine centred on 0 V.</p>
+<p class="fb" data-part="f" data-match="5" data-tol="0.01">5 is the number of divisions from trough to crest. Multiply by the vertical scale, 5 V per division.</p>
+<p class="fb" data-part="f" data-match="50" data-tol="0.01">You doubled the peak-to-peak value. Peak-to-peak is already the full distance from trough to crest; do not double it again.</p>
+</section>
+
+<aside class="xq-flag">The trace is a photographed drawing, so positions on it can be read to about ±0.1 division. On the original, the crests measure +2.43 div and the trough −2.64 div, and one period measures 4.98 div. The solution uses the round readings, 5 div for the period and 5 div peak-to-peak, and the answers do not change.</aside>
+
+<div class="xq-hints">
+<p class="xq-hint">The two labels on the screen are scale settings: “5v” means each vertical division is 5 V, and “2ms” means each horizontal division is 2 ms. Every reading is (number of divisions) × (scale).</p>
+<p class="xq-hint">For the period, pick two points that look the same one cycle apart, for example a crest and the next crest, and count the horizontal divisions between them. Check with the two troughs.</p>
+<p class="xq-hint">For the voltages, count vertically. Peak: from the 0 V centre line (the marker on the left edge) up to a crest. Peak-to-peak: from the bottom of a trough to the top of a crest.</p>
+<p class="xq-hint">Unit conversions: 1 ms = 1000 μs, and \(f = 1/T\). If \(T\) is in ms, \(1/T\) comes out in kHz; multiply by 1000 for Hz.</p>
+</div>
+
+<ol class="xq-steps">
+<li class="xq-step" data-title="Identify the concept">
+<p>This is an <strong>oscilloscope reading</strong> question. The screen is a graph of voltage (up) against time (across), drawn over a grid of equal divisions. The two printed settings tell you what one division is worth:</p>
+<ul>
+<li><strong>Vertical scale</strong> “5v”: 5 V per division (V/div).</li>
+<li><strong>Time base</strong> “2ms”: 2 ms per division (time/div).</li>
+</ul>
+<p>The screen is 10 divisions across and 8 divisions tall. The centre horizontal line is 0 V; the filled marker on the left edge sits on it, so 0 V is the centre line and every voltage is measured from there. (Step 7 checks that the wave is centred on it.)</p>
+</li>
+<li class="xq-step" data-title="Why this method applies: count divisions, then scale">
+<p>Because every division is the same size, a distance on the screen measured in divisions is turned into a real quantity by multiplying by the setting for that axis. Times come from horizontal distances (time base); voltages come from vertical distances (V/div). The two readings are independent: the time base has nothing to do with the voltages, and the V/div setting has nothing to do with the period.</p>
+<p>The six parts ask for only three things, each in two forms: the period \(T\) (in ms and μs), the frequency \(f\) (in kHz and Hz), and the amplitude (peak and peak-to-peak).</p>
+</li>
+<li class="xq-step" data-title="Formulas you need">
+<div class="formula">\[ T = n_T \times \text{(time/div)} \qquad f = \frac{1}{T} \]</div>
+<div class="formula">\[ V_{pk} = n_{pk} \times \text{(V/div)} \qquad V_{pp} = n_{pp} \times \text{(V/div)} \]</div>
+<ul>
+<li>\(n_T\): horizontal divisions for one full cycle (between two equivalent points, such as crest to next crest).</li>
+<li>\(T\): period, the time for one cycle, in seconds (s), milliseconds (ms) or microseconds (μs).</li>
+<li>\(f\): frequency, cycles per second, in hertz (Hz) or kilohertz (kHz).</li>
+<li>\(n_{pk}\): vertical divisions from the 0 V centre line to a crest. \(n_{pp}\): vertical divisions from a trough to a crest.</li>
+<li>\(V_{pk}\): peak voltage, the highest value reached. \(V_{pp}\): peak-to-peak voltage, highest minus lowest. For a sine centred on 0 V, \(V_{pp} = 2V_{pk}\).</li>
+</ul>
+<p>Unit facts: \(1\ \text{ms} = 10^{-3}\ \text{s} = 1000\ \mu\text{s}\) and \(1\ \text{kHz} = 1000\ \text{Hz}\). Because \(1/10^{-3} = 10^{3}\), dividing 1 by a time in ms gives a frequency in kHz.</p>
+</li>
+<li class="xq-step" data-title="Count the horizontal divisions for one cycle">
+<figure class="scope">
+<script type="application/json">{"type":"scope","cols":10,"rows":8,"vdiv":"5 V/div","tdiv":"2 ms/div",
+"traces":[{"shape":"sine","amp":2.5,"period":5,"x0":1,"offset":0}],
+"marks":[{"type":"text","x":-0.04,"y":-0.12,"text":"■","anchor":"end"},
+{"type":"vline","x":4.75},{"type":"vline","x":9.75},
+{"type":"span","x1":4.75,"y1":-3.3,"x2":9.75,"y2":-3.3,"label":"T = 5 div"},
+{"type":"hline","y":2.5},{"type":"hline","y":-2.5},
+{"type":"span","x1":2.25,"y1":0,"x2":2.25,"y2":2.5},
+{"type":"text","x":2.25,"y":3.0,"text":"peak 2.5 div"},
+{"type":"span","x1":4.75,"y1":-2.5,"x2":4.75,"y2":2.5},
+{"type":"text","x":4.75,"y":3.0,"text":"p-p 5 div"}],
+"alt":"The same screen with reading aids. Two vertical cursor lines pass through the troughs at 4.75 and 9.75 divisions; a dimension line between them is labelled T = 5 div. Horizontal cursor lines sit at plus and minus 2.5 divisions. A vertical dimension from the centre line to the first crest is labelled peak 2.5 div, and one from a trough to the crest level is labelled p-p 5 div."}</script>
+<figcaption>Reading aids drawn on the redrawn screen (added for clarity): one period between the two troughs, the peak from the 0 V line, and the peak-to-peak from trough to crest.</figcaption>
+</figure>
+<p>Pick a feature that repeats once per cycle and find it twice:</p>
+<ul>
+<li>The first crest is about a quarter of a division past the vertical line 2 divisions from the left edge (≈ 2¼ div). The next crest is about a quarter past the line at 7 divisions (≈ 7¼ div). Distance: \(7\tfrac14 - 2\tfrac14 = 5\) div.</li>
+<li>Check with the troughs: ≈ 4¾ div and ≈ 9¾ div. Distance: 5 div again.</li>
+</ul>
+<div class="formula">\[ n_T = 5\ \text{div} \]</div>
+<p>Two different pairs of points give the same count, so you are measuring a whole cycle and not half of one (crest to trough is only 2½ div). Source note: a pixel measurement of the photographed exam gives 4.98 div between crests. The trace is a printed drawing, so readings carry about ±0.1 div of uncertainty, and the intended reading is the round 5 div.</p>
+</li>
+<li class="xq-step" data-title="Period in ms and in μs (parts a and b)">
+<div class="formula">\[ T = n_T \times \text{(time/div)} = 5\ \text{div} \times 2\ \frac{\text{ms}}{\text{div}} = 10\ \text{ms} \]</div>
+<p>The “div” units cancel, leaving ms. <strong>a) \(T = 10\) ms.</strong></p>
+<p>Convert to microseconds with \(1\ \text{ms} = 1000\ \mu\text{s}\):</p>
+<div class="formula">\[ T = 10\ \text{ms} \times 1000\ \frac{\mu\text{s}}{\text{ms}} = 10\,000\ \mu\text{s} \]</div>
+<p><strong>b) \(T = 10\,000\ \mu\)s.</strong> In seconds this is \(T = 10 \times 10^{-3}\ \text{s} = 0.01\ \text{s}\), which is handy for the next step.</p>
+</li>
+<li class="xq-step" data-title="Frequency in kHz and in Hz (parts c and d)">
+<p>Frequency is the number of cycles per second, the reciprocal of the period:</p>
+<div class="formula">\[ f = \frac{1}{T} = \frac{1}{10\ \text{ms}} = 0.1\ \frac{1}{\text{ms}} = 0.1\ \text{kHz} \]</div>
+<p>One over milliseconds is kilohertz, because \(1/10^{-3}\ \text{s} = 10^{3}\ \text{Hz}\). <strong>c) \(f = 0.1\) kHz.</strong></p>
+<div class="formula">\[ f = 0.1\ \text{kHz} \times 1000\ \frac{\text{Hz}}{\text{kHz}} = 100\ \text{Hz} \]</div>
+<p>Same result straight from seconds: \(f = 1/0.01\ \text{s} = 100\ \text{Hz}\). <strong>d) \(f = 100\) Hz.</strong></p>
+</li>
+<li class="xq-step" data-title="Count the vertical divisions">
+<p>Measure from the 0 V centre line, the line the left-edge marker points to. Positive voltages are above it and negative below it.</p>
+<ul>
+<li>Crests: about halfway between the grid lines 2 and 3 divisions above the centre line, so \(n_{pk} \approx 2\tfrac12\) div above 0 V.</li>
+<li>Troughs: about halfway between the lines 2 and 3 divisions below the centre line, ≈ 2½ div below 0 V.</li>
+<li>Trough to crest: \(n_{pp} = 2\tfrac12 + 2\tfrac12 = 5\) div.</li>
+</ul>
+<p>The wave swings equally above and below 0 V, so it is centred on 0 V and the peak is half the peak-to-peak: \(n_{pk} = 5/2 = 2.5\) div.</p>
+<p>Source note: the pixel measurement gives crests at +2.43 div, a trough at −2.64 div and 5.07 div trough to crest. The 0.2 div difference between the crest and the trough heights is drawing and photo error. The peak-to-peak count is the most reliable reading, and it rounds to 5 div. That is why the peak is taken as half of it.</p>
+</li>
+<li class="xq-step" data-title="Peak and peak-to-peak voltage (parts e and f)">
+<div class="formula">\[ V_{pk} = n_{pk} \times \text{(V/div)} = 2.5\ \text{div} \times 5\ \frac{\text{V}}{\text{div}} = 12.5\ \text{V} \]</div>
+<p><strong>e) \(V = 12.5\ \text{V}_{pk}\).</strong></p>
+<div class="formula">\[ V_{pp} = n_{pp} \times \text{(V/div)} = 5\ \text{div} \times 5\ \frac{\text{V}}{\text{div}} = 25\ \text{V} \]</div>
+<p><strong>f) \(V = 25\ \text{V}_{pp}\)</strong> (peak-to-peak, written “Vpkpk” on the exam). Check: \(V_{pp} = 2V_{pk} = 2 \times 12.5 = 25\) V.</p>
+<p>The wave reaches +12.5 V at each crest and −12.5 V at each trough, measured against the 0 V centre line.</p>
+</li>
+</ol>
+
+<section class="xq-answer">
+<table>
+<tr><th>Part</th><th>Quantity</th><th>Answer</th></tr>
+<tr><td>a</td><td>Period \(T\)</td><td>10 ms</td></tr>
+<tr><td>b</td><td>Period \(T\)</td><td>10 000 μs</td></tr>
+<tr><td>c</td><td>Frequency \(f\)</td><td>0.1 kHz</td></tr>
+<tr><td>d</td><td>Frequency \(f\)</td><td>100 Hz</td></tr>
+<tr><td>e</td><td>Peak voltage</td><td>12.5 V<sub>pk</sub></td></tr>
+<tr><td>f</td><td>Peak-to-peak voltage</td><td>25 V<sub>pp</sub></td></tr>
+</table>
+<p>Readings: one cycle = 5 div × 2 ms/div; trough to crest = 5 div × 5 V/div.</p>
+</section>
+
+<section class="xq-check">
+<ul>
+<li>\(T \times f\) must equal 1: \(0.01\ \text{s} \times 100\ \text{Hz} = 1\). ✓</li>
+<li>Parts a and b are the same time, so the μs number must be 1000 times the ms number (10 → 10 000). Parts c and d are the same frequency, so the Hz number must be 1000 times the kHz number (0.1 → 100).</li>
+<li>Count the cycles on the screen: the screen is \(10 \times 2\ \text{ms} = 20\ \text{ms}\) wide, so it should hold \(20/10 = 2\) cycles. The drawing shows two crests and two troughs: two cycles. ✓</li>
+<li>Fit on the screen: 12.5 V at 5 V/div is 2.5 div, inside the 4 divisions available above the centre line. ✓</li>
+<li>\(V_{pp} = 2V_{pk}\) for a sine centred on 0 V: \(2 \times 12.5 = 25\) V. ✓</li>
+<li>Reading precision: ±0.1 div on the period is ±0.2 ms, so \(T\) is between 9.8 and 10.2 ms and \(f\) between about 98 and 102 Hz. ±0.1 div on the peak-to-peak is ±0.5 V. The round values 10 ms, 100 Hz and 25 V are clearly the intended ones.</li>
+</ul>
+</section>
+
+<section class="xq-mistakes">
+<ul>
+<li><strong>Measuring half a cycle.</strong> Crest to trough is only half a period (2.5 div = 5 ms, giving 200 Hz). The period runs between two points that look the same, crest to next crest.</li>
+<li><strong>Using the whole screen as the period.</strong> 10 div × 2 ms = 20 ms is the screen width, which holds two cycles here.</li>
+<li><strong>Mixing up the two scales.</strong> Horizontal divisions × time/div gives time; vertical divisions × V/div gives volts. 5 div × 5 = 25 “ms” is wrong.</li>
+<li><strong>Forgetting to multiply by the scale.</strong> 2.5 divisions is not 2.5 V; at 5 V/div it is 12.5 V.</li>
+<li><strong>Swapping peak and peak-to-peak.</strong> Peak is measured from the 0 V line to a crest; peak-to-peak from a trough to a crest. Here 12.5 V<sub>pk</sub> = 25 V<sub>pp</sub>.</li>
+<li><strong>Giving the RMS value.</strong> \(0.707 \times 12.5 = 8.84\) V is the RMS value. The question asks for peak and peak-to-peak, which you read directly from the screen.</li>
+<li><strong>Prefix slips in the conversions.</strong> 10 ms is 10 000 μs, not 10 μs. \(1/(10\ \text{ms})\) is 0.1 kHz, not 0.1 Hz. Write the unit at every step.</li>
+<li><strong>Reporting \(\omega\) as the frequency.</strong> \(2\pi f = 628.3\) rad/s is the angular frequency; \(f\) is 100 Hz.</li>
+<li><strong>Measuring from the bottom edge of the screen.</strong> Voltage is measured from the 0 V line marked on the left edge, not from the bottom of the grid.</li>
+</ul>
+</section>
+
+<section class="xq-similar">
+<p><strong>Approach for a similar problem.</strong> Write down the two settings first, then make three counts: divisions per cycle, divisions from 0 V to a crest, divisions from trough to crest.</p>
+<ul>
+<li><strong>Different settings.</strong> Only the multipliers change. For example, at 2 V/div and 5 ms/div, a cycle 3⅓ div long is 16.7 ms (60 Hz), and a crest 2.5 div above centre is 5 V peak.</li>
+<li><strong>Readings between grid lines.</strong> Use the small tick marks on the centre axes (5 per division, 0.2 div each) if the screen has them; the exam screen does not, so estimate tenths of a division by eye, to about 0.1 div. For the period, measuring across several cycles and dividing by the number of cycles is more precise.</li>
+<li><strong>The 0 V marker is not on the centre line, or the wave is shifted up or down</strong> (a DC offset). Peak-to-peak is still trough to crest. The amplitude is half of the peak-to-peak, measured from the middle of the swing, and the DC level is the middle of the swing relative to the 0 V marker.</li>
+<li><strong>Other shapes</strong> (square, triangle). Period, peak and peak-to-peak are read the same way. Only RMS changes: \(0.707\,V_{pk}\) holds for sines only.</li>
+<li><strong>Asked for RMS or \(\omega\).</strong> For a sine, \(V_{RMS} = V_{pk}/\sqrt2\) (8.84 V here), and \(\omega = 2\pi f\) (628.3 rad/s here).</li>
+<li><strong>Working backwards</strong> (given \(f\), find the divisions). \(T = 1/f\), then divisions per cycle \(= T/\text{(time/div)}\). Divisions for the peak \(= V_{pk}/\text{(V/div)}\); it must be 4 or less to fit on an 8-division screen.</li>
+<li><strong>Unit pairs.</strong> \(1/\text{s} \to \text{Hz}\), \(1/\text{ms} \to \text{kHz}\), \(1/\mu\text{s} \to \text{MHz}\). Moving between ms and μs, or between kHz and Hz, shifts the decimal point three places.</li>
+</ul>
+</section>
+
+<section class="xq-connect">
+<p><strong>Topic tested:</strong> <a href="#/t/scope/understand">Oscilloscope Measurements</a>: reading volts/division and time/division off the grid, period and frequency (\(f = 1/T\)) with unit prefixes, and the difference between peak and peak-to-peak voltage.</p>
+<p><strong>Clues:</strong> a screen grid with a volts-per-division label (“5v”) and a time-per-division label (“2ms”), and answer blanks that ask for the same quantity in two units (mS and uS, kHz and Hz) and in two amplitude forms (Vpk and Vpkpk).</p>
+<p><strong>Where it is taught:</strong></p>
+<ul>
+<li><a class="xref" data-lesson="os1" data-sec="os1-magnitude">AC vs DC lesson, §2: peak, peak-to-peak and RMS</a>. Peak-to-peak is defined at <a class="ts" data-lesson="os1" data-t="10:13"></a>, and the 10 V peak = 20 V peak-to-peak calculation is at <a class="ts" data-lesson="os1" data-t="11:49"></a>.</li>
+<li><a class="xref" data-lesson="os1" data-sec="os1-ex7">AC vs DC lesson, Example 7: period and amplitude from the grid</a> (<a class="ts" data-lesson="os1" data-t="47:56"></a>), part of the first oscilloscope demo, where frequency is introduced as cycles per second at <a class="ts" data-lesson="os1" data-t="46:01"></a>.</li>
+<li><a class="xref" data-lesson="os2" data-sec="os2-ex5">Diodes-in-AC lesson, §5 Example 5: amplitude by counting divisions</a>. At <a class="ts" data-lesson="os2" data-t="1:18:21"></a> the instructor counts 2½ divisions at 2 V/div to get 5 V peak, the same method as part e.</li>
+<li><a class="xref" data-lesson="os2" data-sec="os2-ex6">Diodes-in-AC lesson, §6 Example 6: frequency from the period</a>. At <a class="ts" data-lesson="os2" data-t="1:20:03"></a> he gives the unit trick used in part c: dividing by milliseconds gives kilohertz.</li>
+<li><a class="xref" data-lesson="os3" data-sec="os3-freq">Phasors lesson, §2: frequency, period and \(\omega\)</a>, with hertz as cycles per second at <a class="ts" data-lesson="os3" data-t="12:51"></a>. The <a class="xref" data-lesson="os3" data-sec="os3-outlet">Phasors lesson, §3: wall-outlet example</a> gives 340 V<sub>pp</sub> = 170 V<sub>pk</sub> at <a class="ts" data-lesson="os3" data-t="15:09"></a>.</li>
+<li>In the <a class="xref" data-lesson="cl4" data-sec="cl4-scope">RC lesson, §8</a> the instructor measures a time constant on the scope with time cursors (<a class="ts" data-lesson="cl4" data-t="1:21:55"></a>); the guide adds how to read the same interval as divisions × time/div, the horizontal reading used in parts a and b.</li>
+</ul>
+<p><strong>Formulas:</strong> \(T = n_T \times \text{time/div}\), \(f = 1/T\), \(V_{pk} = n_{pk} \times \text{V/div}\), \(V_{pp} = 2V_{pk}\) (sine centred on 0 V). See the <a href="#/t/scope/review">Oscilloscope formula sheet</a>.</p>
+<p><strong>Try it in the lab:</strong> open the <a href="#/t/scope/understand/lab/scope">oscilloscope lab</a>. In Explore, set a 100 Hz sine with a 12.5 V amplitude, 5 V/div and 2 ms/div to rebuild this exam screen; then change one setting at a time and watch which readings change. “Practice: read” gives you new screens to read in the same way.</p>
+<p><strong>How the concepts combine:</strong> the question joins two separate readings, a time reading on the horizontal axis (period, then frequency through \(f = 1/T\)) and a voltage reading on the vertical axis (peak, then peak-to-peak). Each is a division count times its own scale. The unit conversions (ms ↔ μs, kHz ↔ Hz) and the peak versus peak-to-peak distinction are where most points are lost.</p>
+</section>
+
+</article>

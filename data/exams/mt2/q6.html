@@ -1,0 +1,341 @@
+<article class="xq" id="mt2-q6" data-exam="mt2" data-num="6" data-points="12" data-page="3" data-topics="millman" data-title="Millman’s theorem: three parallel source branches" data-status="flagged">
+
+<section class="xq-prompt">
+<p class="xq-verbatim">6) (12pts) For the circuit below use Millman’s to determine the Voltage across each resistor.<br>R<sub>1</sub> = 10 Ω, R<sub>2</sub> = 20 Ω, R<sub>3</sub> = 30 Ω, V<sub>1</sub> = 4v, V<sub>2</sub> = 10v, V<sub>3</sub> = 6v<br>(2pts) V<sub>R1</sub>: ____ &nbsp; (2pts) V<sub>R2</sub>: ____ &nbsp; (2pts) V<sub>R3</sub>: ____<br>(1pts) I<sub>R1</sub>: ____ &nbsp; (1pts) I<sub>R2</sub>: ____ &nbsp; (1pts) I<sub>R3</sub>: ____<br>(3pts) Draw a current arrow next to each resistor to show the current direction. No credit if the value of current is incorrect</p>
+<figure class="circuit">
+<script type="application/json">{"parts":[
+ {"t":"W","pts":[[0,0],[9,0]]},
+ {"t":"W","pts":[[0,6.5],[9,6.5]]},
+ {"t":"N","at":[4.5,0],"label":"a","pos":"n"},
+ {"t":"N","at":[4.5,6.5],"label":"b","pos":"s"},
+ {"t":"R","a":[0,0],"b":[0,3],"label":"R_1","value":"10 Ω"},
+ {"t":"W","pts":[[0,3],[0,4.2]]},
+ {"t":"W","pts":[[-0.5,4.2],[0.5,4.2]]},
+ {"t":"W","pts":[[-0.28,4.45],[0.28,4.45],[0.28,4.65],[-0.28,4.65],[-0.28,4.45]]},
+ {"t":"W","pts":[[-0.5,4.95],[0.5,4.95]]},
+ {"t":"W","pts":[[-0.28,5.2],[0.28,5.2],[0.28,5.4],[-0.28,5.4],[-0.28,5.2]]},
+ {"t":"W","pts":[[0,5.4],[0,6.5]]},
+ {"t":"T","at":[-0.8,4.35],"text":"+","bold":true,"size":17},
+ {"t":"T","at":[0.75,4.35],"text":"V_1","anchor":"start","bold":true},
+ {"t":"T","at":[0.75,4.95],"text":"4 V","anchor":"start"},
+ {"t":"R","a":[4.5,0],"b":[4.5,3],"label":"R_2","value":"20 Ω"},
+ {"t":"W","pts":[[4.5,3],[4.5,4.2]]},
+ {"t":"W","pts":[[4,4.2],[5,4.2]]},
+ {"t":"W","pts":[[4.22,4.45],[4.78,4.45],[4.78,4.65],[4.22,4.65],[4.22,4.45]]},
+ {"t":"W","pts":[[4,4.95],[5,4.95]]},
+ {"t":"W","pts":[[4.22,5.2],[4.78,5.2],[4.78,5.4],[4.22,5.4],[4.22,5.2]]},
+ {"t":"W","pts":[[4.5,5.4],[4.5,6.5]]},
+ {"t":"T","at":[3.7,4.35],"text":"+","bold":true,"size":17},
+ {"t":"T","at":[5.25,4.35],"text":"V_2","anchor":"start","bold":true},
+ {"t":"T","at":[5.25,4.95],"text":"10 V","anchor":"start"},
+ {"t":"R","a":[9,0],"b":[9,3],"label":"R_3","value":"30 Ω"},
+ {"t":"W","pts":[[9,3],[9,4.2]]},
+ {"t":"W","pts":[[8.5,4.2],[9.5,4.2]]},
+ {"t":"W","pts":[[8.72,4.45],[9.28,4.45],[9.28,4.65],[8.72,4.65],[8.72,4.45]]},
+ {"t":"W","pts":[[8.5,4.95],[9.5,4.95]]},
+ {"t":"W","pts":[[8.72,5.2],[9.28,5.2],[9.28,5.4],[8.72,5.4],[8.72,5.2]]},
+ {"t":"W","pts":[[9,5.4],[9,6.5]]},
+ {"t":"T","at":[8.2,4.35],"text":"+","bold":true,"size":17,"cls":"muted"},
+ {"t":"T","at":[9.75,4.35],"text":"V_3","anchor":"start","bold":true},
+ {"t":"T","at":[9.75,4.95],"text":"6 V","anchor":"start"}
+],"padX":1.9,"alt":"Three parallel branches between a top rail (node a) and a bottom rail (node b). Each branch has a resistor on top and a battery below it: R1 = 10 ohms over V1 = 4 V, R2 = 20 ohms over V2 = 10 V, R3 = 30 ohms over V3 = 6 V. All three battery symbols are drawn the same way, with the long plate on top. Printed sign marks beside the top of each battery: plus for V1, plus for V2, and a faint mark for V3 that is read as plus (shown grey)."}</script>
+<figcaption>Question 6 redrawn. All three battery symbols are drawn the same way on the exam (long plate on top, two cells), and the printed signs beside their tops are “+”. The sign beside \(V_3\) is printed faintly (strong bar, faint vertical stroke); it is drawn grey here and read as “+”. See the source note below. The node names a (top rail) and b (bottom rail) are ours; the exam marks these two nodes with dots but does not name them.</figcaption>
+</figure>
+<table class="xq-given">
+<tr><th>Quantity</th><th>Value</th><th>Note</th></tr>
+<tr><td>\(R_1\)</td><td>10 Ω</td><td>branch 1, between node a and the top of \(V_1\)</td></tr>
+<tr><td>\(R_2\)</td><td>20 Ω</td><td>branch 2, between node a and the top of \(V_2\)</td></tr>
+<tr><td>\(R_3\)</td><td>30 Ω</td><td>branch 3, between node a and the top of \(V_3\)</td></tr>
+<tr><td>\(V_1\)</td><td>4 V</td><td>printed “4v”; “+” printed at its top, long plate on top: + toward node a</td></tr>
+<tr><td>\(V_2\)</td><td>10 V</td><td>printed “10v”; “+” printed at its top, long plate on top: + toward node a</td></tr>
+<tr><td>\(V_3\)</td><td>6 V</td><td>printed “6v”; long plate on top. The sign at its top is faint and read as “+” (likely, not certain): + toward node a. See the source note.</td></tr>
+</table>
+</section>
+
+<section class="xq-find">
+<div class="xq-part" data-part="a" data-points="2" data-type="num" data-label="\(V_{R1}\), voltage across \(R_1\) (magnitude)" data-value="2" data-unit="V" data-tol="0.02"></div>
+<div class="xq-part" data-part="b" data-points="2" data-type="num" data-label="\(V_{R2}\), voltage across \(R_2\) (magnitude)" data-value="4" data-unit="V" data-tol="0.02"></div>
+<div class="xq-part" data-part="c" data-points="2" data-type="num" data-label="\(V_{R3}\), voltage across \(R_3\) (magnitude)" data-value="0" data-unit="V" data-tol="0.02" data-abs="0.005"></div>
+<div class="xq-part" data-part="d" data-points="1" data-type="num" data-label="\(I_{R1}\), current in \(R_1\) (magnitude; the direction is asked below)" data-value="0.2" data-unit="A" data-tol="0.02"></div>
+<div class="xq-part" data-part="e" data-points="1" data-type="num" data-label="\(I_{R2}\), current in \(R_2\) (magnitude)" data-value="0.2" data-unit="A" data-tol="0.02"></div>
+<div class="xq-part" data-part="f" data-points="1" data-type="num" data-label="\(I_{R3}\), current in \(R_3\) (magnitude)" data-value="0" data-unit="A" data-tol="0.02" data-abs="0.0005"></div>
+<div class="xq-part" data-part="g" data-points="1" data-type="mc" data-label="Current arrow next to \(R_1\) (the 3-pt arrow item, 1 of 3)" data-correct="down">
+<div class="opt" data-v="up" data-fb="That is the result if \(V_3\) were reversed; see the source note. With all three sources + on top, \(V_{ab} = 6\ \text{V}\) is above the 4 V at the top of \(V_1\), so node a is the higher-voltage end of \(R_1\) and the current flows down through \(R_1\) into the + terminal of \(V_1\).">↑ Up, from the battery toward node a</div>
+<div class="opt" data-v="down">↓ Down, from node a toward the battery</div>
+<div class="opt" data-v="none" data-fb="No current would need \(V_{ab}\) to equal \(V_1 = 4\ \text{V}\). Here \(V_{ab} = 6\ \text{V}\), so \(R_1\) has 2 V across it and carries current.">No arrow: no current flows (0 A)</div>
+</div>
+<div class="xq-part" data-part="h" data-points="1" data-type="mc" data-label="Current arrow next to \(R_2\) (2 of 3)" data-correct="up">
+<div class="opt" data-v="up">↑ Up, from the battery toward node a</div>
+<div class="opt" data-v="down" data-fb="Current flows from the higher-voltage end of the resistor to the lower one. The top of \(V_2\) is at 10 V and node a is at 6 V, so the current flows up through \(R_2\) into node a.">↓ Down, from node a toward the battery</div>
+<div class="opt" data-v="none" data-fb="\(R_2\) has \(10 - 6 = 4\ \text{V}\) across it, so current flows. No current would need \(V_{ab} = 10\ \text{V}\).">No arrow: no current flows (0 A)</div>
+</div>
+<div class="xq-part" data-part="i" data-points="1" data-type="mc" data-label="Current arrow next to \(R_3\) (3 of 3)" data-correct="none">
+<div class="opt" data-v="up" data-fb="Up would need the top of \(V_3\) to be above node a. Both are at 6 V: the top of \(V_3\) is at +6 V and \(V_{ab} = 6\ \text{V}\). With no voltage across \(R_3\) there is no current, so there is no direction to draw.">↑ Up, from the battery toward node a</div>
+<div class="opt" data-v="down" data-fb="That is the result if \(V_3\) were reversed; see the source note. With \(V_3\) + on top, node a and the top of \(V_3\) are both at 6 V, so \(R_3\) has 0 V across it and carries no current: no arrow.">↓ Down, from node a toward the battery</div>
+<div class="opt" data-v="none">No arrow: no current flows (0 A)</div>
+</div>
+<p class="fb" data-part="a" data-match="0.1818" data-tol="0.02">That is the result if \(V_3\) were reversed; see the source note. This solution reads the faint sign beside \(V_3\) as “+”, so \(V_3\) enters Millman’s formula as +6 V and \(V_{ab} = 6\ \text{V}\).</p>
+<p class="fb" data-part="a" data-match="6" data-tol="0.02">That is \(V_{ab}\), the voltage between the two rails, not the voltage across \(R_1\). The rail voltage is shared by the whole branch: \(R_1\) gets only the difference between \(V_{ab}\) and the battery voltage below it.</p>
+<p class="fb" data-part="a" data-match="4" data-tol="0.02">That is the battery voltage \(V_1\). The resistor gets the difference between node a and the top of the battery: \(V_{ab} - 4\ \text{V}\).</p>
+<p class="fb" data-part="a" data-match="2.667" data-tol="0.02">You used the plain average of the source voltages, \((4 + 10 + 6)/3 = 6.667\ \text{V}\), so \(V_{R1} = 6.667 - 4 = 2.667\ \text{V}\). That shortcut works only when all branch resistances are equal. Here each \(V_k\) is weighted by \(1/R_k\).</p>
+<p class="fb" data-part="b" data-match="6.182" data-tol="0.02">That is the result if \(V_3\) were reversed; see the source note. This solution reads the faint sign beside \(V_3\) as “+”, so \(V_3\) enters Millman’s formula as +6 V.</p>
+<p class="fb" data-part="b" data-match="6" data-tol="0.02">That is \(V_{ab}\), the rail-to-rail voltage. \(R_2\) carries the difference between the top of its battery (10 V) and node a.</p>
+<p class="fb" data-part="b" data-match="10" data-tol="0.02">That is the battery voltage \(V_2\). The resistor gets only the part of it that node a does not take: \(10 - V_{ab}\).</p>
+<p class="fb" data-part="b" data-match="3.333" data-tol="0.02">You used the plain average of the source voltages, \((4 + 10 + 6)/3 = 6.667\ \text{V}\), so \(V_{R2} = 10 - 6.667 = 3.333\ \text{V}\). That shortcut works only when all branch resistances are equal. Here each \(V_k\) is weighted by \(1/R_k\).</p>
+<p class="fb" data-part="c" data-match="9.818" data-tol="0.02">That is the result if \(V_3\) were reversed; see the source note. This solution reads the faint sign beside \(V_3\) as “+”: the top of \(V_3\) is at +6 V, the same as node a.</p>
+<p class="fb" data-part="c" data-match="6" data-tol="0.02">6 V is both \(V_{ab}\) and the battery voltage \(V_3\). The resistor voltage is the <em>difference</em> between node a and the top of the battery: \(6 - 6\).</p>
+<p class="fb" data-part="c" data-match="12" data-tol="0.02">You added \(V_{ab}\) and \(V_3\), as if the top of \(V_3\) were at −6 V. With + on top it is at +6 V, so \(V_{R3} = 6 - 6\).</p>
+<p class="fb" data-part="c" data-match="2.182" data-tol="0.02">This mixes the two readings: \(V_{ab} = 3.818\ \text{V}\) comes from entering \(V_3\) as −6 V, but then you took the top of \(V_3\) as +6 V. Use one polarity throughout. This solution uses + on top: \(V_3 = +6\ \text{V}\) in the formula too.</p>
+<p class="fb" data-part="c" data-match="0.6667" data-tol="0.02">You used the plain average of the source voltages, \((4 + 10 + 6)/3 = 6.667\ \text{V}\), so you got \(6.667 - 6 = 0.6667\ \text{V}\). That shortcut works only when all branch resistances are equal. Here each \(V_k\) is weighted by \(1/R_k\).</p>
+<p class="fb" data-part="d" data-match="0.01818" data-tol="0.02">That is the result if \(V_3\) were reversed (then \(V_{R1} = 0.1818\ \text{V}\)); see the source note. With \(V_3\) + on top, \(V_{R1} = 2\ \text{V}\).</p>
+<p class="fb" data-part="d" data-match="0.4" data-tol="0.02">\(V_1/R_1 = 0.4\ \text{A}\) is the source-transformed current (a numerator term), not the current that actually flows in \(R_1\). Use Ohm’s law with the resistor voltage: \(I_{R1} = V_{R1}/R_1\).</p>
+<p class="fb" data-part="d" data-match="0.6" data-tol="0.02">You divided \(V_{ab}\) by \(R_1\). The current in \(R_1\) is set by the voltage across \(R_1\) only: \(V_{R1}/R_1\).</p>
+<p class="fb" data-part="e" data-match="0.3091" data-tol="0.02">That is the result if \(V_3\) were reversed (then \(V_{R2} = 6.182\ \text{V}\)); see the source note. With \(V_3\) + on top, \(V_{R2} = 4\ \text{V}\).</p>
+<p class="fb" data-part="e" data-match="0.5" data-tol="0.02">\(V_2/R_2 = 0.5\ \text{A}\) is the source-transformed current, not the current in \(R_2\). Use \(I_{R2} = V_{R2}/R_2\).</p>
+<p class="fb" data-part="e" data-match="0.3" data-tol="0.02">You divided \(V_{ab}\) by \(R_2\). Use the voltage across \(R_2\) itself: \(V_{R2}/R_2\).</p>
+<p class="fb" data-part="f" data-match="0.3273" data-tol="0.02">That is the result if \(V_3\) were reversed (then \(V_{R3} = 9.818\ \text{V}\)); see the source note. With \(V_3\) + on top, \(R_3\) has 0 V across it.</p>
+<p class="fb" data-part="f" data-match="0.2" data-tol="0.02">0.2 A is \(V_3/R_3\) (the source-transformed current) and also \(V_{ab}/R_3\). Neither is the current in \(R_3\). Use the voltage across \(R_3\) itself: \(I_{R3} = V_{R3}/R_3\).</p>
+<p class="fb" data-part="f" data-match="0.4" data-tol="0.02">This comes from \(V_{R3} = 12\ \text{V}\), which treats the top of \(V_3\) as −6 V. With + on top it is at +6 V, the same as node a.</p>
+</section>
+
+<aside class="xq-flag">
+<p><strong>Source note: the sign beside \(V_3\) is faint; we read it as “+” (likely, not certain).</strong> All three battery symbols are drawn identically, with the long plate (+) on top. The printed marks beside \(V_1\) and \(V_2\) are clear “+” signs. The mark beside \(V_3\) has a strong horizontal bar but only a faint vertical stroke, so at first glance it can look like a “−”.</p>
+<p><strong>Why we read it as “+”.</strong> On the photo the vertical strokes of the three marks fade from left to right: strong for \(V_1\), about a third of its bar’s contrast for \(V_2\), about a quarter for \(V_3\). The right side of the photo is brighter, which washes out thin strokes; the thicker horizontal bars fade much less. So the faint stroke over \(V_3\)’s bar fits a washed-out “+”. That reading also agrees with the battery symbol (all three drawn the same) and gives round results (\(V_{ab} = 6\ \text{V}\) exactly).</p>
+<p><strong>What speaks against it.</strong> With \(V_3\) + on top, \(R_3\) carries no current, while the question asks for a current arrow next to each resistor. A printed “−” cannot be ruled out.</p>
+<p><strong>How the solution handles it.</strong> The primary solution takes all three sources + on top. The last solution step works out the other reading (\(V_3\) reversed, entering as −6 V): \(V_{ab} = 3.818\ \text{V}\); \(V_{R1} = 0.1818\ \text{V}\), 18.18 mA up; \(V_{R2} = 6.182\ \text{V}\), 309.1 mA up; \(V_{R3} = 9.818\ \text{V}\), 327.3 mA down.</p>
+</aside>
+
+<div class="xq-hints">
+<p class="xq-hint">Look at how the three branches connect. Every branch is a source in series with a resistor, and all three join the same two nodes (the top rail and the bottom rail). Which technique gives the voltage between those two nodes in one formula?</p>
+<p class="xq-hint">In Millman’s formula each \(V_k\) carries a sign: + if its + terminal faces the top rail, − if it faces the bottom rail. Check the sign beside each battery and its symbol (long plate = +) before you add anything up.</p>
+<p class="xq-hint">Once you have \(V_{ab}\), each resistor sits between node a and the top of its own battery. Its voltage is the difference of those two node voltages, and its current is that voltage over its resistance. Current flows from the higher-voltage end to the lower-voltage end, so compare \(V_{ab}\) with each battery voltage before you draw an arrow.</p>
+</div>
+
+<ol class="xq-steps">
+<li class="xq-step" data-title="Identify the concept">
+<p>The circuit has three branches, and each branch is a <strong>voltage source in series with a resistor</strong>. All three branches connect between the same two nodes: the top rail (call it a) and the bottom rail (b). This is exactly the “Millman circuit”, and the question says to use Millman’s theorem.</p>
+<p>Millman’s theorem gives one number: \(V_{ab}\), the voltage of the top rail relative to the bottom rail. The question asks for the voltage across and current through each <em>resistor</em>, so there is a second stage: use \(V_{ab}\) to find each branch’s resistor voltage, then Ohm’s law for its current.</p>
+</li>
+<li class="xq-step" data-title="Why this method applies">
+<p>Millman’s formula needs three conditions, and all three hold here:</p>
+<ul>
+<li>every branch is a voltage source with a resistor in series (no branch is a bare source);</li>
+<li>all branches are connected between the <strong>same two nodes</strong>, a and b;</li>
+<li>nothing else is connected between a and b (no load), so the formula gives the actual rail voltage.</li>
+</ul>
+<p>Once \(V_{ab}\) is known, every node voltage in the circuit is known. Take b as the 0 V reference. The top of each battery is at \(V_k\) (set by the battery), and node a is at \(V_{ab}\). Each resistor is connected between those two known voltages, so its voltage and current follow directly.</p>
+<p>Millman’s formula is single-node KCL in disguise: the branch currents into node a must add to zero, because a is not connected to anything else. That gives the check at the end.</p>
+</li>
+<li class="xq-step" data-title="Polarity and sign conventions">
+<p><strong>Sign of each source in the formula.</strong> \(V_k\) counts as positive if its + terminal faces node a, negative if its + terminal faces node b.</p>
+<ul>
+<li>\(V_1\): “+” printed at its top, long plate on top → + toward a → enters as \(+4\ \text{V}\).</li>
+<li>\(V_2\): “+” printed at its top, long plate on top → + toward a → enters as \(+10\ \text{V}\).</li>
+<li>\(V_3\): long plate on top; the faint sign at its top is read as “+” → + toward a → enters as \(+6\ \text{V}\). (This reading is likely but not certain; see the source note. The reversed case is worked in the last step.)</li>
+</ul>
+<p><strong>Voltages.</strong> All voltages are measured from node b (0 V). \(V_{ab} = v_a - v_b\). The top of battery \(k\) is at \(v_k = V_k\): +4 V, +10 V and +6 V.</p>
+<p><strong>Currents.</strong> In each resistor the current flows from its higher-voltage end to its lower-voltage end. Below, “up” means from the battery toward node a, and “down” means from node a toward the battery. The question asks for voltage and current values plus a separate arrow, so the values are given as magnitudes and the direction is given by the arrow.</p>
+<figure class="circuit">
+<script type="application/json">{"parts":[
+ {"t":"W","pts":[[0,0],[11,0]]},
+ {"t":"W","pts":[[0,6.5],[11,6.5]]},
+ {"t":"N","at":[5.5,0],"label":"a","pos":"n"},
+ {"t":"N","at":[5.5,6.5],"label":"b (0 V)","pos":"s"},
+ {"t":"R","a":[0,0],"b":[0,3],"label":"R_1","value":"10 Ω"},
+ {"t":"BAT","a":[0,6.5],"b":[0,3],"label":"V_1 = +4 V","side":-1},
+ {"t":"R","a":[5.5,0],"b":[5.5,3],"label":"R_2","value":"20 Ω"},
+ {"t":"BAT","a":[5.5,6.5],"b":[5.5,3],"label":"V_2 = +10 V","side":-1},
+ {"t":"R","a":[11,0],"b":[11,3],"label":"R_3","value":"30 Ω"},
+ {"t":"BAT","a":[11,6.5],"b":[11,3],"label":"V_3 = +6 V","side":-1},
+ {"t":"N","at":[0,3],"label":"+4 V","pos":"e"},
+ {"t":"N","at":[5.5,3],"label":"+10 V","pos":"e"},
+ {"t":"N","at":[11,3],"label":"+6 V","pos":"e"}
+],"padX":2.2,"alt":"The circuit as solved: all three batteries with + toward node a. The tops of the batteries are at +4 V, +10 V and +6 V relative to node b."}</script>
+<figcaption>The circuit as solved, with all three batteries + on top. The dots between each resistor and its battery are labelled with their voltage relative to b.</figcaption>
+</figure>
+</li>
+<li class="xq-step" data-title="Formulas you need">
+<p><strong>Millman’s theorem:</strong></p>
+<div class="formula">\[ V_{ab} = \frac{\dfrac{V_1}{R_1} + \dfrac{V_2}{R_2} + \dfrac{V_3}{R_3}}{\dfrac{1}{R_1} + \dfrac{1}{R_2} + \dfrac{1}{R_3}} \]</div>
+<dl class="vardefs">
+<dt>\(V_{ab}\)</dt><dd>voltage of node a relative to node b, V</dd>
+<dt>\(V_k\)</dt><dd>signed source voltage of branch \(k\) (+ if its + faces a), V</dd>
+<dt>\(R_k\)</dt><dd>series resistance of branch \(k\), Ω</dd>
+<dt>\(V_k/R_k\)</dt><dd>source-transformed current of branch \(k\), A; their sum is the Norton current \(I_N\)</dd>
+<dt>\(1/R_k\)</dt><dd>conductance of branch \(k\), S (siemens, 1/Ω); \(1/\sum(1/R_k)\) is the equivalent resistance \(R_N\)</dd>
+</dl>
+<p><strong>Resistor voltage and current</strong> (branch \(k\), battery top at \(v_k\)):</p>
+<div class="formula">\[ V_{Rk} = \lvert v_k - V_{ab} \rvert, \qquad I_{Rk} = \frac{V_{Rk}}{R_k} \]</div>
+<p>If \(v_k &gt; V_{ab}\), the current flows <em>up</em> through \(R_k\) into node a. If \(v_k &lt; V_{ab}\), it flows <em>down</em>. If \(v_k = V_{ab}\), no current flows.</p>
+<p><strong>KCL at node a:</strong> the currents flowing up into a must equal the currents flowing down out of a.</p>
+</li>
+<li class="xq-step" data-title="Numerator: the source-transformed currents">
+<p>Each branch \(V_k\) in series with \(R_k\) is equivalent to a current source \(V_k/R_k\) in parallel with \(R_k\). All three sources have + on top, so all three arrows point up toward a.</p>
+<div class="formula">\[ \frac{V_1}{R_1} = \frac{4\ \text{V}}{10\ \Omega} = 0.4000\ \text{A}, \qquad \frac{V_2}{R_2} = \frac{10\ \text{V}}{20\ \Omega} = 0.5000\ \text{A}, \qquad \frac{V_3}{R_3} = \frac{6\ \text{V}}{30\ \Omega} = 0.2000\ \text{A} \]</div>
+<div class="formula">\[ \sum \frac{V_k}{R_k} = 0.4000 + 0.5000 + 0.2000 = 1.100\ \text{A} \]</div>
+<figure class="circuit">
+<script type="application/json">{"parts":[
+ {"t":"W","pts":[[0,0],[13.6,0]]},
+ {"t":"W","pts":[[0,4.5],[13.6,4.5]]},
+ {"t":"I","a":[0,4.5],"b":[0,0],"label":"0.4 A","side":-1},
+ {"t":"R","a":[1.8,0],"b":[1.8,4.5],"label":"R_1","value":"10 Ω"},
+ {"t":"I","a":[5.8,4.5],"b":[5.8,0],"label":"0.5 A","side":-1},
+ {"t":"R","a":[7.6,0],"b":[7.6,4.5],"label":"R_2","value":"20 Ω"},
+ {"t":"I","a":[11.8,4.5],"b":[11.8,0],"label":"0.2 A","side":-1},
+ {"t":"R","a":[13.6,0],"b":[13.6,4.5],"label":"R_3","value":"30 Ω"},
+ {"t":"N","at":[7.6,0],"label":"a","pos":"n"},
+ {"t":"N","at":[7.6,4.5],"label":"b","pos":"s"}
+],"padX":1.9,"alt":"After source transformation: a 0.4 A source in parallel with R1 = 10 ohms, a 0.5 A source in parallel with R2 = 20 ohms, and a 0.2 A source in parallel with R3 = 30 ohms, all arrows pointing up toward node a."}</script>
+<figcaption>Every branch source-transformed. All three arrows point up, so the currents add: \(0.4 + 0.5 + 0.2 = 1.1\ \text{A}\) is pushed up into node a.</figcaption>
+</figure>
+</li>
+<li class="xq-step" data-title="Denominator and the rail voltage Vab">
+<div class="formula">\[ \sum \frac{1}{R_k} = \frac{1}{10\ \Omega} + \frac{1}{20\ \Omega} + \frac{1}{30\ \Omega} = 0.1000 + 0.05000 + 0.03333 = 0.1833\ \text{S} \]</div>
+<p>(Exactly \(11/60\ \text{S}\), so the equivalent resistance is \(R_N = 60/11 = 5.455\ \Omega\). It is not needed for the answers, because nothing is connected across a–b.)</p>
+<div class="formula">\[ V_{ab} = \frac{1.100\ \text{A}}{0.1833\ \text{S}} = 1.100 \times 5.455 = 6.000\ \text{V} \]</div>
+<p>Exactly \(V_{ab} = 1.1 \times 60/11 = 6\ \text{V}\). Node a is <strong>6.000 V above</strong> node b. Intermediate values are kept to 4 significant figures; here the result is exact.</p>
+</li>
+<li class="xq-step" data-title="Branch 1: voltage and current in R1">
+<p>The top of \(V_1\) is at \(+4\ \text{V}\); node a is at 6 V.</p>
+<div class="formula">\[ V_{R1} = 6\ \text{V} - 4\ \text{V} = 2.000\ \text{V} \]</div>
+<div class="formula">\[ I_{R1} = \frac{2.000\ \text{V}}{10\ \Omega} = 0.2000\ \text{A} = 200\ \text{mA} \]</div>
+<p>Node a (the top of \(R_1\)) is the + end, so the current flows <strong>down</strong> through \(R_1\), out of node a and into the + terminal of \(V_1\). The rail is above 4 V, so \(V_1\) is being charged: it absorbs power instead of delivering it. A battery in a Millman circuit does not always push current out.</p>
+</li>
+<li class="xq-step" data-title="Branch 2: voltage and current in R2">
+<p>The top of \(V_2\) is at \(+10\ \text{V}\); node a is at 6 V.</p>
+<div class="formula">\[ V_{R2} = 10\ \text{V} - 6\ \text{V} = 4.000\ \text{V} \]</div>
+<div class="formula">\[ I_{R2} = \frac{4.000\ \text{V}}{20\ \Omega} = 0.2000\ \text{A} = 200\ \text{mA} \]</div>
+<p>The bottom of \(R_2\) (battery side) is the + end, so the current flows <strong>up</strong> through \(R_2\), into node a. \(V_2\) is the only source above the rail voltage, so it is the one that delivers current.</p>
+</li>
+<li class="xq-step" data-title="Branch 3: no voltage, no current in R3">
+<p>The top of \(V_3\) is at \(+6\ \text{V}\); node a is at 6 V.</p>
+<div class="formula">\[ V_{R3} = 6\ \text{V} - 6\ \text{V} = 0\ \text{V}, \qquad I_{R3} = \frac{0\ \text{V}}{30\ \Omega} = 0\ \text{A} \]</div>
+<p><strong>No arrow can be drawn for \(R_3\).</strong> A current arrow shows which way charge moves. With 0 A nothing moves, so there is no direction to show. On the exam, write \(I_{R3} = 0\ \text{A}\) and “no current” next to \(R_3\) instead of an arrow.</p>
+<p><strong>Why zero current makes sense.</strong> \(V_3\) equals the rail voltage. Both ends of \(R_3\) sit at 6 V: node a at the top and the + terminal of \(V_3\) at the bottom. A resistor only carries current when its ends are at different voltages. \(V_3\) neither delivers nor absorbs power; it is like connecting a 6 V battery to a point that is already at 6 V.</p>
+<p>You can confirm it by removing branch 3: with only branches 1 and 2, \(V_{ab} = (0.4 + 0.5)/(0.1 + 0.05) = 0.9/0.15 = 6\ \text{V}\), the same as before. Connecting \(V_3\) through \(R_3\) to a rail that is already at 6 V changes nothing, so no current flows in it.</p>
+</li>
+<li class="xq-step" data-title="Current arrows and the KCL check">
+<p>Current into node a: \(I_{R2} = 200\ \text{mA}\) (up through \(R_2\)). Currents out of node a: \(I_{R1} + I_{R3} = 200 + 0 = 200\ \text{mA}\) (down through \(R_1\)). They balance, as KCL requires. The 0.2 A simply circulates around the loop formed by branches 1 and 2: out of \(V_2\), up through \(R_2\), along the top rail, down through \(R_1\), into \(V_1\), and back along the bottom rail.</p>
+<figure class="circuit">
+<script type="application/json">{"parts":[
+ {"t":"W","pts":[[0,0],[11,0]]},
+ {"t":"W","pts":[[0,6.5],[11,6.5]]},
+ {"t":"N","at":[5.5,0],"label":"a  (6 V)","pos":"n"},
+ {"t":"N","at":[5.5,6.5],"label":"b  (0 V)","pos":"s"},
+ {"t":"R","a":[0,0],"b":[0,3],"label":"R_1 = 10 Ω","value":"V_{R1} = 2 V"},
+ {"t":"BAT","a":[0,6.5],"b":[0,3],"label":"V_1","value":"4 V","side":-1},
+ {"t":"VM","a":[0.4,0.45],"b":[0.4,2.6]},
+ {"t":"ARROW","a":[-0.75,0.5],"b":[-0.75,2.5],"label":"0.2 A","lat":[-0.95,1.6],"anchor":"end"},
+ {"t":"R","a":[5.5,0],"b":[5.5,3],"label":"R_2 = 20 Ω","value":"V_{R2} = 4 V"},
+ {"t":"BAT","a":[5.5,6.5],"b":[5.5,3],"label":"V_2","value":"10 V","side":-1},
+ {"t":"VM","a":[5.9,2.6],"b":[5.9,0.45]},
+ {"t":"ARROW","a":[4.75,2.5],"b":[4.75,0.5],"label":"0.2 A","lat":[4.55,1.6],"anchor":"end"},
+ {"t":"R","a":[11,0],"b":[11,3],"label":"R_3 = 30 Ω","value":"V_{R3} = 0 V"},
+ {"t":"BAT","a":[11,6.5],"b":[11,3],"label":"V_3","value":"6 V","side":-1},
+ {"t":"T","at":[10.25,1.35],"text":"0 A","anchor":"end","cls":"accent"},
+ {"t":"T","at":[10.25,1.95],"text":"no arrow","anchor":"end","cls":"muted"}
+],"padX":2.6,"alt":"Answer drawing: node a at 6 V. R1: 2 V, 0.2 A flowing down from node a toward V1, + at the top. R2: 4 V, 0.2 A flowing up toward node a, + at the bottom. R3: 0 V, 0 A, no arrow."}</script>
+<figcaption>The requested current arrows. The coloured + and − marks show each resistor’s polarity; current enters every resistor at its + end (passive sign convention). 0.2 A flows up through \(R_2\) and down through \(R_1\); \(R_3\) carries no current, so it gets no arrow.</figcaption>
+</figure>
+</li>
+<li class="xq-step" data-title="Alternative reading: if V3 is reversed">
+<aside class="uncertain">
+<p><strong>Use this only if the faint sign beside \(V_3\) is a “−”</strong> (\(V_3\) with + toward node b, against its drawn symbol). See the source note. \(V_3\) then enters Millman’s formula as −6 V, and the top of \(V_3\) is at −6 V.</p>
+<div class="formula">\[ V_{ab} = \frac{0.4000 + 0.5000 - 0.2000}{0.1833} = \frac{0.7000\ \text{A}}{0.1833\ \text{S}} = 3.818\ \text{V} \quad (\text{exactly } 42/11\ \text{V}) \]</div>
+<ul>
+<li>\(R_1\): \(V_{R1} = 4 - 3.818 = 0.1818\ \text{V}\), \(I_{R1} = 0.1818/10 = 18.18\ \text{mA}\), flowing <strong>up</strong> into node a (the top of \(V_1\) is above the rail).</li>
+<li>\(R_2\): \(V_{R2} = 10 - 3.818 = 6.182\ \text{V}\), \(I_{R2} = 6.182/20 = 309.1\ \text{mA}\), flowing <strong>up</strong>.</li>
+<li>\(R_3\): \(V_{R3} = 3.818 - (-6) = 9.818\ \text{V}\), \(I_{R3} = 9.818/30 = 327.3\ \text{mA}\), flowing <strong>down</strong> out of node a into the − terminal of \(V_3\).</li>
+</ul>
+<p>KCL: \(18.18 + 309.1 = 327.3\ \text{mA}\) in = 327.3 mA out (exactly \(1/55 + 17/55 = 18/55\ \text{A}\)).</p>
+<figure class="circuit">
+<script type="application/json">{"parts":[
+ {"t":"W","pts":[[0,0],[11,0]]},
+ {"t":"W","pts":[[0,6.5],[11,6.5]]},
+ {"t":"N","at":[5.5,0],"label":"a  (3.818 V)","pos":"n"},
+ {"t":"N","at":[5.5,6.5],"label":"b  (0 V)","pos":"s"},
+ {"t":"R","a":[0,0],"b":[0,3],"label":"R_1 = 10 Ω","value":"V_{R1} = 0.1818 V"},
+ {"t":"BAT","a":[0,6.5],"b":[0,3],"label":"V_1","value":"4 V","side":-1},
+ {"t":"VM","a":[0.4,2.6],"b":[0.4,0.45]},
+ {"t":"ARROW","a":[-0.75,2.5],"b":[-0.75,0.5],"label":"18.18 mA","lat":[-0.95,1.6],"anchor":"end"},
+ {"t":"R","a":[5.5,0],"b":[5.5,3],"label":"R_2 = 20 Ω","value":"V_{R2} = 6.182 V"},
+ {"t":"BAT","a":[5.5,6.5],"b":[5.5,3],"label":"V_2","value":"10 V","side":-1},
+ {"t":"VM","a":[5.9,2.6],"b":[5.9,0.45]},
+ {"t":"ARROW","a":[4.75,2.5],"b":[4.75,0.5],"label":"309.1 mA","lat":[4.55,1.6],"anchor":"end"},
+ {"t":"R","a":[11,0],"b":[11,3],"label":"R_3 = 30 Ω","value":"V_{R3} = 9.818 V"},
+ {"t":"BAT","a":[11,6.5],"b":[11,3],"label":"V_3","value":"6 V","plus":"a","side":-1},
+ {"t":"VM","a":[11.4,0.45],"b":[11.4,2.6]},
+ {"t":"ARROW","a":[10.25,0.5],"b":[10.25,2.5],"label":"327.3 mA","lat":[10.05,1.6],"anchor":"end"}
+],"padX":2.6,"alt":"Alternative reading with V3 reversed (+ toward node b): node a at 3.818 V. R1: 0.1818 V, 18.18 mA flowing up. R2: 6.182 V, 309.1 mA flowing up. R3: 9.818 V, 327.3 mA flowing down from node a."}</script>
+<figcaption>Alternative reading only: \(V_3\) drawn reversed (+ toward b). All three resistors carry current here.</figcaption>
+</figure>
+</aside>
+</li>
+</ol>
+
+<section class="xq-answer">
+<p>Primary solution (all three sources + on top, as their symbols are drawn). \(V_{ab} = 6.000\ \text{V}\).</p>
+<table>
+<tr><th>Resistor</th><th>Voltage</th><th>Current</th><th>Arrow</th><th>+ end</th></tr>
+<tr><td>\(R_1\) (10 Ω)</td><td>\(V_{R1} = 2.000\ \text{V}\)</td><td>\(I_{R1} = 0.2000\ \text{A}\)</td><td>↓ down, from node a into the + terminal of \(V_1\)</td><td>top (node a)</td></tr>
+<tr><td>\(R_2\) (20 Ω)</td><td>\(V_{R2} = 4.000\ \text{V}\)</td><td>\(I_{R2} = 0.2000\ \text{A}\)</td><td>↑ up, into node a</td><td>bottom (battery side)</td></tr>
+<tr><td>\(R_3\) (30 Ω)</td><td>\(V_{R3} = 0\ \text{V}\)</td><td>\(I_{R3} = 0\ \text{A}\)</td><td>no arrow (no current)</td><td>none</td></tr>
+</table>
+<p>The current-arrow drawing is the figure in the step “Current arrows and the KCL check”.</p>
+<aside class="uncertain">
+<p><strong>If \(V_3\) is reversed</strong> (the faint sign is a “−”): \(V_{ab} = 3.818\ \text{V}\); \(V_{R1} = 0.1818\ \text{V}\), \(I_{R1} = 18.18\ \text{mA}\) up; \(V_{R2} = 6.182\ \text{V}\), \(I_{R2} = 309.1\ \text{mA}\) up; \(V_{R3} = 9.818\ \text{V}\), \(I_{R3} = 327.3\ \text{mA}\) down.</p>
+</aside>
+</section>
+
+<section class="xq-check">
+<ul>
+<li><strong>KCL at node a:</strong> 200 mA in (through \(R_2\)) = 200 mA out (through \(R_1\)) + 0 mA (through \(R_3\)). The currents balance.</li>
+<li><strong>Weighted average:</strong> Millman’s \(V_{ab}\) is an average of the branch voltages (4, 10, 6 V) weighted by \(1/R_k\): weights \(0.1/0.1833 = 0.5455\), \(0.05/0.1833 = 0.2727\), \(0.0333/0.1833 = 0.1818\). \(0.5455(4) + 0.2727(10) + 0.1818(6) = 2.182 + 2.727 + 1.091 = 6.000\ \text{V}\). It must lie between the lowest (4 V) and highest (10 V) branch voltage. 6 V passes.</li>
+<li><strong>KVL around each branch</strong> (from b up to a): branch 1: \(+4 + 2 = 6\ \text{V}\) (the current flows down, so the top of \(R_1\) is its + end); branch 2: \(+10 - 4 = 6\ \text{V}\); branch 3: \(+6 - 0 = 6\ \text{V}\). All three branches give the same \(V_{ab}\), as they must because they are in parallel.</li>
+<li><strong>Branch 3 removed:</strong> \(V_{ab} = 0.9/0.15 = 6\ \text{V}\), unchanged, which confirms that branch 3 carries no current.</li>
+<li><strong>Power balance:</strong> resistors absorb \(2^2/10 + 4^2/20 + 0 = 0.4 + 0.8 + 0 = 1.2\ \text{W}\). \(V_2\) delivers \(10 \times 0.2 = 2\ \text{W}\); \(V_1\) absorbs \(4 \times 0.2 = 0.8\ \text{W}\) (it is being charged); \(V_3\) delivers 0 W. Net delivered \(2 - 0.8 = 1.2\ \text{W}\). Equal.</li>
+<li>Verified with an independent nodal-analysis script for both readings of \(V_3\).</li>
+</ul>
+</section>
+
+<section class="xq-mistakes">
+<ul>
+<li><strong>Reporting \(V_{ab}\) as the voltage across each resistor.</strong> \(V_{ab}\) is across the whole branch (resistor + battery). The resistor gets the difference between \(V_{ab}\) and its battery-top voltage.</li>
+<li><strong>Using \(V_k/R_k\) as the resistor current.</strong> \(V_k/R_k\) is the source-transformed current used inside the formula. The real current in \(R_k\) is \(V_{Rk}/R_k\). For \(R_3\) this mistake gives 0.2 A instead of 0 A.</li>
+<li><strong>Assuming every battery pushes current up into node a.</strong> A branch current flows up only if its battery voltage is above \(V_{ab}\). Here \(V_1 = 4\ \text{V}\) is below the 6 V rail, so the current in \(R_1\) flows down and charges \(V_1\).</li>
+<li><strong>Drawing an arrow for a zero current.</strong> 0 A has no direction. Write 0 A and “no current” next to \(R_3\); an arrow either way says current flows.</li>
+<li><strong>Adding resistances in the denominator.</strong> The denominator is \(\sum 1/R_k\) (0.1833 S), not \(R_1 + R_2 + R_3\) (60 Ω).</li>
+<li><strong>Not checking polarity.</strong> Read the sign mark and the battery symbol (long plate = +) for every source. A reversed source enters the numerator with a minus sign and changes every answer (see the alternative step). If the two disagree or a mark is unclear, say which reading you used.</li>
+</ul>
+</section>
+
+<section class="xq-similar">
+<p><strong>Approach for a similar problem.</strong></p>
+<ol>
+<li>Check the shape: every branch a source (or nothing) in series with a resistor, all between the same two nodes. If a branch connects to a third node, Millman does not apply directly; use nodal analysis or reduce the circuit first.</li>
+<li>Sign every source: + if its + terminal faces the node you call a, − if reversed, 0 for a resistor-only branch (its \(1/R_k\) still goes in the denominator).</li>
+<li>Compute \(V_{ab} = \sum (V_k/R_k) / \sum (1/R_k)\).</li>
+<li>For each resistor, use KVL around its branch: \(V_{Rk} = \lvert V_k - V_{ab}\rvert\), with \(V_k\) signed as in step 2 (0 for a resistor-only branch), and \(I_{Rk} = V_{Rk}/R_k\). If \(V_k &gt; V_{ab}\), the branch current flows toward node a; if \(V_k &lt; V_{ab}\), it flows away from node a; if \(V_k = V_{ab}\), the branch carries no current and gets no arrow. Inside the resistor the arrow points from its higher-voltage end to its lower one.</li>
+<li>Check KCL at node a: the currents in must equal the currents out.</li>
+</ol>
+<p><strong>If the arrangement changes:</strong> a battery drawn below its resistor or above it changes neither the resistor voltage nor the branch current, because both come from KVL around the whole branch (step 4). The order only changes where the resistor’s + end physically sits: with the battery above the resistor, the resistor’s other end is node b (0 V), not node a. With a load \(R_L\) across a–b, treat it as one more branch with \(V = 0\), or use the equivalent \(V_{ab}\) in series with \(R_N = 1/\sum(1/R_k)\). With all resistors equal, \(V_{ab}\) is the plain average of the signed source voltages.</p>
+</section>
+
+<section class="xq-connect">
+<p><strong>Topic tested:</strong> <a href="#/t/millman/understand">Millman’s Theorem</a>, followed by Ohm’s law and KCL to get each branch’s voltage, current and direction.</p>
+<p><strong>Clues:</strong> the question names the technique (“use Millman’s”). Even without that, the circuit gives it away: three vertical branches, each a battery with a resistor in series, all joined by one top wire and one bottom wire. The battery symbols (long plate on top) and the “+” beside each battery tell you the sign each source gets in the formula.</p>
+<p><strong>Where it is taught:</strong></p>
+<ul>
+<li><a class="xref" data-lesson="mt1" data-sec="mt1-statement">Millman lesson, §1: the circuit and the formula</a>. The formula is introduced at <a class="ts" data-lesson="mt1" data-t="1:17"></a> and explained term by term (numerator \(V_k/R_k\), denominator \(1/R_k\)) at <a class="ts" data-lesson="mt1" data-t="1:41"></a>. In the lesson every source has + toward the output rail, as in the primary reading of this question.</li>
+<li><a class="xref" data-lesson="mt1" data-sec="mt1-step1">§3: source-transform every branch</a> (from <a class="ts" data-lesson="mt1" data-t="6:52"></a>). This is where \(V_k/R_k\) comes from: each branch becomes a current source \(V_k/R_k\) in parallel with \(R_k\), arrow up toward the top rail when the + is on top.</li>
+<li><a class="xref" data-lesson="mt1" data-sec="mt1-in">§4: Norton current</a>: the numerator \(\sum V_k/R_k\) is the short-circuit current, built up by KCL along the top rail (<a class="ts" data-lesson="mt1" data-t="12:43"></a>–<a class="ts" data-lesson="mt1" data-t="14:15"></a>).</li>
+<li><a class="xref" data-lesson="mt1" data-sec="mt1-apply">§9: polarity, source-free branches, load current</a>. This section is additional teaching in the guide (not in the video). It gives the sign rule for a reversed source, which is what the alternative reading of \(V_3\) needs, with a worked example.</li>
+<li><a class="xref" data-lesson="st1" data-sec="st1-idea">Source transformation: which way the arrow points</a> (orientation in the drawings from <a class="ts" data-lesson="st1" data-t="2:20"></a>). The guide adds the flipped case, which is not drawn in the video: a source with + at the bottom gives a downward arrow (again, only needed for the alternative reading).</li>
+</ul>
+<p>The §9 example in the guide (additional teaching) also finds each branch current from the node voltage to check KCL. A branch that carries exactly zero current, as \(R_3\) does here, is not discussed in the guides; that explanation in this solution is additional teaching.</p>
+<p><strong>Formulas:</strong> \(V_{ab} = \sum (V_k/R_k) / \sum (1/R_k)\), \(V_{Rk} = \lvert V_k - V_{ab}\rvert\) (\(V_k\) signed), \(I = V/R\), KCL at node a. See the <a href="#/t/millman/review">Millman formula sheet</a>.</p>
+<p><strong>Try it in the lab:</strong> open the <a href="#/t/millman/understand/lab/millman">Millman lab</a>, set 3 branches: 4 V / 10 Ω, 10 V / 20 Ω and 6 V / 30 Ω, all with “+ at a”. The lab shows \(V_{ab}\), every branch current with its direction (branch 3 shows 0 A and no arrow) and the live KCL sum. Switch branch 3 to “+ at b” to see the alternative result.</p>
+<p><strong>How the concepts combine:</strong> Millman’s theorem only gives the rail voltage \(V_{ab}\). The question asks about each resistor, so you finish with node voltages (each battery fixes the voltage at its top), Ohm’s law for each resistor, and KCL at node a to check the directions. Millman’s formula itself is the same KCL equation at node a, solved for \(V_{ab}\).</p>
+</section>
+
+</article>

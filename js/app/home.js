@@ -90,6 +90,10 @@
         }).join('') + '</ol><p class="flow-foot small muted">Each topic has these modes plus <b>My Notes</b>. <b>Studied</b> (ring) counts lessons you mark complete; <b>Understood</b> (diamonds) counts practice scenarios you solve on your own. Press <kbd>?</kbd> for keyboard shortcuts.</p></section>' : '') +
       '<section aria-labelledby="topicsTitle"><div class="sec-head"><h2 id="topicsTitle" class="sec-title">Topics</h2></div>' +
       '<div class="tgrid">' + A.TOPICS.map(topicCard).join('') + '</div></section>' +
+      '<section class="xm-home" aria-labelledby="xmHomeT"><a class="xm-home-card" href="#/exams">' + (A.exams ? '<span class="xm-home-ic">' + A.exams.icon() + '</span>' : '') +
+      '<span class="xm-home-text"><span class="xm-home-kicker">Practise with real exams</span><span class="xm-home-title" id="xmHomeT">Past Exam Examples</span>' +
+      '<span class="xm-home-desc">Questions from past exams with redrawn diagrams. Try each one, then reveal hints and the worked solution one step at a time, and see which lessons it comes from.</span>' +
+      '<span class="xm-home-meta small muted"></span></span><span class="btn primary small xm-home-go"><span>Open past exams</span>' + icon('arrow') + '</span></a></section>' +
       '<section class="revisit" aria-labelledby="revTitle"><div class="sec-head"><h2 id="revTitle" class="sec-title">Worth revisiting</h2><span class="muted small">Questions you struggled with and sections you flagged</span></div><div class="revisit-body"><p class="muted small">Checking…</p></div></section>' +
       '</div>';
 
@@ -101,6 +105,7 @@
     $$('.tcard', ctx.el).forEach(function (c) {
       c.addEventListener('click', function (e) { if (e.target.closest('a,button')) return; location.hash = $('.tcard-link', c).getAttribute('href'); });
     });
+    if (A.exams) A.exams.homeCard($('.xm-home', ctx.el), ctx);
     return fillRevisit($('.revisit-body', ctx.el), ctx);
   }
 

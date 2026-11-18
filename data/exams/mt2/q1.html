@@ -1,0 +1,352 @@
+<article class="xq" id="mt2-q1" data-exam="mt2" data-num="1" data-points="12" data-page="1" data-topics="thevenin deltawye" data-title="Norton equivalent of a bridge network" data-status="ok">
+
+<section class="xq-prompt">
+<p class="xq-verbatim">1) (12pts) For the following circuit, derive the Norton equivalent circuit.<br>V1 = 30v, R1 = 10Ω, R2 = 20Ω, R3 = 20Ω, R4 = 10Ω, R5 = 25Ω, R6 = 30<br>(4pt) R<sub>N</sub>: ______ &nbsp;&nbsp; (6pt) I<sub>N</sub>: ______<br>(2pt) Draw the Norton Equivalent Circuit.</p>
+<figure class="circuit">
+<script type="application/json">{"parts":[
+ {"t":"BAT","a":[0,6],"b":[0,3],"label":"V_1","value":"30 V","side":-1},
+ {"t":"W","pts":[[0,3],[0,0],[1,0]]},
+ {"t":"R","a":[1,0],"b":[4,0],"label":"R_1","value":"10 Ω"},
+ {"t":"W","pts":[[4,0],[13,0]]},
+ {"t":"N","at":[5,0]},
+ {"t":"N","at":[10,0]},
+ {"t":"R","a":[5,0],"b":[5,4.5],"label":"R_2","value":"20 Ω"},
+ {"t":"R","a":[10,0],"b":[10,4.5],"label":"R_3","value":"20 Ω"},
+ {"t":"W","pts":[[5,4.5],[6,4.5]]},
+ {"t":"R","a":[6,4.5],"b":[9,4.5],"label":"R_4","value":"10 Ω"},
+ {"t":"W","pts":[[9,4.5],[13,4.5]]},
+ {"t":"N","at":[5,4.5]},
+ {"t":"N","at":[10,4.5]},
+ {"t":"R","a":[5,4.5],"b":[5,9],"label":"R_5","value":"25 Ω"},
+ {"t":"R","a":[10,4.5],"b":[10,9],"label":"R_6","value":"30 Ω"},
+ {"t":"W","pts":[[10,9],[0,9],[0,6]]},
+ {"t":"N","at":[5,9]},
+ {"t":"N","at":[13,0],"label":"A","pos":"e","open":true},
+ {"t":"N","at":[13,4.5],"label":"B","pos":"e","open":true}
+],"pad":1.1,"alt":"A 30 volt battery V1 on the left with its positive (long) plate on top. From the top terminal, R1 = 10 ohms runs right to a top wire that continues to open terminal A. R2 = 20 ohms hangs from the top wire down to a left-middle node, and R3 = 20 ohms hangs from the top wire down to a right-middle node. R4 = 10 ohms joins the two middle nodes, and the right-middle node continues right to open terminal B. R5 = 25 ohms goes from the left-middle node down to the bottom wire, and R6 = 30 ohms goes from the right-middle node down to the bottom wire, which returns to the battery's negative terminal."}</script>
+<figcaption>Question 1 redrawn. The battery's long plate (+) is on top, as on the exam. Terminal A is the whole top wire (to the right of \(R_1\)); terminal B is the right-middle node where \(R_3\), \(R_4\) and \(R_6\) meet.</figcaption>
+</figure>
+<table class="xq-given">
+<tr><th>Quantity</th><th>Value</th><th>Note</th></tr>
+<tr><td>\(V_1\)</td><td>30 V</td><td>printed "30v"; + on the top terminal (long plate)</td></tr>
+<tr><td>\(R_1\)</td><td>10 Ω</td><td>from \(V_1\)+ to the top wire (terminal A)</td></tr>
+<tr><td>\(R_2\)</td><td>20 Ω</td><td>top wire → left-middle node</td></tr>
+<tr><td>\(R_3\)</td><td>20 Ω</td><td>top wire (A) → right-middle node (B)</td></tr>
+<tr><td>\(R_4\)</td><td>10 Ω</td><td>between the two middle nodes</td></tr>
+<tr><td>\(R_5\)</td><td>25 Ω</td><td>left-middle node → bottom wire</td></tr>
+<tr><td>\(R_6\)</td><td>30 Ω</td><td>right-middle node (B) → bottom wire. Printed "R6 = 30" with no unit; taken as 30 Ω like every other resistor.</td></tr>
+</table>
+</section>
+
+<section class="xq-find">
+<div class="xq-part" data-part="a" data-points="4" data-type="num" data-label="\(R_N\), the Norton resistance seen from A–B" data-value="8.868" data-unit="Ω" data-tol="0.01"></div>
+<div class="xq-part" data-part="b" data-points="6" data-type="num" data-label="\(I_N\), the current through a short from A to B (positive if it flows from A to B)" data-value="0.9894" data-unit="A" data-tol="0.01"></div>
+<div class="xq-part" data-part="c" data-points="2" data-type="draw" data-label="Draw the Norton equivalent circuit (values and arrow direction)"></div>
+<p class="fb" data-part="a" data-match="11.75" data-tol="0.01">You seem to have removed \(V_1\) as an open circuit, which leaves \(R_1\) dangling. Deactivating a voltage source means replacing it with a <em>wire</em>. Then \(R_1\) connects A to the bottom rail and must be included.</p>
+<p class="fb" data-part="a" data-match="15.93" data-tol="0.01">That is only the path A → (Y centre) → B. \(R_3\) connects A directly to B, so it is in parallel with that path. Finish with \(15.93 \parallel 20\).</p>
+<p class="fb" data-part="a" data-match="7.651" data-tol="0.01">It looks like \(R_1\) disappeared together with the source, so A was tied straight to the bottom rail. Only the source becomes a wire. \(R_1\) stays, between A and the bottom rail.</p>
+<p class="fb" data-part="b" data-match="1.181" data-tol="0.01">That is the total current leaving the source, \(I_T\). Not all of it reaches the short: at node A part of it goes down through \(R_2\). Use KCL at A: \(I_N = I_T - I_{R2}\).</p>
+<p class="fb" data-part="b" data-match="3" data-tol="0.01">\(30/10 = 3\) A assumes that the short puts A at 0 V. The short ties A to B, not to the bottom rail. B is still connected to the bottom rail through \(R_6\) (and through \(R_4\) and \(R_5\)), so A sits well above 0 V.</p>
+<p class="fb" data-part="b" data-match="0.6064" data-tol="0.01">That is only the current down through \(R_6\). The current arriving at B through the short also leaves through \(R_4\) toward the left-middle node. Add both: \(I_N = I_{R6} + I_{R4}\).</p>
+<p class="fb" data-part="b" data-match="0.383" data-tol="0.01">That is only the current through \(R_4\). The short current also feeds \(R_6\). Add both: \(I_N = I_{R6} + I_{R4}\).</p>
+<p class="fb" data-part="b" data-match="0.1915" data-tol="0.01">That is the current in \(R_2\), which bypasses the short. The short carries what is left at node A: \(I_N = I_T - I_{R2}\).</p>
+<p class="fb" data-part="b" data-match="-0.9894" data-tol="0.01">Right size, wrong direction. Node A is fed from \(V_1\)+ through \(R_1\), so the short-circuit current flows from A to B. Enter it as positive (A → B); the Norton arrow then points toward A.</p>
+<p class="fb" data-part="b" data-match="3.383" data-tol="0.01">That is \(V_1/R_N\). The Norton current is the open-circuit voltage divided by \(R_N\), \(I_N = V_{OC}/R_N\), and \(V_{OC}\) is not 30 V. Find \(I_N\) directly by shorting A–B instead.</p>
+</section>
+
+<aside class="xq-flag">Minor source note: the exam prints "R6 = 30" without a unit. Every other resistor is given in Ω, so this solution uses \(R_6 = 30\ \Omega\). The connections, values and battery polarity were checked against the photographed exam and are all legible.</aside>
+
+<div class="xq-hints">
+<p class="xq-hint">\(R_N\) and \(I_N\) are two separate problems on two separate drawings. Start with \(R_N\): replace \(V_1\) with a wire and look for two resistors in series or in parallel. If you can't find any, what kind of network is it?</p>
+<p class="xq-hint">With the source shorted, \(R_4\), \(R_5\) and \(R_6\) form a triangle (Δ) between the left-middle node, the right-middle node (B) and the bottom rail. Convert that Δ to a Y and the rest becomes series and parallel.</p>
+<p class="xq-hint">For \(I_N\), draw a wire from A to B on the <em>original</em> circuit. Look at \(R_3\): both of its ends are now on the same node. What current does it carry? The rest is series–parallel, so no Δ–Y is needed.</p>
+<p class="xq-hint">\(I_N\) is not the source current. Find the total current, then use KCL at A: the short carries what arrives through \(R_1\) minus what leaves through \(R_2\).</p>
+</div>
+
+<ol class="xq-steps">
+<li class="xq-step" data-title="Identify the concept">
+<p>The question asks for the <strong>Norton equivalent</strong> seen from terminals A and B: a current source \(I_N\) in parallel with a shunt resistance \(R_N\). It behaves exactly like the original circuit for anything connected to A–B. You need two numbers, and each one is its own small problem:</p>
+<ul>
+<li>\(R_N\): deactivate \(V_1\) (replace it with a wire) and find the resistance seen from A–B. This is the same as \(R_{TH}\).</li>
+<li>\(I_N\): put a short (a wire) across A–B in the original circuit and find the current in that wire.</li>
+</ul>
+<p>The arrangement \(R_2\), \(R_3\), \(R_4\), \(R_5\), \(R_6\) is a <strong>bridge</strong>: two middle nodes joined by a cross resistor (\(R_4\)). That is the clue that a Δ–Y conversion will be needed for at least one of the two parts.</p>
+</li>
+
+<li class="xq-step" data-title="Why these methods apply">
+<p><strong>For \(R_N\):</strong> with \(V_1\) replaced by a wire, \(R_1\) runs from A to the bottom rail. Now every node has three resistors on it, and no pair is in series (no node with only two resistors) or in parallel (no two resistors sharing both nodes). Series–parallel rules cannot start. The course tool for this is to replace a Δ with an equivalent Y. The bottom Δ \(R_4, R_5, R_6\) is the same position as the bottom π the instructor converts in the bridge example.</p>
+<p><strong>For \(I_N\):</strong> the short joins A and B into one node. \(R_3\) has both ends on that node, so it has 0 V across it and carries no current: it drops out. Without \(R_3\) the bridge is gone, and the circuit reduces with series and parallel steps plus Ohm's law and KCL.</p>
+</li>
+
+<li class="xq-step" data-title="Formulas you need">
+<p><strong>Δ → Y.</strong> For a Δ of three resistors between three nodes, the equivalent Y has a new centre node N and one arm to each of the three nodes. Each arm is the product of the two Δ resistors that touch that node, divided by the sum of all three:</p>
+<div class="formula">\[ R_{y,\text{node}} = \frac{R_{\Delta,\text{touching 1}}\; R_{\Delta,\text{touching 2}}}{R_{\Delta 1} + R_{\Delta 2} + R_{\Delta 3}} \]</div>
+<p>This is the course formula \(R_1 = \dfrac{R_B R_C}{R_A+R_B+R_C}\) (and its two partners) written so that it doesn't depend on letter names. All resistances in Ω.</p>
+<p><strong>Series and parallel:</strong> \(R_s = R_a + R_b\), \(\;R_a \parallel R_b = \dfrac{R_a R_b}{R_a + R_b}\) (Ω).</p>
+<p><strong>Ohm's law:</strong> \(V = IR\) (V, A, Ω). <strong>KCL:</strong> the currents entering a node equal the currents leaving it.</p>
+<p><strong>Norton:</strong> \(I_N = I_{A\to B}\big|_{\text{A–B shorted}}\) (A), \(R_N = R_{AB}\big|_{V_1 \to \text{wire}}\) (Ω), and the Norton source arrow points toward the terminal the short-circuit current comes out of.</p>
+<p>Node names used below: A = the top wire (terminal A), M = the left-middle node, B = the right-middle node (terminal B), G = the bottom rail. Values are shown to 4 significant figures; the calculator keeps full precision.</p>
+</li>
+
+<li class="xq-step" data-title="R_N: deactivate the source and find the Δ">
+<p>Replace \(V_1\) with a wire. \(R_1\) now runs from A to G. The bottom three resistors form a Δ between M, B and G:</p>
+<ul>
+<li>\(R_4 = 10\ \Omega\) between M and B,</li>
+<li>\(R_5 = 25\ \Omega\) between M and G,</li>
+<li>\(R_6 = 30\ \Omega\) between B and G.</li>
+</ul>
+<figure class="circuit">
+<script type="application/json">{"parts":[
+ {"t":"W","pts":[[0,9],[0,0],[1,0]]},
+ {"t":"T","at":[0.35,4.6],"text":"wire (V₁ off)","anchor":"start","cls":"muted"},
+ {"t":"R","a":[1,0],"b":[4,0],"label":"R_1","value":"10 Ω"},
+ {"t":"W","pts":[[4,0],[13,0]]},
+ {"t":"N","at":[5,0]},
+ {"t":"N","at":[10,0]},
+ {"t":"R","a":[5,0],"b":[5,4.5],"label":"R_2","value":"20 Ω"},
+ {"t":"R","a":[10,0],"b":[10,4.5],"label":"R_3","value":"20 Ω"},
+ {"t":"W","pts":[[5,4.5],[6,4.5]]},
+ {"t":"R","a":[6,4.5],"b":[9,4.5],"label":"R_4","value":"10 Ω","side":-1},
+ {"t":"W","pts":[[9,4.5],[13,4.5]]},
+ {"t":"N","at":[5,4.5],"label":"M","pos":"w"},
+ {"t":"N","at":[10,4.5]},
+ {"t":"R","a":[5,4.5],"b":[5,9],"label":"R_5","value":"25 Ω"},
+ {"t":"R","a":[10,4.5],"b":[10,9],"label":"R_6","value":"30 Ω"},
+ {"t":"W","pts":[[10,9],[0,9]]},
+ {"t":"N","at":[5,9],"label":"G","pos":"s"},
+ {"t":"BOX","a":[4.4,3.7],"b":[11.8,9.5],"label":"Δ"},
+ {"t":"N","at":[13,0],"label":"A","pos":"e","open":true},
+ {"t":"N","at":[13,4.5],"label":"B","pos":"e","open":true}
+],"pad":1.1,"alt":"The circuit with V1 replaced by a wire, so R1 = 10 ohms runs from the top wire A to the bottom rail G. A dashed box marks the delta formed by R4 = 10 ohms (between M and B), R5 = 25 ohms (between M and G) and R6 = 30 ohms (between B and G)."}</script>
+<figcaption>Source deactivated (\(V_1\) replaced by a wire). The dashed box marks the bottom Δ: \(R_4\), \(R_5\), \(R_6\) between M, B and G.</figcaption>
+</figure>
+<p>Sum of the Δ resistors (the common denominator):</p>
+<div class="formula">\[ R_4 + R_5 + R_6 = 10 + 25 + 30 = 65\ \Omega \]</div>
+<p>Each Y arm uses the two Δ resistors that touch its node:</p>
+<div class="formula">\[ R_{yM} = \frac{R_4 R_5}{65} = \frac{10 \times 25}{65} = \frac{250}{65} = 3.846\ \Omega \quad(\text{M touches } R_4, R_5) \]</div>
+<div class="formula">\[ R_{yB} = \frac{R_4 R_6}{65} = \frac{10 \times 30}{65} = \frac{300}{65} = 4.615\ \Omega \quad(\text{B touches } R_4, R_6) \]</div>
+<div class="formula">\[ R_{yG} = \frac{R_5 R_6}{65} = \frac{25 \times 30}{65} = \frac{750}{65} = 11.54\ \Omega \quad(\text{G touches } R_5, R_6) \]</div>
+<p>In the course's lettering (dw1), \(R_A = R_4\), \(R_B = R_6\), \(R_C = R_5\), and the arms are \(R_2 = 3.846\ \Omega\) (to M), \(R_3 = 4.615\ \Omega\) (to B) and \(R_1 = 11.54\ \Omega\) (to G). The letter names clash with this exam's \(R_1\)–\(R_6\), which is why this solution names the arms by their nodes.</p>
+</li>
+
+<li class="xq-step" data-title="R_N: reduce the Y circuit">
+<p>Remove the Δ and put the Y on the same three nodes M, B, G. Nothing outside the Δ changes.</p>
+<figure class="circuit">
+<script type="application/json">{"parts":[
+ {"t":"W","pts":[[1,0],[0,0],[0,9.5],[7.5,9.5]]},
+ {"t":"T","at":[0.35,4.8],"text":"wire (V₁ off)","anchor":"start","cls":"muted"},
+ {"t":"R","a":[1,0],"b":[4,0],"label":"R_1","value":"10 Ω"},
+ {"t":"W","pts":[[4,0],[13,0]]},
+ {"t":"N","at":[5,0]},
+ {"t":"N","at":[10,0]},
+ {"t":"R","a":[5,0],"b":[5,4],"label":"R_2","value":"20 Ω","side":-1},
+ {"t":"R","a":[10,0],"b":[10,4],"label":"R_3","value":"20 Ω"},
+ {"t":"N","at":[5,4],"label":"M","pos":"w"},
+ {"t":"N","at":[10,4]},
+ {"t":"R","a":[5,4],"b":[7.5,6.5],"label":"R_{yM}","value":"3.846 Ω","lpos":[-1.25,0.7]},
+ {"t":"R","a":[10,4],"b":[7.5,6.5],"label":"R_{yB}","value":"4.615 Ω","lpos":[1.25,0.7]},
+ {"t":"N","at":[7.5,6.5],"label":"N","pos":"w"},
+ {"t":"R","a":[7.5,6.5],"b":[7.5,9.5],"label":"R_{yG}","value":"11.54 Ω"},
+ {"t":"N","at":[7.5,9.5],"label":"G","pos":"s"},
+ {"t":"W","pts":[[10,4],[13,4]]},
+ {"t":"N","at":[13,0],"label":"A","pos":"e","open":true},
+ {"t":"N","at":[13,4],"label":"B","pos":"e","open":true}
+],"pad":1.1,"alt":"Source still off. The delta has been replaced by a Y with centre node N: R_yM = 3.846 ohms from M to N, R_yB = 4.615 ohms from B to N, and R_yG = 11.54 ohms from N down to the bottom rail G. R1 = 10 ohms still runs from A to G (through the wire that replaced V1), R2 = 20 ohms from A to M, and R3 = 20 ohms from A to B."}</script>
+<figcaption>The bottom Δ replaced by its Y (centre node N). A reaches N two ways: through \(R_2\) and \(R_{yM}\), or through \(R_1\), the wire and \(R_{yG}\).</figcaption>
+</figure>
+<p>Trace a pretend current from A to B. At A it splits three ways:</p>
+<ul>
+<li>A → \(R_2\) → M → \(R_{yM}\) → N: one series branch, \(R_2 + R_{yM} = 20 + 3.846 = 23.85\ \Omega\).</li>
+<li>A → \(R_1\) → wire → G → \(R_{yG}\) → N: another series branch, \(R_1 + R_{yG} = 10 + 11.54 = 21.54\ \Omega\).</li>
+<li>A → \(R_3\) → B directly.</li>
+</ul>
+<p>The first two branches both run from A to N, so they are in parallel. From N the current reaches B only through \(R_{yB}\), which is in series. \(R_3\) is in parallel with that whole A → N → B path.</p>
+<figure class="circuit">
+<script type="application/json">{"parts":[
+ {"t":"W","pts":[[1,0],[13,0]]},
+ {"t":"R","a":[1,0],"b":[1,3],"label":"R_2","value":"20 Ω","side":-1},
+ {"t":"R","a":[1,3],"b":[1,6],"label":"R_{yM}","value":"3.846 Ω","side":-1},
+ {"t":"R","a":[4,0],"b":[4,3],"label":"R_1","value":"10 Ω"},
+ {"t":"R","a":[4,3],"b":[4,6],"label":"R_{yG}","value":"11.54 Ω"},
+ {"t":"W","pts":[[1,6],[7,6]]},
+ {"t":"N","at":[4,0]},
+ {"t":"N","at":[4,6]},
+ {"t":"N","at":[2.5,6],"label":"N","pos":"s"},
+ {"t":"R","a":[7,6],"b":[10,6],"label":"R_{yB}","value":"4.615 Ω","side":-1},
+ {"t":"W","pts":[[10,6],[13,6]]},
+ {"t":"R","a":[11.5,0],"b":[11.5,6],"label":"R_3","value":"20 Ω"},
+ {"t":"N","at":[11.5,0]},
+ {"t":"N","at":[11.5,6]},
+ {"t":"N","at":[13,0],"label":"A","pos":"e","open":true},
+ {"t":"N","at":[13,6],"label":"B","pos":"e","open":true}
+],"pad":1.1,"alt":"Series-parallel redraw seen from A and B. From the A rail, two branches go down to node N: R2 = 20 ohms in series with R_yM = 3.846 ohms, and R1 = 10 ohms in series with R_yG = 11.54 ohms. From N, R_yB = 4.615 ohms leads to terminal B. R3 = 20 ohms connects the A rail directly to B."}</script>
+<figcaption>The same network redrawn as series–parallel groups seen from A–B.</figcaption>
+</figure>
+<p>Parallel pair (A to N):</p>
+<div class="formula">\[ 23.85 \parallel 21.54 = \frac{23.85 \times 21.54}{23.85 + 21.54} = \frac{513.6}{45.38} = 11.32\ \Omega \]</div>
+<p>Add the series arm to B:</p>
+<div class="formula">\[ R_{A\to N\to B} = 11.32 + R_{yB} = 11.32 + 4.615 = 15.93\ \Omega \]</div>
+<p>In parallel with \(R_3\):</p>
+<div class="formula">\[ R_N = 15.93 \parallel 20 = \frac{15.93 \times 20}{15.93 + 20} = \frac{318.6}{35.93} = 8.868\ \Omega \]</div>
+</li>
+
+<li class="xq-step" data-title="I_N: short A–B and simplify">
+<p>Go back to the original circuit with \(V_1\) in place and put a wire from A to B. The current in that wire, from A to B, is \(I_N\).</p>
+<figure class="circuit">
+<script type="application/json">{"parts":[
+ {"t":"BAT","a":[0,6],"b":[0,3],"label":"V_1","value":"30 V","side":-1},
+ {"t":"W","pts":[[0,3],[0,0],[1,0]]},
+ {"t":"IARR","a":[0,2.6],"b":[0,0.8],"label":"I_T","side":-1},
+ {"t":"R","a":[1,0],"b":[4,0],"label":"R_1","value":"10 Ω"},
+ {"t":"W","pts":[[4,0],[13,0]]},
+ {"t":"N","at":[5,0]},
+ {"t":"N","at":[10,0]},
+ {"t":"R","a":[5,0],"b":[5,4.5],"label":"R_2","value":"20 Ω"},
+ {"t":"R","a":[10,0],"b":[10,4.5],"label":"R_3","value":"20 Ω"},
+ {"t":"W","pts":[[5,4.5],[6,4.5]]},
+ {"t":"R","a":[6,4.5],"b":[9,4.5],"label":"R_4","value":"10 Ω","side":-1},
+ {"t":"W","pts":[[9,4.5],[13,4.5]]},
+ {"t":"N","at":[5,4.5],"label":"M","pos":"w"},
+ {"t":"N","at":[10,4.5]},
+ {"t":"R","a":[5,4.5],"b":[5,9],"label":"R_5","value":"25 Ω"},
+ {"t":"R","a":[10,4.5],"b":[10,9],"label":"R_6","value":"30 Ω"},
+ {"t":"W","pts":[[10,9],[0,9],[0,6]]},
+ {"t":"N","at":[5,9],"label":"G","pos":"s"},
+ {"t":"W","pts":[[13,0],[13,4.5]]},
+ {"t":"IARR","a":[13,1.2],"b":[13,3.3],"label":"I_N"},
+ {"t":"N","at":[13,0],"label":"A","pos":"ne"},
+ {"t":"N","at":[13,4.5],"label":"B","pos":"se"}
+],"pad":1.2,"alt":"The original circuit with a wire added from terminal A down to terminal B. The arrow I_N points down through that wire, from A to B. I_T flows up out of the battery's positive terminal toward R1."}</script>
+<figcaption>A–B shorted. \(I_N\) is the current in the added wire, measured from A to B. \(R_3\) now has both ends on the same node (A = B).</figcaption>
+</figure>
+<p>What changes:</p>
+<ul>
+<li>A and B are one node, call it A = B. \(R_3\) connects that node to itself: 0 V across it, so \(I_{R3} = 0\) and it drops out.</li>
+<li>\(R_2\) (A to M) and \(R_4\) (B to M) now both run from the A = B node to M, so they are in parallel.</li>
+<li>\(R_6\) runs from the A = B node to G.</li>
+</ul>
+<figure class="circuit">
+<script type="application/json">{"parts":[
+ {"t":"BAT","a":[0,6],"b":[0,3],"label":"V_1","value":"30 V","side":-1},
+ {"t":"W","pts":[[0,3],[0,0],[1,0]]},
+ {"t":"IARR","a":[0,2.6],"b":[0,0.8],"label":"I_T","side":-1},
+ {"t":"R","a":[1,0],"b":[4,0],"label":"R_1","value":"10 Ω"},
+ {"t":"W","pts":[[4,0],[11,0]]},
+ {"t":"N","at":[5,0],"label":"A = B","pos":"n"},
+ {"t":"N","at":[8,0]},
+ {"t":"R","a":[5,0],"b":[5,3.5],"label":"R_2","value":"20 Ω","side":-1},
+ {"t":"R","a":[8,0],"b":[8,3.5],"label":"R_4","value":"10 Ω"},
+ {"t":"W","pts":[[5,3.5],[8,3.5]]},
+ {"t":"N","at":[6.5,3.5],"label":"M","pos":"n"},
+ {"t":"R","a":[6.5,3.5],"b":[6.5,7.5],"label":"R_5","value":"25 Ω"},
+ {"t":"R","a":[11,0],"b":[11,7.5],"label":"R_6","value":"30 Ω"},
+ {"t":"W","pts":[[11,7.5],[0,7.5],[0,6]]},
+ {"t":"N","at":[6.5,7.5],"label":"G","pos":"s"}
+],"pad":1.2,"alt":"The shorted circuit redrawn. V1 = 30 volts drives R1 = 10 ohms into the merged node A = B. From that node, R2 = 20 ohms and R4 = 10 ohms in parallel go down to node M, then R5 = 25 ohms goes from M to the bottom rail G. R6 = 30 ohms goes from the merged node straight to G. R3 is not shown because it carries no current."}</script>
+<figcaption>The shorted circuit redrawn without \(R_3\) (it carries 0 A): \(R_1\) in series with \(\big[(R_2 \parallel R_4) + R_5\big] \parallel R_6\).</figcaption>
+</figure>
+<p>Reduce from the far side toward the source:</p>
+<div class="formula">\[ R_2 \parallel R_4 = \frac{20 \times 10}{20 + 10} = \frac{200}{30} = 6.667\ \Omega \]</div>
+<div class="formula">\[ (R_2 \parallel R_4) + R_5 = 6.667 + 25 = 31.67\ \Omega \]</div>
+<div class="formula">\[ 31.67 \parallel R_6 = \frac{31.67 \times 30}{31.67 + 30} = \frac{950.0}{61.67} = 15.41\ \Omega \]</div>
+<div class="formula">\[ R_T = R_1 + 15.41 = 10 + 15.41 = 25.41\ \Omega \]</div>
+<p>Total current out of the source (Ohm's law):</p>
+<div class="formula">\[ I_T = \frac{V_1}{R_T} = \frac{30\ \text{V}}{25.41\ \Omega} = 1.181\ \text{A} \]</div>
+</li>
+
+<li class="xq-step" data-title="I_N: work back to the branch currents">
+<p>Voltage at the A = B node (G = 0 V). \(R_1\) drops \(V_{R1} = I_T R_1 = 1.181 \times 10 = 11.81\) V:</p>
+<div class="formula">\[ V_{A} = V_1 - V_{R1} = 30 - 11.81 = 18.19\ \text{V} \]</div>
+<p>This 18.19 V sits across both branches to G:</p>
+<div class="formula">\[ I_{R6} = \frac{18.19\ \text{V}}{30\ \Omega} = 0.6064\ \text{A}, \qquad I_{R5} = \frac{18.19\ \text{V}}{31.67\ \Omega} = 0.5745\ \text{A} \]</div>
+<p>The 0.5745 A going to M splits between \(R_2\) and \(R_4\). Their shared voltage is</p>
+<div class="formula">\[ V_{R2} = V_{R4} = I_{R5}\,(R_2 \parallel R_4) = 0.5745 \times 6.667 = 3.830\ \text{V} \]</div>
+<div class="formula">\[ I_{R2} = \frac{3.830}{20} = 0.1915\ \text{A}\ (\text{A} \to \text{M}), \qquad I_{R4} = \frac{3.830}{10} = 0.3830\ \text{A}\ (\text{B} \to \text{M}) \]</div>
+<p>(Check: \(0.1915 + 0.3830 = 0.5745\) A, and M sits at \(18.19 - 3.830 = 14.36\) V \(= 0.5745 \times 25\).)</p>
+<p>Now apply KCL to the two ends of the short. On the A end, \(I_T\) arrives through \(R_1\); \(I_{R2}\) leaves through \(R_2\); \(R_3\) carries nothing; the rest goes into the short:</p>
+<div class="formula">\[ I_N = I_T - I_{R2} = 1.181 - 0.1915 = 0.9894\ \text{A} \]</div>
+<p>On the B end, the short current leaves through \(R_6\) and \(R_4\):</p>
+<div class="formula">\[ I_N = I_{R6} + I_{R4} = 0.6064 + 0.3830 = 0.9894\ \text{A}\ ✓ \]</div>
+<p>The result is positive in the A → B direction: the short-circuit current flows from A to B.</p>
+</li>
+
+<li class="xq-step" data-title="Draw the Norton equivalent (arrow direction)">
+<p>The Norton circuit is \(I_N = 0.9894\) A in parallel with \(R_N = 8.868\ \Omega\), connected to A and B. The arrow direction comes from the short-circuit test: current came <em>out of A</em>, through the short, into B. The Norton source must push current the same way through an external short, so its arrow points <strong>up, toward A</strong>. With nothing connected, all of \(I_N\) flows through \(R_N\), which makes A the + terminal: \(V_{AB} = I_N R_N = 0.9894 \times 8.868 = 8.774\) V.</p>
+</li>
+</ol>
+
+<section class="xq-answer">
+<p>\(R_N = 8.868\ \Omega \approx 8.87\ \Omega\) (exactly \(470/53\ \Omega\)).</p>
+<p>\(I_N = 0.9894\ \text{A} \approx 0.989\ \text{A}\) (exactly \(93/94\) A), flowing from A to B through a short, so the source arrow points toward A.</p>
+<figure class="circuit">
+<script type="application/json">{"parts":[
+ {"t":"I","a":[0,3],"b":[0,0],"label":"I_N","value":"0.9894 A","side":-1},
+ {"t":"W","pts":[[0,0],[6,0]]},
+ {"t":"W","pts":[[0,3],[6,3]]},
+ {"t":"R","a":[3.5,0],"b":[3.5,3],"label":"R_N","value":"8.868 Ω"},
+ {"t":"N","at":[3.5,0]},
+ {"t":"N","at":[3.5,3]},
+ {"t":"N","at":[6,0],"label":"A","pos":"e","open":true},
+ {"t":"N","at":[6,3],"label":"B","pos":"e","open":true}
+],"pad":1.3,"alt":"Norton equivalent: a current source I_N = 0.9894 A with its arrow pointing up toward terminal A, in parallel with R_N = 8.868 ohms, connected between terminal A (top) and terminal B (bottom)."}</script>
+<figcaption>Norton equivalent seen from A–B: \(I_N = 0.9894\) A, arrow pointing up toward A, in parallel with \(R_N = 8.868\ \Omega\).</figcaption>
+</figure>
+</section>
+
+<section class="xq-check">
+<p><strong>Independent check by nodal analysis (open circuit).</strong> Leave A–B open and take G = 0 V. Unknowns: \(V_A\), \(V_M\), \(V_B\). KCL (currents leaving each node add to zero):</p>
+<div class="formula">\[ \text{A: } \frac{V_A - 30}{10} + \frac{V_A - V_M}{20} + \frac{V_A - V_B}{20} = 0 \;\Rightarrow\; 4V_A - V_M - V_B = 60 \quad(\times 20) \]</div>
+<div class="formula">\[ \text{M: } \frac{V_M - V_A}{20} + \frac{V_M - V_B}{10} + \frac{V_M}{25} = 0 \;\Rightarrow\; -5V_A + 19V_M - 10V_B = 0 \quad(\times 100) \]</div>
+<div class="formula">\[ \text{B: } \frac{V_B - V_A}{20} + \frac{V_B - V_M}{10} + \frac{V_B}{30} = 0 \;\Rightarrow\; -3V_A - 6V_M + 11V_B = 0 \quad(\times 60) \]</div>
+<p>Solving: \(V_A = 21.08\) V, \(V_M = 12.03\) V, \(V_B = 12.31\) V. Substituting back into node A: \(-0.8915 + 0.4528 + 0.4387 = 0\) ✓. So</p>
+<div class="formula">\[ V_{OC} = V_A - V_B = 21.08 - 12.31 = 8.774\ \text{V}\ (\text{A positive}), \qquad \frac{V_{OC}}{R_N} = \frac{8.774}{8.868} = 0.9894\ \text{A} = I_N\ ✓ \]</div>
+<ul>
+<li><strong>Size:</strong> \(R_N = 8.868\ \Omega\) is smaller than \(R_3 = 20\ \Omega\), as it must be, since \(R_3\) sits directly across A–B in parallel with the rest.</li>
+<li><strong>Sign:</strong> A is fed from \(V_1\)+ through only \(R_1\), and B sits lower in the network, so A should be the higher terminal. It is (21.08 V vs 12.31 V), which agrees with the arrow pointing toward A.</li>
+<li><strong>Other Δ:</strong> converting the Δ \(R_1, R_2, R_5\) (between A, M and G with the source off) instead gives arms 3.636, 9.091 and 4.545 Ω and the same \(R_N = 8.868\ \Omega\).</li>
+<li><strong>Load test:</strong> a 10 Ω load on A–B draws \(0.9894 \times 8.868/(8.868 + 10) = 0.465\) A from the Norton model; nodal analysis of the original circuit with the same load also gives 0.465 A.</li>
+</ul>
+</section>
+
+<section class="xq-mistakes">
+<ul>
+<li>Trying series–parallel on the source-off network directly, for example treating \(R_2\) and \(R_5\) as series. They are not: node M also connects to \(R_4\). Check that a "series" node has exactly two elements on it.</li>
+<li>Opening \(V_1\) instead of shorting it (gives 11.75 Ω), or deleting \(R_1\) along with the source (gives 7.651 Ω). Only the source becomes a wire.</li>
+<li>Stopping at 15.93 Ω and forgetting that \(R_3\) is directly across A–B.</li>
+<li>Putting the Y arms on the wrong nodes. Each arm uses the two Δ resistors that <em>touch</em> its node, not the one opposite.</li>
+<li>Using the total source current (1.181 A) as \(I_N\). Part of it (0.1915 A) leaves node A through \(R_2\), goes on through \(R_5\) to the bottom rail and never enters the short: \(I_N = I_T - I_{R2}\).</li>
+<li>Thinking a short across A–B grounds A. It joins A to B; neither is at 0 V (both are at 18.19 V).</li>
+<li>Reusing voltages or currents from the \(I_N\) drawing when finding \(R_N\) (or the reverse). They are different circuits.</li>
+<li>Drawing the Norton arrow toward B, or leaving the direction off. The arrow points toward the terminal the short-circuit current comes out of (A here).</li>
+</ul>
+</section>
+
+<section class="xq-similar">
+<p><strong>Approach for a similar problem.</strong> Keep the two parts separate and check the shape of each circuit before calculating.</p>
+<ul>
+<li><strong>Different numbers, same bridge:</strong> the method is unchanged. Kill the source, convert one Δ (any triangle of three resistors works; pick the one that leaves series–parallel groups behind), reduce, then short A–B for \(I_N\).</li>
+<li><strong>A resistor directly across A–B</strong> (like \(R_3\) here): it carries no current when A–B are shorted, so ignore it for \(I_N\). It still counts for \(R_N\), in parallel with everything else.</li>
+<li><strong>Terminals placed so the short removes the bridge</strong> (as here): \(I_N\) needs no Δ–Y. If the short does not remove the bridge, you may need a Δ–Y for \(I_N\) too. Convert on the shorted circuit and remember that the Y only gives correct voltages at its three outer nodes. Go back to the original circuit to get currents in the removed resistors.</li>
+<li><strong>Balanced bridge</strong> (additional note, not from the lessons): if the cross resistor happens to have the same voltage at both ends, it carries no current and can be removed. That does not happen here, so the Δ–Y is needed.</li>
+<li><strong>Asked for Thévenin instead:</strong> \(R_{TH} = R_N\) and \(V_{TH} = I_N R_N\), with + at the terminal the Norton arrow points to. Or find \(V_{TH}\) directly as the open-circuit voltage, as in the nodal check.</li>
+<li><strong>Not sure your \(I_N\) is right?</strong> Find \(V_{OC}\) a second way (nodal analysis, or a Δ–Y on the open circuit) and check \(I_N = V_{OC}/R_N\).</li>
+</ul>
+</section>
+
+<section class="xq-connect">
+<p><strong>Topic tested:</strong> <a href="#/t/thevenin/understand">Thévenin &amp; Norton equivalents</a> (the Norton procedure), combined with <a href="#/t/deltawye/understand">Δ–Y conversions</a> to find \(R_N\) of a bridge.</p>
+<p><strong>Clues:</strong> "derive the Norton equivalent circuit" and the open terminals A and B name the topic directly. The Δ–Y part is signalled by the shape: two middle nodes joined by a cross resistor (\(R_4\)), with every node touching three resistors once the source is off. When series–parallel reduction has nowhere to start, look for a triangle of three resistors.</p>
+<p><strong>Where it is taught:</strong></p>
+<ul>
+<li><a class="xref" data-lesson="tn2" data-sec="tn2-norton-procedure">Norton lesson 1, §4: the procedure for \(I_N\) and \(R_N\)</a>. Finding \(I_N\) by shorting A and B and measuring the current in the short starts at <a class="ts" data-lesson="tn2" data-t="23:45"></a>; \(R_N\) is found the same way as \(R_{TH}\) at <a class="ts" data-lesson="tn2" data-t="25:11"></a>.</li>
+<li><a class="xref" data-lesson="tn3" data-sec="tn3-ex1-in">Norton lesson 2, §2–3: Example 1</a>, a 30 V circuit where shorting A–B, finding the total current and splitting it gives \(I_N\) (the short is drawn at <a class="ts" data-lesson="tn3" data-t="3:43"></a>), followed by \(R_N\) on a fresh drawing with the source shorted.</li>
+<li><a class="xref" data-lesson="tn3" data-sec="tn3-short-parallel">Norton lesson 2, §6: why a short "deletes" a resistor in parallel with it</a>. This is why \(R_3\) drops out when A–B are shorted (<a class="ts" data-lesson="tn3" data-t="31:46"></a>).</li>
+<li><a class="xref" data-lesson="dw1" data-sec="dw1-bridge-delta">Δ–Y lesson, §6: spotting the Δ in a bridge</a>. The instructor points out the bridge's two π networks at <a class="ts" data-lesson="dw1" data-t="22:40"></a> and converts the bottom one, the same position as \(R_4, R_5, R_6\) here.</li>
+<li><a class="xref" data-lesson="dw1" data-sec="dw1-d2y">Δ–Y lesson, §7: the Δ → Y formulas</a> (<a class="ts" data-lesson="dw1" data-t="28:56"></a>) and the memory rule "same denominator, multiply the other two" (<a class="ts" data-lesson="dw1" data-t="29:43"></a>), then the worked bridge example (<a class="xref" data-lesson="dw1" data-sec="dw1-d2y-example">§8</a>) from <a class="ts" data-lesson="dw1" data-t="30:52"></a>.</li>
+</ul>
+<p><strong>Formulas:</strong> \(I_N = I_{A\to B}\big|_{\text{short}}\), \(R_N = R_{TH}\), \(V_{TH} = I_N R_N\); Δ → Y: arm = (product of the two touching Δ resistors) / (sum of all three). See the <a href="#/t/thevenin/review">Thévenin &amp; Norton formula sheet</a> and the <a href="#/t/deltawye/review">Δ–Y formula sheet</a>.</p>
+<p><strong>Try it in the lab:</strong> in the <a href="#/t/deltawye/understand/lab/deltawye">Δ–Y lab</a>, type the bottom Δ into the converter (\(R_A = 10\), \(R_B = 30\), \(R_C = 25\ \Omega\)) and compare its Y with 3.846, 4.615 and 11.54 Ω. The <a href="#/t/thevenin/understand/lab/thevenin">Thévenin/Norton lab</a> shows the short-circuit view and the Norton arrow direction on simpler circuits.</p>
+<p><strong>How the concepts combine:</strong> Norton gives the plan (two separate circuits: source off for \(R_N\), A–B shorted for \(I_N\)). Δ–Y is the tool that makes the source-off circuit reducible. In the shorted circuit the bridge disappears because \(R_3\) is bypassed, so \(I_N\) needs only series–parallel steps, Ohm's law and KCL.</p>
+</section>
+
+</article>
